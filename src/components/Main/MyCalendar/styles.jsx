@@ -10,13 +10,13 @@ max-width: 1500px;
     padding-right: 20px;
     padding-left: 20px;
     padding-bottom: 20px;
-    border-radius: 10%;
+    border-radius: 30px;
     width: 80%;
 }
 .calendar-container{
     background-color: white;
     padding: 5%;
-    border-radius: 10%;
+    border-radius: 30px;
 }
 .calendar {
     width: 100%;

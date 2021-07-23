@@ -1,13 +1,77 @@
-import {Grid, LinearProgress} from '@material-ui/core'
+import { Grid, LinearProgress, TextField, IconButton } from '@material-ui/core'
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import { withStyles } from "@material-ui/core/styles";
 
 import Wrapper from './styles';
+
+const WhiteTextField = withStyles({
+    input: {
+        color: '#FFFFFF'
+    }
+})(TextField);
+
+const TodolistComponent = () => {
+    return (
+        <Grid container
+            direction="column"
+        className='todolist-container'>
+            <Grid item
+                className='title-container'
+                style={{
+                    backgroundColor: '#1E1F26'
+                }}>
+                <Grid container
+                className='title-subcontainer'>
+                    <Grid item>
+                        <WhiteTextField></WhiteTextField>
+                    </Grid>
+                    <Grid item>
+                        <IconButton>
+                            <AddCircleIcon htmlColor="#411AB0"/>
+                        </IconButton>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid item
+                className='content-container'
+                style={{
+                    backgroundColor: '#1E1F26'
+                }}>
+                <Grid container
+                className='content-subcontainer'>
+                    <Grid item>
+                        <IconButton>
+                            <CheckBoxOutlineBlankIcon htmlColor='white'/>
+                        </IconButton>
+                    </Grid>
+                    <Grid item>
+                        <TextField/>
+                    </Grid>
+                </Grid>
+                <Grid container
+                className='content-subcontainer'>
+                    <Grid item>
+                        <IconButton>
+                            <CheckBoxIcon htmlColor='white'/>
+                        </IconButton>
+                    </Grid>
+                    <Grid item>
+                        <TextField/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    );
+}
 
 const MyTodolist = () => {
     return (
         <Wrapper>
             <Grid container
                 className="all-container"
-                direction="row"
+                direction="column"
                 style={{
                 backgroundColor: '#292A33'
                 }}>
@@ -22,20 +86,21 @@ const MyTodolist = () => {
                     <div>60%</div>
                     <LinearProgress variant="determinate" value={60}/>
                 </Grid>
-                <Grid item>
+                <Grid item xs={12}>
                     <Grid container
-                        direction="column">
+                        direction="row"
+                    justify="space-between">
                         <Grid item>
-
+                            <TodolistComponent/>
                         </Grid>
                         <Grid item>
-                            
+                            <TodolistComponent/>
                         </Grid>
                         <Grid item>
-                            
+                            <TodolistComponent/>
                         </Grid>
                         <Grid item>
-                            
+                            <TodolistComponent/>
                         </Grid>
                     </Grid>
                 </Grid>

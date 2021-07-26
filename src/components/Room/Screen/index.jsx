@@ -1,17 +1,23 @@
-import React from 'react'
+import { useState } from 'react';
 
-const tmpStyle = {
-  width: '100%',
-  height: '220px',
-  backgroundColor: '#ffffff'
-}
+import Wrapper from './styles';
 
-const Screen = () => {
+const Screen = ({ screen_id }) => {
+  const [sId, setSId] = useState(screen_id);
+
   return (
-    <div style={tmpStyle}>
-      Screen
-    </div>
+    <Wrapper>
+      {sId ? (
+        <div className="conference-content">
+
+        </div>
+      ) : (
+        <div>
+          <p>아직 입장하지 않음</p>
+        </div>
+      )}
+    </Wrapper>
   )
 }
 
-export default Screen
+export default Screen;

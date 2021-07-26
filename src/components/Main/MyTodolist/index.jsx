@@ -21,10 +21,13 @@ const LinearProgressOrange = withStyles({
 
 
 const TodolistTitle = (props) => {
-    let { title, index, setTodolistAddInput } = props;
+    let { title, index, setTodolistAddInput, setTodolistEditTitle } = props;
     const handleAddInput = () => {
         setTodolistAddInput(index);
     };
+    const onChangeHandler = (e) => {
+        setTodolistEditTitle(index, e.target.value);
+    }
 
     return (
         <Grid item
@@ -35,7 +38,7 @@ const TodolistTitle = (props) => {
             <Grid container
                 className='title-subcontainer'>
                 <Grid item xs={10} className="input-container">
-                    <input className="title-input" value={title}/>
+                    <input className="title-input" value={title} onChange={onChangeHandler}/>
                 </Grid>
                 <Grid item xs={2}>
                     <IconButton onClick={handleAddInput}>
@@ -48,16 +51,21 @@ const TodolistTitle = (props) => {
 };
 
 const TodolistContent = (props) => {
-    const { todolist } = props;
+    const { todolist, index, setTodolistEditContent } = props;
     return (
         <Grid item
             className='content-container'
             style={{
                 backgroundColor: '#1E1F26'
             }}>
-            {todolist.map((data, index) => {
+            {todolist.map((data, idx) => {
                 return (
-                    <TodolistContentElement content={data.content} />
+                    <TodolistContentElement
+                        content={data.content}
+                        index={index}
+                        setTodolistEditContent={setTodolistEditContent}
+                        subindex={idx}
+                    />
                 )
             })}
         </Grid>
@@ -65,9 +73,11 @@ const TodolistContent = (props) => {
 };
 
 const TodolistContentElement = (props) => {
-    const { content } = props;
-    const onChangeHandler = () => {
+    const { content, setTodolistEditContent, index, subindex } = props;
+    const onChangeHandler = (e) => {
+        setTodolistEditContent(index, subindex, e.target.value);
     };
+    
     return (
         <Grid container
             className='content-subcontainer'>
@@ -84,7 +94,7 @@ const TodolistContentElement = (props) => {
 };
 
 const TodolistComponent = (props) => {
-    let { title, todolist, index, setTodolistAddInput } = props;
+    let { title, todolist, index, setTodolistAddInput, setTodolistEditTitle, setTodolistEditContent } = props;
 
     return (
         <Grid container
@@ -92,8 +102,14 @@ const TodolistComponent = (props) => {
         className='todolist-container'>
             <TodolistTitle title={title}
                 index={index}
-                setTodolistAddInput={setTodolistAddInput}/>
-            <TodolistContent todolist={todolist}/>
+                setTodolistAddInput={setTodolistAddInput}
+                setTodolistEditTitle={setTodolistEditTitle}
+            />
+            <TodolistContent
+                todolist={todolist}
+                setTodolistEditContent={setTodolistEditContent}
+                index={index}
+            />
         </Grid>
     );
 }
@@ -130,7 +146,7 @@ const TodolistAdd = (props) => {
 };
 
 const MyTodolist = (props) => {
-    let { todolistdata, setTodolistAddContainer, setTodolistAddInput } = props;
+    let { todolistdata, setTodolistAddContainer, setTodolistAddInput, setTodolistEditTitle, setTodolistEditContent } = props;
     console.log(todolistdata);
     return (
         <Wrapper>
@@ -174,6 +190,8 @@ const MyTodolist = (props) => {
                                         todolist={data.list}
                                         index={index}
                                         setTodolistAddInput={setTodolistAddInput}
+                                        setTodolistEditTitle={setTodolistEditTitle}
+                                        setTodolistEditContent={setTodolistEditContent}
                                     />
                         </Grid>
                             )

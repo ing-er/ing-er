@@ -1,5 +1,7 @@
 export const ADDCONTAINER = "ADDCONTAINER";
 export const ADDINPUT = "ADDINPUT";
+export const EDITTITLE = "EDITTITLE";
+export const EDITCONTENT = "EDITCONTENT";
 
 export const setTodolistAddContainer = (title, todolist) => ({
   type: ADDCONTAINER,
@@ -10,6 +12,25 @@ export const setTodolistAddContainer = (title, todolist) => ({
 export const setTodolistAddInput = (index, todolist) => ({
   type: ADDINPUT,
   payload: index,
+  todolist,
+});
+
+export const setTodolistEditTitle = (index, title, todolist) => ({
+  type: EDITTITLE,
+  payload: {
+    title: title,
+    index: index,
+  },
+  todolist,
+});
+
+export const setTodolistEditContent = (index, subindex, content, todolist) => ({
+  type: EDITCONTENT,
+  payload: {
+    index: index,
+    subindex: subindex,
+    content: content,
+  },
   todolist,
 });
 
@@ -57,6 +78,19 @@ const setTodolist = (state = initialState, action) => {
         content: "",
         complete: false,
       });
+      return {
+        ...state,
+        todolist: [...state.todolist],
+      };
+    case EDITTITLE:
+      state.todolist[action.payload.index].title = action.payload.title;
+      return {
+        ...state,
+        todolist: [...state.todolist],
+      };
+    case EDITCONTENT:
+      state.todolist[action.payload.index].list[action.payload.subindex].content =
+        action.payload.content;
       return {
         ...state,
         todolist: [...state.todolist],

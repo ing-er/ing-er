@@ -20,7 +20,12 @@ const LinearProgressOrange = withStyles({
 })(LinearProgress);
 
 
-const TodolistTitle = () => {
+const TodolistTitle = (props) => {
+    let { title, index, setTodolistAddInput } = props;
+    const handleAddInput = () => {
+        setTodolistAddInput(index);
+    };
+
     return (
         <Grid item
             className='title-container'
@@ -30,10 +35,10 @@ const TodolistTitle = () => {
             <Grid container
                 className='title-subcontainer'>
                 <Grid item xs={10} className="input-container">
-                    <input className="title-input" />
+                    <input className="title-input" value={title}/>
                 </Grid>
                 <Grid item xs={2}>
-                    <IconButton>
+                    <IconButton onClick={handleAddInput}>
                         <AddCircleIcon htmlColor="#411AB0" />
                     </IconButton>
                 </Grid>
@@ -42,61 +47,91 @@ const TodolistTitle = () => {
     );
 };
 
-const TodolistContent = () => {
+const TodolistContent = (props) => {
+    const { todolist } = props;
     return (
         <Grid item
             className='content-container'
             style={{
                 backgroundColor: '#1E1F26'
             }}>
-            <Grid container
-                className='content-subcontainer'>
-                <Grid item xs={2}>
-                    <IconButton>
-                        <CheckBoxOutlineBlankIcon htmlColor='white' />
-                    </IconButton>
-                </Grid>
-                <Grid item xs={10}>
-                    <input className="content-input" />
-                </Grid>
+            {todolist.map((data, index) => {
+                return (
+                    <TodolistContentElement content={data.content} />
+                )
+            })}
+        </Grid>
+    );
+};
+
+const TodolistContentElement = (props) => {
+    const { content } = props;
+    const onChangeHandler = () => {
+    };
+    return (
+        <Grid container
+            className='content-subcontainer'>
+            <Grid item xs={2}>
+                <IconButton>
+                    <CheckBoxOutlineBlankIcon htmlColor='white'/>
+                </IconButton>
             </Grid>
-            <Grid container
-                className='content-subcontainer'>
-                <Grid ite xs={2}>
-                    <IconButton>
-                        <CheckBoxIcon htmlColor='white' />
-                    </IconButton>
-                </Grid>
-                <Grid item xs={10}>
-                    <input className="content-input" />
-                </Grid>
+            <Grid item xs={10}>
+                <input className="content-input" value={content} onChange={onChangeHandler}/>
             </Grid>
         </Grid>
     );
 };
 
-const TodolistComponent = () => {
+const TodolistComponent = (props) => {
+    let { title, todolist, index, setTodolistAddInput } = props;
+
     return (
         <Grid container
             direction="column"
         className='todolist-container'>
-            <TodolistTitle/>
-            <TodolistContent/>
+            <TodolistTitle title={title}
+                index={index}
+                setTodolistAddInput={setTodolistAddInput}/>
+            <TodolistContent todolist={todolist}/>
         </Grid>
     );
 }
 
-const TodolistAdd = () => {
+const TodolistAdd = (props) => {
+    let { setTodolistAddContainer } = props;
+    const handleAddContainer = () => {
+        setTodolistAddContainer(document.querySelector('#add-title').value);
+    };
+
     return (
         <Grid container
             direction="column"
             className='todolist-container'>
-            <TodolistTitle />
+            <Grid item
+            className='title-container'
+            style={{
+                backgroundColor: '#1E1F26'
+            }}>
+            <Grid container
+                className='title-subcontainer'>
+                <Grid item xs={10} className="input-container">
+                    <input className="title-input" id="add-title"/>
+                </Grid>
+                <Grid item xs={2}>
+                    <IconButton onClick={handleAddContainer}>
+                        <AddCircleIcon htmlColor="#411AB0" />
+                    </IconButton>
+                </Grid>
+            </Grid>
+        </Grid>
         </Grid>
     );
 };
 
-const MyTodolist = () => {
+const MyTodolist = (props) => {
+    let { todolistdata, setTodolistAddContainer, setTodolistAddInput } = props;
+    console.log(todolistdata);
     return (
         <Wrapper>
             <Grid container
@@ -128,26 +163,25 @@ const MyTodolist = () => {
                 <Grid item xs={12}>
                     <Grid container
                         direction="row"
-                    justify="space-between">
-                        <Grid item
+                        justify="space-between">
+                        {todolistdata.map((data, index) => {
+                            return (
+                                <Grid item
                             lg={3} md={4} sm={6} xs={12}
                         className="todolist-component-container">
-                            <TodolistComponent/>
+                                    <TodolistComponent
+                                        title={data.title}
+                                        todolist={data.list}
+                                        index={index}
+                                        setTodolistAddInput={setTodolistAddInput}
+                                    />
                         </Grid>
+                            )
+                        })}
                         <Grid item
                         lg={3} md={4} sm={6} xs={12}
                         className="todolist-component-container">
-                            <TodolistComponent/>
-                        </Grid>
-                        <Grid item
-                        lg={3} md={4} sm={6} xs={12}
-                        className="todolist-component-container">
-                            <TodolistComponent/>
-                        </Grid>
-                        <Grid item
-                        lg={3} md={4} sm={6} xs={12}
-                        className="todolist-component-container">
-                            <TodolistAdd/>
+                            <TodolistAdd setTodolistAddContainer={setTodolistAddContainer}/>
                         </Grid>
                     </Grid>
                 </Grid>

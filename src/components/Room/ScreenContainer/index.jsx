@@ -27,7 +27,7 @@ const ScreenContainer = () => {
       <Grid container spacing={4}>
         {screens.map((screen, idx) => (
           <Grid item 
-            sm={12} md={6} lg={4}
+            xs={12} md={6} lg={4}
             key={idx}
           >
             <Screen screen_id={screen}>

@@ -1,7 +1,6 @@
 import { Tabs, Tab, Container, Button, Grid, Switch, FormControlLabel, Box } from '@material-ui/core';
 import Wrapper from './styles';
-import MyCalendar from '../MyCalendar';
-import MyTodolist from '../MyTodolist';
+import MyCalendarComponent from '../../../containers/MyCalendarContainer';
 import MyTodolistContainer from '../../../containers/MyTodolistContainer';
 import { withStyles } from '@material-ui/styles';
 
@@ -88,7 +87,7 @@ const HorizontalTabs = (props) => {
                 style={{
                 alignItems: 'center'
             }}>
-                <MyCalendar />
+                <MyCalendarComponent />
             </Container>
             )}
             {mainIndex === 1 && (

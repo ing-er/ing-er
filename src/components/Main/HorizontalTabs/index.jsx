@@ -4,36 +4,31 @@ import MyCalendar from '../MyCalendar';
 import MyTodolist from '../MyTodolist';
 import { withStyles } from '@material-ui/styles';
 
-import { useSelector, useDispatch } from "react-redux";
-import { setMainIndexCalendar, setMainIndexTodolist } from '../../../modules/setMainIndex';
-import { setIsRandomRoomTrue, setIsRandomRoomFalse } from '../../../modules/setIsRandomRoom';
-
 const TabsOrange = withStyles({
     indicator: {
         background: '#E96F02'
     }
 })(Tabs);
 
-export default function HorizontalTabs() {
-    const dispatch = useDispatch();
-    const { mainIndex } = useSelector(state => state.setMainIndex);
-    const { isRandomRoom } = useSelector(state => state.setIsRandomRoom);
+const HorizontalTabs = (props) => {
+    let { mainIndex, setMainIndexCalendar, setMainIndexTodolist,
+    isRandomRoom, setIsRandomRoomTrue, setIsRandomRoomFalse} = props;
 
     const labels = ['Calendar', 'Todo-list'];
 
     const handleTabChange = (event, newValue) => {
-        if (newValue == 0) {
-            dispatch(setMainIndexCalendar());
-        } else if (newValue == 1) {
-            dispatch(setMainIndexTodolist());
+        if (newValue === 0) {
+            setMainIndexCalendar();
+        } else if (newValue === 1) {
+            setMainIndexTodolist();
         }
     };
 
     const handleSwitchChange = (event, newValue) => {
         if (newValue === true) {
-            dispatch(setIsRandomRoomTrue());
+            setIsRandomRoomTrue();
         } else {
-            dispatch(setIsRandomRoomFalse());
+            setIsRandomRoomFalse();
         }
     };
 
@@ -106,3 +101,5 @@ export default function HorizontalTabs() {
         </Wrapper>
     );
 };
+
+export default HorizontalTabs;

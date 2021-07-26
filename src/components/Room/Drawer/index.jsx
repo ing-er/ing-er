@@ -1,11 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import Screen from '../Screen'
-
 import { 
   Drawer,
-  Grid,
   IconButton
 } from '@material-ui/core';
 
@@ -20,7 +17,7 @@ import {
   useStyles
 } from './styles';
 
-const RoomDrawer = () => {
+const RoomDrawer = ({ children }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -41,15 +38,7 @@ const RoomDrawer = () => {
           [classes.contentShift]: open,
         })}
       >
-        <Grid container spacing={3}>
-          {Array(6).fill(1).map( (value, idx) => (
-            <Grid item key={idx} xs={12} sm={6} md={4}>
-              <Screen />
-            </Grid>
-          ))}
-          
-        </Grid>
-        
+       { children }
       </main>
       <div className="drawer-button-area">
         <IconButton

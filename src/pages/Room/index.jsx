@@ -6,7 +6,6 @@ import DrawerAppbar from '../../components/Room/DrawerAppbar';
 
 
 import { CssBaseline } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
 import {
   Wrapper,
   useStyles
@@ -15,7 +14,6 @@ import {
 
 const Room = () => {
   const classes = useStyles();
-  const theme = useTheme();
 
   const [open, setOpen] = useState(false);
 
@@ -38,7 +36,6 @@ const Room = () => {
       <RoomDrawer
         handleDrawerClose={handleDrawerClose}
         open={open}
-        theme={theme}
         classes={classes}
       >
         <ScreenContainer />

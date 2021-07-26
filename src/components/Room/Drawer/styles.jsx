@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
 
 export const Wrapper = styled.div`
+  width: 100%;
+  min-height: 666px;
   display: flex;
   
   & .drawer {
@@ -22,8 +24,7 @@ export const Wrapper = styled.div`
     background-color: #ffffff;
     border-radius: 5px;
   }
-
-`
+`;
 
 const drawerWidth = 240;
 export const useStyles = makeStyles((theme) => ({
@@ -62,6 +63,7 @@ export const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginRight: -drawerWidth,
+    marginTop: '1.5rem',
   },
   contentShift: {
     transition: theme.transitions.create('margin', {

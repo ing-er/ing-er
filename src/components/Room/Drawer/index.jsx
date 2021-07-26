@@ -33,13 +33,15 @@ const RoomDrawer = ({ children }) => {
 
   return (
     <Wrapper>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-       { children }
-      </main>
+      <div>
+        <main
+          className={clsx(classes.content, {
+            [classes.contentShift]: open,
+          })}
+        >
+        { children }
+        </main>
+      </div>
       <div className="drawer-button-area">
         <IconButton
           color="inherit"

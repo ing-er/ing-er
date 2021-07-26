@@ -7,11 +7,11 @@ export const Wrapper = styled.div`
   display: flex;
   
   & .drawer {
-    width: 240px;
+    width: 300px;
     flex-shrink: 0;
 
     & .MuiDrawer-paper {
-      width: 240px;
+      width: 300px;
     }
   }
 
@@ -26,7 +26,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -63,7 +63,8 @@ export const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginRight: -drawerWidth,
-    marginTop: '1.5rem',
+    marginTop: '1.8rem',
+    marginBottom: '1.8rem',
   },
   contentShift: {
     transition: theme.transitions.create('margin', {

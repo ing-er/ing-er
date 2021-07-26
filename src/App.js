@@ -3,6 +3,7 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 
 import Main from "./pages/Main";
+import Room from "./pages/Room";
 
 import "./App.css";
 import rootReducer from "./modules";
@@ -15,6 +16,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Main} />
+          <Route exact path="/room" component={Room} />
         </Switch>
       </BrowserRouter>
     </Provider>

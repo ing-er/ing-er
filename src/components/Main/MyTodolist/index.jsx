@@ -51,7 +51,7 @@ const TodolistTitle = (props) => {
 };
 
 const TodolistContent = (props) => {
-    const { todolist, index, setTodolistEditContent } = props;
+    const { todolist, index, setTodolistEditContent, setTodolistEditComplete } = props;
     return (
         <Grid item
             className='content-container'
@@ -62,9 +62,11 @@ const TodolistContent = (props) => {
                 return (
                     <TodolistContentElement
                         content={data.content}
+                        complete={data.complete}
                         index={index}
                         setTodolistEditContent={setTodolistEditContent}
                         subindex={idx}
+                        setTodolistEditComplete={setTodolistEditComplete}
                     />
                 )
             })}
@@ -73,28 +75,41 @@ const TodolistContent = (props) => {
 };
 
 const TodolistContentElement = (props) => {
-    const { content, setTodolistEditContent, index, subindex } = props;
+    const { content, complete, setTodolistEditContent, index, subindex, setTodolistEditComplete } = props;
     const onChangeHandler = (e) => {
         setTodolistEditContent(index, subindex, e.target.value);
     };
-    
+    const checkBoxHandler = () => {
+        setTodolistEditComplete(index, subindex);
+    };
+
     return (
         <Grid container
             className='content-subcontainer'>
             <Grid item xs={2}>
-                <IconButton>
-                    <CheckBoxOutlineBlankIcon htmlColor='white'/>
+                <IconButton onClick={checkBoxHandler}>
+                    {!complete && (
+                        <CheckBoxOutlineBlankIcon htmlColor='white'/>
+                    )}
+                    {complete && (
+                        <CheckBoxIcon htmlColor="#4D4D4D" />
+                    )}
                 </IconButton>
             </Grid>
             <Grid item xs={10}>
-                <input className="content-input" value={content} onChange={onChangeHandler}/>
+                {!complete && (
+                    <input className="content-input" value={content} onChange={onChangeHandler}/>
+                )}
+                {complete && (
+                    <input className="content-input-complete" value={content} onChange={onChangeHandler}/>
+                )}
             </Grid>
         </Grid>
     );
 };
 
 const TodolistComponent = (props) => {
-    let { title, todolist, index, setTodolistAddInput, setTodolistEditTitle, setTodolistEditContent } = props;
+    let { title, todolist, index, setTodolistAddInput, setTodolistEditTitle, setTodolistEditContent, setTodolistEditComplete } = props;
 
     return (
         <Grid container
@@ -109,6 +124,7 @@ const TodolistComponent = (props) => {
                 todolist={todolist}
                 setTodolistEditContent={setTodolistEditContent}
                 index={index}
+                setTodolistEditComplete={setTodolistEditComplete}
             />
         </Grid>
     );
@@ -146,7 +162,7 @@ const TodolistAdd = (props) => {
 };
 
 const MyTodolist = (props) => {
-    let { todolistdata, setTodolistAddContainer, setTodolistAddInput, setTodolistEditTitle, setTodolistEditContent } = props;
+    let { todolistdata, setTodolistAddContainer, setTodolistAddInput, setTodolistEditTitle, setTodolistEditContent, setTodolistEditComplete } = props;
     console.log(todolistdata);
     return (
         <Wrapper>
@@ -192,6 +208,7 @@ const MyTodolist = (props) => {
                                         setTodolistAddInput={setTodolistAddInput}
                                         setTodolistEditTitle={setTodolistEditTitle}
                                         setTodolistEditContent={setTodolistEditContent}
+                                        setTodolistEditComplete={setTodolistEditComplete}
                                     />
                         </Grid>
                             )

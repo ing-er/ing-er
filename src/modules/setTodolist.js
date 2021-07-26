@@ -2,6 +2,7 @@ export const ADDCONTAINER = "ADDCONTAINER";
 export const ADDINPUT = "ADDINPUT";
 export const EDITTITLE = "EDITTITLE";
 export const EDITCONTENT = "EDITCONTENT";
+export const EDITCOMPLETE = "EDITCOMPLETE";
 
 export const setTodolistAddContainer = (title, todolist) => ({
   type: ADDCONTAINER,
@@ -30,6 +31,15 @@ export const setTodolistEditContent = (index, subindex, content, todolist) => ({
     index: index,
     subindex: subindex,
     content: content,
+  },
+  todolist,
+});
+
+export const setTodolistEditComplete = (index, subindex, todolist) => ({
+  type: EDITCOMPLETE,
+  payload: {
+    index: index,
+    subindex: subindex,
   },
   todolist,
 });
@@ -91,6 +101,13 @@ const setTodolist = (state = initialState, action) => {
     case EDITCONTENT:
       state.todolist[action.payload.index].list[action.payload.subindex].content =
         action.payload.content;
+      return {
+        ...state,
+        todolist: [...state.todolist],
+      };
+    case EDITCOMPLETE:
+      state.todolist[action.payload.index].list[action.payload.subindex].complete =
+        !state.todolist[action.payload.index].list[action.payload.subindex].complete;
       return {
         ...state,
         todolist: [...state.todolist],

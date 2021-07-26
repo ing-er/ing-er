@@ -4,6 +4,7 @@ import {
   setTodolistAddInput,
   setTodolistEditTitle,
   setTodolistEditContent,
+  setTodolistEditComplete,
 } from "../modules/setTodolist";
 
 import MyTodolist from "../components/Main/MyTodolist";
@@ -23,6 +24,9 @@ const MyTodolistComponent = () => {
   const setTodolistEditCon = (index, subindex, content) => {
     dispatch(setTodolistEditContent(index, subindex, content));
   };
+  const setTodolistEditCompl = (index, subindex) => {
+    dispatch(setTodolistEditComplete(index, subindex));
+  };
 
   return (
     <MyTodolist
@@ -31,6 +35,7 @@ const MyTodolistComponent = () => {
       setTodolistAddInput={setTodolistAddInp}
       setTodolistEditTitle={setTodolistEditTi}
       setTodolistEditContent={setTodolistEditCon}
+      setTodolistEditComplete={setTodolistEditCompl}
     />
   );
 };

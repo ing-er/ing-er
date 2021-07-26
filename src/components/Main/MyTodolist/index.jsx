@@ -195,7 +195,7 @@ const MyTodolist = (props) => {
                 <Grid item xs={12}>
                     <Grid container
                         direction="row"
-                        justify="space-between">
+                        justify="left">
                         {todolistdata.map((data, index) => {
                             return (
                                 <Grid item

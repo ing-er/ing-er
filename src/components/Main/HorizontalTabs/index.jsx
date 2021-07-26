@@ -5,8 +5,8 @@ import MyTodolist from '../MyTodolist';
 import { withStyles } from '@material-ui/styles';
 
 import { useSelector, useDispatch } from "react-redux";
-import { setMainIndexCalendar, setMainIndexTodolist } from '../../../reducers/setMainIndex';
-import { setIsRandomRoomTrue, setIsRandomRoomFalse } from '../../../reducers/setIsRandomRoom';
+import { setMainIndexCalendar, setMainIndexTodolist } from '../../../modules/setMainIndex';
+import { setIsRandomRoomTrue, setIsRandomRoomFalse } from '../../../modules/setIsRandomRoom';
 
 const TabsOrange = withStyles({
     indicator: {

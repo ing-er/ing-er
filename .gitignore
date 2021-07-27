@@ -35,6 +35,7 @@ Temporary Items
 .DS_*
 *.log
 logs
+package-lock.json
 **/*.backup.*
 **/*.back.*
 

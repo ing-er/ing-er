@@ -1,5 +1,7 @@
-import React from 'react';
 import clsx from 'clsx';
+import { useState } from 'react';
+
+import DrawerContentContainer from '../DrawerContentContainer';
 
 import { 
   Drawer,
@@ -7,29 +9,23 @@ import {
 } from '@material-ui/core';
 
 import {
-  ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  AccountBox,
+  Assignment,
+  Whatshot,
 } from '@material-ui/icons';
 
-import { useTheme } from '@material-ui/core/styles';
 import { 
   Wrapper,
-  useStyles
 } from './styles';
 
-const RoomDrawer = ({ children }) => {
-  const classes = useStyles();
-  const theme = useTheme();
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
+  const [drawerId, setDrawerId] = useState('drawerProfile');
+  
+  const handleDrawerNo = (e) => {
+    const drawerId = e.currentTarget.id
+    setDrawerId(drawerId)
+  }
 
   return (
     <Wrapper>
@@ -38,19 +34,8 @@ const RoomDrawer = ({ children }) => {
           [classes.contentShift]: open,
         })}
       >
-       { children }
+      { children }
       </main>
-      <div className="drawer-button-area">
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="end"
-          onClick={handleDrawerOpen}
-          className={clsx(open && classes.hide)}
-        >
-          <ChevronLeft className="chevron-left"/>
-        </IconButton>
-      </div>
 
       <Drawer
         className="drawer"
@@ -60,9 +45,23 @@ const RoomDrawer = ({ children }) => {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronLeft /> : <ChevronRight />}
+            <ChevronRight className="chevron-right" />
           </IconButton>
+          <div className="drawerHeader-right-container">
+            <IconButton id="drawerProfile" className="icon-button" onClick={handleDrawerNo}>
+              <AccountBox />
+            </IconButton>
+            <IconButton id="drawerTodo" className="icon-button" onClick={handleDrawerNo}>
+              <Assignment />
+            </IconButton>
+            <IconButton id="drawerPromise" className="icon-button" onClick={handleDrawerNo}>
+              <Whatshot />
+            </IconButton>
+          </div>
         </div>
+        <DrawerContentContainer 
+          drawerId={drawerId}
+        />
       </Drawer>
     </Wrapper>
   );

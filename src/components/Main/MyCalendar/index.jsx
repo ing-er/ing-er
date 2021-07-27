@@ -5,7 +5,21 @@ import 'react-calendar/dist/Calendar.css';
 
 import Wrapper from './styles';
 
-const MyCalendar = () => {
+const MyCalendar = (props) => {
+    let { calendardata, setCalendarEditPromise, setCalendarEditDiary, setCalendarEditPromiseIsEditable, setCalendarEditDiaryIsEditable } = props;
+    const onChangePromiseHandler = (e) => {
+        setCalendarEditPromise(e.target.value);
+    };
+    const onChangeDiaryHandler = (e) => {
+        setCalendarEditDiary(e.target.value);
+    };
+    const onClickPromiseHandler = () => {
+        setCalendarEditPromiseIsEditable();
+    };
+    const onClickDiaryHandler = () => {
+        setCalendarEditDiaryIsEditable();
+    };
+    console.log(calendardata);
     return (
         <Wrapper>
             <Grid container
@@ -60,13 +74,16 @@ const MyCalendar = () => {
                                     style={{
                                         backgroundColor:'white'
                                     }}>
-                                    <IconButton>
+                                    <IconButton onClick={onClickPromiseHandler}>
                                         <SettingsApplicationsIcon/>
                                     </IconButton>
                                 <TextField
                                     multiline={true}
                                     rows={8}
-                                    fullWidth
+                                        fullWidth
+                                        defaultValue={calendardata.promise.content}
+                                        onChange={onChangePromiseHandler}
+                                        disabled={!calendardata.promise.isEditable}
                                     />
                             </Grid>
                         </Grid>
@@ -87,13 +104,16 @@ const MyCalendar = () => {
                                     style={{
                                         backgroundColor:'white'
                                     }}>
-                                    <IconButton>
+                                    <IconButton onClick={onClickDiaryHandler}>
                                         <SettingsApplicationsIcon/>
                                     </IconButton>
                                 <TextField
                                     multiline={true}
                                     rows={8}
-                                    fullWidth
+                                        fullWidth
+                                        defaultValue={calendardata.diary.content}
+                                        onChange={onChangeDiaryHandler}
+                                        disabled={!calendardata.diary.isEditable}
                                     />
                             </Grid>
                         </Grid>

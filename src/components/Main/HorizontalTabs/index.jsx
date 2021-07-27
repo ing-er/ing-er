@@ -1,12 +1,8 @@
 import { Tabs, Tab, Container, Button, Grid, Switch, FormControlLabel, Box } from '@material-ui/core';
 import Wrapper from './styles';
-import MyCalendar from '../MyCalendar';
-import MyTodolist from '../MyTodolist';
+import MyCalendarComponent from '../../../containers/MyCalendarContainer';
+import MyTodolistContainer from '../../../containers/MyTodolistContainer';
 import { withStyles } from '@material-ui/styles';
-
-import { useSelector, useDispatch } from "react-redux";
-import { setMainIndexCalendar, setMainIndexTodolist } from '../../../modules/setMainIndex';
-import { setIsRandomRoomTrue, setIsRandomRoomFalse } from '../../../modules/setIsRandomRoom';
 
 const TabsOrange = withStyles({
     indicator: {
@@ -14,26 +10,25 @@ const TabsOrange = withStyles({
     }
 })(Tabs);
 
-export default function HorizontalTabs() {
-    const dispatch = useDispatch();
-    const { mainIndex } = useSelector(state => state.setMainIndex);
-    const { isRandomRoom } = useSelector(state => state.setIsRandomRoom);
+const HorizontalTabs = (props) => {
+    let { mainIndex, setMainIndexCalendar, setMainIndexTodolist,
+    isRandomRoom, setIsRandomRoomTrue, setIsRandomRoomFalse} = props;
 
     const labels = ['Calendar', 'Todo-list'];
 
     const handleTabChange = (event, newValue) => {
-        if (newValue == 0) {
-            dispatch(setMainIndexCalendar());
-        } else if (newValue == 1) {
-            dispatch(setMainIndexTodolist());
+        if (newValue === 0) {
+            setMainIndexCalendar();
+        } else if (newValue === 1) {
+            setMainIndexTodolist();
         }
     };
 
     const handleSwitchChange = (event, newValue) => {
         if (newValue === true) {
-            dispatch(setIsRandomRoomTrue());
+            setIsRandomRoomTrue();
         } else {
-            dispatch(setIsRandomRoomFalse());
+            setIsRandomRoomFalse();
         }
     };
 
@@ -92,7 +87,7 @@ export default function HorizontalTabs() {
                 style={{
                 alignItems: 'center'
             }}>
-                <MyCalendar />
+                <MyCalendarComponent />
             </Container>
             )}
             {mainIndex === 1 && (
@@ -100,9 +95,11 @@ export default function HorizontalTabs() {
                 style={{
                 alignItems: 'center'
             }}>
-                <MyTodolist />
+                <MyTodolistContainer />
                 </Container>
             )}
         </Wrapper>
     );
 };
+
+export default HorizontalTabs;

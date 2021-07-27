@@ -1,26 +1,33 @@
-import React from 'react'
-import Wrapper from './styles';
+import React from "react";
+import Wrapper from "./styles";
 import {
   Button,
   Grid,
   Typography,
   TextField,
   Container,
-  IconButton
-} from '@material-ui/core';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import HowToRegIcon from '@material-ui/icons/HowToReg';
-import CancelIcon from '@material-ui/icons/Cancel';
+  IconButton,
+} from "@material-ui/core";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import HowToRegIcon from "@material-ui/icons/HowToReg";
+import CancelIcon from "@material-ui/icons/Cancel";
 
-function Introduce({ nickname, category, diffNickname, diffCategory, onSetDiffNickname, onSetDiffCategory, onSetting }) {
-
-  const onNicknameChange = e => {
+function MemberSetting({
+  nickname,
+  category,
+  diffNickname,
+  diffCategory,
+  onSetDiffNickname,
+  onSetDiffCategory,
+  onSetting,
+}) {
+  const onNicknameChange = (e) => {
     // onSetNickname(e.target.value);
     onSetDiffNickname(e.target.value);
   };
-  const onCategoryChange = e => {
+  const onCategoryChange = (e) => {
     // onSetNickname(e.target.value);
-    console.log(e.currentTarget.value)
+    console.log(e.currentTarget.value);
     onSetDiffCategory(parseInt(e.currentTarget.value, 10));
   };
 
@@ -31,12 +38,10 @@ function Introduce({ nickname, category, diffNickname, diffCategory, onSetDiffNi
       <Container
         className="all-container"
         style={{
-          alignItems: 'center'
-        }}>
-        <Grid container
-          direction="column"
-          className="container"
-        >
+          alignItems: "center",
+        }}
+      >
+        <Grid container direction="column" className="container">
           <Grid item xs={12}>
             <Grid
               container
@@ -54,7 +59,11 @@ function Introduce({ nickname, category, diffNickname, diffCategory, onSetDiffNi
                     <AccountCircle />
                   </Grid>
                   <Grid item xs={11}>
-                    <input className="nickname-input" value={diffNickname} onChange={onNicknameChange} />
+                    <input
+                      className="nickname-input"
+                      value={diffNickname}
+                      onChange={onNicknameChange}
+                    />
                     {/* <TextField
                       className="nickname-input"
                       type="nickname" value={diffNickname} onChange={onNicknameChange} /> */}
@@ -63,31 +72,32 @@ function Introduce({ nickname, category, diffNickname, diffCategory, onSetDiffNi
                 </Grid>
               </Grid>
               <Grid item xs={2}>
-                <Button variant="outlined"
+                <Button
+                  variant="outlined"
                   style={{
-                    borderRadius: '1.25rem',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    backgroundColor: '#E96F02'
-                  }}>중복 확인</Button>
+                    borderRadius: "1.25rem",
+                    color: "white",
+                    fontWeight: "bold",
+                    backgroundColor: "#E96F02",
+                  }}
+                >
+                  중복 확인
+                </Button>
               </Grid>
-
             </Grid>
           </Grid>
-          <Grid item xs={12}
-            className="category-container">
-            <Grid
-              container
-              direction="column"
-            >
+          <Grid item xs={12} className="category-container">
+            <Grid container direction="column">
               <Grid item xs={12}>
                 <h1>카테고리 설정</h1>
               </Grid>
-              <Grid container
+              <Grid
+                container
                 direction="row"
                 justify="center"
                 spacing={2}
-                xs={12}>
+                xs={12}
+              >
                 <Grid item xs={2}>
                   <Button class="button" value="201" onClick={onCategoryChange}>
                     수능
@@ -117,10 +127,7 @@ function Introduce({ nickname, category, diffNickname, diffCategory, onSetDiffNi
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <Grid container
-              direction="row"
-              justify="center"
-              spacing={2}>
+            <Grid container direction="row" justify="center" spacing={2}>
               <Grid item>
                 <IconButton class="check" onClick={onSetting}>
                   <HowToRegIcon />
@@ -137,10 +144,9 @@ function Introduce({ nickname, category, diffNickname, diffCategory, onSetDiffNi
             <h1>{nickname}</h1>
             <h1>{category}</h1>
           </Grid>
-        </Grid >
+        </Grid>
       </Container>
-
-    </Wrapper >
+    </Wrapper>
   );
 }
-export default Introduce;
+export default MemberSetting;

@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import setMainIndex from "./setMainIndex";
 import setIsRandomRoom from "./setIsRandomRoom";
-import introduce from './introduce';
+import memberSetting from './memberSetting';
 
 const rootReducer = combineReducers({
   setMainIndex,
   setIsRandomRoom,
-  introduce,
+  memberSetting,
 });
 
 export default rootReducer;

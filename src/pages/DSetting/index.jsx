@@ -10,6 +10,6 @@
 //             {/* <Introduce/> */}
 //         </Layout>
 //     )
-// }
+// };
 
 // export default Entrance

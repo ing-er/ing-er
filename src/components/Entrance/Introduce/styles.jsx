@@ -1,7 +1,27 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
+  .all-container {
+    max-width: 1000px;
+  }
+  .nickname-input {
+    background-color: transparent;
+    border: none;
+    color: white;
+    width: 90%;
+    height: 100%;
+    font-size: 20px;
+    :focus {
+        outline: none;
+    }
+  }
+  .category-container {
+    margin-bottom: 100px;
+  }
   .button {
+    width: 100%;
+    height: 50px;
+    align-items: center;
     color: white;
     background: #292A33;
     padding: 0.375rem 0.75rem;
@@ -15,7 +35,7 @@ const Wrapper = styled.div`
   .check {
     color: white;
     background: #E96F02;
-    padding: 0.375rem 0.75rem;
+    padding: 10px;
     border-radius: 3rem;
     font-size: 1rem;
     line-height: 1.5;
@@ -26,7 +46,7 @@ const Wrapper = styled.div`
   .cancel {
     color: white;
     background: #292A33;
-    padding: 0.375rem 0.75rem;
+    padding: 10px;
     border-radius: 3rem;
     font-size: 1rem;
     line-height: 1.5;

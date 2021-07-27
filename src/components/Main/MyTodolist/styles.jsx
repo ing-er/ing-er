@@ -43,6 +43,17 @@ max-width: 1500px;
         outline: none;
     }
 }
+& .content-input-complete {
+    background-color: transparent;
+    border: none;
+    color: #4D4D4D;
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    :focus {
+        outline: none;
+    }
+}
 & .input-container {
     text-align: center;
 }

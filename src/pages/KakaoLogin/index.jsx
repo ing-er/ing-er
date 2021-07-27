@@ -1,10 +1,12 @@
 import React from 'react'
+import Layout from '../../layout';
+import Kakao from '../../components/Entrance/Kakao';
 
 const index = () => {
     return (
-        <div>
-            
-        </div>
+        <Layout>
+            <Kakao />
+        </Layout>
     )
 }
 

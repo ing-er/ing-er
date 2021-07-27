@@ -23,6 +23,17 @@ const Wrapper = styled.div`
     border: 0;
     outline: 0;
   }
+  .cancel {
+    color: white;
+    background: #292A33;
+    padding: 0.375rem 0.75rem;
+    border-radius: 3rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    transform: translateY(4px);
+    border: 0;
+    outline: 0;
+  }
 `;
 
 export default Wrapper;

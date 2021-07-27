@@ -25,14 +25,6 @@ function Introduce( { nickname, category, diffNickname, diffCategory, onSetDiffN
   // const classes = useStyles();
   
   return (
-    // <div>
-    //   <h1>{ nickname }</h1>
-    //   <div>
-    //     <TextField type="nickname" value={diff} onChange={onChange} label="With a grid" />
-    //     {/* <input type="text" value={diff} onchange={onChange} /> */}
-    //     <button onClick={onSetNickChange}>확인</button>
-    //   </div>
-    // </div>
       <Wrapper>
       <Grid
               container
@@ -63,29 +55,37 @@ function Introduce( { nickname, category, diffNickname, diffCategory, onSetDiffN
               </Grid>
               
           </Grid>
-          <Grid item xs={12} sm={6}>
-              카테고리 설정
-              <Grid>
-                <button class="button" value="201" onClick={onCategoryChange}>수능</button>
-                <Button class="button" value="202" onClick={onCategoryChange}>
-                  취준
-                </Button>
-                <Button class="button" value="203" onClick={onCategoryChange}>
-                  자격증
-                </Button>
-                <Button class="button" value="204" onClick={onCategoryChange}>
-                  고시
-                </Button>
-                <Button class="button" value="205" onClick={onCategoryChange}>
-                  기타
-                </Button>
-              </Grid>
 
+          <Grid
+              container
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+              className="sign-up4-grid"
+          >
+            <Grid item xs={12} sm={6}>
+                카테고리 설정
+                <Grid>
+                  <Button class="button" value="201" onClick={onCategoryChange}>수능</Button>
+                  <Button class="button" value="202" onClick={onCategoryChange}>
+                    취준
+                  </Button>
+                  <Button class="button" value="203" onClick={onCategoryChange}>
+                    자격증
+                  </Button>
+                  <Button class="button" value="204" onClick={onCategoryChange}>
+                    고시
+                  </Button>
+                  <Button class="button" value="205" onClick={onCategoryChange}>
+                    기타
+                  </Button>
+                </Grid>
+            </Grid>
           </Grid>
           <Button class="check" onClick={onSetting}>
             <HowToRegIcon />
           </Button>
-          <Button style="color: white;">
+          <Button class="cancel">
             <CancelIcon />
           </Button>
           <h1>{nickname}</h1>

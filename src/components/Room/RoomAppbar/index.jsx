@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
-import RoomClose from '../buttons/RoomClose';
-import RoomPause from '../buttons/RoomPause';
+import RoomClose from '../../buttons/RoomClose';
+import RoomPause from '../../buttons/RoomPause';
 
 import {
   IconButton

@@ -1,25 +1,24 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
+// import { createStore } from "redux";
 
 import Main from "./pages/Main";
+import KakaoLogin from "./pages/KakaoLogin";
+import Entrance from "./pages/Entrance";
 
 import "./App.css";
-import rootReducer from "./modules";
-
-const store = createStore(rootReducer);
 
 const App = () => {
   return (
-    <Provider store={store}>
+    <>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={Main} />
+          <Route exact path="/Main" component={Main} />
+          <Route exact path="/KakaoLogin" component={KakaoLogin} />
+          <Route exact path="/JoinSetting" component={Entrance} />
         </Switch>
       </BrowserRouter>
-    </Provider>
+    </>
   );
 };
 
 export default App;
-

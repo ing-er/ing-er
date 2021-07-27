@@ -16,7 +16,7 @@ import {
   useDrawerStyles
 } from './styles';
 
-const DrawerAppbar = ({ handleDrawerOpen, open, classes }) => {
+const RoomAppbar = ({ handleDrawerOpen, open, classes }) => {
   const drawerClasses = useDrawerStyles();
 
   return (
@@ -47,4 +47,4 @@ const DrawerAppbar = ({ handleDrawerOpen, open, classes }) => {
   )
 }
 
-export default DrawerAppbar;
+export default RoomAppbar;

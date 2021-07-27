@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import ScreenContainer from '../../components/Room/ScreenContainer';
 import RoomDrawer from '../../components/Room/Drawer';
-import DrawerAppbar from '../../components/Room/DrawerAppbar';
+import RoomAppbar from '../../components/Room/RoomAppbar';
 
 
 import { CssBaseline } from '@material-ui/core';
@@ -28,7 +28,7 @@ const Room = () => {
   return (
     <Wrapper>
       <CssBaseline />
-      <DrawerAppbar 
+      <RoomAppbar
         handleDrawerOpen={handleDrawerOpen}
         open={open}
         classes={classes}

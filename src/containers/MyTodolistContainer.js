@@ -1,17 +1,18 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 import {
   setTodolistAddContainer,
   setTodolistAddInput,
   setTodolistEditTitle,
   setTodolistEditContent,
   setTodolistEditComplete,
-} from "../modules/setTodolist";
+} from '../modules/setTodolist';
 
-import MyTodolist from "../components/Main/MyTodolist";
+import MyTodolist from '../components/Main/MyTodolist';
 
 const MyTodolistComponent = () => {
   const dispatch = useDispatch();
   const { todolist } = useSelector((state) => state.setTodolist);
+  const { todopercent } = useSelector((state) => state.setTodolist);
   const setTodolistAddCon = (title) => {
     dispatch(setTodolistAddContainer(title));
   };
@@ -31,6 +32,7 @@ const MyTodolistComponent = () => {
   return (
     <MyTodolist
       todolistdata={todolist}
+      todopercent={todopercent}
       setTodolistAddContainer={setTodolistAddCon}
       setTodolistAddInput={setTodolistAddInp}
       setTodolistEditTitle={setTodolistEditTi}

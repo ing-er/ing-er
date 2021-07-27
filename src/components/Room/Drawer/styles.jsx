@@ -1,76 +1,46 @@
 import styled from 'styled-components';
-import { makeStyles } from '@material-ui/core/styles';
 
 export const Wrapper = styled.div`
   width: 100%;
-  min-height: 666px;
   display: flex;
   
   & .drawer {
-    width: 240px;
+    width: 300px;
     flex-shrink: 0;
 
     & .MuiDrawer-paper {
-      width: 240px;
+      width: 300px;
+    }
+  }
+  & .chevron-right {
+    margin: 5 5 0 0;
+    color: #ffffff;
+    background-color: #1E1F26;
+    border-radius: 5px;
+  }
+  & .drawer1-container {
+    z-index: 10000;
+  }
+  & .drawerHeader-right-container {
+    display: flex;
+    padding: 10px 0 0 0;
+
+    & .icon-button {
+      color: #1E1F26;
+    }
+    & .drawer-span {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+      overflow: hidden;
+      position:absolute;
+      border-radius: inherit;
+      pointer-events: none;
+      
     }
   }
 
-  & .drawer-button-area {
-    position: fixed;
-    right: 1rem;
-  }
-  & .chevron-left {
-    margin: 5 5 0 0;
-    background-color: #ffffff;
-    border-radius: 5px;
-  }
+
 `;
-
-const drawerWidth = 240;
-export const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginRight: drawerWidth,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    justifyContent: 'flex-start',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginRight: -drawerWidth,
-    marginTop: '1.5rem',
-  },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginRight: 0,
-  },
-}));
-

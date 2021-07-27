@@ -1,16 +1,16 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Introduce from '../components/Entrance/Introduce';
-import { setting, setDiffNickname, setDiffCategory } from '../modules/introduce';
+import MemberSetting from '../components/Entrance/MemberSetting';
+import { setting, setDiffNickname, setDiffCategory } from '../modules/memberSetting';
 
-function IntroduceContainer() {
+function SettingContainer() {
   // useSelector는 리덕스 스토어의 상태를 조회하는 Hook입니다.
   // state의 값은 store.getState() 함수를 호출했을 때 나타나는 결과물과 동일합니다.
   const { nickname, category, diffNickname, diffCategory } = useSelector(state => ({
-    nickname: state.introduce.nickname,
-    diffNickname: state.introduce.diffNickname,
-    category: state.introduce.category,
-    diffCategory: state.introduce.diffCategory,
+    nickname: state.membersetting.nickname,
+    diffNickname: state.membersetting.diffNickname,
+    category: state.membersetting.category,
+    diffCategory: state.membersetting.diffCategory,
   }));
 
   // useDispatch 는 리덕스 스토어의 dispatch 를 함수에서 사용 할 수 있게 해주는 Hook 입니다.
@@ -21,7 +21,7 @@ function IntroduceContainer() {
   const onSetDiffCategory = diffCategory => dispatch(setDiffCategory(diffCategory));
 
   return (
-    <Introduce
+    <MemberSetting
       // 상태와
       nickname={nickname}
       category={category}
@@ -35,4 +35,4 @@ function IntroduceContainer() {
   );
 }
 
-export default IntroduceContainer;
+export default SettingContainer;

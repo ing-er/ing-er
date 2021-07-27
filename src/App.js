@@ -5,7 +5,6 @@ import Main from './pages/Main';
 import KakaoLogin from './pages/KakaoLogin';
 import MSetting from './pages/MSetting';
 import Room from './pages/Room';
-import Entrance from './pages/MSetting';
 
 import './App.css';
 
@@ -18,7 +17,6 @@ const App = () => {
           <Route exact path="/KakaoLogin" component={KakaoLogin} />
           <Route exact path="/JoinSetting" component={MSetting} />
           <Route exact path="/room" component={Room} />
-          <Route exact path="/JoinSetting" component={Entrance} />
         </Switch>
       </BrowserRouter>
     </>

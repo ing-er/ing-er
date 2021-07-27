@@ -3,10 +3,7 @@ import { useState } from 'react';
 
 import DrawerContentContainer from '../DrawerContentContainer';
 
-import { 
-  Drawer,
-  IconButton
-} from '@material-ui/core';
+import { Drawer, IconButton } from '@material-ui/core';
 
 import {
   ChevronRight,
@@ -15,16 +12,14 @@ import {
   Whatshot,
 } from '@material-ui/icons';
 
-import { 
-  Wrapper,
-} from './styles';
+import { Wrapper } from './styles';
 
 const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
   const [drawerNo, setDrawerNo] = useState(0);
-  
-  const handleDrawerNo = (e) => {
-    console.log(e)
-  }
+
+  const handleDrawerNo = e => {
+    console.log(e);
+  };
 
   return (
     <Wrapper>
@@ -33,7 +28,7 @@ const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
           [classes.contentShift]: open,
         })}
       >
-      { children }
+        {children}
       </main>
 
       <Drawer
@@ -47,7 +42,11 @@ const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
             <ChevronRight className="chevron-right" />
           </IconButton>
           <div className="drawerHeader-right-container">
-            <IconButton className="icon-button" name="drawer1" onClick={handleDrawerNo}>
+            <IconButton
+              className="icon-button"
+              name="drawer1"
+              onClick={handleDrawerNo}
+            >
               <span id="drawer1" className="drawer-span" />
               <AccountBox />
             </IconButton>
@@ -64,6 +63,6 @@ const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
       </Drawer>
     </Wrapper>
   );
-}
+};
 
-export default RoomDrawer
+export default RoomDrawer;

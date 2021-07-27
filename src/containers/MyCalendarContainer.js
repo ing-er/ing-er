@@ -1,19 +1,19 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 import {
   setCalendarEditPromise,
   setCalendarEditDiary,
   setCalendarEditPromiseIsEditable,
   setCalendarEditDiaryIsEditable,
-} from "../modules/setCalendar";
+} from '../modules/setCalendar';
 
-import MyCalendar from "../components/Main/MyCalendar";
+import MyCalendar from '../components/Main/MyCalendar';
 
 const MyCalendarComponent = () => {
   const dispatch = useDispatch();
-  const setCalendarEditPro = (promise) => {
+  const setCalendarEditPro = promise => {
     dispatch(setCalendarEditPromise(promise));
   };
-  const setCalendarEditDi = (diary) => {
+  const setCalendarEditDi = diary => {
     dispatch(setCalendarEditDiary(diary));
   };
   const setCalendarEditPromiseIsEdit = () => {
@@ -22,7 +22,7 @@ const MyCalendarComponent = () => {
   const setCalendarEditDiaryIsEdit = () => {
     dispatch(setCalendarEditDiaryIsEditable());
   };
-  const { calendar } = useSelector((state) => state.setCalendar);
+  const { calendar } = useSelector(state => state.setCalendar);
 
   return (
     <MyCalendar

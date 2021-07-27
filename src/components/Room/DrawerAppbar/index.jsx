@@ -3,27 +3,22 @@ import clsx from 'clsx';
 import RoomClose from '../buttons/RoomClose';
 import RoomPause from '../buttons/RoomPause';
 
-import {
-  IconButton
-} from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 
-import {
-  ChevronLeft,
-} from '@material-ui/icons';
+import { ChevronLeft } from '@material-ui/icons';
 
-import {
-  Wrapper,
-  useDrawerStyles
-} from './styles';
+import { Wrapper, useDrawerStyles } from './styles';
 
 const DrawerAppbar = ({ handleDrawerOpen, open, classes }) => {
   const drawerClasses = useDrawerStyles();
 
   return (
     <Wrapper>
-      <div className={clsx(drawerClasses.content, {
-        [drawerClasses.contentShift]: open,
-      })}>
+      <div
+        className={clsx(drawerClasses.content, {
+          [drawerClasses.contentShift]: open,
+        })}
+      >
         <div style={{ marginRight: '1rem' }}>
           <RoomPause className="room-pause" />
         </div>
@@ -39,12 +34,11 @@ const DrawerAppbar = ({ handleDrawerOpen, open, classes }) => {
           onClick={handleDrawerOpen}
           className={clsx(open && classes.hide)}
         >
-          <ChevronLeft className="chevron-left"/>
+          <ChevronLeft className="chevron-left" />
         </IconButton>
       </div>
-
-  </Wrapper>
-  )
-}
+    </Wrapper>
+  );
+};
 
 export default DrawerAppbar;

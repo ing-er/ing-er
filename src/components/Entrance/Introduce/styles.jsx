@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   .button {
     color: white;
-    background: #292A33;
+    background: #292a33;
     padding: 0.375rem 0.75rem;
     border-radius: 1.25rem;
     font-size: 1rem;
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   }
   .check {
     color: white;
-    background: #E96F02;
+    background: #e96f02;
     padding: 0.375rem 0.75rem;
     border-radius: 3rem;
     font-size: 1rem;

@@ -1,8 +1,14 @@
-export const RANDOMTRUE = "RANDOMTRUE";
-export const RANDOMFALSE = "RANDOMFALSE";
+export const RANDOMTRUE = 'RANDOMTRUE';
+export const RANDOMFALSE = 'RANDOMFALSE';
 
-export const setIsRandomRoomTrue = (isRandomRoom) => ({ type: RANDOMTRUE, isRandomRoom });
-export const setIsRandomRoomFalse = (isRandomRoom) => ({ type: RANDOMFALSE, isRandomRoom });
+export const setIsRandomRoomTrue = isRandomRoom => ({
+  type: RANDOMTRUE,
+  isRandomRoom,
+});
+export const setIsRandomRoomFalse = isRandomRoom => ({
+  type: RANDOMFALSE,
+  isRandomRoom,
+});
 
 const initialState = {
   isRandomRoom: false,

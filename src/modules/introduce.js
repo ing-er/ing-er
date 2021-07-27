@@ -7,8 +7,14 @@ const SETTING = 'introduce/SETTING';
 
 /* 액션 생성함수 만들기 */
 // 액션 생성함수를 만들고 export 키워드를 사용해서 내보내주세요.
-export const setDiffNickname = diffNickname => ({ type: SET_DIFFNICKNAME, diffNickname });
-export const setDiffCategory = diffCategory => ({ type: SET_DIFFCATEGORY, diffCategory });
+export const setDiffNickname = diffNickname => ({
+  type: SET_DIFFNICKNAME,
+  diffNickname,
+});
+export const setDiffCategory = diffCategory => ({
+  type: SET_DIFFCATEGORY,
+  diffCategory,
+});
 export const setting = () => ({ type: SETTING });
 
 /* 초기 상태 선언 */
@@ -26,18 +32,18 @@ export default function introduce(state = initialState, action) {
     case SET_DIFFNICKNAME:
       return {
         ...state,
-        diffNickname: action.diffNickname
+        diffNickname: action.diffNickname,
       };
     case SET_DIFFCATEGORY:
       return {
         ...state,
-        diffCategory: action.diffCategory
+        diffCategory: action.diffCategory,
       };
     case SETTING:
       return {
         ...state,
         nickname: state.diffNickname,
-        category: state.diffCategory
+        category: state.diffCategory,
       };
     default:
       return state;

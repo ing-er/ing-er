@@ -1,4 +1,12 @@
-import { AppBar, Button, Grid, Icon, IconButton, Typography, useMediaQuery } from "@material-ui/core";
+import {
+  AppBar,
+  Button,
+  Grid,
+  Icon,
+  IconButton,
+  Typography,
+  useMediaQuery,
+} from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import LockIcon from '@material-ui/icons/Lock';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
@@ -12,25 +20,22 @@ const Header = () => {
   return (
     <>
       <Wrapper>
-      
-    <AppBar
-          position="fixed"
-          className='appbar'
-        >
-          <Grid container justify="space-between" alignItems="center"
-          className='header-grid'>
+        <AppBar position="fixed" className="appbar">
+          <Grid
+            container
+            justify="space-between"
+            alignItems="center"
+            className="header-grid"
+          >
             <Grid item>
-              <Typography
-                variant="h6"
-                className="logo"
-              >
+              <Typography variant="h6" className="logo">
                 Ing er
               </Typography>
             </Grid>
 
             <Grid item className="title display-none">
               <Grid container justify="center">
-                  <Grid item>
+                <Grid item>
                   {/* <Button
                     variant="text"
                     className="display-none header-button"
@@ -38,41 +43,39 @@ const Header = () => {
                     소개
                   </Button> */}
                   <IconButton>
-                    <InfoIcon htmlColor="white"/>
+                    <InfoIcon htmlColor="white" />
                   </IconButton>
                 </Grid>
-                
+
                 <Grid item>
-                {/* <Button
+                  {/* <Button
                     variant="text"
                     className="display-none header-button"
                   >
                     마이페이지
                   </Button> */}
                   <IconButton>
-                    <AccountCircleIcon htmlColor="white"/>
+                    <AccountCircleIcon htmlColor="white" />
                   </IconButton>
                 </Grid>
-                
+
                 <Grid item>
-                {/* <Button
+                  {/* <Button
                     variant="text"
                     className="display-none header-button"
                   >
                     방
                   </Button> */}
                   <IconButton>
-                      <MeetingRoomIcon htmlColor="white"/>
-                    </IconButton>
-                  </Grid>
-                
+                    <MeetingRoomIcon htmlColor="white" />
+                  </IconButton>
+                </Grid>
               </Grid>
             </Grid>
 
             <Grid item>
               <Grid container alignItems="center">
-                
-                  <Grid item>
+                <Grid item>
                   {/* <Button
                     variant="text"
                     className="display-none header-button"
@@ -80,11 +83,11 @@ const Header = () => {
                     로그인
                   </Button> */}
                   <IconButton>
-                    <LockIcon htmlColor="white"/>
+                    <LockIcon htmlColor="white" />
                   </IconButton>
                 </Grid>
-                
-                  <Grid item>
+
+                <Grid item>
                   {/* <Button
                     variant="text"
                     className="display-none header-button"
@@ -92,11 +95,11 @@ const Header = () => {
                     설정
                   </Button> */}
                   <IconButton>
-                    <SettingsIcon htmlColor="white"/>
+                    <SettingsIcon htmlColor="white" />
                   </IconButton>
                 </Grid>
-                
-                  <Grid item>
+
+                <Grid item>
                   {/* <Button
                     variant="text"
                     className="display-none header-button"
@@ -105,14 +108,13 @@ const Header = () => {
                   </Button> */}
                   <IconButton>
                     <LockOpenIcon htmlColor="white" />
-                    </IconButton>
+                  </IconButton>
                 </Grid>
-                
               </Grid>
             </Grid>
           </Grid>
         </AppBar>
-    </Wrapper>
+      </Wrapper>
     </>
   );
 };

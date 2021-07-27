@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   width: 100%;
   display: flex;
-  
+
   & .drawer {
     width: 300px;
     flex-shrink: 0;
@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
   & .chevron-right {
     margin: 5 5 0 0;
     color: #ffffff;
-    background-color: #1E1F26;
+    background-color: #1e1f26;
     border-radius: 5px;
   }
   & .drawer1-container {
@@ -26,7 +26,7 @@ export const Wrapper = styled.div`
     padding: 10px 0 0 0;
 
     & .icon-button {
-      color: #1E1F26;
+      color: #1e1f26;
     }
     & .drawer-span {
       top: 0;
@@ -35,12 +35,9 @@ export const Wrapper = styled.div`
       bottom: 0;
       z-index: 10;
       overflow: hidden;
-      position:absolute;
+      position: absolute;
       border-radius: inherit;
       pointer-events: none;
-      
     }
   }
-
-
 `;

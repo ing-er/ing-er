@@ -1,8 +1,8 @@
-export const ADDCONTAINER = "ADDCONTAINER";
-export const ADDINPUT = "ADDINPUT";
-export const EDITTITLE = "EDITTITLE";
-export const EDITCONTENT = "EDITCONTENT";
-export const EDITCOMPLETE = "EDITCOMPLETE";
+export const ADDCONTAINER = 'ADDCONTAINER';
+export const ADDINPUT = 'ADDINPUT';
+export const EDITTITLE = 'EDITTITLE';
+export const EDITCONTENT = 'EDITCONTENT';
+export const EDITCOMPLETE = 'EDITCOMPLETE';
 
 export const setTodolistAddContainer = (title, todolist) => ({
   type: ADDCONTAINER,
@@ -47,24 +47,24 @@ export const setTodolistEditComplete = (index, subindex, todolist) => ({
 const initialState = {
   todolist: [
     {
-      title: "국어",
+      title: '국어',
       list: [
-        { content: "국1", complete: false },
-        { content: "국2", complete: false },
+        { content: '국1', complete: false },
+        { content: '국2', complete: false },
       ],
     },
     {
-      title: "수학",
+      title: '수학',
       list: [
-        { content: "수1", complete: false },
-        { content: "수2", complete: false },
+        { content: '수1', complete: false },
+        { content: '수2', complete: false },
       ],
     },
     {
-      title: "영어",
+      title: '영어',
       list: [
-        { content: "영1", complete: false },
-        { content: "영2", complete: false },
+        { content: '영1', complete: false },
+        { content: '영2', complete: false },
       ],
     },
   ],
@@ -85,7 +85,7 @@ const setTodolist = (state = initialState, action) => {
       };
     case ADDINPUT:
       state.todolist[action.payload].list.push({
-        content: "",
+        content: '',
         complete: false,
       });
       return {
@@ -99,15 +99,19 @@ const setTodolist = (state = initialState, action) => {
         todolist: [...state.todolist],
       };
     case EDITCONTENT:
-      state.todolist[action.payload.index].list[action.payload.subindex].content =
-        action.payload.content;
+      state.todolist[action.payload.index].list[
+        action.payload.subindex
+      ].content = action.payload.content;
       return {
         ...state,
         todolist: [...state.todolist],
       };
     case EDITCOMPLETE:
-      state.todolist[action.payload.index].list[action.payload.subindex].complete =
-        !state.todolist[action.payload.index].list[action.payload.subindex].complete;
+      state.todolist[action.payload.index].list[
+        action.payload.subindex
+      ].complete =
+        !state.todolist[action.payload.index].list[action.payload.subindex]
+          .complete;
       return {
         ...state,
         todolist: [...state.todolist],

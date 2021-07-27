@@ -4,13 +4,8 @@ import ScreenContainer from '../../components/Room/ScreenContainer';
 import RoomDrawer from '../../components/Room/Drawer';
 import DrawerAppbar from '../../components/Room/DrawerAppbar';
 
-
 import { CssBaseline } from '@material-ui/core';
-import {
-  Wrapper,
-  useStyles
- } from './styles';
-
+import { Wrapper, useStyles } from './styles';
 
 const Room = () => {
   const classes = useStyles();
@@ -28,7 +23,7 @@ const Room = () => {
   return (
     <Wrapper>
       <CssBaseline />
-      <DrawerAppbar 
+      <DrawerAppbar
         handleDrawerOpen={handleDrawerOpen}
         open={open}
         classes={classes}
@@ -41,8 +36,7 @@ const Room = () => {
         <ScreenContainer />
       </RoomDrawer>
     </Wrapper>
-    
-  )
-}
+  );
+};
 
-export default Room
+export default Room;

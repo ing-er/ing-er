@@ -28,10 +28,10 @@ export const Wrapper = styled.div`
     background-color: #ffffff;
     border-radius: 5px;
   }
-`
+`;
 
 const drawerWidth = 300;
-export const useDrawerStyles = makeStyles((theme) => ({
+export const useDrawerStyles = makeStyles(theme => ({
   content: {
     display: 'flex',
     justifyContent: 'center',
@@ -40,7 +40,6 @@ export const useDrawerStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    
   },
   contentShift: {
     transition: theme.transitions.create('margin', {

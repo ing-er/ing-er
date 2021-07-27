@@ -8,16 +8,14 @@ const Screen = ({ screen_id }) => {
   return (
     <Wrapper>
       {sId ? (
-        <div className="conference-content">
-
-        </div>
+        <div className="conference-content"></div>
       ) : (
         <div>
           <p>아직 입장하지 않음</p>
         </div>
       )}
     </Wrapper>
-  )
-}
+  );
+};
 
 export default Screen;

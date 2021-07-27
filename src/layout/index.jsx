@@ -11,7 +11,7 @@ const Layout = props => {
         <CssBaseline />
         <Header />
         <Container className="content" maxWidth="xl">
-        <div className="container">{children}</div>
+          <div className="container">{children}</div>
         </Container>
       </Wrapper>
     </div>

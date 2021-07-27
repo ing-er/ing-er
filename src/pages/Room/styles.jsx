@@ -4,11 +4,11 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   width: 100%;
   min-height: 666px;
-  background-color: #1E1F26;
-`
+  background-color: #1e1f26;
+`;
 
 const drawerWidth = 300;
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
   },

@@ -1,7 +1,8 @@
-export const EDITPROMISE = "EDITPROMISE";
-export const EDITDIARY = "EDITDIARY";
-export const EDITPROMISEISEDITABLE = "EDITPROMISEISEDITABLE";
-export const EDITDIARYISEDITABLE = "EDITDIARYISEDITABLE";
+export const EDITPROMISE = 'EDITPROMISE';
+export const EDITDIARY = 'EDITDIARY';
+export const EDITPROMISEISEDITABLE = 'EDITPROMISEISEDITABLE';
+export const EDITDIARYISEDITABLE = 'EDITDIARYISEDITABLE';
+export const SETDATE = 'SETDATE';
 
 export const setCalendarEditPromise = (promise, calendar) => ({
   type: EDITPROMISE,
@@ -25,11 +26,17 @@ export const setCalendarEditDiaryIsEditable = (calendar) => ({
   calendar,
 });
 
+export const setCalendarSetDate = (date, calendar) => ({
+  type: SETDATE,
+  payload: date,
+  calendar,
+});
+
 const initialState = {
   calendar: {
-    date: "date",
-    promise: { content: "오늘 다짐", isEditable: false },
-    diary: { content: "오늘 일기", isEditable: false },
+    date: new Date().toLocaleDateString(),
+    promise: { content: '오늘 다짐', isEditable: false },
+    diary: { content: '오늘 일기', isEditable: false },
   },
 };
 
@@ -58,6 +65,13 @@ const setCalendar = (state = initialState, action) => {
       return {
         ...state,
         calendar: state.calendar,
+      };
+    case SETDATE:
+      state.calendar.date = action.payload;
+      return {
+        ...state,
+        calendar: state.calendar,
+        date: state.calendar.date,
       };
     default:
       return state;

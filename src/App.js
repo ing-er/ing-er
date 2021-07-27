@@ -1,12 +1,13 @@
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 // import { createStore } from "redux";
 
-import Main from "./pages/Main";
-import KakaoLogin from "./pages/KakaoLogin";
-import MSetting from "./pages/MSetting";
-import Room from "./pages/Room";
+import Main from './pages/Main';
+import KakaoLogin from './pages/KakaoLogin';
+import MSetting from './pages/MSetting';
+import Room from './pages/Room';
+import Entrance from './pages/MSetting';
 
-import "./App.css";
+import './App.css';
 
 const App = () => {
   return (

@@ -20,10 +20,11 @@ import {
 } from './styles';
 
 const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
-  const [drawerNo, setDrawerNo] = useState(0);
+  const [drawerId, setDrawerId] = useState('drawerProfile');
   
   const handleDrawerNo = (e) => {
-    console.log(e)
+    const drawerId = e.currentTarget.id
+    setDrawerId(drawerId)
   }
 
   return (
@@ -47,20 +48,20 @@ const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
             <ChevronRight className="chevron-right" />
           </IconButton>
           <div className="drawerHeader-right-container">
-            <IconButton className="icon-button" name="drawer1" onClick={handleDrawerNo}>
-              <span id="drawer1" className="drawer-span" />
+            <IconButton id="drawerProfile" className="icon-button" onClick={handleDrawerNo}>
               <AccountBox />
             </IconButton>
-            <IconButton className="icon-button">
+            <IconButton id="drawerTodo" className="icon-button" onClick={handleDrawerNo}>
               <Assignment />
             </IconButton>
-            <IconButton className="icon-button">
-              <span id="drawer2" className="drawer-span" />
+            <IconButton id="drawerPromise" className="icon-button" onClick={handleDrawerNo}>
               <Whatshot />
             </IconButton>
           </div>
         </div>
-        <DrawerContentContainer />
+        <DrawerContentContainer 
+          drawerId={drawerId}
+        />
       </Drawer>
     </Wrapper>
   );

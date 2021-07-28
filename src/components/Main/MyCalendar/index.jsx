@@ -20,6 +20,8 @@ const MyCalendar = (props) => {
     setCalendarEditDiaryIsEditable,
     setCalendarSetDate,
     requestdate,
+    isEditablePromise,
+    isEditableDiary,
   } = props;
   const onChangePromiseHandler = (e) => {
     setCalendarEditPromise(e.target.value);
@@ -118,9 +120,9 @@ const MyCalendar = (props) => {
                     multiline={true}
                     rows={8}
                     fullWidth
-                    value={calendardata.promise.content}
+                    value={calendardata.promise}
                     onChange={onChangePromiseHandler}
-                    disabled={!calendardata.promise.isEditable}
+                    disabled={!isEditablePromise}
                   />
                 </Grid>
               </Grid>
@@ -149,9 +151,9 @@ const MyCalendar = (props) => {
                     multiline={true}
                     rows={8}
                     fullWidth
-                    value={calendardata.diary.content}
+                    value={calendardata.diary}
                     onChange={onChangeDiaryHandler}
-                    disabled={!calendardata.diary.isEditable}
+                    disabled={!isEditableDiary}
                   />
                 </Grid>
               </Grid>

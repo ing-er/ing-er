@@ -188,6 +188,7 @@ const MyTodolist = (props) => {
   let {
     todolistdata,
     todopercent,
+    date,
     setTodolistAddContainer,
     setTodolistAddInput,
     setTodolistEditTitle,
@@ -220,7 +221,7 @@ const MyTodolist = (props) => {
               fontSize: 30,
             }}
           >
-            7월 20일 (화)
+            {date}
           </Grid>
         </Grid>
         <Grid item xs={12} style={{ marginTop: '10px' }}>

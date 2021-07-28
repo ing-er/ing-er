@@ -1,9 +1,9 @@
-import { combineReducers } from "redux";
-import setMainIndex from "./setMainIndex";
-import setIsRandomRoom from "./setIsRandomRoom";
+import { combineReducers } from 'redux';
+import setMainIndex from './setMainIndex';
+import setIsRandomRoom from './setIsRandomRoom';
 import memberSetting from './memberSetting';
-import setTodolist from "./setTodolist";
-import setCalendar from "./setCalendar";
+import setTodolist from './setTodolist';
+import setCalendar from './setCalendar';
 
 const rootReducer = combineReducers({
   setMainIndex,

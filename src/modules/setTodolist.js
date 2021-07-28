@@ -52,30 +52,8 @@ export const setTodolistEditComplete = (
 });
 
 const initialState = {
-  todolist: [
-    {
-      title: '국어',
-      list: [
-        { content: '국1', complete: false },
-        { content: '국2', complete: false },
-      ],
-    },
-    {
-      title: '수학',
-      list: [
-        { content: '수1', complete: false },
-        { content: '수2', complete: false },
-      ],
-    },
-    {
-      title: '영어',
-      list: [
-        { content: '영1', complete: false },
-        { content: '영2', complete: false },
-      ],
-    },
-  ],
-  todototal: 6,
+  todolist: [],
+  todototal: 0,
   todocomplete: 0,
   todopercent: 0,
 };

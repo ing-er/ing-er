@@ -1,4 +1,4 @@
-import { Grid, LinearProgress, IconButton } from '@material-ui/core';
+import { Grid, LinearProgress, IconButton, Button } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
@@ -188,6 +188,7 @@ const MyTodolist = (props) => {
   let {
     todolistdata,
     todopercent,
+    date,
     setTodolistAddContainer,
     setTodolistAddInput,
     setTodolistEditTitle,
@@ -205,22 +206,41 @@ const MyTodolist = (props) => {
           backgroundColor: '#292A33',
         }}
       >
-        <Grid container direction="row">
-          <Grid
-            item
-            style={{
-              marginRight: '10px',
-            }}
-          >
-            <EventAvailableIcon htmlColor="white" fontSize="large" />
+        <Grid container direction="row" justify="space-between">
+          <Grid item>
+            <Grid container direction="row">
+              <Grid
+                item
+                style={{
+                  marginRight: '10px',
+                }}
+              >
+                <EventAvailableIcon htmlColor="white" fontSize="large" />
+              </Grid>
+              <Grid
+                item
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 30,
+                }}
+              >
+                {date}
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid
-            item
-            style={{
-              fontSize: 30,
-            }}
-          >
-            7월 20일 (화)
+
+          <Grid item>
+            <Button
+              className="enter-button"
+              variant="outlined"
+              style={{
+                fontSize: 15,
+                fontWeight: 'bold',
+                backgroundColor: '#E96F02',
+              }}
+            >
+              저장
+            </Button>
           </Grid>
         </Grid>
         <Grid item xs={12} style={{ marginTop: '10px' }}>

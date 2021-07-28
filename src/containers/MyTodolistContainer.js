@@ -13,6 +13,7 @@ const MyTodolistComponent = () => {
   const dispatch = useDispatch();
   const { todolist } = useSelector((state) => state.setTodolist);
   const { todopercent } = useSelector((state) => state.setTodolist);
+  const { date } = useSelector((state) => state.setCalendar.calendar);
   const setTodolistAddCon = (title) => {
     dispatch(setTodolistAddContainer(title));
   };
@@ -33,6 +34,7 @@ const MyTodolistComponent = () => {
     <MyTodolist
       todolistdata={todolist}
       todopercent={todopercent}
+      date={date}
       setTodolistAddContainer={setTodolistAddCon}
       setTodolistAddInput={setTodolistAddInp}
       setTodolistEditTitle={setTodolistEditTi}

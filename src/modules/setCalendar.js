@@ -6,65 +6,40 @@ export const EDITPROMISEISEDITABLE = 'EDITPROMISEISEDITABLE';
 export const EDITDIARYISEDITABLE = 'EDITDIARYISEDITABLE';
 export const SETDATE = 'SETDATE';
 
-export const setCalendarEditPromise = (
-  promise,
-  requestcalendar,
-  isEditablePromise,
-  isEditableDiary,
-) => ({
+export const setCalendarEditPromise = (promise, requestcalendar) => ({
   type: EDITPROMISE,
   payload: promise,
   requestcalendar,
-  isEditablePromise,
-  isEditableDiary,
 });
 
-export const setCalendarEditDiary = (
-  diary,
-  requestcalendar,
-  isEditablePromise,
-  isEditableDiary,
-) => ({
+export const setCalendarEditDiary = (diary, requestcalendar) => ({
   type: EDITDIARY,
   payload: diary,
   requestcalendar,
-  isEditablePromise,
-  isEditableDiary,
 });
 
 export const setCalendarEditPromiseIsEditable = (
-  requestcalendar,
   isEditablePromise,
   isEditableDiary,
 ) => ({
   type: EDITPROMISEISEDITABLE,
-  requestcalendar,
   isEditablePromise,
   isEditableDiary,
 });
 
 export const setCalendarEditDiaryIsEditable = (
-  requestcalendar,
   isEditablePromise,
   isEditableDiary,
 ) => ({
   type: EDITDIARYISEDITABLE,
-  requestcalendar,
   isEditablePromise,
   isEditableDiary,
 });
 
-export const setCalendarSetDate = (
-  date,
-  requestcalendar,
-  isEditablePromise,
-  isEditableDiary,
-) => ({
+export const setCalendarSetDate = (date, requestcalendar) => ({
   type: SETDATE,
   payload: date,
   requestcalendar,
-  isEditablePromise,
-  isEditableDiary,
 });
 
 function getCalendarData() {}
@@ -102,8 +77,6 @@ const setCalendar = (state = initialState, action) => {
       return {
         ...state,
         requestcalendar: state.requestcalendar,
-        isEditablePromise: state.isEditablePromise,
-        isEditableDiary: state.isEditableDiary,
       };
     case EDITDIARY:
       state.requestcalendar.diary = action.payload;
@@ -111,8 +84,6 @@ const setCalendar = (state = initialState, action) => {
       return {
         ...state,
         requestcalendar: state.requestcalendar,
-        isEditablePromise: state.isEditablePromise,
-        isEditableDiary: state.isEditableDiary,
       };
     case EDITPROMISEISEDITABLE:
       state.isEditablePromise = !state.isEditablePromise;
@@ -148,8 +119,6 @@ const setCalendar = (state = initialState, action) => {
         ...state,
         requestcalendar: state.requestcalendar,
         requestdate: state.requestdate,
-        isEditablePromise: state.isEditablePromise,
-        isEditableDiary: state.isEditableDiary,
       };
     default:
       return state;

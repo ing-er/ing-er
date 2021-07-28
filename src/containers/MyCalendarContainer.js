@@ -26,11 +26,13 @@ const MyCalendarComponent = () => {
   const setCalendarSetDt = (date) => {
     dispatch(setCalendarSetDate(date));
   };
-  const { calendar } = useSelector((state) => state.setCalendar);
+  const { requestcalendar } = useSelector((state) => state.setCalendar);
+  const { requestdate } = useSelector((state) => state.setCalendar);
 
   return (
     <MyCalendar
-      calendardata={calendar}
+      calendardata={requestcalendar}
+      requestdate={requestdate}
       setCalendarEditPromise={setCalendarEditPro}
       setCalendarEditDiary={setCalendarEditDi}
       setCalendarEditPromiseIsEditable={setCalendarEditPromiseIsEdit}

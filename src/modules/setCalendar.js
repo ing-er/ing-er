@@ -6,76 +6,93 @@ export const EDITPROMISEISEDITABLE = 'EDITPROMISEISEDITABLE';
 export const EDITDIARYISEDITABLE = 'EDITDIARYISEDITABLE';
 export const SETDATE = 'SETDATE';
 
-export const setCalendarEditPromise = (promise, calendar) => ({
+export const setCalendarEditPromise = (promise, requestcalendar) => ({
   type: EDITPROMISE,
   payload: promise,
-  calendar,
+  requestcalendar,
 });
 
-export const setCalendarEditDiary = (diary, calendar) => ({
+export const setCalendarEditDiary = (diary, requestcalendar) => ({
   type: EDITDIARY,
   payload: diary,
-  calendar,
+  requestcalendar,
 });
 
-export const setCalendarEditPromiseIsEditable = (calendar) => ({
+export const setCalendarEditPromiseIsEditable = (requestcalendar) => ({
   type: EDITPROMISEISEDITABLE,
-  calendar,
+  requestcalendar,
 });
 
-export const setCalendarEditDiaryIsEditable = (calendar) => ({
+export const setCalendarEditDiaryIsEditable = (requestcalendar) => ({
   type: EDITDIARYISEDITABLE,
-  calendar,
+  requestcalendar,
 });
 
-export const setCalendarSetDate = (date, calendar) => ({
+export const setCalendarSetDate = (date, requestcalendar) => ({
   type: SETDATE,
   payload: date,
-  calendar,
+  requestcalendar,
 });
 
 function getCalendarData() {}
 
 const initialState = {
-  calendar: {
-    date: new Date().toLocaleDateString(),
-    promise: { content: '오늘 다짐', isEditable: false },
-    diary: { content: '오늘 일기', isEditable: false },
-  },
+  calendar: [
+    {
+      date: '2021. 7. 27.',
+      promise: { content: '오늘 다짐!', isEditable: false },
+      diary: { content: '오늘 일기!', isEditable: false },
+    },
+    {
+      date: '2021. 7. 28.',
+      promise: { content: '오늘 다짐', isEditable: false },
+      diary: { content: '오늘 일기', isEditable: false },
+    },
+  ],
+  requestdate: new Date().toLocaleDateString(),
+  requestcalendar: {},
 };
 
 const setCalendar = (state = initialState, action) => {
+  var idx = state.calendar.map((x) => x.date).indexOf(state.requestdate);
+  state.requestcalendar = state.calendar[idx];
   switch (action.type) {
     case EDITPROMISE:
-      state.calendar.promise.content = action.payload;
+      state.calendar[idx].promise.content = action.payload;
+      state.requestcalendar = state.calendar[idx];
       return {
         ...state,
-        calendar: state.calendar,
+        requestcalendar: state.requestcalendar,
       };
     case EDITDIARY:
-      state.calendar.diary.content = action.payload;
+      state.calendar[idx].diary.content = action.payload;
+      state.requestcalendar = state.calendar[idx];
       return {
         ...state,
-        calendar: state.calendar,
+        requestcalendar: state.requestcalendar,
       };
     case EDITPROMISEISEDITABLE:
-      state.calendar.promise.isEditable = !state.calendar.promise.isEditable;
+      state.requestcalendar.promise.isEditable =
+        !state.requestcalendar.promise.isEditable;
       return {
         ...state,
-        calendar: state.calendar,
+        requestcalendar: state.requestcalendar,
       };
     case EDITDIARYISEDITABLE:
-      state.calendar.diary.isEditable = !state.calendar.diary.isEditable;
+      state.requestcalendar.diary.isEditable =
+        !state.requestcalendar.diary.isEditable;
       return {
         ...state,
-        calendar: state.calendar,
+        requestcalendar: state.requestcalendar,
       };
     case SETDATE:
-      state.calendar.date = action.payload;
+      state.requestdate = action.payload;
+      idx = state.calendar.map((x) => x.date).indexOf(state.requestdate);
+      state.requestcalendar = state.calendar[idx];
       return {
         ...state,
-        calendar: state.calendar,
-        date: state.calendar.date,
+        requestcalendar: state.requestcalendar,
+        requestdate: state.requestdate,
       };
     default:
       return state;

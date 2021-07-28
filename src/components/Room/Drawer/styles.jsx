@@ -27,6 +27,7 @@ export const Wrapper = styled.div`
 
     & .icon-button {
       color: #1E1F26;
+      padding: 0 0.3rem;
     }
     & .drawer-span {
       top: 0;

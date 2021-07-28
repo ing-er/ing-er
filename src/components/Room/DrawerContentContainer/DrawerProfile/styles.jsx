@@ -28,6 +28,14 @@ const Wrapper = styled.div`
       font-weight: 800;
     }
   }
+  & .pd-container {
+    padding: 1rem;
+    height: 300px;
+    overflow: auto; 
+  }
+  & .pd-content-container {
+    height: 270px;
+  }
 `;
 
 export default Wrapper;

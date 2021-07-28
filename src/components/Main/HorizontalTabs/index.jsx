@@ -11,6 +11,8 @@ import {
 import Wrapper from './styles';
 import MyCalendarComponent from '../../../containers/MyCalendarContainer';
 import MyTodolistContainer from '../../../containers/MyTodolistContainer';
+import MyTodolist from '../MyTodolist';
+
 import { withStyles } from '@material-ui/styles';
 
 const TabsOrange = withStyles({
@@ -123,7 +125,9 @@ const HorizontalTabs = (props) => {
             alignItems: 'center',
           }}
         >
-          <MyTodolistContainer />
+          <MyTodolistContainer>
+            <MyTodolist />
+          </MyTodolistContainer>
         </Container>
       )}
     </Wrapper>

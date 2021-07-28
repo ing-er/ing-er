@@ -5,7 +5,8 @@ import DrawerContentContainer from '../DrawerContentContainer';
 
 import { 
   Drawer,
-  IconButton
+  IconButton,
+  Container,
 } from '@material-ui/core';
 
 import {
@@ -29,13 +30,15 @@ const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
 
   return (
     <Wrapper>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-      { children }
-      </main>
+      <Container>
+        <main
+          className={clsx(classes.content, {
+            [classes.contentShift]: open,
+          })}
+        >
+        { children }
+        </main>
+      </Container>
 
       <Drawer
         className="drawer"

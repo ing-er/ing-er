@@ -4,7 +4,7 @@ import RoomClose from '../../buttons/RoomClose';
 import RoomPause from '../../buttons/RoomPause';
 
 import {
-  IconButton
+  IconButton,
 } from '@material-ui/core';
 
 import {
@@ -24,12 +24,12 @@ const RoomAppbar = ({ handleDrawerOpen, open, classes }) => {
       <div className={clsx(drawerClasses.content, {
         [drawerClasses.contentShift]: open,
       })}>
-        <div style={{ marginRight: '1rem' }}>
+        <IconButton className="room-buttons-container">
           <RoomPause className="room-pause" />
-        </div>
-        <div style={{ marginLeft: '1rem' }}>
+        </IconButton>
+        <IconButton className="room-buttons-container">
           <RoomClose className="room-close" />
-        </div>
+        </IconButton>
       </div>
       <div className="open-drawer-container">
         <IconButton

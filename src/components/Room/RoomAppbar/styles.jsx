@@ -14,17 +14,33 @@ export const Wrapper = styled.div`
     flex-grow: 1;
     transition: margin 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
   }
+  & .room-buttons-container {
+    font-size: 0;
+    padding: 0;
+    margin: 1rem;
+    cursor: pointer;
+  }
+  & .room-pause {
+    
+  }
+  & .room-close {
+    
+  }
   & .center-buttons-container {
     display: flex;
     justify-content: space-between;
     margin: 0 0.5rem;
+    z-index: 11;
   }
   & .open-drawer-container {
     position: fixed;
-    right: 1rem;
+    width: 100%;
+    /* background-color: #1e1f26; */
+    z-index: 10;
   }
   & .chevron-left {
-    margin: 5 5 0 0;
+    position: fixed;
+    right: 1rem;
     background-color: #ffffff;
     border-radius: 5px;
   }

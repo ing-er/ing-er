@@ -23,6 +23,7 @@ import Wrapper from './styles';
 
 import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
+import KakaoLogin from '../../pages/KakaoLogin';
 
 const styles = (theme) => ({
   root: {
@@ -145,13 +146,16 @@ const Header = () => {
             <Grid item>
               <Grid container alignItems="center">
                 <Grid item>
-                  {/* <IconButton onClick={handleClickOpen}>
+                  <IconButton onClick={handleClickOpen}>
                     <LockIcon htmlColor="white" />
                   </IconButton>
                   <Dialog
                     onClose={handleClose}
                     aria-labelledby="customized-dialog-title"
                     open={open}
+                    style={{
+                      margin: '10px 10px 10px 10px',
+                    }}
                   >
                     <DialogTitle
                       id="customized-dialog-title"
@@ -159,36 +163,18 @@ const Header = () => {
                     >
                       로그인 & 회원가입
                     </DialogTitle>
-                    <DialogContent dividers>
-                      <Typography gutterBottom>
-                        Cras mattis consectetur purus sit amet fermentum. Cras
-                        justo odio, dapibus ac facilisis in, egestas eget quam.
-                        Morbi leo risus, porta ac consectetur ac, vestibulum at
-                        eros.
-                      </Typography>
-                      <Typography gutterBottom>
-                        Praesent commodo cursus magna, vel scelerisque nisl
-                        consectetur et. Vivamus sagittis lacus vel augue laoreet
-                        rutrum faucibus dolor auctor.
-                      </Typography>
-                      <Typography gutterBottom>
-                        Aenean lacinia bibendum nulla sed consectetur. Praesent
-                        commodo cursus magna, vel scelerisque nisl consectetur
-                        et. Donec sed odio dui. Donec ullamcorper nulla non
-                        metus auctor fringilla.
-                      </Typography>
-                    </DialogContent>
+                    <KakaoLogin />
                     <DialogActions>
                       <Button autoFocus onClick={handleClose} color="primary">
                         Save changes
                       </Button>
                     </DialogActions>
-                  </Dialog> */}
-                  <Link to="/KakaoLogin">
+                  </Dialog>
+                  {/* <Link to="/KakaoLogin">
                     <IconButton>
                       <LockIcon htmlColor="white" />
                     </IconButton>
-                  </Link>
+                  </Link> */}
                 </Grid>
 
                 <Grid item>

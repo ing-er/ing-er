@@ -3,17 +3,28 @@ import { Container, CssBaseline } from '@material-ui/core';
 import Wrapper from './styles';
 
 const Layout = (props) => {
-  const { children } = props;
+  const { children, isEntrance } = props;
 
   return (
     <div>
-      <Wrapper>
-        <CssBaseline />
-        <Header />
-        <Container className="content" maxWidth="xl">
-          <div className="container">{children}</div>
-        </Container>
-      </Wrapper>
+      {isEntrance && (
+        <Wrapper style={{ backgroundImage: 'url(img/inger_background.png)' }}>
+          <CssBaseline />
+          <Header />
+          <Container className="content">
+            <div className="container">{children}</div>
+          </Container>
+        </Wrapper>
+      )}
+      {!isEntrance && (
+        <Wrapper>
+          <CssBaseline />
+          <Header />
+          <Container className="content">
+            <div className="container">{children}</div>
+          </Container>
+        </Wrapper>
+      )}
     </div>
   );
 };

@@ -4,7 +4,7 @@ const Wrapper = styled.div`
   .all-container {
     max-width: 1000px;
   }
-  &.nickname-input {
+  .nickname-input {
     background-color: transparent;
     border: none;
     color: white;
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     height: 100%;
     font-size: 20px;
     :focus {
-      outline: none;
+        outline: none;
     }
   }
   .category-container {
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
     height: 50px;
     align-items: center;
     color: white;
-    background: #292a33;
+    background: #292A33;
     padding: 0.375rem 0.75rem;
     border-radius: 1.25rem;
     font-size: 1rem;
@@ -34,7 +34,7 @@ const Wrapper = styled.div`
   }
   .check {
     color: white;
-    background: #e96f02;
+    background: #E96F02;
     padding: 10px;
     border-radius: 3rem;
     font-size: 1rem;
@@ -45,7 +45,7 @@ const Wrapper = styled.div`
   }
   .cancel {
     color: white;
-    background: #292a33;
+    background: #292A33;
     padding: 10px;
     border-radius: 3rem;
     font-size: 1rem;

@@ -1,35 +1,107 @@
-import React from "react";
-import Wrapper from "./styles";
+import React, { useState } from 'react';
+import Wrapper from './styles';
 import {
   Button,
   Grid,
-  Typography,
-  TextField,
   Container,
+  TextField,
   IconButton,
-} from "@material-ui/core";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import HowToRegIcon from "@material-ui/icons/HowToReg";
-import CancelIcon from "@material-ui/icons/Cancel";
+} from '@material-ui/core';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import HowToRegIcon from '@material-ui/icons/HowToReg';
+import CancelIcon from '@material-ui/icons/Cancel';
+import CloseIcon from '@material-ui/icons/Close';
+import Typography from '@material-ui/core/Typography';
 
-function MemberSetting({
-  nickname,
-  category,
-  diffNickname,
-  diffCategory,
-  onSetDiffNickname,
-  onSetDiffCategory,
-  onSetting,
-}) {
+import { withStyles } from '@material-ui/core/styles';
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogActions from '@material-ui/core/DialogActions';
+
+const styles = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
+
+const DialogTitle = withStyles(styles)((props) => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          className={classes.closeButton}
+          onClick={onClose}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+
+const DialogContent = withStyles((theme) => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+}))(MuiDialogContent);
+
+const DialogActions = withStyles((theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(1),
+  },
+}))(MuiDialogActions);
+
+function MEMBERSETTING({ nickname, category, onSetting }) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const [tmpNickname, setTmpNickname] = useState(nickname);
+  const [tmpCategory, setTmpCategory] = useState('');
+
   const onNicknameChange = (e) => {
-    // onSetNickname(e.target.value);
-    onSetDiffNickname(e.target.value);
+    setTmpNickname(e.target.value);
+    console.log(e.target.value);
+    //   console.log(setTmpNickname);
+    //   // this.tmpNickname = e.currentTarget.value;
   };
   const onCategoryChange = (e) => {
-    // onSetNickname(e.target.value);
-    console.log(e.currentTarget.value);
-    onSetDiffCategory(parseInt(e.currentTarget.value, 10));
+    setTmpCategory(e.target.value);
+    this.tmpCategory = e.currentTarget.value;
+    //   this.tmpCategory = e.currentTarget.value;
   };
+  const onClick = () => {
+    console.log(tmpNickname);
+    console.log(tmpCategory);
+    // if (this.tmpNickname != null && this.tmpCategory != null) {
+    //   nickname = this.nickname;
+    //   category = this.category;
+    //   onSetting(nickname, category);
+    // }
+    // onSetDiffNickname(e.target.value);
+  };
+  // const onCategoryChange = (e) => {
+  //   // onSetNickname(e.target.value);
+  //   onSetCategory(e.currentTarget.value);
+  //   // onSetDiffCategory(parseInt(e.currentTarget.value, 10));
+  // };
 
   // const classes = useStyles();
 
@@ -38,7 +110,7 @@ function MemberSetting({
       <Container
         className="all-container"
         style={{
-          alignItems: "center",
+          alignItems: 'center',
         }}
       >
         <Grid container direction="column" className="container">
@@ -59,10 +131,13 @@ function MemberSetting({
                     <AccountCircle />
                   </Grid>
                   <Grid item xs={11}>
-                    <input
+                    <TextField
                       className="nickname-input"
-                      value={diffNickname}
+                      type="nickname"
+                      value={tmpNickname}
                       onChange={onNicknameChange}
+                      label="With a grid"
+                      borderColor="white"
                     />
                     {/* <TextField
                       className="nickname-input"
@@ -75,10 +150,10 @@ function MemberSetting({
                 <Button
                   variant="outlined"
                   style={{
-                    borderRadius: "1.25rem",
-                    color: "white",
-                    fontWeight: "bold",
-                    backgroundColor: "#E96F02",
+                    borderRadius: '1.25rem',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    backgroundColor: '#E96F02',
                   }}
                 >
                   중복 확인
@@ -127,9 +202,81 @@ function MemberSetting({
             </Grid>
           </Grid>
           <Grid item xs={12}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              xs={12}
+            >
+              <Grid item xs={2}>
+                <h1>회원 탈퇴</h1>
+              </Grid>
+              <Grid item xs={8}></Grid>
+              <Grid item xs={2}>
+                <Button
+                  variant="outlined"
+                  style={{
+                    borderRadius: '1.25rem',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    backgroundColor: '#CD0C22',
+                  }}
+                  onClick={handleClickOpen}
+                >
+                  탈퇴하기
+                </Button>
+                <Dialog
+                  onClose={handleClose}
+                  aria-labelledby="customized-dialog-title"
+                  open={open}
+                >
+                  <DialogTitle
+                    id="customized-dialog-title"
+                    onClose={handleClose}
+                  >
+                    회원 탈퇴
+                  </DialogTitle>
+                  <DialogContent dividers>
+                    <Typography gutterBottom>
+                      공부기록 등 그 외 사용자가 설정한 모든 정보가 사라지고,
+                      <br></br>
+                      복구가 불가능 합니다.
+                    </Typography>
+                    <Typography gutterBottom>
+                      그래도 탈퇴하시겠다면,
+                      <br></br>
+                      하단에 아이디를 한 번 더 입력해 주십시오.
+                    </Typography>
+                    <Grid item xs={12}>
+                      <Grid item xs={8}></Grid>
+                      <input
+                        type="text"
+                        style={{
+                          float: 'rignt',
+                        }}
+                      />
+                    </Grid>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      autoFocus
+                      onClick={handleClose}
+                      style={{
+                        color: '#CD0C22',
+                      }}
+                    >
+                      탈퇴하기
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
             <Grid container direction="row" justify="center" spacing={2}>
               <Grid item>
-                <IconButton class="check" onClick={onSetting}>
+                <IconButton class="check" onClick={onClick}>
                   <HowToRegIcon />
                 </IconButton>
               </Grid>
@@ -140,13 +287,13 @@ function MemberSetting({
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <h1>{nickname}</h1>
             <h1>{category}</h1>
-          </Grid>
+          </Grid> */}
         </Grid>
       </Container>
     </Wrapper>
   );
 }
-export default MemberSetting;
+export default MEMBERSETTING;

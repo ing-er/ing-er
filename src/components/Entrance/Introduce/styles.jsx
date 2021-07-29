@@ -1,59 +1,19 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  .all-container {
-    max-width: 1000px;
-  }
-  .nickname-input {
-    background-color: transparent;
-    border: none;
-    color: white;
-    width: 90%;
-    height: 100%;
-    font-size: 20px;
-    :focus {
-        outline: none;
-    }
-  }
-  .category-container {
-    margin-bottom: 100px;
-  }
-  .button {
-    width: 100%;
-    height: 50px;
-    align-items: center;
-    color: white;
-    background: #292A33;
-    padding: 0.375rem 0.75rem;
-    border-radius: 1.25rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    transform: translateY(4px);
-    border: 0;
-    outline: 0;
-  }
-  .check {
-    color: white;
-    background: #E96F02;
-    padding: 10px;
-    border-radius: 3rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    transform: translateY(4px);
-    border: 0;
-    outline: 0;
-  }
-  .cancel {
-    color: white;
-    background: #292A33;
-    padding: 10px;
-    border-radius: 3rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    transform: translateY(4px);
-    border: 0;
-    outline: 0;
-  }
+  background-size: 'contain';
+  width: 100%;
+  height: auto;
+  /* &.background {
+  } */
+  /* .homepage-bgimage {
+    background-image: 'url(./img/inger_background.png)';
+    height: 100vh;
+    width: 100vw;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  } */
 `;
 
 export default Wrapper;

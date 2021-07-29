@@ -1,13 +1,14 @@
-import React from 'react'
+import React from 'react';
 import Layout from '../../layout';
-import Kakao from '../../components/Entrance/Kakao';
+// import Kakao from '../../components/Entrance/Kakao';
+import LoginContainer from '../../containers/LoginContainer';
 
 const index = () => {
-    return (
-        <Layout>
-            <Kakao />
-        </Layout>
-    )
-}
+  return (
+    <Layout>
+      <LoginContainer />
+    </Layout>
+  );
+};
 
-export default index
+export default index;

@@ -53,6 +53,10 @@ function getCalendarData() {
   });
 }
 let list = [];
+let today = new Date();
+let year = today.getFullYear();
+let month = ('0' + (today.getMonth() + 1)).slice(-2);
+let day = ('0' + today.getDate()).slice(-2);
 getCalendarData().then((res) => {
   res.map((data, index) => {
     list.push({
@@ -62,10 +66,7 @@ getCalendarData().then((res) => {
     });
   });
 });
-let today = new Date();
-let year = today.getFullYear();
-let month = ('0' + (today.getMonth() + 1)).slice(-2);
-let day = ('0' + today.getDate()).slice(-2);
+
 const initialState = {
   calendar: list,
   isEditablePromise: false,
@@ -81,9 +82,9 @@ const initialState = {
 const setCalendar = (state = initialState, action) => {
   console.log(state.calendar);
   var idx = state.calendar.map((x) => x.date).indexOf(state.requestdate);
-  if (idx !== -1) {
-    state.requestcalendar = state.calendar[idx];
-  }
+  // if (idx !== -1) {
+  //   state.requestcalendar = state.calendar[idx];
+  // }
   switch (action.type) {
     case EDITPROMISE:
       state.requestcalendar.promise = action.payload;

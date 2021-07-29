@@ -19,6 +19,10 @@ const MyCalendar = (props) => {
     setCalendarEditPromiseIsEditable,
     setCalendarEditDiaryIsEditable,
     setCalendarSetDate,
+    requestdate,
+    isEditablePromise,
+    isEditableDiary,
+    setCalendarSaveData,
   } = props;
   const onChangePromiseHandler = (e) => {
     setCalendarEditPromise(e.target.value);
@@ -33,10 +37,17 @@ const MyCalendar = (props) => {
     setCalendarEditDiaryIsEditable();
   };
   const onChangeDate = (value, event) => {
-    console.log(value.toLocaleDateString());
-    setCalendarSetDate(value.toLocaleDateString());
+    let year = value.getFullYear();
+    let month = ('0' + (value.getMonth() + 1)).slice(-2);
+    let day = ('0' + value.getDate()).slice(-2);
+    console.log(year + '-' + month + '-' + day);
+    setCalendarSetDate(year + '-' + month + '-' + day);
   };
-  console.log(calendardata);
+
+  const onClickSaveHandler = () => {
+    setCalendarSaveData();
+  };
+
   return (
     <Wrapper>
       <Grid
@@ -60,6 +71,7 @@ const MyCalendar = (props) => {
               fontWeight: 'bold',
               backgroundColor: '#E96F02',
             }}
+            onClick={onClickSaveHandler}
           >
             저장
           </Button>
@@ -73,7 +85,7 @@ const MyCalendar = (props) => {
                 fontSize: 25,
               }}
             >
-              {calendardata.date}
+              {requestdate}
             </Grid>
             <Grid item>오늘의 공부 시간</Grid>
             <Grid
@@ -117,9 +129,9 @@ const MyCalendar = (props) => {
                     multiline={true}
                     rows={8}
                     fullWidth
-                    defaultValue={calendardata.promise.content}
+                    value={calendardata.promise}
                     onChange={onChangePromiseHandler}
-                    disabled={!calendardata.promise.isEditable}
+                    disabled={!isEditablePromise}
                   />
                 </Grid>
               </Grid>
@@ -148,9 +160,9 @@ const MyCalendar = (props) => {
                     multiline={true}
                     rows={8}
                     fullWidth
-                    defaultValue={calendardata.diary.content}
+                    value={calendardata.diary}
                     onChange={onChangeDiaryHandler}
-                    disabled={!calendardata.diary.isEditable}
+                    disabled={!isEditableDiary}
                   />
                 </Grid>
               </Grid>

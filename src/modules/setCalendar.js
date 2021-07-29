@@ -5,77 +5,183 @@ export const EDITDIARY = 'EDITDIARY';
 export const EDITPROMISEISEDITABLE = 'EDITPROMISEISEDITABLE';
 export const EDITDIARYISEDITABLE = 'EDITDIARYISEDITABLE';
 export const SETDATE = 'SETDATE';
+export const SAVEDATA = 'SAVEDATA';
 
-export const setCalendarEditPromise = (promise, calendar) => ({
+const HOST = 'localhost:8080';
+const serverUrl = `http://${HOST}/api/v1`;
+
+export const setCalendarEditPromise = (promise, requestcalendar) => ({
   type: EDITPROMISE,
   payload: promise,
-  calendar,
+  requestcalendar,
 });
 
-export const setCalendarEditDiary = (diary, calendar) => ({
+export const setCalendarEditDiary = (diary, requestcalendar) => ({
   type: EDITDIARY,
   payload: diary,
-  calendar,
+  requestcalendar,
 });
 
-export const setCalendarEditPromiseIsEditable = (calendar) => ({
+export const setCalendarEditPromiseIsEditable = (
+  isEditablePromise,
+  isEditableDiary,
+) => ({
   type: EDITPROMISEISEDITABLE,
-  calendar,
+  isEditablePromise,
+  isEditableDiary,
 });
 
-export const setCalendarEditDiaryIsEditable = (calendar) => ({
+export const setCalendarEditDiaryIsEditable = (
+  isEditablePromise,
+  isEditableDiary,
+) => ({
   type: EDITDIARYISEDITABLE,
-  calendar,
+  isEditablePromise,
+  isEditableDiary,
 });
 
-export const setCalendarSetDate = (date, calendar) => ({
+export const setCalendarSetDate = (date, requestcalendar) => ({
   type: SETDATE,
   payload: date,
-  calendar,
+  requestcalendar,
 });
 
-function getCalendarData() {}
+export const setCalendarSaveData = () => ({
+  type: SAVEDATA,
+});
+
+let list = [];
+function getCalendarData() {
+  axios.get(serverUrl + '/calendar/list/' + 1).then((res) => {
+    res.data.map((x, index) => {
+      list.push({
+        date: x.date,
+        promise: x.promise,
+        diary: x.diary,
+        id: x.id,
+      });
+    });
+  });
+}
+getCalendarData();
+let today = new Date();
+let year = today.getFullYear();
+let month = ('0' + (today.getMonth() + 1)).slice(-2);
+let day = ('0' + today.getDate()).slice(-2);
 
 const initialState = {
-  calendar: {
-    date: new Date().toLocaleDateString(),
-    promise: { content: '오늘 다짐', isEditable: false },
-    diary: { content: '오늘 일기', isEditable: false },
+  calendar: list,
+  isEditablePromise: false,
+  isEditableDiary: false,
+  requestdate: year + '-' + month + '-' + day,
+  requestcalendar: {
+    date: '',
+    promise: '',
+    diary: '',
+    id: -1,
   },
 };
 
 const setCalendar = (state = initialState, action) => {
+  console.log(state.calendar);
+  var idx = state.calendar.map((x) => x.date).indexOf(state.requestdate);
+  // if (idx !== -1) {
+  //   state.requestcalendar = state.calendar[idx];
+  // }
   switch (action.type) {
     case EDITPROMISE:
-      state.calendar.promise.content = action.payload;
+      state.requestcalendar.promise = action.payload;
+      if (idx === -1) {
+        state.calendar.push(state.requestcalendar);
+        idx = state.calendar.length - 1;
+      }
+      state.calendar[idx].promise = state.requestcalendar.promise;
       return {
         ...state,
-        calendar: state.calendar,
+        requestcalendar: state.requestcalendar,
       };
     case EDITDIARY:
-      state.calendar.diary.content = action.payload;
+      state.requestcalendar.diary = action.payload;
+      if (idx === -1) {
+        state.calendar.push(state.requestcalendar);
+        idx = state.calendar.length - 1;
+      }
+      state.calendar[idx].diary = state.requestcalendar.diary;
       return {
         ...state,
-        calendar: state.calendar,
+        requestcalendar: state.requestcalendar,
       };
     case EDITPROMISEISEDITABLE:
-      state.calendar.promise.isEditable = !state.calendar.promise.isEditable;
+      state.isEditablePromise = !state.isEditablePromise;
       return {
         ...state,
-        calendar: state.calendar,
+        requestcalendar: state.requestcalendar,
+        isEditablePromise: state.isEditablePromise,
+        isEditableDiary: state.isEditableDiary,
       };
     case EDITDIARYISEDITABLE:
-      state.calendar.diary.isEditable = !state.calendar.diary.isEditable;
+      state.isEditableDiary = !state.isEditableDiary;
       return {
         ...state,
-        calendar: state.calendar,
+        requestcalendar: state.requestcalendar,
+        isEditablePromise: state.isEditablePromise,
+        isEditableDiary: state.isEditableDiary,
       };
     case SETDATE:
-      state.calendar.date = action.payload;
+      state.requestdate = action.payload;
+      idx = state.calendar.map((x) => x.date).indexOf(state.requestdate);
+      if (idx !== -1) {
+        state.requestcalendar = state.calendar[idx];
+      } else {
+        state.requestcalendar = {
+          date: state.requestdate,
+          promise: '',
+          diary: '',
+          id: -1,
+        };
+      }
       return {
         ...state,
-        calendar: state.calendar,
-        date: state.calendar.date,
+        requestcalendar: state.requestcalendar,
+        requestdate: state.requestdate,
+      };
+    case SAVEDATA:
+      let id = state.requestcalendar.id;
+      let post = {
+        date: state.requestcalendar.date,
+        diary: state.requestcalendar.diary,
+        promise: state.requestcalendar.promise,
+        userId: 1,
+      };
+      if (id !== -1) {
+        axios
+          .patch(serverUrl + '/calendar/modify/' + id, post)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        if (
+          state.requestcalendar.promise === '' &&
+          state.requestcalendar.diary === ''
+        ) {
+          return {
+            ...state,
+          };
+        }
+        axios
+          .post(serverUrl + '/calendar/regist', post)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      return {
+        ...state,
       };
     default:
       return state;

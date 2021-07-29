@@ -5,6 +5,7 @@ import {
   setCalendarEditPromiseIsEditable,
   setCalendarEditDiaryIsEditable,
   setCalendarSetDate,
+  setCalendarSaveData,
 } from '../modules/setCalendar';
 
 import MyCalendar from '../components/Main/MyCalendar';
@@ -26,16 +27,26 @@ const MyCalendarComponent = () => {
   const setCalendarSetDt = (date) => {
     dispatch(setCalendarSetDate(date));
   };
-  const { calendar } = useSelector((state) => state.setCalendar);
+  const setCalendarSave = () => {
+    dispatch(setCalendarSaveData());
+  };
+  const { requestcalendar } = useSelector((state) => state.setCalendar);
+  const { requestdate } = useSelector((state) => state.setCalendar);
+  const { isEditablePromise } = useSelector((state) => state.setCalendar);
+  const { isEditableDiary } = useSelector((state) => state.setCalendar);
 
   return (
     <MyCalendar
-      calendardata={calendar}
+      calendardata={requestcalendar}
+      requestdate={requestdate}
+      isEditablePromise={isEditablePromise}
+      isEditableDiary={isEditableDiary}
       setCalendarEditPromise={setCalendarEditPro}
       setCalendarEditDiary={setCalendarEditDi}
       setCalendarEditPromiseIsEditable={setCalendarEditPromiseIsEdit}
       setCalendarEditDiaryIsEditable={setCalendarEditDiaryIsEdit}
       setCalendarSetDate={setCalendarSetDt}
+      setCalendarSaveData={setCalendarSave}
     />
   );
 };

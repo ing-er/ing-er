@@ -16,6 +16,9 @@ const LOGIN_USER_FAILURE = 'userAuthorization/LOGIN_USER_FAILURE';
 //* LOG_OUT_USER
 const LOG_OUT_USER = 'userAuthorization/LOG_OUT_USER';
 
+const DIALOGOPEN = 'DIALOGOPEN';
+const DIALOGCLOSE = 'DIALOGCLOSE';
+
 //* GENERATE_TYPE_FUNCTION
 export const typeAuthUser = () => ({
   type: AUTH_USER,
@@ -62,8 +65,15 @@ export function* userAuthorizationSaga() {
   yield takeLatest(AUTH_USER, authSaga);
   yield takeLatest(LOGIN_USER, loginSaga);
 }
+
+export const setKakoDialogOpen = () => ({
+  type: DIALOGOPEN,
+});
+export const setKakoDialogClose = () => ({
+  type: DIALOGCLOSE,
+});
 //* REDUCER
-export default function authorization(state = {}, action) {
+export default function authorization(state = { isOpen: false }, action) {
   switch (action.type) {
     //* =====================
     //*   AUTH_USER
@@ -117,8 +127,17 @@ export default function authorization(state = {}, action) {
         logoutSuccess: true,
       };
 
+    case DIALOGOPEN:
+      return {
+        ...state,
+        isOpen: true,
+      };
+    case DIALOGCLOSE:
+      return {
+        ...state,
+        isOpen: false,
+      };
     default:
       return state;
   }
 }
-

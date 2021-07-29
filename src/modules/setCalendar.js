@@ -78,6 +78,7 @@ const initialState = {
     date: '',
     promise: '',
     diary: '',
+    id: -1,
   },
 };
 
@@ -162,6 +163,14 @@ const setCalendar = (state = initialState, action) => {
             console.log(err);
           });
       } else {
+        if (
+          state.requestcalendar.promise === '' &&
+          state.requestcalendar.diary === ''
+        ) {
+          return {
+            ...state,
+          };
+        }
         axios
           .post(serverUrl + '/calendar/regist', post)
           .then((res) => {

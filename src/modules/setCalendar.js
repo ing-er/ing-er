@@ -6,6 +6,9 @@ export const EDITPROMISEISEDITABLE = 'EDITPROMISEISEDITABLE';
 export const EDITDIARYISEDITABLE = 'EDITDIARYISEDITABLE';
 export const SETDATE = 'SETDATE';
 
+const HOST = 'localhost:8080';
+const serverUrl = `http://${HOST}/api/v1`;
+
 export const setCalendarEditPromise = (promise, requestcalendar) => ({
   type: EDITPROMISE,
   payload: promise,
@@ -42,24 +45,32 @@ export const setCalendarSetDate = (date, requestcalendar) => ({
   requestcalendar,
 });
 
-function getCalendarData() {}
-
+function getCalendarData() {
+  return new Promise((resolve, reject) => {
+    axios.get(serverUrl + '/calendar/list/' + 1).then((res) => {
+      resolve(res.data);
+    });
+  });
+}
+let list = [];
+getCalendarData().then((res) => {
+  res.map((data, index) => {
+    list.push({
+      date: data.date,
+      promise: data.promise,
+      diary: data.diary,
+    });
+  });
+});
+let today = new Date();
+let year = today.getFullYear();
+let month = ('0' + (today.getMonth() + 1)).slice(-2);
+let day = ('0' + today.getDate()).slice(-2);
 const initialState = {
-  calendar: [
-    {
-      date: '2021. 7. 27.',
-      promise: '오늘 다짐!',
-      diary: '오늘 일기!',
-    },
-    {
-      date: '2021. 7. 28.',
-      promise: '오늘 다짐',
-      diary: '오늘 일기',
-    },
-  ],
+  calendar: list,
   isEditablePromise: false,
   isEditableDiary: false,
-  requestdate: new Date().toLocaleDateString(),
+  requestdate: year + '-' + month + '-' + day,
   requestcalendar: {
     date: '',
     promise: '',
@@ -68,11 +79,18 @@ const initialState = {
 };
 
 const setCalendar = (state = initialState, action) => {
+  console.log(state.calendar);
   var idx = state.calendar.map((x) => x.date).indexOf(state.requestdate);
-  state.requestcalendar = state.calendar[idx];
+  if (idx !== -1) {
+    state.requestcalendar = state.calendar[idx];
+  }
   switch (action.type) {
     case EDITPROMISE:
       state.requestcalendar.promise = action.payload;
+      if (idx === -1) {
+        state.calendar.push(state.requestcalendar);
+        idx = state.calendar.length - 1;
+      }
       state.calendar[idx].promise = state.requestcalendar.promise;
       return {
         ...state,
@@ -80,6 +98,10 @@ const setCalendar = (state = initialState, action) => {
       };
     case EDITDIARY:
       state.requestcalendar.diary = action.payload;
+      if (idx === -1) {
+        state.calendar.push(state.requestcalendar);
+        idx = state.calendar.length - 1;
+      }
       state.calendar[idx].diary = state.requestcalendar.diary;
       return {
         ...state,
@@ -112,8 +134,6 @@ const setCalendar = (state = initialState, action) => {
           promise: '',
           diary: '',
         };
-        state.calendar.push(state.requestcalendar);
-        idx = state.calendar.length - 1;
       }
       return {
         ...state,

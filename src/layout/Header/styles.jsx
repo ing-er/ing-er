@@ -1,28 +1,29 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-position: relative;
-height: 50px;
-& .appbar {
+  position: relative;
+  height: 50px;
+  & .appbar {
     width: 100%;
     height: 50px;
-    background-color: #1E1F26;
+    background-color: transparent;
+    /* background-color: #1E1F26; */
     box-shadow: none;
-}
-& .header-grid {
+  }
+  & .header-grid {
     position: absolute;
-}
-& .header-button {
+  }
+  & .header-button {
     box-shadow: none;
     background-color: transparent;
     color: white;
-}
-& .logo {
+  }
+  & .logo {
     padding-left: 10px;
     color: white;
     cursor: pointer;
-}
-& .menu-button {
+  }
+  & .menu-button {
     position: fixed;
     left: 12px;
     top: 14px;
@@ -32,15 +33,15 @@ height: 50px;
     height: 20px;
     cursor: pointer;
     & div {
-        width: 100%;
-        height: 3px;
-        background: #fff;
-        border-radius: 30px;
+      width: 100%;
+      height: 3px;
+      background: #fff;
+      border-radius: 30px;
     }
   }
   & .display-none {
-      display: block;
-    }
+    display: block;
+  }
 `;
 
 export default Wrapper;

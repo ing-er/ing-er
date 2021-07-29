@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import RoomCalendar from '../../RoomCalendar';
 
 import { 
@@ -7,15 +9,11 @@ import {
 
 import Wrapper from './styles';
 
-const tmpStyle = {
-  border: '1px solid blue',
-}
-
 const DrawerProfile = () => {
   return (
-    <Wrapper style={tmpStyle}>
+    <Wrapper>
       <Grid className="nickname-container">
-        <Typography variant="h4" className="nickname">닉네임</Typography>
+        <Typography variant="h4" className="nickname"></Typography>
       </Grid>
       <Grid className="calendar-container">
         <RoomCalendar />
@@ -25,9 +23,14 @@ const DrawerProfile = () => {
         <Typography className="time-text">오늘의 공부 시간</Typography>
         <Typography className="time">00 : 00 : 00</Typography>
       </Grid>
-      <div>
-        다짐
-      </div>
+      <Grid className="pd-container">
+        <Grid className="pd-content-container">
+          <p style={{ border: '1px solid black', textAlign: 'center', height: '100%' }}>다짐 component</p>
+        </Grid>
+        <Grid className="pd-content-container">
+          <p style={{ border: '1px solid black', textAlign: 'center', height: '100%' }}>일기 component</p>
+        </Grid>
+      </Grid>
     </Wrapper>
   )
 }

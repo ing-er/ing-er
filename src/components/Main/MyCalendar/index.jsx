@@ -1,4 +1,10 @@
-import { TextField, Grid, Container, IconButton } from '@material-ui/core';
+import {
+  TextField,
+  Grid,
+  Container,
+  IconButton,
+  Button,
+} from '@material-ui/core';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -41,6 +47,23 @@ const MyCalendar = (props) => {
           backgroundColor: '#292A33',
         }}
       >
+        <Grid
+          container
+          xs={12}
+          justify="right"
+          style={{ marginBottom: '20px' }}
+        >
+          <Button
+            variant="outlined"
+            style={{
+              fontSize: 15,
+              fontWeight: 'bold',
+              backgroundColor: '#E96F02',
+            }}
+          >
+            저장
+          </Button>
+        </Grid>
         <Grid item xs={12} sm={6}>
           <Grid container direction="column" spacing={2}>
             <Grid

@@ -1,3 +1,5 @@
+import { cloneElement } from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setTodolistAddContainer,
@@ -7,12 +9,11 @@ import {
   setTodolistEditComplete,
 } from '../modules/setTodolist';
 
-import MyTodolist from '../components/Main/MyTodolist';
-
-const MyTodolistComponent = () => {
+const MyTodolistComponent = ({ children }) => {
   const dispatch = useDispatch();
   const { todolist } = useSelector((state) => state.setTodolist);
   const { todopercent } = useSelector((state) => state.setTodolist);
+  const { date } = useSelector((state) => state.setCalendar.calendar);
   const setTodolistAddCon = (title) => {
     dispatch(setTodolistAddContainer(title));
   };
@@ -30,15 +31,16 @@ const MyTodolistComponent = () => {
   };
 
   return (
-    <MyTodolist
-      todolistdata={todolist}
-      todopercent={todopercent}
-      setTodolistAddContainer={setTodolistAddCon}
-      setTodolistAddInput={setTodolistAddInp}
-      setTodolistEditTitle={setTodolistEditTi}
-      setTodolistEditContent={setTodolistEditCon}
-      setTodolistEditComplete={setTodolistEditCompl}
-    />
+    cloneElement(children, {
+      todolistdata: todolist,
+      todopercent: todopercent,
+      date: date,
+      setTodolistAddContainer: setTodolistAddCon,
+      setTodolistAddInput: setTodolistAddInp,
+      setTodolistEditTitle: setTodolistEditTi,
+      setTodolistEditContent: setTodolistEditCon,
+      setTodolistEditComplete: setTodolistEditCompl,
+    })
   );
 };
 

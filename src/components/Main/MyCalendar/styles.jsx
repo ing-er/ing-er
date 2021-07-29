@@ -4,7 +4,7 @@ const Wrapper = styled.div`
   max-width: 1500px;
   & .all-container {
     text-align: center;
-    padding: 30px;
+    padding: 10px 30px 30px 30px;
   }
   .textfield-grid {
     padding-right: 20px;

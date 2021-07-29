@@ -1,9 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 
+let defaultHeight = window.innerHeight;
 export const Wrapper = styled.div`
+  min-height: ${defaultHeight}px;
   width: 100%;
-  min-height: 666px;
   background-color: #1E1F26;
 `
 

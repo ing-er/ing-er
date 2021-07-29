@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const EDITPROMISE = 'EDITPROMISE';
 export const EDITDIARY = 'EDITDIARY';
 export const EDITPROMISEISEDITABLE = 'EDITPROMISEISEDITABLE';
@@ -31,6 +33,8 @@ export const setCalendarSetDate = (date, calendar) => ({
   payload: date,
   calendar,
 });
+
+function getCalendarData() {}
 
 const initialState = {
   calendar: {

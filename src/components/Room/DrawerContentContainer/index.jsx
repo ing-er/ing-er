@@ -6,9 +6,6 @@ import DrawerPromise from './DrawerPromise';
 
 import Wrapper from './styles';
 
-const tmpStyle = {
-  border: '1px solid red',
-};
 
 const DrawerContentContainer = ({ drawerId }) => {
   const [contentDiv, setContentDiv] = useState(<DrawerProfile />)
@@ -27,7 +24,7 @@ const DrawerContentContainer = ({ drawerId }) => {
   }, [drawerId])
 
   return (
-    <Wrapper style={tmpStyle}>
+    <Wrapper>
       { contentDiv }
     </Wrapper>
   );

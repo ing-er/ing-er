@@ -22,6 +22,7 @@ const MyCalendar = (props) => {
     requestdate,
     isEditablePromise,
     isEditableDiary,
+    setCalendarSaveData,
   } = props;
   const onChangePromiseHandler = (e) => {
     setCalendarEditPromise(e.target.value);
@@ -43,7 +44,9 @@ const MyCalendar = (props) => {
     setCalendarSetDate(year + '-' + month + '-' + day);
   };
 
-  const onClickSaveHandler = (e) => {};
+  const onClickSaveHandler = () => {
+    setCalendarSaveData();
+  };
 
   return (
     <Wrapper>

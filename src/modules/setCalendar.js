@@ -5,6 +5,7 @@ export const EDITDIARY = 'EDITDIARY';
 export const EDITPROMISEISEDITABLE = 'EDITPROMISEISEDITABLE';
 export const EDITDIARYISEDITABLE = 'EDITDIARYISEDITABLE';
 export const SETDATE = 'SETDATE';
+export const SAVEDATA = 'SAVEDATA';
 
 const HOST = 'localhost:8080';
 const serverUrl = `http://${HOST}/api/v1`;
@@ -45,6 +46,10 @@ export const setCalendarSetDate = (date, requestcalendar) => ({
   requestcalendar,
 });
 
+export const setCalendarSaveData = () => ({
+  type: SAVEDATA,
+});
+
 let list = [];
 function getCalendarData() {
   axios.get(serverUrl + '/calendar/list/' + 1).then((res) => {
@@ -53,6 +58,7 @@ function getCalendarData() {
         date: x.date,
         promise: x.promise,
         diary: x.diary,
+        id: x.id,
       });
     });
   });
@@ -130,12 +136,43 @@ const setCalendar = (state = initialState, action) => {
           date: state.requestdate,
           promise: '',
           diary: '',
+          id: -1,
         };
       }
       return {
         ...state,
         requestcalendar: state.requestcalendar,
         requestdate: state.requestdate,
+      };
+    case SAVEDATA:
+      let id = state.requestcalendar.id;
+      let post = {
+        date: state.requestcalendar.date,
+        diary: state.requestcalendar.diary,
+        promise: state.requestcalendar.promise,
+        userId: 1,
+      };
+      if (id !== -1) {
+        axios
+          .patch(serverUrl + '/calendar/modify/' + id, post)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        axios
+          .post(serverUrl + '/calendar/regist', post)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      return {
+        ...state,
       };
     default:
       return state;

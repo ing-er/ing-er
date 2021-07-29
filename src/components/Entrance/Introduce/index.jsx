@@ -1,13 +1,15 @@
+import { Container } from '@material-ui/core';
 import React from 'react';
 // import Wrapper from './styles';
 // import background from './img/inger_background.png';
 
 const index = () => {
   return (
-    <div
+    <Container
       classname="container"
       style={{
-        backgroundImage: 'url(./img/inger_background.png)',
+        // backgroundImage: 'url(./img/inger_background.png)',
+        backgroundSize: '100%',
         margin: 0,
         padding: 0,
         height: '100vh',
@@ -16,7 +18,7 @@ const index = () => {
         // margin: 0,
         backgroundRepeat: 'no-repeat',
       }}
-    ></div>
+    ></Container>
   );
 };
 

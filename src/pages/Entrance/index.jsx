@@ -5,7 +5,7 @@ import Introduce from '../../components/Entrance/Introduce';
 
 const Entrance = () => {
   return (
-    <Layout>
+    <Layout isEntrance={true}>
       <Introduce />
     </Layout>
   );

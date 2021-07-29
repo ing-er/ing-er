@@ -45,27 +45,23 @@ export const setCalendarSetDate = (date, requestcalendar) => ({
   requestcalendar,
 });
 
+let list = [];
 function getCalendarData() {
-  return new Promise((resolve, reject) => {
-    axios.get(serverUrl + '/calendar/list/' + 1).then((res) => {
-      resolve(res.data);
+  axios.get(serverUrl + '/calendar/list/' + 1).then((res) => {
+    res.data.map((x, index) => {
+      list.push({
+        date: x.date,
+        promise: x.promise,
+        diary: x.diary,
+      });
     });
   });
 }
-let list = [];
+getCalendarData();
 let today = new Date();
 let year = today.getFullYear();
 let month = ('0' + (today.getMonth() + 1)).slice(-2);
 let day = ('0' + today.getDate()).slice(-2);
-getCalendarData().then((res) => {
-  res.map((data, index) => {
-    list.push({
-      date: data.date,
-      promise: data.promise,
-      diary: data.diary,
-    });
-  });
-});
 
 const initialState = {
   calendar: list,

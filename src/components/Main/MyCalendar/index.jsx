@@ -42,7 +42,9 @@ const MyCalendar = (props) => {
     console.log(year + '-' + month + '-' + day);
     setCalendarSetDate(year + '-' + month + '-' + day);
   };
-  console.log(calendardata);
+
+  const onClickSaveHandler = (e) => {};
+
   return (
     <Wrapper>
       <Grid
@@ -66,6 +68,7 @@ const MyCalendar = (props) => {
               fontWeight: 'bold',
               backgroundColor: '#E96F02',
             }}
+            onClick={onClickSaveHandler}
           >
             저장
           </Button>

@@ -6,6 +6,9 @@ import {
   Container,
   TextField,
   IconButton,
+  Switch,
+  FormControlLabel,
+  Box,
 } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
@@ -63,7 +66,15 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-function MEMBERSETTING({ nickname, category, onSetting }) {
+function MEMBERSETTING({
+  nickname,
+  setNickname,
+  category,
+  setCategory,
+  isPublic,
+  setIsPublic,
+  onUpdateInfo,
+}) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -73,37 +84,13 @@ function MEMBERSETTING({ nickname, category, onSetting }) {
     setOpen(false);
   };
 
-  const [tmpNickname, setTmpNickname] = useState(nickname);
-  const [tmpCategory, setTmpCategory] = useState('');
-
-  const onNicknameChange = (e) => {
-    setTmpNickname(e.target.value);
-    console.log(e.target.value);
-    //   console.log(setTmpNickname);
-    //   // this.tmpNickname = e.currentTarget.value;
+  const handleSwitchChange = (newValue) => {
+    if (newValue === true) {
+      setIsPublic(false);
+    } else {
+      setIsPublic(true);
+    }
   };
-  const onCategoryChange = (e) => {
-    setTmpCategory(e.target.value);
-    this.tmpCategory = e.currentTarget.value;
-    //   this.tmpCategory = e.currentTarget.value;
-  };
-  const onClick = () => {
-    console.log(tmpNickname);
-    console.log(tmpCategory);
-    // if (this.tmpNickname != null && this.tmpCategory != null) {
-    //   nickname = this.nickname;
-    //   category = this.category;
-    //   onSetting(nickname, category);
-    // }
-    // onSetDiffNickname(e.target.value);
-  };
-  // const onCategoryChange = (e) => {
-  //   // onSetNickname(e.target.value);
-  //   onSetCategory(e.currentTarget.value);
-  //   // onSetDiffCategory(parseInt(e.currentTarget.value, 10));
-  // };
-
-  // const classes = useStyles();
 
   return (
     <Wrapper>
@@ -134,10 +121,12 @@ function MEMBERSETTING({ nickname, category, onSetting }) {
                     <TextField
                       className="nickname-input"
                       type="nickname"
-                      value={tmpNickname}
-                      onChange={onNicknameChange}
+                      value={nickname}
                       label="With a grid"
                       borderColor="white"
+                      onChange={(e) => {
+                        setNickname(e.target.value);
+                      }}
                     />
                     {/* <TextField
                       className="nickname-input"
@@ -174,30 +163,95 @@ function MEMBERSETTING({ nickname, category, onSetting }) {
                 xs={12}
               >
                 <Grid item xs={2}>
-                  <Button class="button" value="201" onClick={onCategoryChange}>
+                  <Button
+                    class="button"
+                    value="201"
+                    onClick={(e) => {
+                      setCategory(e.currentTarget.value);
+                    }}
+                  >
                     수능
                   </Button>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button class="button" value="202" onClick={onCategoryChange}>
+                  <Button
+                    class="button"
+                    value="202"
+                    onClick={(e) => {
+                      setCategory(e.currentTarget.value);
+                    }}
+                  >
                     취준
                   </Button>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button class="button" value="203" onClick={onCategoryChange}>
+                  <Button
+                    class="button"
+                    value="203"
+                    onClick={(e) => {
+                      setCategory(e.currentTarget.value);
+                    }}
+                  >
                     자격증
                   </Button>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button class="button" value="204" onClick={onCategoryChange}>
+                  <Button
+                    class="button"
+                    value="204"
+                    onClick={(e) => {
+                      setCategory(e.currentTarget.value);
+                    }}
+                  >
                     고시
                   </Button>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button class="button" value="205" onClick={onCategoryChange}>
+                  <Button
+                    class="button"
+                    value="205"
+                    onClick={(e) => {
+                      setCategory(e.currentTarget.value);
+                    }}
+                  >
                     기타
                   </Button>
                 </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              xs={12}
+            >
+              <Grid item xs={3}>
+                <h1>다짐 공개 여부</h1>
+              </Grid>
+              <Grid item xs={7}></Grid>
+              <Grid item xs={2}>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      value={isPublic}
+                      onChange={handleSwitchChange}
+                      // onChange={(e) => {
+                      //   console.log(e);
+                      //   setIsPublic(e.target.value);
+                      // }}
+                      style={{ color: '#E96F02' }}
+                    />
+                  }
+                  labelPlacement="top"
+                  label={
+                    <Box component="div" fontSize={12}>
+                      랜덤방
+                    </Box>
+                  }
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -276,7 +330,7 @@ function MEMBERSETTING({ nickname, category, onSetting }) {
           <Grid item xs={12}>
             <Grid container direction="row" justify="center" spacing={2}>
               <Grid item>
-                <IconButton class="check" onClick={onClick}>
+                <IconButton class="check" onClick={onUpdateInfo}>
                   <HowToRegIcon />
                 </IconButton>
               </Grid>

@@ -83,7 +83,7 @@ const initialState = {
 };
 
 const setCalendar = (state = initialState, action) => {
-  console.log(state.calendar);
+  // console.log(state.calendar);
   var idx = state.calendar.map((x) => x.date).indexOf(state.requestdate);
   // if (idx !== -1) {
   //   state.requestcalendar = state.calendar[idx];

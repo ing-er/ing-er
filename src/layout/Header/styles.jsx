@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  position: relative;
-  height: 50px;
+  position: fixed;
+  height: 110px;
+  top: 0;
+  left: 0;
   & .appbar {
     width: 100%;
     height: 50px;

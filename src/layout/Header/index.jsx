@@ -25,6 +25,7 @@ import LoginContainer from '../../containers/LoginContainer';
 import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import { useHistory } from 'react-router';
+import KakaoLogin from '../../pages/KakaoLogin';
 
 const styles = (theme) => ({
   root: {
@@ -108,6 +109,9 @@ const Header = () => {
                     onClose={handleClose}
                     aria-labelledby="customized-dialog-title"
                     open={open}
+                    style={{
+                      margin: '10px 10px 10px 10px',
+                    }}
                   >
                     <DialogTitle
                       id="customized-dialog-title"

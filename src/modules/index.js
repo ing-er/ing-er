@@ -1,11 +1,11 @@
 import { all } from 'redux-saga/effects';
 import { combineReducers } from "redux";
+import authorization, { userAuthorizationSaga } from "./userAuthorization";
 import setMainIndex from "./setMainIndex";
 import setIsRandomRoom from "./setIsRandomRoom";
-import memberSetting from './memberSetting';
+import memberSetting, { userInfoSaga } from './memberSetting';
 import setTodolist from "./setTodolist";
 import setCalendar from "./setCalendar";
-import authorization, {userAuthorizationSaga} from "./userAuthorization";
 
 const rootReducer = combineReducers({
   setMainIndex,
@@ -19,6 +19,7 @@ const rootReducer = combineReducers({
 export function* rootSaga() {
   yield all([
     userAuthorizationSaga(),
+    userInfoSaga(),
   ]);
 }
 

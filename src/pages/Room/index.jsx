@@ -12,7 +12,7 @@ import {
  } from './styles';
 
 
-const Room = () => {
+const Room = ({ publisher }) => {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -38,7 +38,9 @@ const Room = () => {
         open={open}
         classes={classes}
       >
-        <ScreenContainer />
+        <ScreenContainer 
+          publisher={publisher}
+        />
       </RoomDrawer>
     </Wrapper>
     

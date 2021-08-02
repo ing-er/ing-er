@@ -7,7 +7,9 @@ import {
   Grid,
 } from '@material-ui/core';
 
-const ScreenContainer = () => {
+const ScreenContainer = ({ publisher }) => {
+  console.log('screen-container')
+  console.log(publisher)
   const [screens, setScreens] = useState(new Array(6).fill(null))
 
   const onChangeScreen = () => {
@@ -30,8 +32,10 @@ const ScreenContainer = () => {
             xs={12} md={6} lg={6} xl={4}
             key={idx}
           >
-            <Screen screen_id={screen}>
-            </Screen>
+            <Screen 
+              screen_id={screen}
+              publisher={publisher}
+            />
           </Grid>
         ))}
       </Grid>

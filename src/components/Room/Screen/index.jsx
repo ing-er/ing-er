@@ -1,15 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import Wrapper from './styles';
 
-const Screen = ({ screen_id }) => {
+const Screen = ({ screen_id, publisher }) => {
   const [sId, setSId] = useState(screen_id);
+  const videoRef = useRef(undefined);
+
+  useEffect(() => {
+    if (videoRef && videoRef.current) {
+      publisher.addVideoElement(videoRef.current)
+    }
+  })
 
   return (
     <Wrapper>
-      {sId ? (
+      {publisher ? (
         <div className="conference-content">
-
+          <video
+            className="screen"
+            autoPlay={true}
+            ref={videoRef}
+          />
         </div>
       ) : (
         <div>

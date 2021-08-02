@@ -20,9 +20,11 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Wrapper from './styles';
+import LoginContainer from '../../containers/LoginContainer';
 
 import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
+import { useHistory } from 'react-router';
 
 const styles = (theme) => ({
   root: {
@@ -37,39 +39,9 @@ const styles = (theme) => ({
   },
 });
 
-// const DialogTitle = withStyles(styles)((props) => {
-//   const { children, classes, onClose, ...other } = props;
-//   return (
-//     <MuiDialogTitle disableTypography className={classes.root} {...other}>
-//       <Typography variant="h6">{children}</Typography>
-//       {onClose ? (
-//         <IconButton
-//           aria-label="close"
-//           className={classes.closeButton}
-//           onClick={onClose}
-//         >
-//           <CloseIcon />
-//         </IconButton>
-//       ) : null}
-//     </MuiDialogTitle>
-//   );
-// });
-
-// const DialogContent = withStyles((theme) => ({
-//   root: {
-//     padding: theme.spacing(2),
-//   },
-// }))(MuiDialogContent);
-
-// const DialogActions = withStyles((theme) => ({
-//   root: {
-//     margin: 0,
-//     padding: theme.spacing(1),
-//   },
-// }))(MuiDialogActions);
-
 const Header = () => {
   const isTablet = useMediaQuery('(max-width:960px)');
+  const history = useHistory();
 
   const [open, setOpen] = React.useState(false);
 
@@ -101,24 +73,14 @@ const Header = () => {
             <Grid item className="title display-none">
               <Grid container justify="center">
                 <Grid item>
-                  {/* <Button
-                    variant="text"
-                    className="display-none header-button"
-                  >
-                    소개
-                  </Button> */}
+                  {/*  소개 */}
                   <IconButton>
                     <InfoIcon htmlColor="white" />
                   </IconButton>
                 </Grid>
 
                 <Grid item>
-                  {/* <Button
-                    variant="text"
-                    className="display-none header-button"
-                  >
-                    마이페이지
-                  </Button> */}
+                  {/* 마이페이지 */}
                   <Link to="/Main">
                     <IconButton>
                       <AccountCircleIcon htmlColor="white" />
@@ -127,12 +89,6 @@ const Header = () => {
                 </Grid>
 
                 <Grid item>
-                  {/* <Button
-                    variant="text"
-                    className="display-none header-button"
-                  >
-                    방
-                  </Button> */}
                   <Link to="/room">
                     <IconButton>
                       <MeetingRoomIcon htmlColor="white" />
@@ -145,7 +101,7 @@ const Header = () => {
             <Grid item>
               <Grid container alignItems="center">
                 <Grid item>
-                  {/* <IconButton onClick={handleClickOpen}>
+                  <IconButton onClick={handleClickOpen}>
                     <LockIcon htmlColor="white" />
                   </IconButton>
                   <Dialog
@@ -160,44 +116,23 @@ const Header = () => {
                       로그인 & 회원가입
                     </DialogTitle>
                     <DialogContent dividers>
-                      <Typography gutterBottom>
-                        Cras mattis consectetur purus sit amet fermentum. Cras
-                        justo odio, dapibus ac facilisis in, egestas eget quam.
-                        Morbi leo risus, porta ac consectetur ac, vestibulum at
-                        eros.
-                      </Typography>
-                      <Typography gutterBottom>
-                        Praesent commodo cursus magna, vel scelerisque nisl
-                        consectetur et. Vivamus sagittis lacus vel augue laoreet
-                        rutrum faucibus dolor auctor.
-                      </Typography>
-                      <Typography gutterBottom>
-                        Aenean lacinia bibendum nulla sed consectetur. Praesent
-                        commodo cursus magna, vel scelerisque nisl consectetur
-                        et. Donec sed odio dui. Donec ullamcorper nulla non
-                        metus auctor fringilla.
-                      </Typography>
+                      <LoginContainer />
                     </DialogContent>
-                    <DialogActions>
-                      <Button autoFocus onClick={handleClose} color="primary">
-                        Save changes
-                      </Button>
-                    </DialogActions>
-                  </Dialog> */}
-                  <Link to="/KakaoLogin">
-                    <IconButton>
-                      <LockIcon htmlColor="white" />
-                    </IconButton>
-                  </Link>
+                    <Button
+                      onClick={() => {
+                        history.push({
+                          pathname: '/joinsetting',
+                          // state: { kakaoIdNum: oAuthId },
+                        });
+                      }}
+                    >
+                      확인
+                    </Button>
+                  </Dialog>
                 </Grid>
 
                 <Grid item>
-                  {/* <Button
-                    variant="text"
-                    className="display-none header-button"
-                  >
-                    설정
-                  </Button> */}
+                  {/* 멤버 설정 */}
                   <Link to="/JoinSetting">
                     <IconButton>
                       <SettingsIcon htmlColor="white" />
@@ -206,12 +141,7 @@ const Header = () => {
                 </Grid>
 
                 <Grid item>
-                  {/* <Button
-                    variant="text"
-                    className="display-none header-button"
-                  >
-                    로그아웃
-                  </Button> */}
+                  {/* 로그아웃 */}
                   <IconButton>
                     <LockOpenIcon htmlColor="white" />
                   </IconButton>

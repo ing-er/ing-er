@@ -1,54 +1,20 @@
-// import React, { useEffect, useState } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import MemberSetting from '../layout/Header';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import Header from '../layout/Header';
 
-// function HeaderContainer() {
-//   const dispatch = useDispatch();
-//   // useSelector는 리덕스 스토어의 상태를 조회.
-//   // useSelector를 통해 rootReducer에 있는 타 모듈을 불러옴.
-//   const { kakaoIdNum, info } = useSelector(({authorization, memberSetting }) => ({
-//     kakaoIdNum: authorization.kakaoIdNum,
-//     info: memberSetting.info,
-//   }));
+function HeaderContainer() {
 
-//   const [nickname, setNickname] = useState('');
-//   const [category, setCategory] = useState('');
-//   const [isPublic, setIsPublic] = useState('');
+  const { isJoin, isAuth } = useSelector(({ authorization }) => ({
+    isJoin: authorization.isJoin,
+    isAuth: authorization.isAuth,
+  }));
 
-//   useEffect(() => {
-//     dispatch(typeGetUserInfo());
-//   }, []);
+  return (
+    <Header
+			isJoin={isJoin}
+			isAuth={isAuth}
+    />
+  );
+}
 
-//   useEffect(() => {
-//     setNickname(info.nickname);
-//     setCategory(info.category);
-//     setIsPublic(info.isPublic);
-//   }, [info]);
-
-//   const onUpdateInfo = () => {
-//     const data = {
-//       "category": Number(category),
-//       "isOpen": isPublic,
-//       "kakaoIdNum": kakaoIdNum,
-//       "name": nickname,
-//     };
-//     console.log(data)
-//     dispatch(typeInitInfo(data));
-//   };
-
-//   return (
-//     <MemberSetting
-//       // 상태와
-//       kakaoIdNum={kakaoIdNum}
-//       nickname={nickname}
-//       setNickname={setNickname}
-//       category={category}
-//       setCategory={setCategory}
-//       isPublic={isPublic}
-//       setIsPublic={setIsPublic}
-//       onUpdateInfo={onUpdateInfo}
-//     />
-//   );
-// }
-
-// export default HeaderContainer;
+export default HeaderContainer;

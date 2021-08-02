@@ -4,10 +4,10 @@ export async function loginAsync(formData) {
   const response = await axios.get(
     `http://localhost:8080/api/v1/users/${formData.oAuthId}`
     );
+  window.localStorage.setItem('CURRENT_USER', formData.oAuthId);
   if (response.data != ''){
     return response.data
   }
-  localStorage.setItem('CURRENT_USER', formData.oAuthId);
   //   if (response.data == ''){
   // }
   // else {
@@ -17,7 +17,7 @@ return formData.oAuthId;
 
 export async function isAuthAsync() {
   console.log('auth sync')
-  const token = localStorage.getItem('CURRENT_USER');
+  const token = window.localStorage.getItem('CURRENT_USER');
   console.log(token)
   const response = await axios.get(
     `http://localhost:8080/api/v1/users/${token}/`,
@@ -32,6 +32,5 @@ export async function isAuthAsync() {
   if (!response.status == 200) {
     throw new Error('사용자 인증에 실패했습니다.');
   }
-  localStorage.setItem('CURRENT_USER', JSON.stringify(response.data));
   return response.data;
 }

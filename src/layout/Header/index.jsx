@@ -39,7 +39,7 @@ const styles = (theme) => ({
   },
 });
 
-const Header = () => {
+const Header = ({ isJoin, isAuth }) => {
   const isTablet = useMediaQuery('(max-width:960px)');
   const history = useHistory();
 
@@ -81,19 +81,28 @@ const Header = () => {
 
                 <Grid item>
                   {/* 마이페이지 */}
-                  <Link to="/Main">
-                    <IconButton>
-                      <AccountCircleIcon htmlColor="white" />
-                    </IconButton>
-                  </Link>
+                  {isAuth ? (
+                    <div></div>
+                  ) : (
+                    <Link to="/Main">
+                      <IconButton>
+                        <AccountCircleIcon htmlColor="white" />
+                      </IconButton>
+                    </Link>
+                  )}
                 </Grid>
 
                 <Grid item>
-                  <Link to="/room">
-                    <IconButton>
-                      <MeetingRoomIcon htmlColor="white" />
-                    </IconButton>
-                  </Link>
+                  {/* 방 입장 */}
+                  {isAuth ? (
+                    <div></div>
+                  ) : (
+                    <Link to="/room">
+                      <IconButton>
+                        <MeetingRoomIcon htmlColor="white" />
+                      </IconButton>
+                    </Link>
+                  )}
                 </Grid>
               </Grid>
             </Grid>
@@ -101,9 +110,13 @@ const Header = () => {
             <Grid item>
               <Grid container alignItems="center">
                 <Grid item>
-                  <IconButton onClick={handleClickOpen}>
-                    <LockIcon htmlColor="white" />
-                  </IconButton>
+                  {isAuth == false ? (
+                    <IconButton onClick={handleClickOpen}>
+                      <LockIcon htmlColor="white" />
+                    </IconButton>
+                  ) : (
+                    <div></div>
+                  )}
                   <Dialog
                     onClose={handleClose}
                     aria-labelledby="customized-dialog-title"
@@ -118,33 +131,46 @@ const Header = () => {
                     <DialogContent dividers>
                       <LoginContainer />
                     </DialogContent>
-                    <Button
-                      onClick={() => {
-                        history.push({
-                          pathname: '/joinsetting',
-                          // state: { kakaoIdNum: oAuthId },
-                        });
-                      }}
-                    >
-                      확인
-                    </Button>
+                    {isJoin ? (
+                      <Button
+                        onClick={() =>
+                          history.push({ pathname: '/joinsetting' })
+                        }
+                      >
+                        확인
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => history.push({ pathname: '/main' })}
+                      >
+                        확인
+                      </Button>
+                    )}
                   </Dialog>
                 </Grid>
 
                 <Grid item>
                   {/* 멤버 설정 */}
-                  <Link to="/JoinSetting">
-                    <IconButton>
-                      <SettingsIcon htmlColor="white" />
-                    </IconButton>
-                  </Link>
+                  {isAuth ? (
+                    <div></div>
+                  ) : (
+                    <Link to="/JoinSetting">
+                      <IconButton>
+                        <SettingsIcon htmlColor="white" />
+                      </IconButton>
+                    </Link>
+                  )}
                 </Grid>
 
                 <Grid item>
                   {/* 로그아웃 */}
-                  <IconButton>
-                    <LockOpenIcon htmlColor="white" />
-                  </IconButton>
+                  {isAuth ? (
+                    <div></div>
+                  ) : (
+                    <IconButton>
+                      <LockOpenIcon htmlColor="white" />
+                    </IconButton>
+                  )}
                 </Grid>
               </Grid>
             </Grid>

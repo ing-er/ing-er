@@ -1,3 +1,4 @@
+import { TramOutlined } from '@material-ui/icons';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as loginApi from '../api/auth/userAuthorization';
 
@@ -72,8 +73,14 @@ export const setKakoDialogOpen = () => ({
 export const setKakoDialogClose = () => ({
   type: DIALOGCLOSE,
 });
+
+
+const initialState = {
+  isAuth: false,
+};
+
 //* REDUCER
-export default function authorization(state = { isOpen: false }, action) {
+export default function authorization(state = initialState, action) {
   switch (action.type) {
     //* =====================
     //*   AUTH_USER
@@ -85,7 +92,7 @@ export default function authorization(state = { isOpen: false }, action) {
     case AUTH_USER_SUCCESS:
       return {
         ...state,
-        isAuth: action.payload,
+        isAuth: true,
       };
     case AUTH_USER_FAILURE:
       return {
@@ -103,12 +110,12 @@ export default function authorization(state = { isOpen: false }, action) {
         load: true,
       };
     case LOGIN_USER_SUCCESS:
-      console.log(action.payload)
       if (action.payload.length == 1){
         return {
           ...state,
           kakaoNum: action.payload,
           isJoin: true,
+          isAuth:true,
         };
       }
       else{
@@ -116,6 +123,7 @@ export default function authorization(state = { isOpen: false }, action) {
           ...state,
           userData: action.payload,
           isJoin: false,
+          isAuth: true,
         };
       }
     case LOGIN_USER_FAILURE:

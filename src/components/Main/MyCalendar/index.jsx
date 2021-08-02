@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import './Calendar.css';
 
 import Wrapper from './styles';
 

@@ -7,6 +7,7 @@ import {
   setTodolistEditTitle,
   setTodolistEditContent,
   setTodolistEditComplete,
+  setTodolistSaveData,
 } from '../modules/setTodolist';
 
 const MyTodolistComponent = ({ children }) => {
@@ -29,6 +30,9 @@ const MyTodolistComponent = ({ children }) => {
   const setTodolistEditCompl = (index, subindex) => {
     dispatch(setTodolistEditComplete(index, subindex));
   };
+  const setTodolistSave = () => {
+    dispatch(setTodolistSaveData());
+  };
 
   return cloneElement(children, {
     todolistdata: todolist,
@@ -39,6 +43,7 @@ const MyTodolistComponent = ({ children }) => {
     setTodolistEditTitle: setTodolistEditTi,
     setTodolistEditContent: setTodolistEditCon,
     setTodolistEditComplete: setTodolistEditCompl,
+    setTodolistSaveData: setTodolistSave,
   });
 };
 

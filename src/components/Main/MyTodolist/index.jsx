@@ -194,6 +194,7 @@ const MyTodolist = (props) => {
     setTodolistEditTitle,
     setTodolistEditContent,
     setTodolistEditComplete,
+    setTodolistSaveData,
   } = props;
   console.log(todolistdata);
   return (

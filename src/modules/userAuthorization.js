@@ -35,7 +35,6 @@ export const typeLogOut = () => ({
 export function* authSaga(action) {
   try {
     const authResult = yield call(loginApi.isAuthAsync, action.payload);
-    console.log(authResult)
     yield put({
       type: AUTH_USER_SUCCESS,
       payload: authResult,
@@ -49,12 +48,6 @@ export function* authSaga(action) {
 }
 export function* loginSaga(action) {
   try {
-    // const data = {
-    //   "category": 201,
-    //   "isOpen": false,
-    //   "kakaoIdNum": 1810000000,
-    //   "name": "your_name"
-    // }
     const loginResult = yield call(loginApi.loginAsync, action.payload);
     yield put({
       type: LOGIN_USER_SUCCESS,
@@ -110,13 +103,21 @@ export default function authorization(state = { isOpen: false }, action) {
         load: true,
       };
     case LOGIN_USER_SUCCESS:
-      return {
-        ...state,
-        kakaoIdNum: action.payload,
-        // loginSuccess: action.payload.loginSuccess,
-        // load: false,
-        // token: action.payload.token,
-      };
+      console.log(action.payload)
+      if (action.payload.length == 1){
+        return {
+          ...state,
+          kakaoNum: action.payload,
+          isJoin: true,
+        };
+      }
+      else{
+        return {
+          ...state,
+          userData: action.payload,
+          isJoin: false,
+        };
+      }
     case LOGIN_USER_FAILURE:
       return {
         ...state,

@@ -35,8 +35,6 @@ export const typeInitInfo = (data) => ({
 //* MAIN_SAGA_FUNCTION
 
 export function* registUserInfoSaga(action) {
-  console.log('register')
-  console.log(action)
   try {
     const result = yield call(editApi.registUserInfoAsync, action.payload);
     yield put({

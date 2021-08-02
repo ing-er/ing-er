@@ -6,7 +6,6 @@ export async function registUserInfoAsync(formData) {
     `http://localhost:8080/api/v1/users/regist`,
     formData
   );
-	console.log(response.data)
   return response.data;
 }
 

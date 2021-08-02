@@ -248,7 +248,7 @@ function MEMBERSETTING({
                   labelPlacement="top"
                   label={
                     <Box component="div" fontSize={12}>
-                      랜덤방
+                      기본 값이 ‘공개’
                     </Box>
                   }
                 />

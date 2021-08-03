@@ -109,13 +109,14 @@ const CalendarDiary = (props) => {
 };
 
 const CalendarComponent = (props) => {
-  let { setCalendarSetDate } = props;
+  let { setCalendarSetDate, setTodolistSetDate } = props;
   const onChangeDate = (value, event) => {
     let year = value.getFullYear();
     let month = ('0' + (value.getMonth() + 1)).slice(-2);
     let day = ('0' + value.getDate()).slice(-2);
     console.log(year + '-' + month + '-' + day);
     setCalendarSetDate(year + '-' + month + '-' + day);
+    setTodolistSetDate(year + '-' + month + '-' + day);
   };
 
   const formatDate = (locale, date) => {
@@ -150,6 +151,7 @@ const MyCalendar = (props) => {
     isEditablePromise,
     isEditableDiary,
     setCalendarSaveData,
+    setTodolistSetDate,
   } = props;
 
   const onClickSaveHandler = () => {
@@ -205,7 +207,10 @@ const MyCalendar = (props) => {
               01 : 53 : 05
             </Grid>
             <Grid item>
-              <CalendarComponent setCalendarSetDate={setCalendarSetDate} />
+              <CalendarComponent
+                setCalendarSetDate={setCalendarSetDate}
+                setTodolistSetDate={setTodolistSetDate}
+              />
             </Grid>
           </Grid>
         </Grid>

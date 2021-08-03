@@ -74,13 +74,9 @@ export const setKakoDialogClose = () => ({
   type: DIALOGCLOSE,
 });
 
-
-const initialState = {
-  isAuth: false,
-};
-
 //* REDUCER
-export default function authorization(state = initialState, action) {
+export default function authorization(state={}, action) {
+  console.log(state)
   switch (action.type) {
     //* =====================
     //*   AUTH_USER
@@ -92,6 +88,7 @@ export default function authorization(state = initialState, action) {
     case AUTH_USER_SUCCESS:
       return {
         ...state,
+        userData: action.payload,
         isAuth: true,
       };
     case AUTH_USER_FAILURE:
@@ -129,8 +126,7 @@ export default function authorization(state = initialState, action) {
     case LOGIN_USER_FAILURE:
       return {
         ...state,
-        loginSuccess: false,
-        load: false,
+        isAuth: false,
         error: action.payload.message,
       };
 
@@ -140,8 +136,8 @@ export default function authorization(state = initialState, action) {
     case LOG_OUT_USER:
       return {
         ...state,
-        isAuth: {},
-        logoutSuccess: true,
+        isAuth: false,
+        userData: {},
       };
 
     case DIALOGOPEN:

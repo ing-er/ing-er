@@ -74,6 +74,7 @@ function MEMBERSETTING({
   isPublic,
   setIsPublic,
   onUpdateInfo,
+  onDuplicateHandler,
 }) {
   const [open, setOpen] = React.useState(false);
 
@@ -144,6 +145,7 @@ function MEMBERSETTING({
                     fontWeight: 'bold',
                     backgroundColor: '#E96F02',
                   }}
+                  onClick={onDuplicateHandler}
                 >
                   중복 확인
                 </Button>
@@ -238,10 +240,6 @@ function MEMBERSETTING({
                     <Switch
                       value={isPublic}
                       onChange={handleSwitchChange}
-                      // onChange={(e) => {
-                      //   console.log(e);
-                      //   setIsPublic(e.target.value);
-                      // }}
                       style={{ color: '#E96F02' }}
                     />
                   }

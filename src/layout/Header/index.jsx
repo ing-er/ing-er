@@ -39,7 +39,7 @@ const styles = (theme) => ({
   },
 });
 
-const Header = ({ isJoin, isAuth }) => {
+const Header = ({ isJoin, isAuth, onLogOutHandler, onLoginHandler }) => {
   const isTablet = useMediaQuery('(max-width:960px)');
   const history = useHistory();
 
@@ -81,7 +81,7 @@ const Header = ({ isJoin, isAuth }) => {
 
                 <Grid item>
                   {/* 마이페이지 */}
-                  {isAuth ? (
+                  {!isAuth ? (
                     <div></div>
                   ) : (
                     <Link to="/Main">
@@ -94,7 +94,7 @@ const Header = ({ isJoin, isAuth }) => {
 
                 <Grid item>
                   {/* 방 입장 */}
-                  {isAuth ? (
+                  {!isAuth ? (
                     <div></div>
                   ) : (
                     <Link to="/room">
@@ -110,12 +110,12 @@ const Header = ({ isJoin, isAuth }) => {
             <Grid item>
               <Grid container alignItems="center">
                 <Grid item>
-                  {isAuth == false ? (
+                  {isAuth ? (
+                    <div></div>
+                  ) : (
                     <IconButton onClick={handleClickOpen}>
                       <LockIcon htmlColor="white" />
                     </IconButton>
-                  ) : (
-                    <div></div>
                   )}
                   <Dialog
                     onClose={handleClose}
@@ -131,7 +131,8 @@ const Header = ({ isJoin, isAuth }) => {
                     <DialogContent dividers>
                       <LoginContainer />
                     </DialogContent>
-                    {isJoin ? (
+                    <Button onClick={onLoginHandler}>확인</Button>
+                    {/* {isJoin ? (
                       <Button
                         onClick={() =>
                           history.push({ pathname: '/joinsetting' })
@@ -145,13 +146,13 @@ const Header = ({ isJoin, isAuth }) => {
                       >
                         확인
                       </Button>
-                    )}
+                    )} */}
                   </Dialog>
                 </Grid>
 
                 <Grid item>
                   {/* 멤버 설정 */}
-                  {isAuth ? (
+                  {!isAuth ? (
                     <div></div>
                   ) : (
                     <Link to="/JoinSetting">
@@ -164,10 +165,10 @@ const Header = ({ isJoin, isAuth }) => {
 
                 <Grid item>
                   {/* 로그아웃 */}
-                  {isAuth ? (
+                  {!isAuth ? (
                     <div></div>
                   ) : (
-                    <IconButton>
+                    <IconButton onClick={onLogOutHandler}>
                       <LockOpenIcon htmlColor="white" />
                     </IconButton>
                   )}

@@ -16,9 +16,7 @@ return formData.oAuthId;
 }
 
 export async function isAuthAsync() {
-  console.log('auth sync')
   const token = window.localStorage.getItem('CURRENT_USER');
-  console.log(token)
   const response = await axios.get(
     `http://localhost:8080/api/v1/users/${token}/`,
     // { 헤더 추가할 일 있으면 써야지
@@ -29,6 +27,7 @@ export async function isAuthAsync() {
     //   withCredentials: true,
     // }
   );
+  console.log(response)
   if (!response.status == 200) {
     throw new Error('사용자 인증에 실패했습니다.');
   }

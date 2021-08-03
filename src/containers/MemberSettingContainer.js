@@ -4,14 +4,16 @@ import MemberSetting from '../components/Entrance/MemberSetting';
 import {
   typeGetUserInfo,
   typeInitInfo,
+  typeCheckUserNickname,
 } from '../modules/memberSetting';
 
 function MemberSettingContainer() {
   const dispatch = useDispatch();
   // useSelector는 리덕스 스토어의 상태를 조회.
   // useSelector를 통해 rootReducer에 있는 타 모듈을 불러옴.
-  const { kakaoIdNum, info } = useSelector(({authorization, memberSetting }) => ({
+  const { kakaoIdNum, isDuplicated, info } = useSelector(({authorization, memberSetting }) => ({
     kakaoIdNum: authorization.kakaoIdNum,
+    isDuplicated: memberSetting.isDuplicated,
     info: memberSetting.info,
   }));
 
@@ -36,8 +38,17 @@ function MemberSettingContainer() {
       "kakaoIdNum": kakaoIdNum,
       "name": nickname,
     };
-    console.log(data)
     dispatch(typeInitInfo(data));
+  };
+
+  const onDuplicateHandler = () => {
+    const data = nickname
+    dispatch(typeCheckUserNickname(data))
+    if (!isDuplicated){
+      alert('사용 가능한 닉네임입니다.')
+    } else {
+      alert('이미 존재하는 닉네임입니다.')
+    }
   };
 
   return (
@@ -50,6 +61,7 @@ function MemberSettingContainer() {
       setCategory={setCategory}
       isPublic={isPublic}
       setIsPublic={setIsPublic}
+      onDuplicateHandler={onDuplicateHandler}
       onUpdateInfo={onUpdateInfo}
     />
   );

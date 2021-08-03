@@ -1,6 +1,7 @@
 import Header from './Header';
 import { Container, CssBaseline } from '@material-ui/core';
 import Wrapper from './styles';
+import HeaderContainer from '../containers/HeaderContainer';
 
 const Layout = (props) => {
   const { children, isEntrance } = props;
@@ -10,7 +11,7 @@ const Layout = (props) => {
       {isEntrance && (
         <Wrapper style={{ backgroundImage: 'url(img/inger_background.png)' }}>
           <CssBaseline />
-          <Header />
+          <HeaderContainer />
           <Container className="content">
             <div className="container">{children}</div>
           </Container>
@@ -19,7 +20,7 @@ const Layout = (props) => {
       {!isEntrance && (
         <Wrapper>
           <CssBaseline />
-          <Header />
+          <HeaderContainer />
           <Container className="content">
             <div className="container">{children}</div>
           </Container>

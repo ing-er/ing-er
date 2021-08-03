@@ -8,6 +8,7 @@ import {
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import Calendar from 'react-calendar';
 import './Calendar.css';
+import dayjs from 'dayjs';
 
 import Wrapper from './styles';
 
@@ -117,9 +118,22 @@ const CalendarComponent = (props) => {
     setCalendarSetDate(year + '-' + month + '-' + day);
   };
 
+  const formatDate = (locale, date) => {
+    let day = dayjs(date).format('DD');
+    if (day.charAt(0) === '0') {
+      day = day.slice(1);
+    }
+    return day;
+  };
+
   return (
     <Container className="calendar-container">
-      <Calendar className="calendar" onChange={onChangeDate} />
+      <Calendar
+        className="calendar"
+        onChange={onChangeDate}
+        calendarType="US"
+        formatDay={(locale, date) => formatDate(locale, date)}
+      />
     </Container>
   );
 };

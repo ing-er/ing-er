@@ -69,10 +69,10 @@
   padding: calc(0.75em / 0.75) calc(0.5em / 0.75);
 }
 
-.react-calendar__month-view__days__day--weekend:nth-child(7n) {
+.react-calendar__month-view__days__day--weekend:nth-child(7n + 1) {
   color: #d10000;
 }
-.react-calendar__month-view__days__day--weekend:nth-child(7n + 6) {
+.react-calendar__month-view__days__day--weekend:nth-child(7n) {
   color: #0000d1;
 }
 .react-calendar__month-view__days__day--neighboringMonth {

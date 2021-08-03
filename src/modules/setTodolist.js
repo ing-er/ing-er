@@ -83,12 +83,21 @@ function getTodolistData() {
     .then((res) => {
       res.data.map((x, index) => {
         let todolistDetail = [];
+        let todolistDetailCopy = [];
         x.detail.map((y, idx) => {
           todolistTotal++;
           if (y.isFinish === true) {
             todolistComplete++;
           }
           todolistDetail.push({
+            id: y.id,
+            todoidx: index,
+            detailidx: idx,
+            content: y.detail,
+            complete: y.isFinish,
+            isChanged: false,
+          });
+          todolistDetailCopy.push({
             id: y.id,
             todoidx: index,
             detailidx: idx,
@@ -112,10 +121,11 @@ function getTodolistData() {
             date: x.date,
             title: x.todo,
             isChanged: false,
-            list: todolistDetail,
+            list: todolistDetailCopy,
           });
         }
       });
+      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);
@@ -353,10 +363,15 @@ const setTodolist = (state = initialState, action) => {
             console.log(err);
           });
       }
-
+      todaydate = state.requestdate;
+      todolistData = [];
+      todolistToday = [];
+      getTodolistData();
+      state.allTodolist = todolistData;
+      state.todolist = todolistToday;
       return {
         ...state,
-        // todolist: [...state.todolist],
+        todolist: [...state.todolist],
       };
     case SETDATE:
       state.requestdate = action.payload;

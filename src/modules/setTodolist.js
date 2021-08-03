@@ -125,7 +125,7 @@ function getTodolistData() {
           });
         }
       });
-      console.log(res.data);
+      console.log('load 완료..');
     })
     .catch((err) => {
       console.log(err);
@@ -371,18 +371,18 @@ const setTodolist = (state = initialState, action) => {
       state.todolist = todolistToday;
       return {
         ...state,
-        todolist: [...state.todolist],
+        todolist: state.todolist,
       };
     case SETDATE:
       state.requestdate = action.payload;
-      let todolistdate = [];
-      let todoTotal = 0;
-      let todoCompl = 0;
+      todolistToday = [];
+      todolistTotal = 0;
+      todolistComplete = 0;
       state.allTodolist.map((x, index) => {
         if (x.date === state.requestdate) {
-          let todolistdatedetail = [];
+          let todolistDetail = [];
           x.list.map((y, idx) => {
-            todolistdatedetail.push({
+            todolistDetail.push({
               id: y.id,
               todoidx: index,
               detailidx: idx,
@@ -391,27 +391,27 @@ const setTodolist = (state = initialState, action) => {
               isChanged: false,
             });
           });
-          todolistdate.push({
+          todolistToday.push({
             id: x.id,
             date: x.date,
             title: x.title,
             isChanged: false,
-            list: todolistdatedetail,
+            list: todolistDetail,
             todoidx: x.todoidx,
           });
-          todoTotal += x.list.length;
+          todolistTotal += x.list.length;
           x.list.map((y, idx) => {
             if (y.complete === true) {
-              todoCompl++;
+              todolistComplete++;
             }
           });
         }
       });
-      state.todolist = todolistdate;
-      state.todocomplete = todoCompl;
-      state.todototal = todoTotal;
-      state.todopercent = (todoCompl / todoTotal) * 100;
-      if (todoTotal === 0) {
+      state.todolist = todolistToday;
+      state.todocomplete = todolistComplete;
+      state.todototal = todolistTotal;
+      state.todopercent = (todolistComplete / todolistTotal) * 100;
+      if (todolistTotal === 0) {
         state.todopercent = 0;
       }
       return {

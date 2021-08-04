@@ -4,7 +4,7 @@ export const EDITPROMISE = 'EDITPROMISE';
 export const EDITDIARY = 'EDITDIARY';
 export const EDITPROMISEISEDITABLE = 'EDITPROMISEISEDITABLE';
 export const EDITDIARYISEDITABLE = 'EDITDIARYISEDITABLE';
-export const SETDATE = 'SETDATE';
+export const SETDATE = 'CALENDAR/SETDATE';
 export const SAVEDATA = 'SAVEDATA';
 
 const HOST = 'localhost:8080';
@@ -51,6 +51,13 @@ export const setCalendarSaveData = () => ({
 });
 
 let list = [];
+let listToday = {};
+let today = new Date();
+let year = today.getFullYear();
+let month = ('0' + (today.getMonth() + 1)).slice(-2);
+let day = ('0' + today.getDate()).slice(-2);
+let todaydate = year + '-' + month + '-' + day;
+
 function getCalendarData() {
   axios.get(serverUrl + '/calendar/list/' + 1).then((res) => {
     res.data.map((x, index) => {
@@ -60,26 +67,25 @@ function getCalendarData() {
         diary: x.diary,
         id: x.id,
       });
+      if (x.date === todaydate) {
+        listToday = {
+          date: x.date,
+          promise: x.promise,
+          diary: x.diary,
+          id: x.id,
+        };
+      }
     });
   });
 }
 getCalendarData();
-let today = new Date();
-let year = today.getFullYear();
-let month = ('0' + (today.getMonth() + 1)).slice(-2);
-let day = ('0' + today.getDate()).slice(-2);
 
 const initialState = {
   calendar: list,
   isEditablePromise: false,
   isEditableDiary: false,
-  requestdate: year + '-' + month + '-' + day,
-  requestcalendar: {
-    date: '',
-    promise: '',
-    diary: '',
-    id: -1,
-  },
+  requestdate: todaydate,
+  requestcalendar: listToday,
 };
 
 const setCalendar = (state = initialState, action) => {

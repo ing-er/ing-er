@@ -194,8 +194,13 @@ const MyTodolist = (props) => {
     setTodolistEditTitle,
     setTodolistEditContent,
     setTodolistEditComplete,
+    setTodolistSaveData,
   } = props;
   console.log(todolistdata);
+
+  const onClickSaveTodolist = (e) => {
+    setTodolistSaveData();
+  };
   return (
     <Wrapper>
       <Grid
@@ -233,6 +238,7 @@ const MyTodolist = (props) => {
             <Button
               className="enter-button"
               variant="outlined"
+              onClick={onClickSaveTodolist}
               style={{
                 fontSize: 15,
                 fontWeight: 'bold',

@@ -58,7 +58,8 @@ function MemberSettingContainer() {
   };
 
   const onDuplicateHandler = () => {
-    fetch(`http://localhost:8080/api/v1/users/checkname/${nickname}`, {
+    // fetch(`http://localhost:8080/api/v1/users/checkname/${nickname}`, {
+    fetch(`http://i5a208.p.ssafy.io:8080/api/v1/users/checkname/${nickname}`, {
         method: "GET",
       })
       .then(response => {if(response.status === 200){
@@ -73,7 +74,8 @@ function MemberSettingContainer() {
 
   const onWithdrawalHandler = () => {
     console.log(kakaoIdNum)
-    fetch(`http://localhost:8080/api/v1/users/${kakaoIdNum}`, {
+    // fetch(`http://localhost:8080/api/v1/users/${kakaoIdNum}`, {
+    fetch(`http://i5a208.p.ssafy.io:8080/api/v1/users/${kakaoIdNum}`, {
         method: "DELETE",
       })
       .then(response => {if(response.status === 200){

@@ -77,27 +77,18 @@ let month = ('0' + (today.getMonth() + 1)).slice(-2);
 let day = ('0' + today.getDate()).slice(-2);
 let todaydate = year + '-' + month + '-' + day;
 
-function getTodolistData() {
-  axios
+async function getTodolistData() {
+  await axios
     .get(serverUrl + '/todoList/select/' + 1)
     .then((res) => {
       res.data.map((x, index) => {
         let todolistDetail = [];
-        let todolistDetailCopy = [];
         x.detail.map((y, idx) => {
           todolistTotal++;
           if (y.isFinish === true) {
             todolistComplete++;
           }
           todolistDetail.push({
-            id: y.id,
-            todoidx: index,
-            detailidx: idx,
-            content: y.detail,
-            complete: y.isFinish,
-            isChanged: false,
-          });
-          todolistDetailCopy.push({
             id: y.id,
             todoidx: index,
             detailidx: idx,
@@ -115,14 +106,7 @@ function getTodolistData() {
           list: todolistDetail,
         });
         if (x.date === todaydate) {
-          todolistToday.push({
-            id: x.id,
-            todoidx: index,
-            date: x.date,
-            title: x.todo,
-            isChanged: false,
-            list: todolistDetailCopy,
-          });
+          todolistToday.push(todolistData[index]);
         }
       });
       console.log('load 완료..');
@@ -136,7 +120,7 @@ getTodolistData();
 
 const initialState = {
   allTodolist: todolistData,
-  todolist: [],
+  todolist: todolistToday,
   todototal: todolistTotal,
   todocomplete: todolistComplete,
   todopercent:
@@ -152,14 +136,6 @@ const setTodolist = (state = initialState, action) => {
   switch (action.type) {
     case ADDCONTAINER:
       let len = state.allTodolist.length;
-      state.todolist.push({
-        id: -1,
-        todoidx: len,
-        title: action.payload,
-        isChanged: true,
-        date: state.requestdate,
-        list: [],
-      });
       state.allTodolist.push({
         id: -1,
         todoidx: len,
@@ -168,6 +144,7 @@ const setTodolist = (state = initialState, action) => {
         date: state.requestdate,
         list: [],
       });
+      state.todolist.push(state.allTodolist[len]);
       return {
         ...state,
         todolist: state.todolist,
@@ -175,14 +152,6 @@ const setTodolist = (state = initialState, action) => {
     case ADDINPUT:
       let idx = state.todolist[action.payload].todoidx;
       let listlen = state.todolist[action.payload].list.length;
-      state.todolist[action.payload].list.push({
-        id: -1,
-        todoidx: idx,
-        detailidx: listlen,
-        content: '',
-        complete: false,
-        isChanged: true,
-      });
       let todolistIdx = state.allTodolist.map((x) => x.todoidx).indexOf(idx);
       console.log('todolistIdx : ' + todolistIdx);
       state.allTodolist[todolistIdx].list.push({
@@ -203,10 +172,6 @@ const setTodolist = (state = initialState, action) => {
     case EDITTITLE:
       state.todolist[action.payload.index].title = action.payload.title;
       state.todolist[action.payload.index].isChanged = true;
-      let todoIdx = state.todolist[action.payload.index].todoidx;
-      let todoindex = state.allTodolist.map((x) => x.todoidx).indexOf(todoIdx);
-      state.allTodolist[todoindex].title = action.payload.title;
-      state.allTodolist[todoindex].isChanged = true;
       return {
         ...state,
         todolist: state.todolist,
@@ -218,21 +183,6 @@ const setTodolist = (state = initialState, action) => {
       state.todolist[action.payload.index].list[
         action.payload.subindex
       ].isChanged = true;
-      let todoListIdx =
-        state.todolist[action.payload.index].list[action.payload.subindex]
-          .todoidx;
-      let subTodoIdx =
-        state.todolist[action.payload.index].list[action.payload.subindex]
-          .detailidx;
-      let todoIndex = state.allTodolist
-        .map((x) => x.todoidx)
-        .indexOf(todoListIdx);
-      let subTodoindex = state.allTodolist[todoIndex].list
-        .map((x) => x.detailidx)
-        .indexOf(subTodoIdx);
-      state.allTodolist[todoIndex].list[subTodoindex].content =
-        action.payload.content;
-      state.allTodolist[todoIndex].list[subTodoindex].isChanged = true;
       return {
         ...state,
         todolist: state.todolist,
@@ -246,21 +196,6 @@ const setTodolist = (state = initialState, action) => {
       state.todolist[action.payload.index].list[
         action.payload.subindex
       ].isChanged = true;
-      let TodoListIdx =
-        state.todolist[action.payload.index].list[action.payload.subindex]
-          .todoidx;
-      let SubTodoIdx =
-        state.todolist[action.payload.index].list[action.payload.subindex]
-          .detailidx;
-      let TodoIndex = state.allTodolist
-        .map((x) => x.todoidx)
-        .indexOf(TodoListIdx);
-      let SubTodoIndex = state.allTodolist[TodoIndex].list
-        .map((x) => x.detailidx)
-        .indexOf(SubTodoIdx);
-      state.allTodolist[TodoIndex].list[SubTodoIndex].complete =
-        !state.allTodolist[TodoIndex].list[SubTodoIndex].complete;
-      state.allTodolist[TodoIndex].list[SubTodoIndex].isChanged = true;
       if (
         state.todolist[action.payload.index].list[action.payload.subindex]
           .complete === true
@@ -380,25 +315,7 @@ const setTodolist = (state = initialState, action) => {
       todolistComplete = 0;
       state.allTodolist.map((x, index) => {
         if (x.date === state.requestdate) {
-          let todolistDetail = [];
-          x.list.map((y, idx) => {
-            todolistDetail.push({
-              id: y.id,
-              todoidx: index,
-              detailidx: idx,
-              content: y.content,
-              complete: y.complete,
-              isChanged: false,
-            });
-          });
-          todolistToday.push({
-            id: x.id,
-            date: x.date,
-            title: x.title,
-            isChanged: false,
-            list: todolistDetail,
-            todoidx: x.todoidx,
-          });
+          todolistToday.push(state.allTodolist[index]);
           todolistTotal += x.list.length;
           x.list.map((y, idx) => {
             if (y.complete === true) {

@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   background-color: #1E1F26;
 `
 
-const drawerWidth = 300;
+const drawerWidth = 400;
 export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',

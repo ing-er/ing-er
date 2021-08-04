@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   &:before {
     content: '';
     display: block;
-    padding-top: 52.65%;
+    padding-top: 56.25%;
   }
 
   & .conference-content {
@@ -22,6 +22,11 @@ const Wrapper = styled.div`
     bottom: 0;
     left: 0;
   }
+  & .screen {
+    width: 100%;
+    height: 100%;
+  }
+
 `;
 
 export default Wrapper;

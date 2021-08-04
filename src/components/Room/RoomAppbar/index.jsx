@@ -3,6 +3,8 @@ import clsx from 'clsx';
 import RoomClose from '../../buttons/RoomClose';
 import RoomPause from '../../buttons/RoomPause';
 
+import { Link } from 'react-router-dom';
+
 import {
   IconButton,
 } from '@material-ui/core';
@@ -16,8 +18,14 @@ import {
   useDrawerStyles
 } from './styles';
 
-const RoomAppbar = ({ handleDrawerOpen, open, classes }) => {
+const RoomAppbar = ({ handleDrawerOpen, leaveSession, open, classes }) => {
   const drawerClasses = useDrawerStyles();
+
+  const handleLeaveSession = (e) => {
+    console.log('!!!!!!!!!!!!!!leave session!!!!!!!!!!!')
+    console.log(e)
+    leaveSession()
+  }
 
   return (
     <Wrapper>
@@ -27,9 +35,17 @@ const RoomAppbar = ({ handleDrawerOpen, open, classes }) => {
         <IconButton className="room-buttons-container">
           <RoomPause className="room-pause" />
         </IconButton>
-        <IconButton className="room-buttons-container">
-          <RoomClose className="room-close" />
-        </IconButton>
+        <Link
+          to='/webrtc'
+          onClick={handleLeaveSession}
+        >
+          <IconButton 
+            className="room-buttons-container"
+            onClick={handleLeaveSession}
+          >
+            <RoomClose className="room-close" />
+          </IconButton>
+        </Link>
       </div>
       <div className="open-drawer-container">
         <IconButton

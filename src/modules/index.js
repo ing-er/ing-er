@@ -8,6 +8,14 @@ import setTodolist from './setTodolist';
 import setCalendar from './setCalendar';
 import setTimer from './setTimer';
 
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
 const rootReducer = combineReducers({
   setMainIndex,
   setIsRandomRoom,
@@ -22,4 +30,8 @@ export function* rootSaga() {
   yield all([userAuthorizationSaga(), userInfoSaga()]);
 }
 
-export default rootReducer;
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export default persistedReducer;
+// export default rootReducer;

@@ -34,21 +34,6 @@ export const typeInitInfo = (data) => ({
 
 //* MAIN_SAGA_FUNCTION
 
-export function* registUserInfoSaga(action) {
-  try {
-    const result = yield call(editApi.registUserInfoAsync, action.payload);
-    yield put({
-      type: INIT_USER_INFO_SUCCESS,
-      payload: result,
-    });
-  } catch (e) {
-    yield put({
-      type: INIT_USER_INFO_FAILURE,
-      payload: e,
-    });
-  }
-}
-
 export function* getUserInfoSaga() {
   try {
     const result = yield call(editApi.getUserInfoAsync);
@@ -59,6 +44,21 @@ export function* getUserInfoSaga() {
   } catch (e) {
     yield put({
       type: GET_USER_INFO_FAILURE,
+      payload: e,
+    });
+  }
+}
+
+export function* registUserInfoSaga(action) {
+  try {
+    const result = yield call(editApi.registUserInfoAsync, action.payload);
+    yield put({
+      type: INIT_USER_INFO_SUCCESS,
+      payload: result,
+    });
+  } catch (e) {
+    yield put({
+      type: INIT_USER_INFO_FAILURE,
       payload: e,
     });
   }
@@ -81,8 +81,8 @@ export function* updateUserInfoSaga(action) {
 
 //* WATCHER_SAGA_FUNCTION
 export function* userInfoSaga() {
-  yield takeLatest(INIT_USER_INFO, registUserInfoSaga);
   yield takeLatest(GET_USER_INFO, getUserInfoSaga);
+  yield takeLatest(INIT_USER_INFO, registUserInfoSaga);
   yield takeLatest(POST_UPDATE_USER_INFO, updateUserInfoSaga);
 }
 

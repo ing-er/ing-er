@@ -1,3 +1,4 @@
+import { TramOutlined } from '@material-ui/icons';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as loginApi from '../api/auth/userAuthorization';
 
@@ -32,13 +33,14 @@ export const typeLogOut = () => ({
 });
 
 //* MAIN_SAGA_FUNCTION
+
 export function* authSaga(action) {
   try {
     const authResult = yield call(loginApi.isAuthAsync, action.payload);
-    console.log(authResult)
     yield put({
       type: AUTH_USER_SUCCESS,
       payload: authResult,
+      kakaoIdNum: action.payload
     });
   } catch (e) {
     yield put({
@@ -49,12 +51,6 @@ export function* authSaga(action) {
 }
 export function* loginSaga(action) {
   try {
-    // const data = {
-    //   "category": 201,
-    //   "isOpen": false,
-    //   "kakaoIdNum": 1810000000,
-    //   "name": "your_name"
-    // }
     const loginResult = yield call(loginApi.loginAsync, action.payload);
     yield put({
       type: LOGIN_USER_SUCCESS,
@@ -79,8 +75,9 @@ export const setKakoDialogOpen = () => ({
 export const setKakoDialogClose = () => ({
   type: DIALOGCLOSE,
 });
+
 //* REDUCER
-export default function authorization(state = { isOpen: false }, action) {
+export default function authorization(state={}, action) {
   switch (action.type) {
     //* =====================
     //*   AUTH_USER
@@ -90,14 +87,35 @@ export default function authorization(state = { isOpen: false }, action) {
         ...state,
       };
     case AUTH_USER_SUCCESS:
-      return {
-        ...state,
-        isAuth: action.payload,
+      //* 카카오 아이디가 없는 상태
+      if (action.payload === 1) {
+        return {
+          isAuth: false,
+          isJoin: false,
+        }
+      } else if (action.payload === 2) {
+        //* 회원가입하려는 상태
+        return {
+          ...state,
+          isAuth: false,
+          isJoin: true,
+          kakaoIdNum: action.kakaoIdNum,
+        }
+      } else {
+        //* 로그인되어 있는 상태
+        return {
+          ...state,
+          userData: action.payload,
+          isAuth: true,
+          isJoin: false,
+          kakaoIdNum: action.kakaoIdNum,
+        };
       };
     case AUTH_USER_FAILURE:
       return {
         ...state,
         isAuth: false,
+        isJoin: false,
         error: action.payload.message,
       };
 
@@ -107,21 +125,29 @@ export default function authorization(state = { isOpen: false }, action) {
     case LOGIN_USER:
       return {
         ...state,
-        load: true,
       };
     case LOGIN_USER_SUCCESS:
-      return {
-        ...state,
-        kakaoIdNum: action.payload,
-        // loginSuccess: action.payload.loginSuccess,
-        // load: false,
-        // token: action.payload.token,
-      };
+      //* 등록된 유저일 때,
+      if (isNaN(action.payload)) {
+        return {
+          ...state,
+          userData: action.payload,
+          isAuth: true,
+          isJoin: false,
+        };
+      }
+      else {
+        return {
+          ...state,
+          kakaoIdNum: action.payload,
+          isJoin: true,
+          isAuth: false,
+        };
+      }
     case LOGIN_USER_FAILURE:
       return {
         ...state,
-        loginSuccess: false,
-        load: false,
+        isAuth: false,
         error: action.payload.message,
       };
 
@@ -131,8 +157,8 @@ export default function authorization(state = { isOpen: false }, action) {
     case LOG_OUT_USER:
       return {
         ...state,
-        isAuth: {},
-        logoutSuccess: true,
+        isAuth: false,
+        userData: {},
       };
 
     case DIALOGOPEN:

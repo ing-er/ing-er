@@ -28,15 +28,8 @@ export async function getUserInfoAsync(formData) {
 export async function postUserUpdateAsync(data) {
   const { token } = JSON.parse(localStorage.getItem('CURRENT_USER'));
   const response = await axios.post(
-    'http://3.140.150.124:5000/api/auth/updateuser',
+    'http://localhost:8080/api/v1/regist',
     data,
-    {
-      headers: {
-        xauth: token,
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-    }
   );
   return response.data;
 }

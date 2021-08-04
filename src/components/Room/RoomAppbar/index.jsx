@@ -11,21 +11,23 @@ import { ChevronLeft } from '@material-ui/icons';
 
 import { Wrapper, useDrawerStyles } from './styles';
 
-const RoomAppbar = ({ handleDrawerOpen, leaveSession, open, classes }) => {
+const RoomAppbar = ({ handleDrawerOpen, leaveSession, handleVideoMute, open, classes }) => {
   const drawerClasses = useDrawerStyles();
 
   const handleLeaveSession = (e) => {
     leaveSession()
   }
 
+
   return (
     <Wrapper>
-      <div
-        className={clsx(drawerClasses.content, {
-          [drawerClasses.contentShift]: open,
-        })}
-      >
-        <IconButton className="room-buttons-container">
+      <div className={clsx(drawerClasses.content, {
+        [drawerClasses.contentShift]: open,
+      })}>
+        <IconButton
+          onClick={handleVideoMute}
+          className="room-buttons-container"
+        >
           <RoomPause className="room-pause" />
         </IconButton>
         <Link

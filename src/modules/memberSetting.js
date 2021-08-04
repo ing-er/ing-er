@@ -7,11 +7,6 @@ const GET_USER_INFO = 'memberSetting/GET_USER_INFO';
 const GET_USER_INFO_SUCCESS = 'memberSetting/GET_USER_INFO_SUCCESS';
 const GET_USER_INFO_FAILURE = 'memberSetting/GET_USER_INFO_FAILURE';
 
-//* GET_USER_INFO
-const CHECK_USER_NICKNAME = 'memberSetting/CHECK_USER_NICKNAME';
-const CHECK_USER_NICKNAME_SUCCESS = 'memberSetting/CHECK_USER_NICKNAME_SUCCESS';
-const CHECK_USER_NICKNAME_FAILURE = 'memberSetting/CHECK_USER_NICKNAME_FAILURE';
-
 //* POST_UPDATE_USER_INFO
 const POST_UPDATE_USER_INFO = 'userEdit/POST_UPDATE_USER_INFO';
 const POST_UPDATE_USER_INFO_SUCCESS = 'userEdit/POST_UPDATE_USER_INFO_SUCCESS';
@@ -25,11 +20,6 @@ const INIT_USER_INFO_FAILURE = 'userEdit/INIT_UPDATE_INFO_FAILURE';
 //* GENERATE_TYPE_FUNCTION
 export const typeGetUserInfo = () => ({
   type: GET_USER_INFO,
-});
-
-export const typeCheckUserNickname = (data) => ({
-  type: CHECK_USER_NICKNAME,
-  payload: data,
 });
 
 export const typeUpdateUserInfo = (data) => ({
@@ -54,21 +44,6 @@ export function* getUserInfoSaga() {
   } catch (e) {
     yield put({
       type: GET_USER_INFO_FAILURE,
-      payload: e,
-    });
-  }
-}
-
-export function* checkUserNicknameSaga(action) {
-  try {
-    const result = yield call(editApi.checkUserNicknameAsync, action.payload);
-    yield put({
-      type: CHECK_USER_NICKNAME_SUCCESS,
-      payload: result,
-    });
-  } catch (e) {
-    yield put({
-      type: CHECK_USER_NICKNAME_FAILURE,
       payload: e,
     });
   }
@@ -107,7 +82,6 @@ export function* updateUserInfoSaga(action) {
 //* WATCHER_SAGA_FUNCTION
 export function* userInfoSaga() {
   yield takeLatest(GET_USER_INFO, getUserInfoSaga);
-  yield takeLatest(CHECK_USER_NICKNAME, checkUserNicknameSaga);
   yield takeLatest(INIT_USER_INFO, registUserInfoSaga);
   yield takeLatest(POST_UPDATE_USER_INFO, updateUserInfoSaga);
 }
@@ -135,22 +109,6 @@ export default function memberSetting(state = initialState, action) {
       return {
         ...state,
         error: action.payload,
-      };
-
-    //*   CHECK_USER_NICKNAME
-    case CHECK_USER_NICKNAME:
-      return {
-        ...state,
-      };
-    case CHECK_USER_NICKNAME_SUCCESS:
-      return {
-        ...state,
-        isduplicated: false
-      };
-    case CHECK_USER_NICKNAME_FAILURE:
-      return {
-        ...state,
-        isduplicated: true,
       };
 
     case POST_UPDATE_USER_INFO:

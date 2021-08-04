@@ -33,12 +33,14 @@ export const typeLogOut = () => ({
 });
 
 //* MAIN_SAGA_FUNCTION
+
 export function* authSaga(action) {
   try {
     const authResult = yield call(loginApi.isAuthAsync, action.payload);
     yield put({
       type: AUTH_USER_SUCCESS,
       payload: authResult,
+      kakaoIdNum: action.payload
     });
   } catch (e) {
     yield put({
@@ -76,7 +78,6 @@ export const setKakoDialogClose = () => ({
 
 //* REDUCER
 export default function authorization(state={}, action) {
-  console.log(state)
   switch (action.type) {
     //* =====================
     //*   AUTH_USER
@@ -86,15 +87,35 @@ export default function authorization(state={}, action) {
         ...state,
       };
     case AUTH_USER_SUCCESS:
-      return {
-        ...state,
-        userData: action.payload,
-        isAuth: true,
+      //* 카카오 아이디가 없는 상태
+      if (action.payload === 1) {
+        return {
+          isAuth: false,
+          isJoin: false,
+        }
+      } else if (action.payload === 2) {
+        //* 회원가입하려는 상태
+        return {
+          ...state,
+          isAuth: false,
+          isJoin: true,
+          kakaoIdNum: action.kakaoIdNum,
+        }
+      } else {
+        //* 로그인되어 있는 상태
+        return {
+          ...state,
+          userData: action.payload,
+          isAuth: true,
+          isJoin: false,
+          kakaoIdNum: action.kakaoIdNum,
+        };
       };
     case AUTH_USER_FAILURE:
       return {
         ...state,
         isAuth: false,
+        isJoin: false,
         error: action.payload.message,
       };
 
@@ -104,23 +125,23 @@ export default function authorization(state={}, action) {
     case LOGIN_USER:
       return {
         ...state,
-        load: true,
       };
     case LOGIN_USER_SUCCESS:
-      if (action.payload.length == 1){
-        return {
-          ...state,
-          kakaoNum: action.payload,
-          isJoin: true,
-          isAuth:true,
-        };
-      }
-      else{
+      //* 등록된 유저일 때,
+      if (isNaN(action.payload)) {
         return {
           ...state,
           userData: action.payload,
-          isJoin: false,
           isAuth: true,
+          isJoin: false,
+        };
+      }
+      else {
+        return {
+          ...state,
+          kakaoIdNum: action.payload,
+          isJoin: true,
+          isAuth: false,
         };
       }
     case LOGIN_USER_FAILURE:

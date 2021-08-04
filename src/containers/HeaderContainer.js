@@ -9,9 +9,10 @@ function HeaderContainer() {
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-  const { isJoin, isAuth } = useSelector(({ authorization }) => ({
+  const { isJoin, isAuth, state } = useSelector(({ authorization }) => ({
     isJoin: authorization.isJoin,
     isAuth: authorization.isAuth,
+    state: authorization.state,
   }));
 
 	const onLogOutHandler = () => {
@@ -21,8 +22,8 @@ function HeaderContainer() {
   };
 
   const onLoginHandler = () => {
-    if (!isAuth){
-      alert('로그인 하셔야 입장 가능합니다.')
+    if (isJoin === false && isAuth === false){
+      alert('로그인 후 입장 가능합니다.')
     } else {
       if(isJoin){
         history.push({ pathname: '/joinsetting' });

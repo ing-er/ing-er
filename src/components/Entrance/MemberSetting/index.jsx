@@ -67,6 +67,8 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 function MEMBERSETTING({
+  isJoin,
+  isAuth,
   nickname,
   setNickname,
   category,
@@ -129,10 +131,6 @@ function MEMBERSETTING({
                         setNickname(e.target.value);
                       }}
                     />
-                    {/* <TextField
-                      className="nickname-input"
-                      type="nickname" value={diffNickname} onChange={onNicknameChange} /> */}
-                    {/* <TextField id="input-with-icon-grid" label="With a grid" /> */}
                   </Grid>
                 </Grid>
               </Grid>
@@ -253,78 +251,82 @@ function MEMBERSETTING({
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Grid
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
-              xs={12}
-            >
-              <Grid item xs={2}>
-                <h1>회원 탈퇴</h1>
-              </Grid>
-              <Grid item xs={8}></Grid>
-              <Grid item xs={2}>
-                <Button
-                  variant="outlined"
-                  style={{
-                    borderRadius: '1.25rem',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    backgroundColor: '#CD0C22',
-                  }}
-                  onClick={handleClickOpen}
-                >
-                  탈퇴하기
-                </Button>
-                <Dialog
-                  onClose={handleClose}
-                  aria-labelledby="customized-dialog-title"
-                  open={open}
-                >
-                  <DialogTitle
-                    id="customized-dialog-title"
-                    onClose={handleClose}
+          {!isJoin && isAuth ? (
+            <Grid item xs={12}>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                xs={12}
+              >
+                <Grid item xs={2}>
+                  <h1>회원 탈퇴</h1>
+                </Grid>
+                <Grid item xs={8}></Grid>
+                <Grid item xs={2}>
+                  <Button
+                    variant="outlined"
+                    style={{
+                      borderRadius: '1.25rem',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      backgroundColor: '#CD0C22',
+                    }}
+                    onClick={handleClickOpen}
                   >
-                    회원 탈퇴
-                  </DialogTitle>
-                  <DialogContent dividers>
-                    <Typography gutterBottom>
-                      공부기록 등 그 외 사용자가 설정한 모든 정보가 사라지고,
-                      <br></br>
-                      복구가 불가능 합니다.
-                    </Typography>
-                    <Typography gutterBottom>
-                      그래도 탈퇴하시겠다면,
-                      <br></br>
-                      하단에 아이디를 한 번 더 입력해 주십시오.
-                    </Typography>
-                    <Grid item xs={12}>
-                      <Grid item xs={8}></Grid>
-                      <input
-                        type="text"
-                        style={{
-                          float: 'rignt',
-                        }}
-                      />
-                    </Grid>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button
-                      autoFocus
-                      onClick={handleClose}
-                      style={{
-                        color: '#CD0C22',
-                      }}
+                    탈퇴하기
+                  </Button>
+                  <Dialog
+                    onClose={handleClose}
+                    aria-labelledby="customized-dialog-title"
+                    open={open}
+                  >
+                    <DialogTitle
+                      id="customized-dialog-title"
+                      onClose={handleClose}
                     >
-                      탈퇴하기
-                    </Button>
-                  </DialogActions>
-                </Dialog>
+                      회원 탈퇴
+                    </DialogTitle>
+                    <DialogContent dividers>
+                      <Typography gutterBottom>
+                        공부기록 등 그 외 사용자가 설정한 모든 정보가 사라지고,
+                        <br></br>
+                        복구가 불가능 합니다.
+                      </Typography>
+                      <Typography gutterBottom>
+                        그래도 탈퇴하시겠다면,
+                        <br></br>
+                        하단에 아이디를 한 번 더 입력해 주십시오.
+                      </Typography>
+                      <Grid item xs={12}>
+                        <Grid item xs={8}></Grid>
+                        <input
+                          type="text"
+                          style={{
+                            float: 'rignt',
+                          }}
+                        />
+                      </Grid>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button
+                        autoFocus
+                        onClick={handleClose}
+                        style={{
+                          color: '#CD0C22',
+                        }}
+                      >
+                        탈퇴하기
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <div></div>
+          )}
           <Grid item xs={12}>
             <Grid container direction="row" justify="center" spacing={2}>
               <Grid item>

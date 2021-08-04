@@ -4,16 +4,16 @@ import MemberSetting from '../components/Entrance/MemberSetting';
 import {
   typeGetUserInfo,
   typeInitInfo,
-  typeCheckUserNickname,
 } from '../modules/memberSetting';
 
 function MemberSettingContainer() {
   const dispatch = useDispatch();
   // useSelector는 리덕스 스토어의 상태를 조회.
   // useSelector를 통해 rootReducer에 있는 타 모듈을 불러옴.
-  const { kakaoIdNum, isDuplicated, info } = useSelector(({authorization, memberSetting }) => ({
+  const { kakaoIdNum, isJoin, isAuth, info } = useSelector(({authorization, memberSetting }) => ({
     kakaoIdNum: authorization.kakaoIdNum,
-    isDuplicated: memberSetting.isDuplicated,
+    isJoin: authorization.isJoin,
+    isAuth: authorization.isAuth,
     info: memberSetting.info,
   }));
 
@@ -42,19 +42,27 @@ function MemberSettingContainer() {
   };
 
   const onDuplicateHandler = () => {
-    const data = nickname
-    dispatch(typeCheckUserNickname(data))
-    if (!isDuplicated){
-      alert('사용 가능한 닉네임입니다.')
-    } else {
-      alert('이미 존재하는 닉네임입니다.')
-    }
+    fetch(`http://localhost:8080/api/v1/users/checkname/${nickname}`, {
+        method: "GET",
+      })
+      .then(response => {if(response.status === 200){
+        alert("사용 가능한 닉네임 입니다.");
+      }else if(response.status === 401){
+        alert("이미 사용중인 아이디 입니다.")
+      }else{
+        alert("사용 불가한 아이디입니다.")
+      }
+    })
   };
+
+
 
   return (
     <MemberSetting
       // 상태와
       kakaoIdNum={kakaoIdNum}
+      isJoin={isJoin}
+      isAuth={isAuth}
       nickname={nickname}
       setNickname={setNickname}
       category={category}

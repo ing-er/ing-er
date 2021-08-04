@@ -5,41 +5,33 @@ import RoomPause from '../../buttons/RoomPause';
 
 import { Link } from 'react-router-dom';
 
-import {
-  IconButton,
-} from '@material-ui/core';
+import { IconButton } from '@material-ui/core';
 
-import {
-  ChevronLeft,
-} from '@material-ui/icons';
+import { ChevronLeft } from '@material-ui/icons';
 
-import {
-  Wrapper,
-  useDrawerStyles
-} from './styles';
+import { Wrapper, useDrawerStyles } from './styles';
 
 const RoomAppbar = ({ handleDrawerOpen, leaveSession, open, classes }) => {
   const drawerClasses = useDrawerStyles();
 
   const handleLeaveSession = (e) => {
-    console.log('!!!!!!!!!!!!!!leave session!!!!!!!!!!!')
-    console.log(e)
-    leaveSession()
-  }
+    // console.log('!!!!!!!!!!!!!!leave session!!!!!!!!!!!')
+    // console.log(e)
+    leaveSession();
+  };
 
   return (
     <Wrapper>
-      <div className={clsx(drawerClasses.content, {
-        [drawerClasses.contentShift]: open,
-      })}>
+      <div
+        className={clsx(drawerClasses.content, {
+          [drawerClasses.contentShift]: open,
+        })}
+      >
         <IconButton className="room-buttons-container">
           <RoomPause className="room-pause" />
         </IconButton>
-        <Link
-          to='/webrtc'
-          onClick={handleLeaveSession}
-        >
-          <IconButton 
+        <Link to="/webrtc" onClick={handleLeaveSession}>
+          <IconButton
             className="room-buttons-container"
             onClick={handleLeaveSession}
           >
@@ -55,12 +47,11 @@ const RoomAppbar = ({ handleDrawerOpen, leaveSession, open, classes }) => {
           onClick={handleDrawerOpen}
           className={clsx(open && classes.hide)}
         >
-          <ChevronLeft className="chevron-left"/>
+          <ChevronLeft className="chevron-left" />
         </IconButton>
       </div>
-
-  </Wrapper>
-  )
-}
+    </Wrapper>
+  );
+};
 
 export default RoomAppbar;

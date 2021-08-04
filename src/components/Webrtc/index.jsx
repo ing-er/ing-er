@@ -71,8 +71,8 @@ const Webrtc = () => {
           connectWebCam();
         })
         .catch((err) => {
-          console.log('There was an error while connecting.');
-          console.log(err);
+          // console.log('There was an error while connecting.');
+          // console.log(err);
         });
     });
   };
@@ -162,13 +162,12 @@ const Webrtc = () => {
     getOvSession();
     setSubscribers([]);
     setUser(new UserModel());
-
   };
 
   /* user 상태 변경 */
   const subscribeToUserChanged = () => {
     session.on('signal:userchanged', (e) => {
-      console.log('signal:userchanged!!!!!!!!!!!!!')
+      // console.log('signal:userchanged!!!!!!!!!!!!!')
       let remoteUsers = subscribers;
       remoteUsers.forEach((user) => {
         if (user.getConnectionId() === e.from.connectionId) {
@@ -221,7 +220,7 @@ const Webrtc = () => {
           if (error.response && error.response.status === 409) {
             resolve(sessionId);
           } else {
-            console.log(error);
+            // console.log(error);
             console.warn(
               'No connection to OpenVidu Server. This may be a certificate error at ' +
                 OPENVIDU_SERVER_URL,

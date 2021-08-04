@@ -39,7 +39,7 @@ const styles = (theme) => ({
   },
 });
 
-const Header = ({ isJoin, isAuth, onLogOutHandler, onLoginHandler }) => {
+const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
   const isTablet = useMediaQuery('(max-width:960px)');
   const history = useHistory();
 
@@ -50,6 +50,19 @@ const Header = ({ isJoin, isAuth, onLogOutHandler, onLoginHandler }) => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const onLoginHandler = () => {
+    if (isJoin === false && isAuth === false) {
+      alert('로그인 후 입장 가능합니다.');
+    } else {
+      if (isJoin) {
+        history.push({ pathname: '/joinsetting' });
+      } else {
+        setOpen(false);
+        history.push({ pathname: '/main' });
+      }
+    }
   };
 
   return (
@@ -81,27 +94,27 @@ const Header = ({ isJoin, isAuth, onLogOutHandler, onLoginHandler }) => {
 
                 <Grid item>
                   {/* 마이페이지 */}
-                  {!isAuth ? (
-                    <div></div>
-                  ) : (
+                  {isAuth && !isJoin ? (
                     <Link to="/Main">
                       <IconButton>
                         <AccountCircleIcon htmlColor="white" />
                       </IconButton>
                     </Link>
+                  ) : (
+                    <div></div>
                   )}
                 </Grid>
 
                 <Grid item>
                   {/* 방 입장 */}
-                  {!isAuth ? (
-                    <div></div>
-                  ) : (
+                  {isAuth && !isJoin ? (
                     <Link to="/room">
                       <IconButton>
                         <MeetingRoomIcon htmlColor="white" />
                       </IconButton>
                     </Link>
+                  ) : (
+                    <div></div>
                   )}
                 </Grid>
               </Grid>

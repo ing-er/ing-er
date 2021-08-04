@@ -109,10 +109,10 @@ async function getTodolistData() {
           todolistToday.push(todolistData[index]);
         }
       });
-      console.log('load 완료..');
+      // console.log('load 완료..');
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     });
 }
 
@@ -129,10 +129,10 @@ const initialState = {
 };
 
 const setTodolist = (state = initialState, action) => {
-  console.log('allTodolist');
-  console.log(state.allTodolist);
-  console.log('todolist');
-  console.log(state.todolist);
+  // console.log('allTodolist');
+  // console.log(state.allTodolist);
+  // console.log('todolist');
+  // console.log(state.todolist);
   switch (action.type) {
     case ADDCONTAINER:
       let len = state.allTodolist.length;
@@ -153,7 +153,7 @@ const setTodolist = (state = initialState, action) => {
       let idx = state.todolist[action.payload].todoidx;
       let listlen = state.todolist[action.payload].list.length;
       let todolistIdx = state.allTodolist.map((x) => x.todoidx).indexOf(idx);
-      console.log('todolistIdx : ' + todolistIdx);
+      // console.log('todolistIdx : ' + todolistIdx);
       state.allTodolist[todolistIdx].list.push({
         id: -1,
         todoidx: idx,
@@ -262,40 +262,40 @@ const setTodolist = (state = initialState, action) => {
         axios
           .post(serverUrl + '/todoList/create', createTodolist)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       }
       if (createTodolistDetail.length !== 0) {
         axios
           .post(serverUrl + '/todoList/createDetail', createTodolistDetail)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       }
       if (updateTodolist.length !== 0) {
         axios
           .patch(serverUrl + '/todoList/update', updateTodolist)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       }
       if (updateTodolistDetail.length !== 0) {
         axios
           .patch(serverUrl + '/todoList/updateDetail', updateTodolistDetail)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       }
       todaydate = state.requestdate;

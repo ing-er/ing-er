@@ -28,7 +28,6 @@ export async function isAuthAsync() {
     //   withCredentials: true,
     // }
   );
-  console.log(response)
   if (!response.status == 200) {
     throw new Error('사용자 인증에 실패했습니다.');
   }

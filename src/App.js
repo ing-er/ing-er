@@ -7,7 +7,7 @@ import KakaoLogin from './pages/KakaoLogin';
 import MemberSetting from './pages/MemberSetting';
 import DirectorSetting from './pages/DirectorSetting';
 import Room from './pages/Room';
-import Webrtc from './pages/Webrtc';
+import Webrtc from './components/Webrtc';
 
 import './App.css';
 

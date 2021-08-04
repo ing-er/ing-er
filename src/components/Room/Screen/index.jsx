@@ -2,19 +2,19 @@ import { useState, useEffect, useRef } from 'react';
 
 import Wrapper from './styles';
 
-const Screen = ({ screen_id, publisher }) => {
-  const [sId, setSId] = useState(screen_id);
+const Screen = ({ subscriber }) => {
   const videoRef = useRef(undefined);
 
+  /* subscriber hook */
   useEffect(() => {
-    if (videoRef && videoRef.current) {
-      publisher.addVideoElement(videoRef.current)
+    if (subscriber && videoRef.current) {
+      subscriber.getStreamManager().addVideoElement(videoRef.current)
     }
-  })
+  }, [subscriber])
 
   return (
     <Wrapper>
-      {publisher ? (
+      {subscriber !== undefined ? (
         <div className="conference-content">
           <video
             className="screen"

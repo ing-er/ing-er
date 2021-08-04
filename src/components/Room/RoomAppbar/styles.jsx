@@ -34,9 +34,6 @@ export const Wrapper = styled.div`
   }
   & .open-drawer-container {
     position: fixed;
-    width: 100%;
-    /* background-color: #1e1f26; */
-    z-index: 10;
   }
   & .chevron-left {
     position: fixed;
@@ -46,7 +43,7 @@ export const Wrapper = styled.div`
   }
 `
 
-const drawerWidth = 300;
+const drawerWidth = 400;
 export const useDrawerStyles = makeStyles((theme) => ({
   content: {
     display: 'flex',

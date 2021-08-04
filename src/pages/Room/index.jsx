@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import ScreenContainer from '../../components/Room/ScreenContainer';
 import RoomDrawer from '../../components/Room/Drawer';
@@ -12,7 +12,7 @@ import {
  } from './styles';
 
 
-const Room = ({ publisher }) => {
+const Room = ({ subscribers, leaveSession }) => {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -30,6 +30,7 @@ const Room = ({ publisher }) => {
       <CssBaseline />
       <RoomAppbar
         handleDrawerOpen={handleDrawerOpen}
+        leaveSession={leaveSession}
         open={open}
         classes={classes}
       />
@@ -39,7 +40,7 @@ const Room = ({ publisher }) => {
         classes={classes}
       >
         <ScreenContainer 
-          publisher={publisher}
+          subscribers={subscribers}
         />
       </RoomDrawer>
     </Wrapper>

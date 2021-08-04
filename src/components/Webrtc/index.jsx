@@ -10,11 +10,11 @@ import UserModel from './user-model';
 import Wrapper from './styles';
 
 const Webrtc = () => {
-  const OPENVIDU_SERVER_URL = 'https://i5a208.p.ssafy.io';
+  const OPENVIDU_SERVER_URL = 'https://localhost:4443';
   const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
-  const [flag, setFlag] = useState(false);
-  const [sessionId, setSessionId] = useState('SessionA');
+  const [flag, setFlag] = useState('init');
+  const [sessionId, setSessionId] = useState('defaultSession');
   const [OV, setOV] = useState(undefined);
   const [session, setSession] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
@@ -22,9 +22,7 @@ const Webrtc = () => {
 
   /* constructor hook */
   useEffect(() => {
-    getOvSession();
-
-    // 사용자가 화면을 떠날 대 leave session
+    // 사용자가 화면을 떠날 때 leave session
     window.addEventListener('beforeunload', onbeforeunload);
 
     return () => {
@@ -41,34 +39,48 @@ const Webrtc = () => {
     subscribeToStreamCreated();
     subscribeToStreamDestroyed();
     subscribeToUserChanged();
-  });
+  }, [session]);
+
+  /* flag hook */
+  useEffect(() => {
+    if (flag === 'init') {
+      getOvSession().then((payload) => {
+        console.log(payload)
+        joinSession(payload);
+      });
+    } else if (flag) {
+      joinSession([OV, session])
+    }
+  }, [flag]);
 
   // init OV, session
+  const getOv = () => new OpenVidu();
   const getOvSession = async () => {
-    const getOv = () => new OpenVidu();
 
     const _ov = await getOv();
-    const _session = _ov.initSession();
+    const _session = await _ov.initSession();
     setOV(_ov);
     setSession(_session);
+
+    return [_ov, _session]
   };
 
   /* join session(방 입장) */
-  const joinSession = (event) => {
+  const joinSession = (payload) => {
     // connect to Session
-    connectToSession();
+    connectToSession(payload);
 
     // prevent default event
-    event.preventDefault();
+    // event.preventDefault();
   };
 
   // connect to session
-  const connectToSession = () => {
+  const connectToSession = (payload) => {
     getToken().then((token) => {
-      session
+      payload[1]
         .connect(token, { clientData: user })
         .then(() => {
-          connectWebCam();
+          connectWebCam(payload);
         })
         .catch((err) => {
           // console.log('There was an error while connecting.');
@@ -78,8 +90,8 @@ const Webrtc = () => {
   };
 
   // webCam 연결
-  const connectWebCam = () => {
-    let publisher = OV.initPublisher(undefined, {
+  const connectWebCam = (payload) => {
+    let publisher = payload[0].initPublisher(undefined, {
       audioSource: undefined,
       videoSource: undefined,
       publishAudio: false,
@@ -90,10 +102,10 @@ const Webrtc = () => {
     });
 
     // session publish then update Subscribers
-    session.publish(publisher);
+    payload[1].publish(publisher);
 
     // set connectionId, streamManager
-    user.setConnectionId(session.connection.connectionId);
+    user.setConnectionId(payload[1].connection.connectionId);
     user.setStreamManager(publisher);
 
     // add subs
@@ -158,16 +170,16 @@ const Webrtc = () => {
     }
 
     // empty all properties
-    setFlag(false);
     getOvSession();
     setSubscribers([]);
     setUser(new UserModel());
+    setFlag(undefined);
   };
 
   /* user 상태 변경 */
   const subscribeToUserChanged = () => {
     session.on('signal:userchanged', (e) => {
-      // console.log('signal:userchanged!!!!!!!!!!!!!')
+      console.log('signal:userchanged!!!!!!!!!!!!!');
       let remoteUsers = subscribers;
       remoteUsers.forEach((user) => {
         if (user.getConnectionId() === e.from.connectionId) {
@@ -275,7 +287,7 @@ const Webrtc = () => {
   return (
     <Wrapper>
       {!flag ? (
-        <button onClick={joinSession}>방입장</button>
+        null
       ) : (
         <Room subscribers={subscribers} leaveSession={leaveSession} />
       )}

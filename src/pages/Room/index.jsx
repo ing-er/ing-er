@@ -4,26 +4,21 @@ import ScreenContainer from '../../components/Room/ScreenContainer';
 import RoomDrawer from '../../components/Room/Drawer';
 import RoomAppbar from '../../components/Room/RoomAppbar';
 
-
 import { CssBaseline } from '@material-ui/core';
-import {
-  Wrapper,
-  useStyles
- } from './styles';
-
+import { Wrapper, useStyles } from './styles';
 
 const Room = ({ subscribers, leaveSession }) => {
+  /* drawer */
   const classes = useStyles();
-
   const [open, setOpen] = useState(false);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  /* webrtc */
 
   return (
     <Wrapper>
@@ -39,13 +34,11 @@ const Room = ({ subscribers, leaveSession }) => {
         open={open}
         classes={classes}
       >
-        <ScreenContainer 
-          subscribers={subscribers}
-        />
+        {}
+        <ScreenContainer subscribers={subscribers} />
       </RoomDrawer>
     </Wrapper>
-    
-  )
-}
+  );
+};
 
-export default Room
+export default Room;

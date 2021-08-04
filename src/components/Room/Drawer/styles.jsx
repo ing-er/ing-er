@@ -5,11 +5,11 @@ export const Wrapper = styled.div`
   display: flex;
   
   & .drawer {
-    width: 400;
+    width: 400px;
     flex-shrink: 0;
 
     & .MuiDrawer-paper {
-      width: 400;
+      width: 400px;
     }
   }
   & .chevron-right {

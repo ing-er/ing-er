@@ -15,10 +15,8 @@ const RoomAppbar = ({ handleDrawerOpen, leaveSession, open, classes }) => {
   const drawerClasses = useDrawerStyles();
 
   const handleLeaveSession = (e) => {
-    // console.log('!!!!!!!!!!!!!!leave session!!!!!!!!!!!')
-    // console.log(e)
-    leaveSession();
-  };
+    leaveSession()
+  }
 
   return (
     <Wrapper>
@@ -30,8 +28,11 @@ const RoomAppbar = ({ handleDrawerOpen, leaveSession, open, classes }) => {
         <IconButton className="room-buttons-container">
           <RoomPause className="room-pause" />
         </IconButton>
-        <Link to="/webrtc" onClick={handleLeaveSession}>
-          <IconButton
+        <Link
+          to='/Main'
+          onClick={handleLeaveSession}
+        >
+          <IconButton 
             className="room-buttons-container"
             onClick={handleLeaveSession}
           >

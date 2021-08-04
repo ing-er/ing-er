@@ -4,13 +4,22 @@ import MemberSetting from '../components/Entrance/MemberSetting';
 import {
   typeGetUserInfo,
   typeInitInfo,
+  typeUpdateUserInfo,
+  typeWithdrawal,
 } from '../modules/memberSetting';
+import {
+  typeAuthUser,
+  typeCompleteJoinUser
+} from '../modules/userAuthorization';
+
+import { useHistory } from 'react-router';
 
 function MemberSettingContainer() {
   const dispatch = useDispatch();
+  const history = useHistory();
   // useSelector는 리덕스 스토어의 상태를 조회.
   // useSelector를 통해 rootReducer에 있는 타 모듈을 불러옴.
-  const { kakaoIdNum, isJoin, isAuth, info } = useSelector(({authorization, memberSetting }) => ({
+  let { kakaoIdNum, isJoin, isAuth, info } = useSelector(({authorization, memberSetting }) => ({
     kakaoIdNum: authorization.kakaoIdNum,
     isJoin: authorization.isJoin,
     isAuth: authorization.isAuth,
@@ -38,7 +47,14 @@ function MemberSettingContainer() {
       "kakaoIdNum": kakaoIdNum,
       "name": nickname,
     };
-    dispatch(typeInitInfo(data));
+    if (isAuth && !isJoin){
+      console.log(data)
+      dispatch(typeUpdateUserInfo(data));
+    } else {
+      dispatch(typeInitInfo(data));
+      dispatch(typeCompleteJoinUser());
+    }
+    history.push({ pathname: '/main' });
   };
 
   const onDuplicateHandler = () => {
@@ -51,6 +67,24 @@ function MemberSettingContainer() {
         alert("이미 사용중인 아이디 입니다.")
       }else{
         alert("사용 불가한 아이디입니다.")
+      }
+    })
+  };
+
+  const onWithdrawalHandler = () => {
+    console.log(kakaoIdNum)
+    fetch(`http://localhost:8080/api/v1/users/${kakaoIdNum}`, {
+        method: "DELETE",
+      })
+      .then(response => {if(response.status === 200){
+        console.log(response)
+        localStorage.removeItem('CURRENT_USER');
+        dispatch(typeAuthUser());
+        history.push({ pathname: '/' });
+      }else if(response.status === 401){
+        alert("인증이 실패하였습니다.")
+      }else{
+        alert("존재하는 사용자가 없습니다.")
       }
     })
   };
@@ -71,6 +105,7 @@ function MemberSettingContainer() {
       setIsPublic={setIsPublic}
       onDuplicateHandler={onDuplicateHandler}
       onUpdateInfo={onUpdateInfo}
+      onWithdrawalHandler={onWithdrawalHandler}
     />
   );
 }

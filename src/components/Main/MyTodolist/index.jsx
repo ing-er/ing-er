@@ -196,7 +196,7 @@ const MyTodolist = (props) => {
     setTodolistEditComplete,
     setTodolistSaveData,
   } = props;
-  console.log(todolistdata);
+  // console.log(todolistdata);
 
   const onClickSaveTodolist = (e) => {
     setTodolistSaveData();

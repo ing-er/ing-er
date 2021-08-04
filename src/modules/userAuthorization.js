@@ -1,4 +1,3 @@
-import { TramOutlined } from '@material-ui/icons';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as loginApi from '../api/auth/userAuthorization';
 
@@ -17,6 +16,9 @@ const LOGIN_USER_FAILURE = 'userAuthorization/LOGIN_USER_FAILURE';
 //* LOG_OUT_USER
 const LOG_OUT_USER = 'userAuthorization/LOG_OUT_USER';
 
+//* 회원가입을 마친 상태의 유저에게 올바른 상단바를 보여 주기 위한 변수
+const COMPLETE_JOIN_USER = 'userAuthorization/COMPLETE_JOIN_USER';
+
 const DIALOGOPEN = 'DIALOGOPEN';
 const DIALOGCLOSE = 'DIALOGCLOSE';
 
@@ -30,6 +32,9 @@ export const typeLogin = (formData) => ({
 });
 export const typeLogOut = () => ({
   type: LOG_OUT_USER,
+});
+export const typeCompleteJoinUser = () => ({
+  type: COMPLETE_JOIN_USER,
 });
 
 //* MAIN_SAGA_FUNCTION
@@ -63,6 +68,7 @@ export function* loginSaga(action) {
     });
   }
 }
+
 //* WATCHER_SAGA_FUNCTION
 export function* userAuthorizationSaga() {
   yield takeLatest(AUTH_USER, authSaga);
@@ -97,7 +103,7 @@ export default function authorization(state={}, action) {
         //* 회원가입하려는 상태
         return {
           ...state,
-          isAuth: false,
+          isAuth: true,
           isJoin: true,
           kakaoIdNum: action.kakaoIdNum,
         }
@@ -131,6 +137,7 @@ export default function authorization(state={}, action) {
       if (isNaN(action.payload)) {
         return {
           ...state,
+          kakaoIdNum: Number(action.payload.kakaoIdNum),
           userData: action.payload,
           isAuth: true,
           isJoin: false,
@@ -141,7 +148,7 @@ export default function authorization(state={}, action) {
           ...state,
           kakaoIdNum: action.payload,
           isJoin: true,
-          isAuth: false,
+          isAuth: true,
         };
       }
     case LOGIN_USER_FAILURE:
@@ -158,7 +165,16 @@ export default function authorization(state={}, action) {
       return {
         ...state,
         isAuth: false,
+        isJoin: false,
         userData: {},
+      };
+
+      //* COMPLETE_JOIN_USER
+    case COMPLETE_JOIN_USER:
+      return {
+        ...state,
+        isAuth: true,
+        isJoin: false,
       };
 
     case DIALOGOPEN:

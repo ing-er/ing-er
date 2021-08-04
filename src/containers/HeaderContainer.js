@@ -21,25 +21,11 @@ function HeaderContainer() {
     history.push({ pathname: '/' });
   };
 
-  const onLoginHandler = () => {
-    if (isJoin === false && isAuth === false){
-      alert('로그인 후 입장 가능합니다.')
-    } else {
-      if(isJoin){
-        history.push({ pathname: '/joinsetting' });
-      } else {
-        history.push({ pathname: '/' });
-      }
-    }
-  };
-
-
   return (
     <Header
 			isJoin={isJoin}
 			isAuth={isAuth}
 			onLogOutHandler={onLogOutHandler}
-      onLoginHandler={onLoginHandler}
     />
   );
 }

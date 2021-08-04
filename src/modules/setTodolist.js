@@ -110,10 +110,10 @@ const getTodolistData = async () => {
           todolistToday.push(todolistData[index]);
         }
       });
-      console.log('load 완료..');
+      // console.log('load 완료..');
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
     });
 };
 
@@ -154,7 +154,7 @@ const setTodolist = (state = initialState, action) => {
       let idx = state.todolist[action.payload].todoidx;
       let listlen = state.todolist[action.payload].list.length;
       let todolistIdx = state.allTodolist.map((x) => x.todoidx).indexOf(idx);
-      console.log('todolistIdx : ' + todolistIdx);
+      // console.log('todolistIdx : ' + todolistIdx);
       state.allTodolist[todolistIdx].list.push({
         id: -1,
         todoidx: idx,
@@ -342,7 +342,7 @@ const setTodolist = (state = initialState, action) => {
             console.log(state.todolist);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
           });
       };
 

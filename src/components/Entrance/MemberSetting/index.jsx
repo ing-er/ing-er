@@ -77,6 +77,7 @@ function MEMBERSETTING({
   setIsPublic,
   onUpdateInfo,
   onDuplicateHandler,
+  onWithdrawalHandler,
 }) {
   const [open, setOpen] = React.useState(false);
 
@@ -242,11 +243,11 @@ function MEMBERSETTING({
                     />
                   }
                   labelPlacement="top"
-                  label={
-                    <Box component="div" fontSize={12}>
-                      기본 값이 ‘공개’
-                    </Box>
-                  }
+                  // label={
+                  //   <Box component="div" fontSize={12}>
+                  //     기본 값이 ‘공개’
+                  //   </Box>
+                  // }
                 />
               </Grid>
             </Grid>
@@ -294,7 +295,7 @@ function MEMBERSETTING({
                         <br></br>
                         복구가 불가능 합니다.
                       </Typography>
-                      <Typography gutterBottom>
+                      {/* <Typography gutterBottom>
                         그래도 탈퇴하시겠다면,
                         <br></br>
                         하단에 아이디를 한 번 더 입력해 주십시오.
@@ -307,12 +308,12 @@ function MEMBERSETTING({
                             float: 'rignt',
                           }}
                         />
-                      </Grid>
+                      </Grid> */}
                     </DialogContent>
                     <DialogActions>
                       <Button
                         autoFocus
-                        onClick={handleClose}
+                        onClick={onWithdrawalHandler}
                         style={{
                           color: '#CD0C22',
                         }}

@@ -114,7 +114,7 @@ const CalendarComponent = (props) => {
     let year = value.getFullYear();
     let month = ('0' + (value.getMonth() + 1)).slice(-2);
     let day = ('0' + value.getDate()).slice(-2);
-    console.log(year + '-' + month + '-' + day);
+    // console.log(year + '-' + month + '-' + day);
     setCalendarSetDate(year + '-' + month + '-' + day);
     setTodolistSetDate(year + '-' + month + '-' + day);
   };

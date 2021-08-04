@@ -77,7 +77,7 @@ let month = ('0' + (today.getMonth() + 1)).slice(-2);
 let day = ('0' + today.getDate()).slice(-2);
 let todaydate = year + '-' + month + '-' + day;
 
-async function getTodolistData() {
+const getTodolistData = async () => {
   await axios
     .get(serverUrl + '/todoList/select/' + 1)
     .then((res) => {
@@ -114,7 +114,7 @@ async function getTodolistData() {
     .catch((err) => {
       console.log(err);
     });
-}
+};
 
 getTodolistData();
 

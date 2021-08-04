@@ -6,6 +6,7 @@ import {
   setCalendarEditDiaryIsEditable,
   setCalendarSetDate,
   setCalendarSaveData,
+  getCalendarData,
 } from '../modules/setCalendar';
 import { setTodolistSetDate } from '../modules/setTodolist';
 
@@ -38,6 +39,9 @@ const MyCalendarComponent = () => {
   const { requestdate } = useSelector((state) => state.setCalendar);
   const { isEditablePromise } = useSelector((state) => state.setCalendar);
   const { isEditableDiary } = useSelector((state) => state.setCalendar);
+  const { id } = useSelector((state) => state.authorization.userData);
+
+  getCalendarData(id);
 
   return (
     <MyCalendar

@@ -76,10 +76,12 @@ let year = today.getFullYear();
 let month = ('0' + (today.getMonth() + 1)).slice(-2);
 let day = ('0' + today.getDate()).slice(-2);
 let todaydate = year + '-' + month + '-' + day;
+let userId;
 
-const getTodolistData = async () => {
+export const getTodolistData = async (id) => {
+  userId = id;
   await axios
-    .get(serverUrl + '/todoList/select/' + 1)
+    .get(serverUrl + '/todoList/select/' + id)
     .then((res) => {
       console.log(res);
       res.data.map((x, index) => {
@@ -117,7 +119,7 @@ const getTodolistData = async () => {
     });
 };
 
-getTodolistData();
+// getTodolistData();
 
 const initialState = {
   allTodolist: todolistData,
@@ -154,7 +156,7 @@ const setTodolist = (state = initialState, action) => {
       let idx = state.todolist[action.payload].todoidx;
       let listlen = state.todolist[action.payload].list.length;
       let todolistIdx = state.allTodolist.map((x) => x.todoidx).indexOf(idx);
-      console.log('todolistIdx : ' + todolistIdx);
+      // console.log('todolistIdx : ' + todolistIdx);
       state.allTodolist[todolistIdx].list.push({
         id: -1,
         todoidx: idx,
@@ -230,7 +232,7 @@ const setTodolist = (state = initialState, action) => {
             date: todo.date,
             todo: todo.title,
             detail: detailList,
-            userId: 1,
+            userId: userId,
           });
         } else {
           if (todo.isChanged === true) {
@@ -301,7 +303,7 @@ const setTodolist = (state = initialState, action) => {
             });
         }
         await axios
-          .get(serverUrl + '/todoList/select/' + 1)
+          .get(serverUrl + '/todoList/select/' + userId)
           .then((res) => {
             console.log(res);
             todaydate = state.requestdate;

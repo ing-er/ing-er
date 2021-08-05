@@ -8,7 +8,7 @@ export const EDITCOMPLETE = 'EDITCOMPLETE';
 export const SAVETODOLIST = 'SAVETODOLIST';
 export const SETDATE = 'TODOLIST/SETDATE';
 
-const HOST = 'localhost:8080';
+const HOST = 'i5a208.p.ssafy.io:8080';
 const serverUrl = `http://${HOST}/api/v1`;
 
 export const setTodolistAddContainer = (title, todolist) => ({
@@ -112,7 +112,7 @@ export const getTodolistData = async (id) => {
           todolistToday.push(todolistData[index]);
         }
       });
-      // console.log('load �료..');
+      // console.log('load �료..');
     })
     .catch((err) => {
       // console.log(err);
@@ -343,7 +343,7 @@ const setTodolist = (state = initialState, action) => {
             });
             state.allTodolist = todolistData;
             state.todolist = todolistToday;
-            console.log('load �료..');
+            console.log('load �료..');
             // console.log('SAVEDATA : todolist');
             // console.log(state.todolist);
           })

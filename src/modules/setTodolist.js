@@ -179,7 +179,7 @@ const setTodolist = (state = initialState, action) => {
       state.todolist[action.payload.index].isChanged = true;
       return {
         ...state,
-        todolist: state.todolist,
+        // todolist: state.todolist,
       };
     case EDITCONTENT:
       state.todolist[action.payload.index].list[
@@ -366,8 +366,8 @@ const setTodolist = (state = initialState, action) => {
         ...state,
         todolist: todolistToday,
         allTodolist: todolistData,
-        todocomplete: todolistComplete,
-        todototal: todolistTotal,
+        // todocomplete: todolistComplete,
+        // todototal: todolistTotal,
         todopercent: (todolistComplete / todolistTotal) * 100,
       };
     case SETDATE:
@@ -397,7 +397,7 @@ const setTodolist = (state = initialState, action) => {
       console.log(state.todolist);
       return {
         ...state,
-        todolist: todolistToday,
+        todolist: state.todolist,
       };
     default:
       return state;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
-import TodolistContainer from '../../../containers/MyTodolistContainer';
+// import TodolistContainer from '../../../containers/MyTodolistContainer';
+import DrawerTodoContainer from '../../../containers/DrawerTodoContainer';
 import DrawerProfile from './DrawerProfile';
 import DrawerProfileContainer from '../../../containers/DrawerProfileContainer';
 import DrawerTodo from './DrawerTodo';
@@ -17,9 +18,9 @@ const DrawerContentContainer = ({ drawerId }) => {
       setContentDiv(<DrawerProfileContainer />);
     } else if (drawerId === 'drawerTodo') {
       setContentDiv(
-        <TodolistContainer>
+        <DrawerTodoContainer>
           <DrawerTodo />
-        </TodolistContainer>,
+        </DrawerTodoContainer>,
       );
     } else if (drawerId === 'drawerPromise') {
       setContentDiv(<DrawerPromise />);

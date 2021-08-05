@@ -132,10 +132,6 @@ const initialState = {
 };
 
 const setTodolist = (state = initialState, action) => {
-  // console.log('action : allTodolist');
-  // console.log([...state.allTodolist]);
-  // console.log('action : todolist');
-  // console.log([...state.todolist]);
   switch (action.type) {
     case ADDCONTAINER:
       let len = todolistData.length;
@@ -167,11 +163,12 @@ const setTodolist = (state = initialState, action) => {
         isChanged: true,
       });
       state.todototal++;
+      todolistTotal++;
       state.todopercent = (state.todocomplete / state.todototal) * 100;
       return {
         ...state,
         todolist: todolistToday,
-        todopercent: state.todopercent,
+        todopercent: (todolistComplete / todolistTotal) * 100,
         allTodolist: todolistData,
       };
     case EDITTITLE:
@@ -207,14 +204,16 @@ const setTodolist = (state = initialState, action) => {
           .complete === true
       ) {
         state.todocomplete++;
+        todolistComplete++;
       } else {
         state.todocomplete--;
+        todolistComplete--;
       }
       state.todopercent = (state.todocomplete / state.todototal) * 100;
       return {
         ...state,
         todolist: todolistToday,
-        todopercent: state.todopercent,
+        todopercent: (todolistComplete / todolistTotal) * 100,
       };
     case SAVETODOLIST:
       let updateTodolist = [];
@@ -399,6 +398,7 @@ const setTodolist = (state = initialState, action) => {
       return {
         ...state,
         todolist: todolistToday,
+        todopercent: (todolistComplete / todolistTotal) * 100,
       };
     default:
       return state;

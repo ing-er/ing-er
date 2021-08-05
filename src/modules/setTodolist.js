@@ -127,7 +127,9 @@ const initialState = {
   todototal: todolistTotal,
   todocomplete: todolistComplete,
   todopercent:
-    todolistTotal === 0 ? 0 : (todolistComplete / todolistTotal) * 100,
+    todolistTotal === 0
+      ? 0
+      : Math.round((todolistComplete / todolistTotal) * 100),
   requestdate: todaydate,
 };
 
@@ -168,7 +170,10 @@ const setTodolist = (state = initialState, action) => {
       return {
         ...state,
         todolist: todolistToday,
-        todopercent: (todolistComplete / todolistTotal) * 100,
+        todopercent:
+          todolistTotal === 0
+            ? 0
+            : Math.round((todolistComplete / todolistTotal) * 100),
         allTodolist: todolistData,
       };
     case EDITTITLE:
@@ -213,7 +218,10 @@ const setTodolist = (state = initialState, action) => {
       return {
         ...state,
         todolist: todolistToday,
-        todopercent: (todolistComplete / todolistTotal) * 100,
+        todopercent:
+          todolistTotal === 0
+            ? 0
+            : Math.round((todolistComplete / todolistTotal) * 100),
       };
     case SAVETODOLIST:
       let updateTodolist = [];
@@ -368,7 +376,10 @@ const setTodolist = (state = initialState, action) => {
         allTodolist: todolistData,
         // todocomplete: todolistComplete,
         // todototal: todolistTotal,
-        todopercent: (todolistComplete / todolistTotal) * 100,
+        todopercent:
+          todolistTotal === 0
+            ? 0
+            : Math.round((todolistComplete / todolistTotal) * 100),
       };
     case SETDATE:
       state.requestdate = action.payload;
@@ -398,7 +409,10 @@ const setTodolist = (state = initialState, action) => {
       return {
         ...state,
         todolist: todolistToday,
-        todopercent: (todolistComplete / todolistTotal) * 100,
+        todopercent:
+          todolistTotal === 0
+            ? 0
+            : Math.round((todolistComplete / todolistTotal) * 100),
       };
     default:
       return state;

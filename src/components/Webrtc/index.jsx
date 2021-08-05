@@ -45,24 +45,22 @@ const Webrtc = () => {
   useEffect(() => {
     if (flag === 'init') {
       getOvSession().then((payload) => {
-        console.log(payload)
         joinSession(payload);
       });
     } else if (flag) {
-      joinSession([OV, session])
+      joinSession([OV, session]);
     }
   }, [flag]);
 
   // init OV, session
   const getOv = () => new OpenVidu();
   const getOvSession = async () => {
-
     const _ov = await getOv();
     const _session = await _ov.initSession();
     setOV(_ov);
     setSession(_session);
 
-    return [_ov, _session]
+    return [_ov, _session];
   };
 
   /* join session(방 입장) */
@@ -176,21 +174,27 @@ const Webrtc = () => {
     setFlag(undefined);
   };
 
+  /* handle video mute or unmute */
+  const handleVideoMute = () => {
+    user.streamManager.publishVideo(!user.isVideoActive())
+    user.setVideoActive(!user.isVideoActive())
+  };
+
   /* user 상태 변경 */
   const subscribeToUserChanged = () => {
-    session.on('signal:userchanged', (e) => {
-      console.log('signal:userchanged!!!!!!!!!!!!!');
-      let remoteUsers = subscribers;
-      remoteUsers.forEach((user) => {
-        if (user.getConnectionId() === e.from.connectionId) {
-          const data = JSON.parse(e.data);
+    session.on('StreamPropertyChanged', (e) => {
+      console.log('stream property changed!!!!!!!!!!!!!');
+      // let remoteUsers = subscribers;
+      // remoteUsers.forEach((user) => {
+      //   if (user.getConnectionId() === e.from.connectionId) {
+      //     const data = JSON.parse(e.data);
 
-          if (data.isVideoActive !== undefined) {
-            user.setVideoActive(data.isVideoActive);
-          }
-        }
-      });
-      setSubscribers([...remoteUsers]);
+      //     if (data.isVideoActive !== undefined) {
+      //       user.setVideoActive(data.isVideoActive);
+      //     }
+      //   }
+      // });
+      // setSubscribers([...remoteUsers]);
     });
   };
 
@@ -286,10 +290,12 @@ const Webrtc = () => {
 
   return (
     <Wrapper>
-      {!flag ? (
-        null
-      ) : (
-        <Room subscribers={subscribers} leaveSession={leaveSession} />
+      {!flag ? null : (
+        <Room 
+          subscribers={subscribers}
+          leaveSession={leaveSession}
+          handleVideoMute={handleVideoMute}
+        />
       )}
     </Wrapper>
   );

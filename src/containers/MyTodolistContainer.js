@@ -34,11 +34,9 @@ const MyTodolistComponent = ({ children }) => {
   const setTodolistSave = () => {
     dispatch(setTodolistSaveData());
   };
-  const { id } = useSelector((state) => state.authorization.userData);
-  useEffect(() => {
-    getTodolistData(id);
-  }, []);
 
+  console.log('todolist');
+  console.log(todolist);
   return cloneElement(children, {
     todolistdata: todolist,
     todopercent: todopercent,

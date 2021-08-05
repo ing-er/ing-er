@@ -11,7 +11,6 @@ import {
 import { setTodolistSetDate } from '../modules/setTodolist';
 
 import MyCalendar from '../components/Main/MyCalendar';
-import { useEffect } from 'react';
 
 const MyCalendarComponent = () => {
   const dispatch = useDispatch();
@@ -40,11 +39,6 @@ const MyCalendarComponent = () => {
   const { requestdate } = useSelector((state) => state.setCalendar);
   const { isEditablePromise } = useSelector((state) => state.setCalendar);
   const { isEditableDiary } = useSelector((state) => state.setCalendar);
-  const { id } = useSelector((state) => state.authorization.userData);
-
-  useEffect(() => {
-    getCalendarData(id);
-  }, []);
 
   return (
     <MyCalendar

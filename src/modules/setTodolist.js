@@ -132,14 +132,14 @@ const initialState = {
 };
 
 const setTodolist = (state = initialState, action) => {
-  console.log('action : allTodolist');
-  console.log([...state.allTodolist]);
-  console.log('action : todolist');
-  console.log([...state.todolist]);
+  // console.log('action : allTodolist');
+  // console.log([...state.allTodolist]);
+  // console.log('action : todolist');
+  // console.log([...state.todolist]);
   switch (action.type) {
     case ADDCONTAINER:
-      let len = state.allTodolist.length;
-      state.allTodolist.push({
+      let len = todolistData.length;
+      todolistData.push({
         id: -1,
         todoidx: len,
         title: action.payload,
@@ -147,18 +147,18 @@ const setTodolist = (state = initialState, action) => {
         date: state.requestdate,
         list: [],
       });
-      state.todolist.push(state.allTodolist[len]);
+      todolistToday.push(todolistData[len]);
       return {
         ...state,
-        todolist: state.todolist,
-        allTodolist: state.allTodolist,
+        todolist: todolistToday,
+        allTodolist: todolistData,
       };
     case ADDINPUT:
-      let idx = state.todolist[action.payload].todoidx;
-      let listlen = state.todolist[action.payload].list.length;
-      let todolistIdx = state.allTodolist.map((x) => x.todoidx).indexOf(idx);
+      let idx = todolistToday[action.payload].todoidx;
+      let listlen = todolistToday[action.payload].list.length;
+      let todolistIdx = todolistData.map((x) => x.todoidx).indexOf(idx);
       // console.log('todolistIdx : ' + todolistIdx);
-      state.allTodolist[todolistIdx].list.push({
+      todolistData[todolistIdx].list.push({
         id: -1,
         todoidx: idx,
         detailidx: listlen,
@@ -170,39 +170,40 @@ const setTodolist = (state = initialState, action) => {
       state.todopercent = (state.todocomplete / state.todototal) * 100;
       return {
         ...state,
-        todolist: state.todolist,
+        todolist: todolistToday,
         todopercent: state.todopercent,
-        allTodolist: state.allTodolist,
+        allTodolist: todolistData,
       };
     case EDITTITLE:
-      state.todolist[action.payload.index].title = action.payload.title;
-      state.todolist[action.payload.index].isChanged = true;
+      todolistToday[action.payload.index].title = action.payload.title;
+      todolistToday[action.payload.index].isChanged = true;
       return {
         ...state,
+        todolist: todolistToday,
         // todolist: state.todolist,
       };
     case EDITCONTENT:
-      state.todolist[action.payload.index].list[
+      todolistToday[action.payload.index].list[
         action.payload.subindex
       ].content = action.payload.content;
-      state.todolist[action.payload.index].list[
+      todolistToday[action.payload.index].list[
         action.payload.subindex
       ].isChanged = true;
       return {
         ...state,
-        todolist: state.todolist,
+        todolist: todolistToday,
       };
     case EDITCOMPLETE:
-      state.todolist[action.payload.index].list[
+      todolistToday[action.payload.index].list[
         action.payload.subindex
       ].complete =
-        !state.todolist[action.payload.index].list[action.payload.subindex]
+        !todolistToday[action.payload.index].list[action.payload.subindex]
           .complete;
-      state.todolist[action.payload.index].list[
+      todolistToday[action.payload.index].list[
         action.payload.subindex
       ].isChanged = true;
       if (
-        state.todolist[action.payload.index].list[action.payload.subindex]
+        todolistToday[action.payload.index].list[action.payload.subindex]
           .complete === true
       ) {
         state.todocomplete++;
@@ -212,7 +213,7 @@ const setTodolist = (state = initialState, action) => {
       state.todopercent = (state.todocomplete / state.todototal) * 100;
       return {
         ...state,
-        todolist: state.todolist,
+        todolist: todolistToday,
         todopercent: state.todopercent,
       };
     case SAVETODOLIST:
@@ -397,7 +398,7 @@ const setTodolist = (state = initialState, action) => {
       console.log(state.todolist);
       return {
         ...state,
-        todolist: state.todolist,
+        todolist: todolistToday,
       };
     default:
       return state;

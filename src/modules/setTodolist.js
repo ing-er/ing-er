@@ -375,9 +375,9 @@ const setTodolist = (state = initialState, action) => {
       todolistToday = [];
       todolistTotal = 0;
       todolistComplete = 0;
-      state.allTodolist.map((x, index) => {
+      todolistData.map((x, index) => {
         if (x.date === state.requestdate) {
-          todolistToday.push(state.allTodolist[index]);
+          todolistToday.push(todolistData[index]);
           todolistTotal += x.list.length;
           x.list.map((y, idx) => {
             if (y.complete === true) {

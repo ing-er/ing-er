@@ -134,6 +134,7 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                     onClose={handleClose}
                     aria-labelledby="customized-dialog-title"
                     open={open}
+                    disableBackdropClick="true"
                   >
                     <DialogTitle
                       id="customized-dialog-title"

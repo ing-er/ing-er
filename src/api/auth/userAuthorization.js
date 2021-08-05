@@ -2,8 +2,8 @@ import axios from 'axios';
 
 export async function loginAsync(formData) {
   const response = await axios.get(
-    // `http://localhost:8080/api/v1/users/${formData.oAuthId}`
-    `http://i5a208.p.ssafy.io:8080/api/v1/users/${formData.oAuthId}`
+    `http://localhost:8080/api/v1/users/${formData.oAuthId}`
+    // `http://i5a208.p.ssafy.io:8080/api/v1/users/${formData.oAuthId}`
     );
   window.localStorage.setItem('CURRENT_USER', formData.oAuthId);
   //* 이미 등록된 유저일 때,
@@ -20,8 +20,8 @@ export async function isAuthAsync() {
     return 1
   }
   const response = await axios.get(
-    // `http://localhost:8080/api/v1/users/${token}/`,
-    `http://i5a208.p.ssafy.io:8080/api/v1/users/${token}/`,
+    `http://localhost:8080/api/v1/users/${token}/`,
+    // `http://i5a208.p.ssafy.io:8080/api/v1/users/${token}/`,
     // { 헤더 추가할 일 있으면 써야지
     //   headers: {
     //     xauth: token,

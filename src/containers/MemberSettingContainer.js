@@ -26,40 +26,58 @@ function MemberSettingContainer() {
     info: memberSetting.info,
   }));
 
-  const [nickname, setNickname] = useState('');
+  const [name, setname] = useState('');
   const [category, setCategory] = useState('');
-  const [isPublic, setIsPublic] = useState('');
+  const [isOpen, setisOpen] = useState('');
 
   useEffect(() => {
     dispatch(typeGetUserInfo());
   }, []);
 
   useEffect(() => {
-    setNickname(info.nickname);
+    setname(info.name);
     setCategory(info.category);
-    setIsPublic(info.isPublic);
+    setisOpen(info.isOpen);
   }, [info]);
 
   const onUpdateInfo = () => {
-    const data = {
-      "category": Number(category),
-      "isOpen": isPublic,
-      "kakaoIdNum": kakaoIdNum,
-      "name": nickname,
-    };
-    if (isAuth && !isJoin){
-      console.log(data)
-      dispatch(typeUpdateUserInfo(data));
+    if(name != undefined && 2 <= name.length && name.length <= 6 && category != undefined && isOpen != undefined){
+      const data = {
+        "category": Number(category),
+        "isOpen": isOpen,
+        "kakaoIdNum": kakaoIdNum,
+        "name": name,
+      };
+      if (isAuth && !isJoin){
+        console.log(data)
+        dispatch(typeUpdateUserInfo(data));
+      } else {
+        dispatch(typeInitInfo(data));
+        dispatch(typeCompleteJoinUser());
+      }
+      history.push({ pathname: '/main' });
     } else {
-      dispatch(typeInitInfo(data));
-      dispatch(typeCompleteJoinUser());
+      alert('다음과 같은 기준을 맞춰 주세요 \n 닉네임: 2자 이상, 6자 이하 \n 닉네임 중복 확인 \n 카테고리, 다짐 공개여부 선택')
     }
-    history.push({ pathname: '/main' });
+    // const data = {
+    //   "category": Number(category),
+    //   "isOpen": isOpen,
+    //   "kakaoIdNum": kakaoIdNum,
+    //   "name": name,
+    // };
+    // if (isAuth && !isJoin){
+    //   console.log(data)
+    //   dispatch(typeUpdateUserInfo(data));
+    // } else {
+    //   dispatch(typeInitInfo(data));
+    //   dispatch(typeCompleteJoinUser());
+    // }
+    // history.push({ pathname: '/main' });
   };
 
   const onDuplicateHandler = () => {
-    // fetch(`http://localhost:8080/api/v1/users/checkname/${nickname}`, {
-    fetch(`http://i5a208.p.ssafy.io:8080/api/v1/users/checkname/${nickname}`, {
+    fetch(`http://localhost:8080/api/v1/users/checkname/${name}`, {
+    // fetch(`http://i5a208.p.ssafy.io:8080/api/v1/users/checkname/${name}`, {
         method: "GET",
       })
       .then(response => {if(response.status === 200){
@@ -74,8 +92,8 @@ function MemberSettingContainer() {
 
   const onWithdrawalHandler = () => {
     console.log(kakaoIdNum)
-    // fetch(`http://localhost:8080/api/v1/users/${kakaoIdNum}`, {
-    fetch(`http://i5a208.p.ssafy.io:8080/api/v1/users/${kakaoIdNum}`, {
+    fetch(`http://localhost:8080/api/v1/users/${kakaoIdNum}`, {
+    // fetch(`http://i5a208.p.ssafy.io:8080/api/v1/users/${kakaoIdNum}`, {
         method: "DELETE",
       })
       .then(response => {if(response.status === 200){
@@ -99,12 +117,12 @@ function MemberSettingContainer() {
       kakaoIdNum={kakaoIdNum}
       isJoin={isJoin}
       isAuth={isAuth}
-      nickname={nickname}
-      setNickname={setNickname}
+      name={name}
+      setname={setname}
       category={category}
       setCategory={setCategory}
-      isPublic={isPublic}
-      setIsPublic={setIsPublic}
+      isOpen={isOpen}
+      setisOpen={setisOpen}
       onDuplicateHandler={onDuplicateHandler}
       onUpdateInfo={onUpdateInfo}
       onWithdrawalHandler={onWithdrawalHandler}

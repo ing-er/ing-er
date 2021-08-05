@@ -3,8 +3,8 @@ import axios from 'axios';
 
 export async function registUserInfoAsync(formData) {
   const response = await axios.post(
-    // `http://localhost:8080/api/v1/users/regist`,
-    `http://i5a208.p.ssafy.io:8080/api/v1/users/regist`,
+    `http://localhost:8080/api/v1/users/regist`,
+    // `http://i5a208.p.ssafy.io:8080/api/v1/users/regist`,
     formData
   );
   return response.data;
@@ -12,8 +12,8 @@ export async function registUserInfoAsync(formData) {
 
 export async function WithdrawalUserAsync(kakaoIdNum) {
   const response = await axios.delete(
-    // `http://localhost:8080/api/v1/users/${kakaoIdNum}`,
-    `http://i5a208.p.ssafy.io:8080/api/v1/users/${kakaoIdNum}`,
+    `http://localhost:8080/api/v1/users/${kakaoIdNum}`,
+    // `http://i5a208.p.ssafy.io:8080/api/v1/users/${kakaoIdNum}`,
   );
   if (response.status == 401) {
     throw new Error("인증이 실패하였습니다.");
@@ -25,15 +25,15 @@ export async function WithdrawalUserAsync(kakaoIdNum) {
 
 export async function editUserInfoAsync(formData) {
 
-  const kakaoIdNum = Number(formData["kakaoIdNum"])
+  const kakaoIdNum = window.localStorage.getItem('CURRENT_USER');
   const data = {
     category: formData.category,
     isOpen: formData.isOpen,
     name: formData.name
   }
   const response = await axios.patch(
-    // `http://localhost:8080/api/v1/users/modify/${kakaoIdNum}`,
-    `http://i5a208.p.ssafy.io:8080/api/v1/users/modify/${kakaoIdNum}`,
+    `http://localhost:8080/api/v1/users/modify/${kakaoIdNum}`,
+    // `http://i5a208.p.ssafy.io:8080/api/v1/users/modify/${kakaoIdNum}`,
     data
   );
   return response.data;
@@ -42,8 +42,8 @@ export async function editUserInfoAsync(formData) {
 export async function getUserInfoAsync(formData) {
   // const { token } = JSON.parse(localStorage.getItem('CURRENT_USER'));
   const response = await axios.get(
-    // `http://localhost:8080/api/v1/regist`,
-    `http://i5a208.p.ssafy.io:8080/api/v1/regist`,
+    `http://localhost:8080/api/v1/regist`,
+    // `http://i5a208.p.ssafy.io:8080/api/v1/regist`,
 		formData,
     // {
     //   headers: {
@@ -59,8 +59,8 @@ export async function getUserInfoAsync(formData) {
 export async function postUserUpdateAsync(data) {
   const { token } = JSON.parse(localStorage.getItem('CURRENT_USER'));
   const response = await axios.post(
-    // 'http://localhost:8080/api/v1/regist',
-    'http://i5a208.p.ssafy.io:8080/api/v1/regist',
+    'http://localhost:8080/api/v1/regist',
+    // 'http://i5a208.p.ssafy.io:8080/api/v1/regist',
     data,
   );
   return response.data;

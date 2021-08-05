@@ -4,7 +4,7 @@ const Wrapper = styled.div`
   .all-container {
     max-width: 1000px;
   }
-  &.nickname-input {
+  &.name-input {
     background-color: transparent;
     border: none;
     color: white;

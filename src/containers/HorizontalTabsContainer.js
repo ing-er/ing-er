@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import {
   setMainIndexCalendar,
   setMainIndexTodolist,
@@ -7,6 +8,8 @@ import {
   setIsRandomRoomTrue,
   setIsRandomRoomFalse,
 } from '../modules/setIsRandomRoom';
+import { getCalendarData } from '../modules/setCalendar';
+import { getTodolistData } from '../modules/setTodolist';
 
 import HorizontalTabs from '../components/Main/HorizontalTabs';
 
@@ -27,6 +30,15 @@ const HorizontalTabsComponent = () => {
   const setIsRandomRoomF = () => {
     dispatch(setIsRandomRoomFalse());
   };
+
+  const { id } = useSelector((state) => state.authorization.userData);
+
+  useEffect(() => {
+    getCalendarData(id);
+  }, []);
+  useEffect(() => {
+    getTodolistData(id);
+  }, []);
 
   return (
     <HorizontalTabs

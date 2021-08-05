@@ -8,6 +8,7 @@ import {
   setTodolistEditContent,
   setTodolistEditComplete,
   setTodolistSaveData,
+  getTodolistData,
 } from '../modules/setTodolist';
 
 const MyTodolistComponent = ({ children }) => {
@@ -34,6 +35,8 @@ const MyTodolistComponent = ({ children }) => {
     dispatch(setTodolistSaveData());
   };
 
+  console.log('todolist');
+  console.log(todolist);
   return cloneElement(children, {
     todolistdata: todolist,
     todopercent: todopercent,

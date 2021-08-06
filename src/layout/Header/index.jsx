@@ -52,6 +52,10 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
     setOpen(false);
   };
 
+  const onClickRoom = () => {
+    alert('준비 중입니다.');
+  };
+
   const onLoginHandler = () => {
     if (isJoin === false && isAuth === false) {
       alert('로그인 후 입장 가능합니다.');
@@ -108,12 +112,15 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                 <Grid item>
                   {/* 방 입장 */}
                   {isAuth && !isJoin ? (
-                    <Link to="/room">
-                      <IconButton>
-                        <MeetingRoomIcon htmlColor="white" />
-                      </IconButton>
-                    </Link>
+                    <IconButton onClick={onClickRoom}>
+                      <MeetingRoomIcon htmlColor="white" />
+                    </IconButton>
                   ) : (
+                    // <Link to="/room">
+                    //   <IconButton>
+                    //     <MeetingRoomIcon htmlColor="white" />
+                    //   </IconButton>
+                    // </Link>
                     <div></div>
                   )}
                 </Grid>

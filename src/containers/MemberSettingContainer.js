@@ -283,7 +283,7 @@ function MemberSettingContainer() {
   }, [a]);
 
   const onDuplicateHandler = () => {
-    if (name === undefined || name.length < 2) {
+    if (name === undefined || name.length < 2 || name.length > 6) {
       alert('닉네임은 2자이상 6자 이하로 설정해 주십시오.')
     } else {
         // fetch(`http://localhost:8080/api/v1/users/checkname/${name}`, {

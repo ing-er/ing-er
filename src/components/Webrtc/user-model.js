@@ -2,14 +2,14 @@ class UserModel {
   connectionId;
   audioActive;
   videoActive;
-  nickname;
+  name;
   streamManager;
 
   constructor() {
     this.connectionId = '';
     this.audioActive = false;
     this.videoActive = true;
-    this.nickname = '';
+    this.name = '';
     this.streamManager = null;
   }
 
@@ -21,8 +21,8 @@ class UserModel {
     return this.connectionId;
   }
 
-  getNickname() {
-    return this.nickname;
+  getname() {
+    return this.name;
   }
 
   getStreamManager() {
@@ -38,8 +38,8 @@ class UserModel {
   setConnectionId(conecctionId) {
     this.connectionId = conecctionId;
   }
-  setNickname(nickname) {
-    this.nickname = nickname;
+  setname(name) {
+    this.name = name;
   }
 }
 

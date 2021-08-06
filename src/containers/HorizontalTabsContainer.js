@@ -13,6 +13,12 @@ import { getTodolistData } from '../modules/setTodolist';
 
 import HorizontalTabs from '../components/Main/HorizontalTabs';
 
+//* 민코
+// import MemberSetting from '../components/Entrance/MemberSetting';
+import {
+  typeAuthUser,
+} from '../modules/userAuthorization';
+
 const HorizontalTabsComponent = () => {
   const dispatch = useDispatch();
   const { mainIndex } = useSelector((state) => state.setMainIndex);
@@ -31,8 +37,18 @@ const HorizontalTabsComponent = () => {
     dispatch(setIsRandomRoomFalse());
   };
 
-  const { id } = useSelector((state) => state.authorization.userData);
+  // const { id } = useSelector(({authorization}) => authorization.info.id);
+  // const { id } = useSelector((state) => state.authorization.userData);
+  const { id } = useSelector(({authorization }) => ({
+    id: authorization.userData.id,
+  }));
 
+  console.log(id)
+
+
+  useEffect(() => {
+    typeAuthUser();
+  }, []);
   useEffect(() => {
     getCalendarData(id);
   }, []);

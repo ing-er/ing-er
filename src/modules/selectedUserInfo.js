@@ -10,7 +10,7 @@ export const setSelectedUserInfo = (userId) => ({
 /* initial state */
 const initialState = {
   userId: 'defaultUserId',
-  nickname: 'defaultUserNickname',
+  name: 'defaultUsername',
 };
 
 /* reducer */

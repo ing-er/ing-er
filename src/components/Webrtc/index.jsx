@@ -124,8 +124,8 @@ const Webrtc = () => {
       newUser.setStreamManager(sub);
       newUser.setConnectionId(event.stream.connection.connectionId);
 
-      // const newUserNickname = event.stream.connection.data.split('%')[0];
-      // newUser.setNickname(JSON.parse(newUserNickname).clientData);
+      // const newUsername = event.stream.connection.data.split('%')[0];
+      // newUser.setname(JSON.parse(newUsername).clientData);
 
       let newSubs = subscribers;
       newSubs.push(newUser);
@@ -176,8 +176,8 @@ const Webrtc = () => {
 
   /* handle video mute or unmute */
   const handleVideoMute = () => {
-    user.streamManager.publishVideo(!user.isVideoActive())
-    user.setVideoActive(!user.isVideoActive())
+    user.streamManager.publishVideo(!user.isVideoActive());
+    user.setVideoActive(!user.isVideoActive());
   };
 
   /* user 상태 변경 */
@@ -291,7 +291,7 @@ const Webrtc = () => {
   return (
     <Wrapper>
       {!flag ? null : (
-        <Room 
+        <Room
           subscribers={subscribers}
           leaveSession={leaveSession}
           handleVideoMute={handleVideoMute}

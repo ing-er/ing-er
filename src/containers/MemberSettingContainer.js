@@ -242,7 +242,9 @@ function MemberSettingContainer() {
 
 
   const onUpdateInfo = () => {
-    if(name != undefined && 2 <= name.length && name.length <= 6 && category != undefined && isOpen != undefined && isDupl === 1){
+    const validation = /^[0-9a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/;
+
+    if(name != undefined && 2 <= name.length && name.length <= 6 && validation.test(name) && category != undefined && isOpen != undefined && isDupl === 1){
       if (isAuth && !isJoin){
         const data = {
           "category": Number(category),
@@ -261,7 +263,7 @@ function MemberSettingContainer() {
         dispatch(typeInitInfo(data));
       }
     } else {
-      alert('다음과 같은 기준을 맞춰 주십시오. \n 닉네임: 2자 이상, 6자 이하 \n 닉네임 중복 확인 \n 카테고리, 다짐 공개여부 선택')
+      alert('다음과 같은 기준을 맞춰 주십시오. \n 닉네임은 2자 이상, 6자 이하, 숫자, 알파벳, 한글만 가능 \n 닉네임 중복 확인 \n 카테고리, 다짐 공개여부 선택')
     }
   };
 
@@ -283,8 +285,10 @@ function MemberSettingContainer() {
   }, [a]);
 
   const onDuplicateHandler = () => {
-    if (name === undefined || name.length < 2 || name.length > 6) {
-      alert('닉네임은 2자이상 6자 이하로 설정해 주십시오.')
+    const validation = /^[0-9a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/;
+
+    if (name === undefined || name.length < 2 || name.length > 6 || !validation.test(name)) {
+      alert('닉네임은 2자이상 6자 이하의 숫자, 한글, 알파벳으로만 설정해 주십시오.')
     } else {
         // fetch(`http://localhost:8080/api/v1/users/checkname/${name}`, {
         fetch(`http://i5a208.p.ssafy.io:8080/api/v1/users/checkname/${name}`, {

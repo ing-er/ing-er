@@ -31,7 +31,8 @@ const RoomAppbar = ({ handleDrawerOpen, leaveSession, handleVideoMute, open, cla
           <RoomPause className="room-pause" />
         </IconButton>
         <Link
-          to='/Main'
+          // to='/Main'
+          to="/TESTBUTTON" // tmp link
           onClick={handleLeaveSession}
         >
           <IconButton 

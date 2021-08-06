@@ -6,7 +6,8 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import Wrapper from './styles';
 
 const TodolistTitle = (props) => {
-  let { title, index, setTodolistAddInput, setTodolistEditTitle } = props;
+  let { title, index, setTodolistAddInput, setTodolistEditTitle, backColor } =
+    props;
   const handleAddInput = () => {
     setTodolistAddInput(index);
   };
@@ -19,7 +20,7 @@ const TodolistTitle = (props) => {
       item
       className="title-container"
       style={{
-        backgroundColor: '#1E1F26',
+        backgroundColor: backColor,
       }}
     >
       <Grid container className="title-subcontainer">
@@ -41,14 +42,22 @@ const TodolistTitle = (props) => {
 };
 
 const TodolistContent = (props) => {
-  const { todolist, index, setTodolistEditContent, setTodolistEditComplete } =
-    props;
+  const {
+    todolist,
+    index,
+    setTodolistEditContent,
+    setTodolistEditComplete,
+    backColor,
+    textColor,
+    completeTextColor,
+  } = props;
+
   return (
     <Grid
       item
       className="content-container"
       style={{
-        backgroundColor: '#1E1F26',
+        backgroundColor: backColor,
       }}
     >
       {todolist.map((data, idx) => {
@@ -60,6 +69,8 @@ const TodolistContent = (props) => {
             setTodolistEditContent={setTodolistEditContent}
             subindex={idx}
             setTodolistEditComplete={setTodolistEditComplete}
+            textColor={textColor}
+            completeTextColor={completeTextColor}
           />
         );
       })}
@@ -75,6 +86,8 @@ const TodolistContentElement = (props) => {
     index,
     subindex,
     setTodolistEditComplete,
+    textColor,
+    completeTextColor,
   } = props;
   const onChangeHandler = (e) => {
     setTodolistEditContent(index, subindex, e.target.value);
@@ -87,8 +100,8 @@ const TodolistContentElement = (props) => {
     <Grid container className="content-subcontainer">
       <Grid item xs={2}>
         <IconButton onClick={checkBoxHandler}>
-          {!complete && <CheckBoxOutlineBlankIcon htmlColor="white" />}
-          {complete && <CheckBoxIcon htmlColor="#4D4D4D" />}
+          {!complete && <CheckBoxOutlineBlankIcon htmlColor={textColor} />}
+          {complete && <CheckBoxIcon htmlColor={completeTextColor} />}
         </IconButton>
       </Grid>
       <Grid item xs={10}>
@@ -120,6 +133,9 @@ const TodolistComponent = (props) => {
     setTodolistEditTitle,
     setTodolistEditContent,
     setTodolistEditComplete,
+    backColor,
+    textColor,
+    completeTextColor,
   } = props;
 
   return (
@@ -130,12 +146,16 @@ const TodolistComponent = (props) => {
           index={index}
           setTodolistAddInput={setTodolistAddInput}
           setTodolistEditTitle={setTodolistEditTitle}
+          backColor={backColor}
         />
         <TodolistContent
           todolist={todolist}
           setTodolistEditContent={setTodolistEditContent}
           index={index}
           setTodolistEditComplete={setTodolistEditComplete}
+          backColor={backColor}
+          textColor={textColor}
+          completeTextColor={completeTextColor}
         />
       </Grid>
     </Wrapper>

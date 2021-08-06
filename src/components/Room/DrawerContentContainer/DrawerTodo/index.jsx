@@ -13,7 +13,7 @@ import Wrapper from './styles';
 const LinearProgressOrange = withStyles({
   root: {
     height: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F9F9F9',
     borderRadius: '20px',
   },
   bar: {
@@ -41,7 +41,7 @@ const DrawerTodo = (props) => {
         className="all-container"
         direction="column"
         style={{
-          backgroundColor: '#292A33',
+          backgroundColor: '#FFFFFF',
         }}
       >
         <Grid container direction="row" justify="space-between">
@@ -88,8 +88,13 @@ const DrawerTodo = (props) => {
             <LinearProgressOrange variant="determinate" value={todopercent} />
           </div>
         </Grid>
-        <Grid item xs={12}>
-          <Grid container direction="row" justify="left">
+        <Grid item xs={12} style={{ margin: '10px' }}>
+          <Grid
+            container
+            direction="row"
+            justify="left"
+            style={{ backgroundColor: '#F6F7F9', borderRadius: '30px' }}
+          >
             {todolistdata.map((data, index) => {
               return (
                 <Grid
@@ -108,6 +113,9 @@ const DrawerTodo = (props) => {
                     setTodolistEditTitle={setTodolistEditTitle}
                     setTodolistEditContent={setTodolistEditContent}
                     setTodolistEditComplete={setTodolistEditComplete}
+                    backColor={'#FFFFFF'}
+                    textColor={'#000000'}
+                    completeTextColor={'#CECECE'}
                   />
                 </Grid>
               );
@@ -120,7 +128,11 @@ const DrawerTodo = (props) => {
               xs={12}
               className="todolist-component-container"
             >
-              <TodolistAdd setTodolistAddContainer={setTodolistAddContainer} />
+              <TodolistAdd
+                setTodolistAddContainer={setTodolistAddContainer}
+                backColor={'#FFFFFF'}
+                textColor={'#000000'}
+              />
             </Grid>
           </Grid>
         </Grid>

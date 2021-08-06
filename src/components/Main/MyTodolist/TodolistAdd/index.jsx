@@ -7,7 +7,7 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import Wrapper from './styles';
 
 const TodolistAdd = (props) => {
-  let { setTodolistAddContainer } = props;
+  let { setTodolistAddContainer, backColor } = props;
   const handleAddContainer = () => {
     setTodolistAddContainer(document.querySelector('#add-title').value);
   };
@@ -18,7 +18,7 @@ const TodolistAdd = (props) => {
         item
         className="title-container"
         style={{
-          backgroundColor: '#1E1F26',
+          backgroundColor: backColor,
         }}
       >
         <Grid container className="title-subcontainer">

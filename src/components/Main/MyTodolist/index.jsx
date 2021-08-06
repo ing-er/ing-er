@@ -278,6 +278,9 @@ const MyTodolist = (props) => {
                     setTodolistEditTitle={setTodolistEditTitle}
                     setTodolistEditContent={setTodolistEditContent}
                     setTodolistEditComplete={setTodolistEditComplete}
+                    backColor={'#1E1F26'}
+                    textColor={'white'}
+                    completeTextColor={'#4D4D4D'}
                   />
                 </Grid>
               );
@@ -290,7 +293,11 @@ const MyTodolist = (props) => {
               xs={12}
               className="todolist-component-container"
             >
-              <TodolistAdd setTodolistAddContainer={setTodolistAddContainer} />
+              <TodolistAdd
+                setTodolistAddContainer={setTodolistAddContainer}
+                backColor={'#1E1F26'}
+                textColor={'white'}
+              />
             </Grid>
           </Grid>
         </Grid>

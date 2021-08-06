@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   & .title-input {
     background-color: transparent;
     border: none;
-    color: white;
+    color: #000000;
     width: 80%;
     height: 100%;
     font-size: 20px;
@@ -34,7 +34,7 @@ const Wrapper = styled.div`
   & .content-input {
     background-color: transparent;
     border: none;
-    color: white;
+    color: #000000;
     width: 100%;
     height: 100%;
     font-size: 18px;
@@ -45,7 +45,7 @@ const Wrapper = styled.div`
   & .content-input-complete {
     background-color: transparent;
     border: none;
-    color: #4d4d4d;
+    color: #cecece;
     width: 100%;
     height: 100%;
     font-size: 18px;

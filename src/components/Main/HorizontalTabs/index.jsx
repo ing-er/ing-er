@@ -110,7 +110,6 @@ const HorizontalTabs = (props) => {
               >
                 입장하기
               </Button>
-
             </Link>
           </Grid>
         </Grid>

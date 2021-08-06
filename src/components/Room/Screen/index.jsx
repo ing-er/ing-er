@@ -3,14 +3,18 @@ import { useState, useEffect, useRef } from 'react';
 import Wrapper from './styles';
 
 const Screen = ({ subscriber }) => {
-  const videoRef = useRef(undefined);
+  let videoRef = useRef(null);
 
   /* subscriber hook */
   useEffect(() => {
-    if (subscriber && videoRef.current) {
-      subscriber.getStreamManager().addVideoElement(videoRef.current)
+    if (subscriber && !!videoRef) {
+      subscriber.addVideoElement(videoRef.current)
     }
   }, [subscriber])
+
+  const getUsername = () => {
+    return JSON.parse(subscriber.streamManager.stream.connection.data).clientData;
+  }
 
   return (
     <Wrapper>

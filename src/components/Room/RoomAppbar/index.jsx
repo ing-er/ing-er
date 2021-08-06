@@ -37,6 +37,7 @@ const RoomAppbar = ({ handleDrawerOpen, leaveSession, handleVideoMute, open, cla
           <IconButton 
             className="room-buttons-container"
             onClick={handleLeaveSession}
+            style={{ display: "inline-block" }}
           >
             <RoomClose className="room-close" />
           </IconButton>

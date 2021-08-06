@@ -1,23 +1,42 @@
 import { useState } from 'react';
 
 import RoomCalendar from '../../RoomCalendar';
+import CalendarComponent from '../../../Main/MyCalendar/CalendarComponent';
+import CalendarDiary from '../../../Main/MyCalendar/CalendarDiary';
+import CalendarPromise from '../../../Main/MyCalendar/CalendarPromise';
 
 import { Grid, Typography } from '@material-ui/core';
 
 import Wrapper from './styles';
 
-const DrawerProfile = () => {
+const DrawerProfile = (props) => {
+  let {
+    calendardata,
+    setCalendarEditPromise,
+    setCalendarEditDiary,
+    setCalendarEditPromiseIsEditable,
+    setCalendarEditDiaryIsEditable,
+    setCalendarSetDate,
+    requestdate,
+    isEditablePromise,
+    isEditableDiary,
+    setCalendarSaveData,
+    setTodolistSetDate,
+  } = props;
   return (
     <Wrapper>
       <Grid className="name-container">
         <Typography variant="h4" className="name"></Typography>
       </Grid>
       <Grid className="calendar-container">
-        <RoomCalendar />
+        <CalendarComponent
+          setCalendarSetDate={setCalendarSetDate}
+          setTodolistSetDate={setTodolistSetDate}
+        />
       </Grid>
       <Grid className="date-time-container">
-        <Typography className="date">7월 20일 (목)</Typography>
-        <Typography className="time-text">오늘의 공부 시간</Typography>
+        <Typography className="date">{requestdate}</Typography>
+        <Typography className="time-text">�늘공� �간</Typography>
         <Typography className="time">00 : 00 : 00</Typography>
       </Grid>
       <Grid className="pd-container">
@@ -29,7 +48,14 @@ const DrawerProfile = () => {
               height: '100%',
             }}
           >
-            다짐 component
+            <CalendarPromise
+              calendardata={calendardata}
+              isEditablePromise={isEditablePromise}
+              setCalendarEditPromise={setCalendarEditPromise}
+              setCalendarEditPromiseIsEditable={
+                setCalendarEditPromiseIsEditable
+              }
+            />
           </p>
         </Grid>
         <Grid className="pd-content-container">
@@ -40,7 +66,12 @@ const DrawerProfile = () => {
               height: '100%',
             }}
           >
-            일기 component
+            <CalendarDiary
+              calendardata={calendardata}
+              isEditableDiary={isEditableDiary}
+              setCalendarEditDiary={setCalendarEditDiary}
+              setCalendarEditDiaryIsEditable={setCalendarEditDiaryIsEditable}
+            />
           </p>
         </Grid>
       </Grid>

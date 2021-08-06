@@ -4,16 +4,19 @@ import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 
 import Room from '../../pages/Room';
+import Screen from '../Room/Screen';
 import Wrapper from './styles';
 
 const Webrtc = () => {
-  const OPENVIDU_SERVER_URL = 'https://localhost:4443';
+  const OPENVIDU_SERVER_URL = 'https://i5a204.p.ssafy.io';
   const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
   const [flag, setFlag] = useState(false);
   const [OV, setOV] = useState(undefined);
   const [mySessionId, setMysessionId] = useState('SessionT');
-  const [myUsername, setMyUsername] = useState('Participant' + Math.floor(Math.random() * 100));
+  const [myUsername, setMyUsername] = useState(
+    'Participant' + Math.floor(Math.random() * 100),
+  );
   const [session, setSession] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
@@ -36,26 +39,26 @@ const Webrtc = () => {
   const onbeforeunload = (event) => {
     this.leaveSession();
   };
-  
+
   /* to init session */
   useEffect(() => {
     if (!OV) return;
     setSession(OV.initSession());
-  }, [OV])
+  }, [OV]);
 
   /* session hook */
   useEffect(() => {
     if (!session) return;
-    
-    // on every stream received or destroyed
-    subscribeToStreamCreated();
-    subscribeToStreamDestroyed();
-    onException();
+    // join Session
+    if (!flag) {
+      joinSession();
 
-    // join session
-    joinSession();
-
-    // subscribeToUserChanged();
+      // on every stream received or destroyed
+      subscribeToStreamCreated();
+      subscribeToStreamDestroyed();
+      onException();
+      // subscribeToUserChanged();
+    }
   }, [session]);
 
   /* subscriber test */
@@ -68,49 +71,47 @@ const Webrtc = () => {
     let mySession = session;
 
     getToken().then((token) => {
-      mySession.connect(token, { clientData: myUsername })
-      .then(() => {
-        let _publisher = OV.initPublisher(undefined, {
-          audioSource: undefined,
-          videoSource: undefined,
-          publishAudio: false,
-          publishVideo: true,
-          resolution: '1920x1080',
-          frameRate: 30,
-          insertMode: 'APPEND',
-          mirror: false,
+      mySession
+        .connect(token, { clientData: myUsername })
+        .then(() => {
+          let _publisher = OV.initPublisher('', {
+            audioSource: undefined,
+            videoSource: undefined,
+            publishAudio: false,
+            publishVideo: true,
+            resolution: '1920x1080',
+            frameRate: 30,
+            insertMode: 'APPEND',
+            mirror: false,
+          });
+
+          session.publish(_publisher);
+          setPublisher(_publisher);
+          setFlag(true);
+        })
+        .catch((err) => {
+          console.log(
+            'There was an error connecting to the session:',
+            err.code,
+            err.message,
+          );
         });
-
-        session.publish(_publisher)
-          .then(() => {
-            setPublisher(_publisher)
-            setFlag(true);
-          })
-
-      })
-      .catch((err) => {
-        console.log('There was an error connecting to the session:', err.code, err.message);
-      })
-    })
-  }
+    });
+  };
 
   // update streamer
   const updateStreamer = (streamer) => {
-    let subs = []
-    for (let i = 0; i < subscribers.length; i++) {
-      const _sub = JSON.parse(JSON.stringify(subscribers[i]))
-      subs = subs.concat(_sub)
-    }
+    let subs = subscribers;
     subs.push(streamer);
-    setSubscribers([...subs])
-  }
+    setSubscribers([...subs]);
+  };
 
   // ON EVERY new subscriber's stream received
   const subscribeToStreamCreated = () => {
     session.on('streamCreated', (event) => {
       let sub = session.subscribe(event.stream, '');
 
-      updateStreamer(sub)
+      updateStreamer(sub);
     });
   };
 
@@ -124,17 +125,11 @@ const Webrtc = () => {
 
   // delete remote subscriber
   const deleteSubscriber = (streamManager) => {
-    let subs = []
-    for (let i = 0; i < subscribers.length; i++) {
-      const _sub = JSON.parse(JSON.stringify(subscribers[i]))
-      subs.push(_sub)
-    }
-
+    let subs = subscribers;
     let idx = subs.indexOf(streamManager, 0);
     if (idx > -1) {
       subs.splice(idx, 1);
-      
-      setSubscribers([...subs])
+      setSubscribers([...subs]);
     }
   };
 
@@ -143,7 +138,7 @@ const Webrtc = () => {
     session.on('exception', (exception) => {
       console.warn(exception);
     });
-  }
+  };
 
   /* leave session */
   const leaveSession = () => {
@@ -155,7 +150,6 @@ const Webrtc = () => {
 
     // empty all properties
     initStates();
-
   };
 
   /* initParams */
@@ -168,7 +162,7 @@ const Webrtc = () => {
     setSubscribers([]);
     setIsVideoActive(false);
     setFlag(false);
-  }
+  };
 
   /* handle video mute or unmute */
   const handleVideoMute = () => {
@@ -180,17 +174,17 @@ const Webrtc = () => {
   // const subscribeToUserChanged = () => {
   //   session.on('StreamPropertyChanged', (e) => {
   //     console.log('stream property changed!!!!!!!!!!!!!');
-      // let remoteUsers = subscribers;
-      // remoteUsers.forEach((user) => {
-      //   if (user.getConnectionId() === e.from.connectionId) {
-      //     const data = JSON.parse(e.data);
+  // let remoteUsers = subscribers;
+  // remoteUsers.forEach((user) => {
+  //   if (user.getConnectionId() === e.from.connectionId) {
+  //     const data = JSON.parse(e.data);
 
-      //     if (data.isVideoActive !== undefined) {
-      //       user.setVideoActive(data.isVideoActive);
-      //     }
-      //   }
-      // });
-      // setSubscribers([...remoteUsers]);
+  //     if (data.isVideoActive !== undefined) {
+  //       user.setVideoActive(data.isVideoActive);
+  //     }
+  //   }
+  // });
+  // setSubscribers([...remoteUsers]);
   //   });
   // };
 
@@ -220,7 +214,7 @@ const Webrtc = () => {
           headers: {
             Authorization:
               'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
-              'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
           },
         })
         .then((response) => {
@@ -270,7 +264,7 @@ const Webrtc = () => {
             headers: {
               Authorization:
                 'Basic ' + btoa('OPENVIDUAPP:' + OPENVIDU_SERVER_SECRET),
-                'Content-Type': 'application/json',
+              'Content-Type': 'application/json',
             },
           },
         )
@@ -285,9 +279,10 @@ const Webrtc = () => {
   return (
     <Wrapper>
       {!flag ? (
-        null
+        <p>멈춰!</p>
       ) : (
         <Room
+          publisher={publisher}
           subscribers={subscribers}
           leaveSession={leaveSession}
           handleVideoMute={handleVideoMute}

@@ -7,7 +7,7 @@ import RoomAppbar from '../../components/Room/RoomAppbar';
 import { CssBaseline } from '@material-ui/core';
 import { Wrapper, useStyles } from './styles';
 
-const Room = ({ subscribers, leaveSession, handleVideoMute }) => {
+const Room = ({ subscribers, publisher, leaveSession, handleVideoMute }) => {
   /* drawer */
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -35,7 +35,10 @@ const Room = ({ subscribers, leaveSession, handleVideoMute }) => {
         open={open}
         classes={classes}
       >
-        <ScreenContainer subscribers={subscribers} />
+        <ScreenContainer
+          publisher={publisher}
+          subscribers={subscribers}
+        />
       </RoomDrawer>
     </Wrapper>
   );

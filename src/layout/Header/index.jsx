@@ -101,7 +101,7 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                       </IconButton>
                     </Link>
                   ) : (
-                    <div></div>
+                    <Link to="/TESTBUTTON">test</Link>
                   )}
                 </Grid>
 

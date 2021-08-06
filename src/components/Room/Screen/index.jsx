@@ -2,23 +2,23 @@ import { useState, useEffect, useRef } from 'react';
 
 import Wrapper from './styles';
 
-const Screen = ({ subscriber }) => {
-  let videoRef = useRef(null);
+const Screen = ({ streamManager }) => {
+  let videoRef = useRef();
 
   /* subscriber hook */
   useEffect(() => {
-    if (subscriber && !!videoRef) {
-      subscriber.addVideoElement(videoRef.current)
+    if (streamManager && !!videoRef) {
+      streamManager.addVideoElement(videoRef.current)
     }
-  }, [subscriber])
+  }, [streamManager])
 
   const getUsername = () => {
-    return JSON.parse(subscriber.streamManager.stream.connection.data).clientData;
+    return JSON.parse(streamManager.streamManager.stream.connection.data).clientData;
   }
 
   return (
     <Wrapper>
-      {subscriber !== undefined ? (
+      {streamManager !== undefined ? (
         <div className="conference-content">
           <video
             className="screen"

@@ -23,6 +23,8 @@ const WITHDRAWAL_USER = 'memberSetting/WITHDRAWAL_USER';
 const WITHDRAWAL_USER_SUCCESS = 'memberSetting/WITHDRAWAL_USER_SUCCESS';
 const WITHDRAWAL_USER_FAILURE = 'memberSetting/WITHDRAWAL_USER_FAILURE';
 
+const INIT_STATE = 'memberSetting/INIT_STATE';
+
 //* GENERATE_TYPE_FUNCTION
 export const typeGetUserInfo = () => ({
   type: GET_USER_INFO,
@@ -38,9 +40,12 @@ export const typeInitInfo = (data) => ({
   payload: data,
 });
 
-export const typeWithdrawal = (data) => ({
+export const typeWithdrawal = () => ({
   type: WITHDRAWAL_USER,
-  payload: data,
+});
+
+export const typeInitialize = () => ({
+  type: INIT_STATE,
 });
 
 //* MAIN_SAGA_FUNCTION
@@ -63,6 +68,8 @@ export function* getUserInfoSaga() {
 export function* registUserInfoSaga(action) {
   try {
     const result = yield call(editApi.registUserInfoAsync, action.payload);
+    console.log('reg result')
+    console.log(result)
     yield put({
       type: INIT_USER_INFO_SUCCESS,
       payload: result,
@@ -90,9 +97,9 @@ export function* updateUserInfoSaga(action) {
   }
 }
 
-export function* withdrawalSaga(action) {
+export function* withdrawalSaga() {
   try {
-    const withdrawalResult = yield call(editApi.WithdrawalUserAsync, action.payload);
+    const withdrawalResult = yield call(editApi.WithdrawalUserAsync);
     yield put({
       type: WITHDRAWAL_USER_SUCCESS,
       payload: withdrawalResult,
@@ -115,15 +122,15 @@ export function* userInfoSaga() {
 
 //* 초기 state
 const initialState = {
-  isJoin: authorization.isJoin,
-  isAuth: authorization.isAuth,
   info: {},
 };
 
 /* 리듀서 선언 */
 // 리듀서는 export default 로 내보내주세요.
 export default function memberSetting(state = initialState, action) {
+  console.log('mem func')
   console.log(state)
+  console.log(action)
   
   switch (action.type) {
     //*   GET_USER_INFO
@@ -147,11 +154,14 @@ export default function memberSetting(state = initialState, action) {
         ...state,
       };
     case POST_UPDATE_USER_INFO_SUCCESS:
+      //* {
+      //*   "message": "정상",
+      //*   "statusCode": 200
+      //* }
       return {
         ...state,
-        isJoin: false,
-        isAuth: true,
-        info: action.payload,
+        update: action.payload,
+        // info: action.payload,
       };
     case POST_UPDATE_USER_INFO_FAILURE:
       return {
@@ -159,15 +169,23 @@ export default function memberSetting(state = initialState, action) {
         error: action.payload,
       };
 
-      case INIT_USER_INFO:
-      return {
-        ...state,
+    case INIT_USER_INFO:
+      // {
+      //   "message": "Success",
+      //   "id": 21,
+      //   "kakaoIdNum": "1810000000",
+      //   "name": "your_name",
+      //   "isOpen": false,
+      //   "usercode": 101,
+      //   "category": 201
+      // }
+    return {
+      ...state,
       };
     case INIT_USER_INFO_SUCCESS:
       return {
-        isJoin: false,
-        isAuth: true,
         ...state,
+        update: action.payload,
       };
     case INIT_USER_INFO_FAILURE:
       return {
@@ -186,6 +204,12 @@ export default function memberSetting(state = initialState, action) {
     case WITHDRAWAL_USER_FAILURE:
       return {
         ...state,
+      };
+    
+    case INIT_STATE:
+      return {
+        ...state,
+        update: {}
       };
 
     default:

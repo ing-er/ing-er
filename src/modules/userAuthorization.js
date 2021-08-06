@@ -16,11 +16,18 @@ const LOGIN_USER_FAILURE = 'userAuthorization/LOGIN_USER_FAILURE';
 //* LOG_OUT_USER
 const LOG_OUT_USER = 'userAuthorization/LOG_OUT_USER';
 
+//* WITHDRAWAL_USER
+const WITHDRAWAL_USER = 'userAuthorization/WITHDRAWAL_USER';
+const WITHDRAWAL_USER_SUCCESS = 'userAuthorization/WITHDRAWAL_USER_SUCCESS';
+const WITHDRAWAL_USER_FAILURE = 'userAuthorization/WITHDRAWAL_USER_FAILURE';
+
 //* 회원가입을 마친 상태의 유저에게 올바른 상단바를 보여 주기 위한 변수
 const COMPLETE_JOIN_USER = 'userAuthorization/COMPLETE_JOIN_USER';
 
 const DIALOGOPEN = 'DIALOGOPEN';
 const DIALOGCLOSE = 'DIALOGCLOSE';
+
+const SETTING_INITIALIZE = 'userAuthorization/SETTING_INITIALIZE'
 
 //* GENERATE_TYPE_FUNCTION
 export const typeAuthUser = () => ({
@@ -37,15 +44,21 @@ export const typeCompleteJoinUser = () => ({
   type: COMPLETE_JOIN_USER,
 });
 
+export const typeWithdrawal = () => ({
+  type: WITHDRAWAL_USER,
+});
+export const typeSettingInitialize = () => ({
+  type: SETTING_INITIALIZE,
+});
+
 //* MAIN_SAGA_FUNCTION
 
-export function* authSaga(action) {
+export function* authSaga() {
   try {
-    const authResult = yield call(loginApi.isAuthAsync, action.payload);
+    const authResult = yield call(loginApi.isAuthAsync);
     yield put({
       type: AUTH_USER_SUCCESS,
-      payload: authResult,
-      kakaoIdNum: action.payload
+      payload: authResult
     });
   } catch (e) {
     yield put({
@@ -69,10 +82,27 @@ export function* loginSaga(action) {
   }
 }
 
+export function* withdrawalSaga() {
+  try {
+    const withdrawalResult = yield call(loginApi.WithdrawalUserAsync);
+    yield put({
+      type: WITHDRAWAL_USER_SUCCESS,
+      payload: withdrawalResult,
+    });
+  } catch (e) {
+    yield put({
+      type: WITHDRAWAL_USER_FAILURE,
+      payload: e,
+    });
+  }
+}
+
+
 //* WATCHER_SAGA_FUNCTION
 export function* userAuthorizationSaga() {
   yield takeLatest(AUTH_USER, authSaga);
   yield takeLatest(LOGIN_USER, loginSaga);
+  yield takeLatest(WITHDRAWAL_USER, withdrawalSaga);
 }
 
 export const setKakoDialogOpen = () => ({
@@ -82,8 +112,16 @@ export const setKakoDialogClose = () => ({
   type: DIALOGCLOSE,
 });
 
+const initialState = {
+  id: 0,
+};
+
 //* REDUCER
-export default function authorization(state={}, action) {
+export default function authorization(state=initialState, action) {
+// export default function authorization(state={}, action) {
+  console.log('auth check')
+  console.log(state)
+  console.log(action.payload)
   switch (action.type) {
     //* =====================
     //*   AUTH_USER
@@ -111,7 +149,9 @@ export default function authorization(state={}, action) {
         //* 로그인되어 있는 상태
         return {
           ...state,
+          id: action.payload.id,
           userData: action.payload,
+          info: action.payload,
           isAuth: true,
           isJoin: false,
           kakaoIdNum: action.kakaoIdNum,
@@ -169,12 +209,36 @@ export default function authorization(state={}, action) {
         userData: {},
       };
 
+    //* =====================
+    //*   WITHDRAWAL_USER
+    //* =====================
+      case WITHDRAWAL_USER:
+      return {
+        ...state,
+      };
+    case WITHDRAWAL_USER_SUCCESS:
+      return {
+        ...state,
+        isAuth: false,
+        isJoin: false,
+        uinfo: action.payload,
+      };
+    case WITHDRAWAL_USER_FAILURE:
+      return {
+        ...state,
+      };
+
       //* COMPLETE_JOIN_USER
     case COMPLETE_JOIN_USER:
       return {
         ...state,
         isAuth: true,
         isJoin: false,
+      };
+    case SETTING_INITIALIZE:
+      return {
+        ...state,
+        setting: 0,
       };
 
     case DIALOGOPEN:

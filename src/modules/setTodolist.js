@@ -80,6 +80,10 @@ let userId;
 
 export const getTodolistData = async (id) => {
   userId = id;
+  todolistData = [];
+  todolistToday = [];
+  todolistTotal = 0;
+  todolistComplete = 0;
   await axios
     .get(serverUrl + '/todoList/select/' + id)
     .then((res) => {

@@ -26,6 +26,9 @@ import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import { useHistory } from 'react-router';
 
+// tmp
+import { BrightnessLow } from '@material-ui/icons';
+
 const styles = (theme) => ({
   root: {
     margin: 0,
@@ -101,7 +104,7 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                       </IconButton>
                     </Link>
                   ) : (
-                    <Link to="/TESTBUTTON">test</Link>
+                    <div></div>
                   )}
                 </Grid>
 
@@ -114,7 +117,12 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                       </IconButton>
                     </Link>
                   ) : (
-                    <div></div>
+                    // TMP TEST BUTTOn
+                    <Link to="/TESTBUTTON">
+                      <IconButton>
+                        <BrightnessLow htmlColor="white" />
+                      </IconButton>
+                    </Link>
                   )}
                 </Grid>
               </Grid>

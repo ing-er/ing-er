@@ -21,9 +21,6 @@ const Wrapper = styled.div`
   }
 
   & .conference-content {
-    display: flex;
-    justify-content: flex-end;
-    position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
@@ -34,6 +31,13 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 7px;
+  }
+
+  & .screen-header-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
   }
 
 `;

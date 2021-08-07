@@ -1,16 +1,14 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  position: inherit;
   margin-top: 0.4rem;
   margin-right: 0.4rem;
-
   & .timer-container {
     background-color: #080808;
     border-radius: 10px;
-    box-shadow: 1px 1px 5px #c4c4c426, 0 15px 90px 30px rgba(0,0,0,0.25);
+    box-shadow: 1px 1px 5px #c4c4c426, 0px 15px 90px 30px rgba(0,0,0,0.25);
     display: flex;
-
+  }
   & .timer-col {
     text-align: center;
     margin: 0 0.7rem 0 0.7rem;

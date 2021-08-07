@@ -11,7 +11,6 @@ const Timer = ({ streamManager }) => {
   useEffect(() => {
     
     timerRef = setInterval(tick, 1000);
-    console.log('??')
     
     return (() => {
       clearInterval(timerRef);

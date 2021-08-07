@@ -286,6 +286,7 @@ const Webrtc = () => {
           subscribers={subscribers}
           leaveSession={leaveSession}
           handleVideoMute={handleVideoMute}
+          isVideoActive={isVideoActive}
         />
       )}
     </Wrapper>

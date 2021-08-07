@@ -8,7 +8,7 @@ import Screen from '../Room/Screen';
 import Wrapper from './styles';
 
 const Webrtc = () => {
-  const OPENVIDU_SERVER_URL = 'https://i5a204.p.ssafy.io';
+  const OPENVIDU_SERVER_URL = 'https://localhost:4443';
   const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
   const [flag, setFlag] = useState(false);
@@ -286,6 +286,7 @@ const Webrtc = () => {
           subscribers={subscribers}
           leaveSession={leaveSession}
           handleVideoMute={handleVideoMute}
+          isVideoActive={isVideoActive}
         />
       )}
     </Wrapper>

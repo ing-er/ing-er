@@ -1,8 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
+import Timer from './Timer';
+import Name from './Name';
+import Rest from './Rest';
 import Wrapper from './styles';
 
-const Screen = ({ streamManager }) => {
+const Screen = ({ streamManager, isVideoActive }) => {
   let videoRef = useRef();
 
   /* subscriber hook */
@@ -12,6 +15,10 @@ const Screen = ({ streamManager }) => {
     }
   }, [streamManager])
 
+  useEffect(() => {
+    console.log(isVideoActive)
+  }, [isVideoActive])
+
   const getUsername = () => {
     return JSON.parse(streamManager.streamManager.stream.connection.data).clientData;
   }
@@ -20,6 +27,15 @@ const Screen = ({ streamManager }) => {
     <Wrapper>
       {streamManager !== undefined ? (
         <div className="conference-content">
+          <div className="screen-header-container">
+            <Name />
+            <Timer streamManager={streamManager} />
+          </div>
+          {isVideoActive ? (
+            null
+          ) : (
+            <Rest />
+          )}
           <video
             className="screen"
             autoPlay={true}
@@ -28,7 +44,7 @@ const Screen = ({ streamManager }) => {
         </div>
       ) : (
         <div>
-          <p>아직 입장하지 않음</p>
+          <p>empty</p>
         </div>
       )}
     </Wrapper>

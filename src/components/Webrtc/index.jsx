@@ -20,7 +20,7 @@ const Webrtc = () => {
   const [session, setSession] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
-  const [isVideoActive, setIsVideoActive] = useState(true);
+  const [isLocalVideoActive, setIsLocalVideoActive] = useState(true);
 
   /* constructor hook */
   useEffect(() => {
@@ -57,7 +57,7 @@ const Webrtc = () => {
       subscribeToStreamCreated();
       subscribeToStreamDestroyed();
       onException();
-      // subscribeToUserChanged();
+      subscribeToUserChanged();
     }
   }, [session]);
 
@@ -160,33 +160,23 @@ const Webrtc = () => {
     setPublisher(undefined);
     setMysessionId('SessionO');
     setSubscribers([]);
-    setIsVideoActive(false);
+    setIsLocalVideoActive(false);
     setFlag(false);
   };
 
   /* handle video mute or unmute */
   const handleVideoMute = () => {
-    publisher.publishVideo(!isVideoActive);
-    setIsVideoActive(!isVideoActive);
+    publisher.publishVideo(!isLocalVideoActive);
+    setIsLocalVideoActive(!isLocalVideoActive);
   };
 
   /* user 상태 변경 */
-  // const subscribeToUserChanged = () => {
-  //   session.on('StreamPropertyChanged', (e) => {
-  //     console.log('stream property changed!!!!!!!!!!!!!');
-  // let remoteUsers = subscribers;
-  // remoteUsers.forEach((user) => {
-  //   if (user.getConnectionId() === e.from.connectionId) {
-  //     const data = JSON.parse(e.data);
-
-  //     if (data.isVideoActive !== undefined) {
-  //       user.setVideoActive(data.isVideoActive);
-  //     }
-  //   }
-  // });
-  // setSubscribers([...remoteUsers]);
-  //   });
-  // };
+  const subscribeToUserChanged = () => {
+    session.on('streamPropertyChanged', (e) => {
+      let remoteUsers = subscribers;
+      setSubscribers([...remoteUsers]);
+    });
+  };
 
   /**
    * --------------------------
@@ -286,7 +276,7 @@ const Webrtc = () => {
           subscribers={subscribers}
           leaveSession={leaveSession}
           handleVideoMute={handleVideoMute}
-          isVideoActive={isVideoActive}
+          isLocalVideoActive={isLocalVideoActive}
         />
       )}
     </Wrapper>

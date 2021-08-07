@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import Timer from './Timer';
 import Name from './Name';
 import Rest from './Rest';
 import Wrapper from './styles';
 
-const Screen = ({ streamManager, isVideoActive }) => {
+const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {
   let videoRef = useRef();
 
   /* subscriber hook */
@@ -14,10 +14,6 @@ const Screen = ({ streamManager, isVideoActive }) => {
       streamManager.addVideoElement(videoRef.current)
     }
   }, [streamManager])
-
-  useEffect(() => {
-    console.log(isVideoActive)
-  }, [isVideoActive])
 
   const getUsername = () => {
     return JSON.parse(streamManager.streamManager.stream.connection.data).clientData;
@@ -31,9 +27,10 @@ const Screen = ({ streamManager, isVideoActive }) => {
             <Name />
             <Timer streamManager={streamManager} />
           </div>
-          {isVideoActive ? (
-            null
-          ) : (
+          {isLocal && !isLocalVideoActive && (
+            <Rest />
+          )}
+          {!isLocal && !streamManager.stream.videoActive && (
             <Rest />
           )}
           <video

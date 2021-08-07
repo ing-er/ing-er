@@ -12,7 +12,7 @@ const Room = ({
   publisher,
   leaveSession,
   handleVideoMute,
-  isVideoActive,
+  isLocalVideoActive,
 }) => {
   /* drawer */
   const classes = useStyles();
@@ -44,7 +44,7 @@ const Room = ({
         <ScreenContainer
           publisher={publisher}
           subscribers={subscribers}
-          isVideoActive={isVideoActive}
+          isLocalVideoActive={isLocalVideoActive}
         />
       </RoomDrawer>
     </Wrapper>

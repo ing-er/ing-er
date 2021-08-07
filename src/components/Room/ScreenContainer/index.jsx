@@ -21,12 +21,12 @@ const ScreenContainer = ({ subscribers, publisher, isVideoActive }) => {
   return (
     <Wrapper>
       <Grid container spacing={10}>
-        <Grid item xs={12} md={6} lg={6} xl={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Screen streamManager={publisher} isVideoActive={isVideoActive} />
         </Grid>
         {subs.map((sub, idx) => {
           return (
-            <Grid item xs={12} md={6} lg={6} xl={4} key={idx}>
+            <Grid item xs={12} md={6} lg={4} key={idx}>
               <Screen streamManager={sub} />
             </Grid>
           );

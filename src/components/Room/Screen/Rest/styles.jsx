@@ -12,7 +12,7 @@ const colorWhite = '#ffffff';
 const Wrapper = styled.div`
   & .z1 {
     position: absolute;
-    font-size: 0.7rem;
+    font-size: 0.5rem;
     left: 35%;
     top: 42%;
     animation: ${blink} 2s steps(5, start) infinite;
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 
   & .z2 {
     position: absolute;
-    font-size: 1.2rem;
+    font-size: 1rem;
     left: 30%;
     top: 33%;
     animation: ${blink} 2s 1s steps(5, start) infinite;
@@ -28,7 +28,7 @@ const Wrapper = styled.div`
 
   & .z3 {
     position: absolute;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     top: 19%;
     left: 35%;
     animation: ${blink} 2s 2s steps(5, start) infinite;
@@ -38,8 +38,8 @@ const Wrapper = styled.div`
     position: absolute;
     top: 50%;
     left: 44%;
-    height: 40px;
-    width: 60px;
+    height: 35px;
+    width: 50px;
   }
 
   // Ears

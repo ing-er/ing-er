@@ -20,7 +20,7 @@ const ScreenContainer = ({ subscribers, publisher }) => {
 
   return (
     <Wrapper>
-      <Grid container spacing={4}>
+      <Grid container spacing={10}>
         <Grid item xs={12} md={6} lg={6} xl={4}>
           <Screen streamManager={publisher} />
         </Grid>

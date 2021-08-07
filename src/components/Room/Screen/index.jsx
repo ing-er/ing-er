@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
+import Timer from '../../Webrtc/Timer';
 import Wrapper from './styles';
 
 const Screen = ({ streamManager }) => {
@@ -20,6 +21,7 @@ const Screen = ({ streamManager }) => {
     <Wrapper>
       {streamManager !== undefined ? (
         <div className="conference-content">
+          <Timer streamManager={streamManager} />
           <video
             className="screen"
             autoPlay={true}

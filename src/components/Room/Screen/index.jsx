@@ -7,12 +7,18 @@ import Wrapper from './styles';
 
 const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {
   let videoRef = useRef();
+  const [username, setUsername] = useState(undefined)
 
   /* subscriber hook */
   useEffect(() => {
     if (streamManager && !!videoRef) {
       streamManager.addVideoElement(videoRef.current)
+
+      // username 초기화
+      const name = JSON.parse(streamManager?.stream.connection.data).clientData;
+      setUsername(name);
     }
+
   }, [streamManager])
 
   return (
@@ -20,9 +26,10 @@ const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {
       {streamManager !== undefined ? (
         <div className="conference-content">
           <div className="screen-header-container">
-            <Name streamManager={streamManager} />
+            <Name username={username} />
             <Timer
               streamManager={streamManager}
+              username={username}
               isLocal={isLocal}
               isLocalVideoActive={isLocalVideoActive}
             />

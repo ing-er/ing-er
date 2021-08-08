@@ -1,18 +1,6 @@
-import { useState, useEffect } from 'react';
-
 import Wrapper from './styles';
 
-const Name = ({ streamManager }) => {
-  const [username, setUsername] = useState(undefined);
-
-  /* username hook */
-  useEffect(() => {
-    if (!streamManager) return;
-
-    const name = JSON.parse(streamManager?.stream.connection.data).clientData;
-    setUsername(name);
-  }, [streamManager]);
-
+const Name = ({ username }) => {
   return (
     <Wrapper>
       <div className="name-container">

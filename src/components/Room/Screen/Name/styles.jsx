@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
+  width: fit-content;
+
   & .name-container {
     background-color: #080808;
     border-radius: 10px;

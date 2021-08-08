@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
+  place-self: flex-end;
+  width: fit-content;
+
   & .timer-container {
     background-color: #080808;
     border-radius: 10px;

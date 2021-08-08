@@ -31,12 +31,15 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 7px;
+    margin-bottom: -7px;
   }
 
   & .screen-header-container {
     position: absolute;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    height: 100%;
     width: 100%;
     padding: 7px;
   }

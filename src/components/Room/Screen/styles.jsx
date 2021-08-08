@@ -26,6 +26,7 @@ const Wrapper = styled.div`
     bottom: 0;
     left: 0;
     overflow: hidden;
+    cursor: pointer;
   }
   & .screen {
     width: 100%;

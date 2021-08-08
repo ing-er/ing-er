@@ -5,6 +5,8 @@ import Name from './Name';
 import Rest from './Rest';
 import Wrapper from './styles';
 
+import { motion } from 'framer-motion';
+
 const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {
   let videoRef = useRef();
   const [username, setUsername] = useState(undefined)
@@ -24,7 +26,13 @@ const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {
   return (
     <Wrapper>
       {streamManager !== undefined ? (
-        <div className="conference-content">
+        <motion.div className="conference-content"
+          whileHover={{ 
+            scale: 1.1,
+            textShadow: "0px 0px 8px rgb(255, 255, 255)",
+            boxShadow: "0px 0px 8px rgb(255, 255, 255)"
+          }}
+        >
           <div className="screen-header-container">
             <Name username={username} />
             <Timer
@@ -40,12 +48,14 @@ const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {
           {!isLocal && !streamManager.stream.videoActive && (
             <Rest />
           )}
-          <video
-            className="screen"
-            autoPlay={true}
-            ref={videoRef}
-          />
-        </div>
+          <div>
+            <video
+              className="screen"
+              autoPlay={true}
+              ref={videoRef}
+            />
+          </div>
+        </motion.div>
       ) : (
         <div>
           <p>empty</p>

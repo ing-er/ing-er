@@ -2,33 +2,46 @@ import { useState, useEffect, useRef } from 'react';
 
 import Wrapper from './styles';
 
-const Timer = ({ streamManager }) => {
-  let timerRef = useRef();
+const useInterval = (callback, delay) => {
+  const savedCallback = useRef();
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback])
+
+  useEffect(() => {
+    const tick = () => {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay])
+}
+
+const Timer = ({ streamManager, isLocal, isLocalVideoActive }) => {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
-  
-  /* constructor hook */
-  useEffect(() => {
-    
-    timerRef = setInterval(tick, 1000);
-    
-    return (() => {
-      clearInterval(timerRef);
-    })
-  });
-  
-  const tick = () => {
-    if (isRunning) {
-      const s = seconds + 1
-      setSeconds(s)
-    }
-  }
 
-  // useEffect(() => {
-  //   if (!streamManager) return;
-  //   const totalStreamSeconds = parseInt( (+new Date() - streamManager.stream.creationTime) / 1000);
-  //   console.log(totalStreamSeconds);
-  // }, [streamManager]);
+  /* interval hook */
+  useInterval(() => {
+    setSeconds(seconds + 1);
+  }, isRunning ? 1000 : null);
+
+  /* local video hook*/
+  useEffect(() => {
+    if (isLocal) {
+      setIsRunning(isLocalVideoActive)
+    }
+  }, [isLocalVideoActive])
+
+  /* remote streamManager hook */
+  useEffect(() => {
+    if (!isLocal) {
+      setIsRunning(streamManager.stream.videoActive)
+    }
+  }, [streamManager?.stream.videoActive])
 
 
   return (

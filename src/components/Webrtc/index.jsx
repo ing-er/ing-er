@@ -4,7 +4,6 @@ import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 
 import Room from '../../pages/Room';
-import Screen from '../Room/Screen';
 import Wrapper from './styles';
 
 const Webrtc = () => {

@@ -15,17 +15,17 @@ const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {
     }
   }, [streamManager])
 
-  const getUsername = () => {
-    return JSON.parse(streamManager.streamManager.stream.connection.data).clientData;
-  }
-
   return (
     <Wrapper>
       {streamManager !== undefined ? (
         <div className="conference-content">
           <div className="screen-header-container">
-            <Name />
-            <Timer streamManager={streamManager} />
+            <Name streamManager={streamManager} />
+            <Timer
+              streamManager={streamManager}
+              isLocal={isLocal}
+              isLocalVideoActive={isLocalVideoActive}
+            />
           </div>
           {isLocal && !isLocalVideoActive && (
             <Rest />

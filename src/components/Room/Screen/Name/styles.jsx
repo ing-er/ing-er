@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  margin-top: 0.4rem;
-  margin-left: 0.4rem;
-
   & .name-container {
     background-color: #080808;
     border-radius: 10px;
@@ -14,10 +11,9 @@ const Wrapper = styled.div`
   & .name-text { 
     color: #ffffff;
     font-family: 'Noto Sans KR';
-    text-transform: uppercase;
-    font-size: 0.8rem;
+    font-size: 0.77rem;
     font-weight: 300;
-    margin: 0.5rem;
+    margin: 0.4rem 0.6rem;
     letter-spacing: 5px;
   }
 `

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  margin-top: 0.4rem;
-  margin-right: 0.4rem;
   & .timer-container {
     background-color: #080808;
     border-radius: 10px;

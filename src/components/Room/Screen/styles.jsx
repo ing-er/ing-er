@@ -34,12 +34,12 @@ const Wrapper = styled.div`
   }
 
   & .screen-header-container {
-    width: 100%;
+    position: absolute;
     display: flex;
     justify-content: space-between;
-    position: absolute;
+    width: 100%;
+    padding: 7px;
   }
-
 `;
 
 export default Wrapper;

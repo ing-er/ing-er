@@ -20,7 +20,7 @@ const ScreenContainer = ({ subscribers, publisher, isLocalVideoActive }) => {
 
   return (
     <Wrapper>
-      <Grid container spacing={10}>
+      <Grid container spacing={9}>
         <Grid item xs={12} md={6} lg={4}>
           <Screen
             streamManager={publisher}

@@ -13,9 +13,22 @@ const tmpStyle = {
 }
 const TESTBUTTON = () => {
   return (
-    <Link to="/webrtc">
-      <button>클릭</button>
-    </Link>
+    <div>
+      <motion.div style={tmpStyle}
+        whileHover={{ 
+          scale: 1.1,
+          textShadow: "0px 0px 8px rgb(255, 255, 255)",
+          boxShadow: "0px 0px 8px rgb(255, 255, 255)"
+        }}
+        transition={{ type: 'spring', stiffness: 300 }}
+      >
+        framer motion test
+      </motion.div>
+      <Link to="/webrtc">
+        <button>클릭</button>
+      </Link>
+    </div>
+    
   )
 }
 

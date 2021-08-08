@@ -3,8 +3,8 @@ import { useState, useEffect, useRef } from 'react';
 import Timer from './Timer';
 import Name from './Name';
 import Rest from './Rest';
-import Wrapper from './styles';
 
+import Wrapper from './styles';
 import { motion } from 'framer-motion';
 
 const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {

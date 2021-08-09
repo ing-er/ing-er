@@ -6,7 +6,7 @@ import setIsRandomRoom from './setIsRandomRoom';
 import memberSetting, { userInfoSaga } from './memberSetting';
 import setTodolist from './setTodolist';
 import setCalendar from './setCalendar';
-import setTimer from './setTimer';
+import timer from './timer';
 
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
   setTodolist,
   setCalendar,
   authorization,
-  setTimer,
+  timer,
 });
 
 export function* rootSaga() {

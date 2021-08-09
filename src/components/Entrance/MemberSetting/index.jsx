@@ -5,6 +5,7 @@ import {
   Grid,
   Container,
   TextField,
+  makeStyles,
   IconButton,
   Switch,
   FormControlLabel,
@@ -34,6 +35,35 @@ const styles = (theme) => ({
     color: theme.palette.grey[500],
   },
 });
+
+const textStyles = makeStyles((theme) => ({
+  input: {
+    color: 'white',
+  },
+}));
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'white',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'white',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+        color: 'white',
+      },
+      '&:hover fieldset': {
+        borderColor: 'yellow',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'green',
+      },
+    },
+  },
+})(TextField);
 
 const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
@@ -67,15 +97,20 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 function MEMBERSETTING({
-  nickname,
-  setNickname,
+  isJoin,
+  isAuth,
+  name,
+  setname,
   category,
   setCategory,
-  isPublic,
-  setIsPublic,
+  isOpen,
+  setisOpen,
   onUpdateInfo,
+  onDuplicateHandler,
+  onWithdrawalHandler,
 }) {
   const [open, setOpen] = React.useState(false);
+  const classes = textStyles();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -85,11 +120,25 @@ function MEMBERSETTING({
   };
 
   const handleSwitchChange = (newValue) => {
+    console.log(newValue);
     if (newValue === true) {
-      setIsPublic(false);
+      setisOpen(false);
     } else {
-      setIsPublic(true);
+      setisOpen(true);
     }
+  };
+
+  const categoryName = {
+    201: '수능',
+    202: '취준',
+    203: '자격증',
+    204: '고시',
+    205: '기타',
+  };
+
+  const isOpenName = {
+    true: '공개',
+    false: '비공개',
   };
 
   return (
@@ -101,6 +150,11 @@ function MEMBERSETTING({
         }}
       >
         <Grid container direction="column" className="container">
+          <Grid item xs={12}>
+            <div class="title" style={{ fontSize: '36px' }}>
+              회원 정보 입력
+            </div>
+          </Grid>
           <Grid item xs={12}>
             <Grid
               container
@@ -118,20 +172,17 @@ function MEMBERSETTING({
                     <AccountCircle />
                   </Grid>
                   <Grid item xs={11}>
-                    <TextField
-                      className="nickname-input"
-                      type="nickname"
-                      value={nickname}
-                      label="With a grid"
-                      borderColor="white"
+                    <CssTextField
+                      className="name-input"
+                      type="name"
+                      value={name || ''}
+                      InputProps={{
+                        className: classes.input,
+                      }}
                       onChange={(e) => {
-                        setNickname(e.target.value);
+                        setname(e.target.value);
                       }}
                     />
-                    {/* <TextField
-                      className="nickname-input"
-                      type="nickname" value={diffNickname} onChange={onNicknameChange} /> */}
-                    {/* <TextField id="input-with-icon-grid" label="With a grid" /> */}
                   </Grid>
                 </Grid>
               </Grid>
@@ -144,6 +195,7 @@ function MEMBERSETTING({
                     fontWeight: 'bold',
                     backgroundColor: '#E96F02',
                   }}
+                  onClick={onDuplicateHandler}
                 >
                   중복 확인
                 </Button>
@@ -154,6 +206,9 @@ function MEMBERSETTING({
             <Grid container direction="column">
               <Grid item xs={12}>
                 <h1>카테고리 설정</h1>
+              </Grid>
+              <Grid item xs={12}>
+                <p>현재 카테고리 : {categoryName[category]}</p>
               </Grid>
               <Grid
                 container
@@ -236,97 +291,103 @@ function MEMBERSETTING({
                 <FormControlLabel
                   control={
                     <Switch
-                      value={isPublic}
-                      onChange={handleSwitchChange}
-                      // onChange={(e) => {
-                      //   console.log(e);
-                      //   setIsPublic(e.target.value);
-                      // }}
+                      // value={isOpen}
+                      checked={isOpen}
+                      // onChange={handleSwitchChange}
+                      onChange={(e) => {
+                        // console.log(e);
+                        setisOpen((isOpen) => !isOpen);
+                      }}
                       style={{ color: '#E96F02' }}
                     />
                   }
                   labelPlacement="top"
-                  label={
-                    <Box component="div" fontSize={12}>
-                      기본 값이 ‘공개’
-                    </Box>
-                  }
+                  // label={
+                  //   <Box component="div" fontSize={12}>
+                  //     기본 값이 ‘공개’
+                  //   </Box>
+                  // }
                 />
               </Grid>
             </Grid>
+            <p>현재 다짐 공개 여부 : {isOpenName[isOpen]}</p>
           </Grid>
-          <Grid item xs={12}>
-            <Grid
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
-              xs={12}
-            >
-              <Grid item xs={2}>
-                <h1>회원 탈퇴</h1>
-              </Grid>
-              <Grid item xs={8}></Grid>
-              <Grid item xs={2}>
-                <Button
-                  variant="outlined"
-                  style={{
-                    borderRadius: '1.25rem',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    backgroundColor: '#CD0C22',
-                  }}
-                  onClick={handleClickOpen}
-                >
-                  탈퇴하기
-                </Button>
-                <Dialog
-                  onClose={handleClose}
-                  aria-labelledby="customized-dialog-title"
-                  open={open}
-                >
-                  <DialogTitle
-                    id="customized-dialog-title"
-                    onClose={handleClose}
+          {!isJoin && isAuth ? (
+            <Grid item xs={12}>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                xs={12}
+              >
+                <Grid item xs={2}>
+                  <h1>회원 탈퇴</h1>
+                </Grid>
+                <Grid item xs={8}></Grid>
+                <Grid item xs={2}>
+                  <Button
+                    variant="outlined"
+                    style={{
+                      borderRadius: '1.25rem',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      backgroundColor: '#CD0C22',
+                    }}
+                    onClick={handleClickOpen}
                   >
-                    회원 탈퇴
-                  </DialogTitle>
-                  <DialogContent dividers>
-                    <Typography gutterBottom>
-                      공부기록 등 그 외 사용자가 설정한 모든 정보가 사라지고,
-                      <br></br>
-                      복구가 불가능 합니다.
-                    </Typography>
-                    <Typography gutterBottom>
-                      그래도 탈퇴하시겠다면,
-                      <br></br>
-                      하단에 아이디를 한 번 더 입력해 주십시오.
-                    </Typography>
-                    <Grid item xs={12}>
-                      <Grid item xs={8}></Grid>
-                      <input
-                        type="text"
-                        style={{
-                          float: 'rignt',
-                        }}
-                      />
-                    </Grid>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button
-                      autoFocus
-                      onClick={handleClose}
-                      style={{
-                        color: '#CD0C22',
-                      }}
+                    탈퇴하기
+                  </Button>
+                  <Dialog
+                    onClose={handleClose}
+                    aria-labelledby="customized-dialog-title"
+                    open={open}
+                  >
+                    <DialogTitle
+                      id="customized-dialog-title"
+                      onClose={handleClose}
                     >
-                      탈퇴하기
-                    </Button>
-                  </DialogActions>
-                </Dialog>
+                      회원 탈퇴
+                    </DialogTitle>
+                    <DialogContent dividers>
+                      <Typography gutterBottom>
+                        공부기록 등 그 외 사용자가 설정한 모든 정보가 사라지고,
+                        <br></br>
+                        복구가 불가능 합니다.
+                      </Typography>
+                      {/* <Typography gutterBottom>
+                        그래도 탈퇴하시겠다면,
+                        <br></br>
+                        하단에 아이디를 한 번 더 입력해 주십시오.
+                      </Typography>
+                      <Grid item xs={12}>
+                        <Grid item xs={8}></Grid>
+                        <input
+                          type="text"
+                          style={{
+                            float: 'rignt',
+                          }}
+                        />
+                      </Grid> */}
+                    </DialogContent>
+                    <DialogActions>
+                      <Button
+                        autoFocus
+                        onClick={onWithdrawalHandler}
+                        style={{
+                          color: '#CD0C22',
+                        }}
+                      >
+                        탈퇴하기
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <div></div>
+          )}
           <Grid item xs={12}>
             <Grid container direction="row" justify="center" spacing={2}>
               <Grid item>
@@ -334,15 +395,15 @@ function MEMBERSETTING({
                   <HowToRegIcon />
                 </IconButton>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <IconButton class="cancel">
                   <CancelIcon />
                 </IconButton>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
           {/* <Grid item xs={12}>
-            <h1>{nickname}</h1>
+            <h1>{name}</h1>
             <h1>{category}</h1>
           </Grid> */}
         </Grid>

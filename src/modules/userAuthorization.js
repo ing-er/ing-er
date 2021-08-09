@@ -16,8 +16,18 @@ const LOGIN_USER_FAILURE = 'userAuthorization/LOGIN_USER_FAILURE';
 //* LOG_OUT_USER
 const LOG_OUT_USER = 'userAuthorization/LOG_OUT_USER';
 
+//* WITHDRAWAL_USER
+const WITHDRAWAL_USER = 'userAuthorization/WITHDRAWAL_USER';
+const WITHDRAWAL_USER_SUCCESS = 'userAuthorization/WITHDRAWAL_USER_SUCCESS';
+const WITHDRAWAL_USER_FAILURE = 'userAuthorization/WITHDRAWAL_USER_FAILURE';
+
+//* 회원가입을 마친 상태의 유저에게 올바른 상단바를 보여 주기 위한 변수
+const COMPLETE_JOIN_USER = 'userAuthorization/COMPLETE_JOIN_USER';
+
 const DIALOGOPEN = 'DIALOGOPEN';
 const DIALOGCLOSE = 'DIALOGCLOSE';
+
+const SETTING_INITIALIZE = 'userAuthorization/SETTING_INITIALIZE'
 
 //* GENERATE_TYPE_FUNCTION
 export const typeAuthUser = () => ({
@@ -30,15 +40,25 @@ export const typeLogin = (formData) => ({
 export const typeLogOut = () => ({
   type: LOG_OUT_USER,
 });
+export const typeCompleteJoinUser = () => ({
+  type: COMPLETE_JOIN_USER,
+});
+
+export const typeWithdrawal = () => ({
+  type: WITHDRAWAL_USER,
+});
+export const typeSettingInitialize = () => ({
+  type: SETTING_INITIALIZE,
+});
 
 //* MAIN_SAGA_FUNCTION
-export function* authSaga(action) {
+
+export function* authSaga() {
   try {
-    const authResult = yield call(loginApi.isAuthAsync, action.payload);
-    console.log(authResult)
+    const authResult = yield call(loginApi.isAuthAsync);
     yield put({
       type: AUTH_USER_SUCCESS,
-      payload: authResult,
+      payload: authResult
     });
   } catch (e) {
     yield put({
@@ -49,12 +69,6 @@ export function* authSaga(action) {
 }
 export function* loginSaga(action) {
   try {
-    // const data = {
-    //   "category": 201,
-    //   "isOpen": false,
-    //   "kakaoIdNum": 1810000000,
-    //   "name": "your_name"
-    // }
     const loginResult = yield call(loginApi.loginAsync, action.payload);
     yield put({
       type: LOGIN_USER_SUCCESS,
@@ -67,10 +81,28 @@ export function* loginSaga(action) {
     });
   }
 }
+
+export function* withdrawalSaga() {
+  try {
+    const withdrawalResult = yield call(loginApi.WithdrawalUserAsync);
+    yield put({
+      type: WITHDRAWAL_USER_SUCCESS,
+      payload: withdrawalResult,
+    });
+  } catch (e) {
+    yield put({
+      type: WITHDRAWAL_USER_FAILURE,
+      payload: e,
+    });
+  }
+}
+
+
 //* WATCHER_SAGA_FUNCTION
 export function* userAuthorizationSaga() {
   yield takeLatest(AUTH_USER, authSaga);
   yield takeLatest(LOGIN_USER, loginSaga);
+  yield takeLatest(WITHDRAWAL_USER, withdrawalSaga);
 }
 
 export const setKakoDialogOpen = () => ({
@@ -79,8 +111,13 @@ export const setKakoDialogOpen = () => ({
 export const setKakoDialogClose = () => ({
   type: DIALOGCLOSE,
 });
+
+const initialState = {
+  id: 0,
+};
+
 //* REDUCER
-export default function authorization(state = { isOpen: false }, action) {
+export default function authorization(state=initialState, action) {
   switch (action.type) {
     //* =====================
     //*   AUTH_USER
@@ -90,14 +127,37 @@ export default function authorization(state = { isOpen: false }, action) {
         ...state,
       };
     case AUTH_USER_SUCCESS:
-      return {
-        ...state,
-        isAuth: action.payload,
+      //* 카카오 아이디가 없는 상태
+      if (action.payload === 1) {
+        return {
+          isAuth: false,
+          isJoin: false,
+        }
+      } else if (action.payload === 2) {
+        //* 회원가입하려는 상태
+        return {
+          ...state,
+          isAuth: true,
+          isJoin: true,
+          kakaoIdNum: action.kakaoIdNum,
+        }
+      } else {
+        //* 로그인되어 있는 상태
+        return {
+          ...state,
+          id: action.payload.id,
+          userData: action.payload,
+          info: action.payload,
+          isAuth: true,
+          isJoin: false,
+          kakaoIdNum: action.kakaoIdNum,
+        };
       };
     case AUTH_USER_FAILURE:
       return {
         ...state,
         isAuth: false,
+        isJoin: false,
         error: action.payload.message,
       };
 
@@ -107,21 +167,30 @@ export default function authorization(state = { isOpen: false }, action) {
     case LOGIN_USER:
       return {
         ...state,
-        load: true,
       };
     case LOGIN_USER_SUCCESS:
-      return {
-        ...state,
-        kakaoIdNum: action.payload,
-        // loginSuccess: action.payload.loginSuccess,
-        // load: false,
-        // token: action.payload.token,
-      };
+      //* 등록된 유저일 때,
+      if (isNaN(action.payload)) {
+        return {
+          ...state,
+          kakaoIdNum: Number(action.payload.kakaoIdNum),
+          userData: action.payload,
+          isAuth: true,
+          isJoin: false,
+        };
+      }
+      else {
+        return {
+          ...state,
+          kakaoIdNum: action.payload,
+          isJoin: true,
+          isAuth: true,
+        };
+      }
     case LOGIN_USER_FAILURE:
       return {
         ...state,
-        loginSuccess: false,
-        load: false,
+        isAuth: false,
         error: action.payload.message,
       };
 
@@ -131,8 +200,41 @@ export default function authorization(state = { isOpen: false }, action) {
     case LOG_OUT_USER:
       return {
         ...state,
-        isAuth: {},
-        logoutSuccess: true,
+        isAuth: false,
+        isJoin: false,
+        userData: {},
+      };
+
+    //* =====================
+    //*   WITHDRAWAL_USER
+    //* =====================
+      case WITHDRAWAL_USER:
+      return {
+        ...state,
+      };
+    case WITHDRAWAL_USER_SUCCESS:
+      return {
+        ...state,
+        isAuth: false,
+        isJoin: false,
+        uinfo: action.payload,
+      };
+    case WITHDRAWAL_USER_FAILURE:
+      return {
+        ...state,
+      };
+
+      //* COMPLETE_JOIN_USER
+    case COMPLETE_JOIN_USER:
+      return {
+        ...state,
+        isAuth: true,
+        isJoin: false,
+      };
+    case SETTING_INITIALIZE:
+      return {
+        ...state,
+        setting: 0,
       };
 
     case DIALOGOPEN:

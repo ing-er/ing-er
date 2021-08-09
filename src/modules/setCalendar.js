@@ -4,11 +4,13 @@ export const EDITPROMISE = 'EDITPROMISE';
 export const EDITDIARY = 'EDITDIARY';
 export const EDITPROMISEISEDITABLE = 'EDITPROMISEISEDITABLE';
 export const EDITDIARYISEDITABLE = 'EDITDIARYISEDITABLE';
-export const SETDATE = 'SETDATE';
+export const SETDATE = 'CALENDAR/SETDATE';
 export const SAVEDATA = 'SAVEDATA';
 
 const HOST = 'localhost:8080';
 const serverUrl = `http://${HOST}/api/v1`;
+// const HOST = 'i5a208.p.ssafy.io:8080';
+// const serverUrl = `http://${HOST}/api/v1`;
 
 export const setCalendarEditPromise = (promise, requestcalendar) => ({
   type: EDITPROMISE,
@@ -50,9 +52,18 @@ export const setCalendarSaveData = () => ({
   type: SAVEDATA,
 });
 
+let userId;
 let list = [];
-function getCalendarData() {
-  axios.get(serverUrl + '/calendar/list/' + 1).then((res) => {
+let listToday = {};
+let today = new Date();
+let year = today.getFullYear();
+let month = ('0' + (today.getMonth() + 1)).slice(-2);
+let day = ('0' + today.getDate()).slice(-2);
+let todaydate = year + '-' + month + '-' + day;
+
+export const getCalendarData = async (id) => {
+  userId = id;
+  await axios.get(serverUrl + '/calendar/list/' + id).then((res) => {
     res.data.map((x, index) => {
       list.push({
         date: x.date,
@@ -60,26 +71,25 @@ function getCalendarData() {
         diary: x.diary,
         id: x.id,
       });
+      if (x.date === todaydate) {
+        listToday = {
+          date: x.date,
+          promise: x.promise,
+          diary: x.diary,
+          id: x.id,
+        };
+      }
     });
   });
-}
-getCalendarData();
-let today = new Date();
-let year = today.getFullYear();
-let month = ('0' + (today.getMonth() + 1)).slice(-2);
-let day = ('0' + today.getDate()).slice(-2);
+};
+// getCalendarData();
 
 const initialState = {
   calendar: list,
   isEditablePromise: false,
   isEditableDiary: false,
-  requestdate: year + '-' + month + '-' + day,
-  requestcalendar: {
-    date: '',
-    promise: '',
-    diary: '',
-    id: -1,
-  },
+  requestdate: todaydate,
+  requestcalendar: listToday,
 };
 
 const setCalendar = (state = initialState, action) => {
@@ -151,35 +161,38 @@ const setCalendar = (state = initialState, action) => {
         date: state.requestcalendar.date,
         diary: state.requestcalendar.diary,
         promise: state.requestcalendar.promise,
-        userId: 1,
+        userId: userId,
       };
-      if (id !== -1) {
-        axios
-          .patch(serverUrl + '/calendar/modify/' + id, post)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        if (
-          state.requestcalendar.promise === '' &&
-          state.requestcalendar.diary === ''
-        ) {
-          return {
-            ...state,
-          };
+      const async = async () => {
+        if (id !== -1) {
+          await axios
+            .patch(serverUrl + '/calendar/modify/' + id, post)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          if (
+            state.requestcalendar.promise === '' &&
+            state.requestcalendar.diary === ''
+          ) {
+            return {
+              ...state,
+            };
+          }
+          await axios
+            .post(serverUrl + '/calendar/regist', post)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         }
-        axios
-          .post(serverUrl + '/calendar/regist', post)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+      };
+      async();
       return {
         ...state,
       };

@@ -26,6 +26,9 @@ import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import { useHistory } from 'react-router';
 
+// tmp
+import { BrightnessLow } from '@material-ui/icons';
+
 const styles = (theme) => ({
   root: {
     margin: 0,
@@ -39,7 +42,7 @@ const styles = (theme) => ({
   },
 });
 
-const Header = () => {
+const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
   const isTablet = useMediaQuery('(max-width:960px)');
   const history = useHistory();
 
@@ -50,6 +53,23 @@ const Header = () => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const onClickRoom = () => {
+    alert('준비 중입니다.');
+  };
+
+  const onLoginHandler = () => {
+    if (isJoin === false && isAuth === false) {
+      alert('로그인 후 입장 가능합니다.');
+    } else {
+      if (isJoin) {
+        history.push({ pathname: '/joinsetting' });
+      } else {
+        setOpen(false);
+        history.push({ pathname: '/main' });
+      }
+    }
   };
 
   return (
@@ -81,19 +101,31 @@ const Header = () => {
 
                 <Grid item>
                   {/* 마이페이지 */}
-                  <Link to="/Main">
-                    <IconButton>
-                      <AccountCircleIcon htmlColor="white" />
-                    </IconButton>
-                  </Link>
+                  {isAuth && !isJoin ? (
+                    <Link to="/Main">
+                      <IconButton>
+                        <AccountCircleIcon htmlColor="white" />
+                      </IconButton>
+                    </Link>
+                  ) : (
+                    <div></div>
+                  )}
                 </Grid>
 
                 <Grid item>
-                  <Link to="/room">
-                    <IconButton>
+                  {/* 방 입장 */}
+                  {isAuth && !isJoin ? (
+                    <IconButton onClick={onClickRoom}>
                       <MeetingRoomIcon htmlColor="white" />
                     </IconButton>
-                  </Link>
+                  ) : (
+                    // TMP TEST BUTTOn
+                    <Link to="/TESTBUTTON">
+                      <IconButton>
+                        <BrightnessLow htmlColor="white" />
+                      </IconButton>
+                    </Link>
+                  )}
                 </Grid>
               </Grid>
             </Grid>
@@ -101,13 +133,18 @@ const Header = () => {
             <Grid item>
               <Grid container alignItems="center">
                 <Grid item>
-                  <IconButton onClick={handleClickOpen}>
-                    <LockIcon htmlColor="white" />
-                  </IconButton>
+                  {isAuth ? (
+                    <div></div>
+                  ) : (
+                    <IconButton onClick={handleClickOpen}>
+                      <LockIcon htmlColor="white" />
+                    </IconButton>
+                  )}
                   <Dialog
                     onClose={handleClose}
                     aria-labelledby="customized-dialog-title"
                     open={open}
+                    disableBackdropClick="true"
                   >
                     <DialogTitle
                       id="customized-dialog-title"
@@ -118,33 +155,47 @@ const Header = () => {
                     <DialogContent dividers>
                       <LoginContainer />
                     </DialogContent>
-                    <Button
-                      onClick={() => {
-                        history.push({
-                          pathname: '/joinsetting',
-                          // state: { kakaoIdNum: oAuthId },
-                        });
-                      }}
-                    >
-                      확인
-                    </Button>
+                    <Button onClick={onLoginHandler}>확인</Button>
+                    {/* {isJoin ? (
+                      <Button
+                        onClick={() =>
+                          history.push({ pathname: '/joinsetting' })
+                        }
+                      >
+                        확인
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => history.push({ pathname: '/main' })}
+                      >
+                        확인
+                      </Button>
+                    )} */}
                   </Dialog>
                 </Grid>
 
                 <Grid item>
                   {/* 멤버 설정 */}
-                  <Link to="/JoinSetting">
-                    <IconButton>
-                      <SettingsIcon htmlColor="white" />
-                    </IconButton>
-                  </Link>
+                  {!isAuth ? (
+                    <div></div>
+                  ) : (
+                    <Link to="/JoinSetting">
+                      <IconButton>
+                        <SettingsIcon htmlColor="white" />
+                      </IconButton>
+                    </Link>
+                  )}
                 </Grid>
 
                 <Grid item>
                   {/* 로그아웃 */}
-                  <IconButton>
-                    <LockOpenIcon htmlColor="white" />
-                  </IconButton>
+                  {!isAuth ? (
+                    <div></div>
+                  ) : (
+                    <IconButton onClick={onLogOutHandler}>
+                      <LockOpenIcon htmlColor="white" />
+                    </IconButton>
+                  )}
                 </Grid>
               </Grid>
             </Grid>

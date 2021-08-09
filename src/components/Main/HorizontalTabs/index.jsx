@@ -13,6 +13,8 @@ import MyCalendarComponent from '../../../containers/MyCalendarContainer';
 import MyTodolistContainer from '../../../containers/MyTodolistContainer';
 import MyTodolist from '../MyTodolist';
 
+import { Link } from 'react-router-dom';
+
 import { withStyles } from '@material-ui/styles';
 
 const TabsOrange = withStyles({
@@ -96,17 +98,19 @@ const HorizontalTabs = (props) => {
                 </Box>
               }
             />
-            <Button
-              className="enter-button"
-              variant="outlined"
-              style={{
-                fontSize: 20,
-                fontWeight: 'bold',
-                backgroundColor: '#E96F02',
-              }}
-            >
-              입장하기
-            </Button>
+            <Link to="/webrtc">
+              <Button
+                className="enter-button"
+                variant="outlined"
+                style={{
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  backgroundColor: '#E96F02',
+                }}
+              >
+                입장하기
+              </Button>
+            </Link>
           </Grid>
         </Grid>
       </Container>

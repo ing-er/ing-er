@@ -1,42 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Screen from '../Screen';
 import Wrapper from './styles';
 
-import { 
-  Grid,
-} from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
-const ScreenContainer = () => {
-  const [screens, setScreens] = useState(new Array(6).fill(null))
+const ScreenContainer = ({ subscribers, publisher, isLocalVideoActive }) => {
+  const [subs, setSubs] = useState(new Array(5).fill(undefined));
 
-  const onChangeScreen = () => {
-    const newScreens = screens.slice()
-    newScreens.forEach((screen, idx, array) => {
-      console.log(idx, array)
+  /* subscribers hook */
+  useEffect(() => {
+    if (!subscribers) return;
+    let newSubs = new Array(5).fill(undefined);
+    for (let i = 0; i < subscribers.length; i++) {
+      newSubs[i] = subscribers[i];
+    }
+    setSubs([...newSubs]);
+  }, [subscribers]);
 
-      if (screen === null) {
-        // logic
-      }
-    })
-    setScreens(newScreens)
-  }
-  
   return (
     <Wrapper>
-      <Grid container spacing={4}>
-        {screens.map((screen, idx) => (
-          <Grid item 
-            xs={12} md={6} lg={6} xl={4}
-            key={idx}
-          >
-            <Screen screen_id={screen}>
-            </Screen>
-          </Grid>
-        ))}
+      <Grid container spacing={9}>
+        <Grid item xs={12} md={6} lg={4}>
+          <Screen
+            streamManager={publisher}
+            isLocalVideoActive={isLocalVideoActive}
+            isLocal={true}
+          />
+        </Grid>
+        {subs.map((sub, idx) => {
+          return (
+            <Grid item xs={12} md={6} lg={4} key={idx}>
+              <Screen
+                streamManager={sub}
+                isLocal={false}
+              />
+            </Grid>
+          );
+        })}
       </Grid>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default ScreenContainer
+export default ScreenContainer;

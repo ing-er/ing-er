@@ -1,4 +1,4 @@
-import { cloneElement } from 'react';
+import { cloneElement, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -7,6 +7,8 @@ import {
   setTodolistEditTitle,
   setTodolistEditContent,
   setTodolistEditComplete,
+  setTodolistSaveData,
+  getTodolistData,
 } from '../modules/setTodolist';
 
 const MyTodolistComponent = ({ children }) => {
@@ -29,7 +31,12 @@ const MyTodolistComponent = ({ children }) => {
   const setTodolistEditCompl = (index, subindex) => {
     dispatch(setTodolistEditComplete(index, subindex));
   };
+  const setTodolistSave = () => {
+    dispatch(setTodolistSaveData());
+  };
 
+  console.log('todolist');
+  console.log(todolist);
   return cloneElement(children, {
     todolistdata: todolist,
     todopercent: todopercent,
@@ -39,6 +46,7 @@ const MyTodolistComponent = ({ children }) => {
     setTodolistEditTitle: setTodolistEditTi,
     setTodolistEditContent: setTodolistEditCon,
     setTodolistEditComplete: setTodolistEditCompl,
+    setTodolistSaveData: setTodolistSave,
   });
 };
 

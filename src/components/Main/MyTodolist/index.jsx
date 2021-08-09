@@ -7,6 +7,9 @@ import { withStyles } from '@material-ui/styles';
 
 import Wrapper from './styles';
 
+import TodolistComponent from './TodolistComponent';
+import TodolistAdd from './TodolistAdd';
+
 const LinearProgressOrange = withStyles({
   root: {
     height: 10,
@@ -19,170 +22,170 @@ const LinearProgressOrange = withStyles({
   },
 })(LinearProgress);
 
-const TodolistTitle = (props) => {
-  let { title, index, setTodolistAddInput, setTodolistEditTitle } = props;
-  const handleAddInput = () => {
-    setTodolistAddInput(index);
-  };
-  const onChangeHandler = (e) => {
-    setTodolistEditTitle(index, e.target.value);
-  };
+// const TodolistTitle = (props) => {
+//   let { title, index, setTodolistAddInput, setTodolistEditTitle } = props;
+//   const handleAddInput = () => {
+//     setTodolistAddInput(index);
+//   };
+//   const onChangeHandler = (e) => {
+//     setTodolistEditTitle(index, e.target.value);
+//   };
 
-  return (
-    <Grid
-      item
-      className="title-container"
-      style={{
-        backgroundColor: '#1E1F26',
-      }}
-    >
-      <Grid container className="title-subcontainer">
-        <Grid item xs={10} className="input-container">
-          <input
-            className="title-input"
-            value={title}
-            onChange={onChangeHandler}
-          />
-        </Grid>
-        <Grid item xs={2}>
-          <IconButton onClick={handleAddInput}>
-            <AddCircleIcon htmlColor="#411AB0" />
-          </IconButton>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-};
+//   return (
+//     <Grid
+//       item
+//       className="title-container"
+//       style={{
+//         backgroundColor: '#1E1F26',
+//       }}
+//     >
+//       <Grid container className="title-subcontainer">
+//         <Grid item xs={10} className="input-container">
+//           <input
+//             className="title-input"
+//             value={title}
+//             onChange={onChangeHandler}
+//           />
+//         </Grid>
+//         <Grid item xs={2}>
+//           <IconButton onClick={handleAddInput}>
+//             <AddCircleIcon htmlColor="#411AB0" />
+//           </IconButton>
+//         </Grid>
+//       </Grid>
+//     </Grid>
+//   );
+// };
 
-const TodolistContent = (props) => {
-  const { todolist, index, setTodolistEditContent, setTodolistEditComplete } =
-    props;
-  return (
-    <Grid
-      item
-      className="content-container"
-      style={{
-        backgroundColor: '#1E1F26',
-      }}
-    >
-      {todolist.map((data, idx) => {
-        return (
-          <TodolistContentElement
-            content={data.content}
-            complete={data.complete}
-            index={index}
-            setTodolistEditContent={setTodolistEditContent}
-            subindex={idx}
-            setTodolistEditComplete={setTodolistEditComplete}
-          />
-        );
-      })}
-    </Grid>
-  );
-};
+// const TodolistContent = (props) => {
+//   const { todolist, index, setTodolistEditContent, setTodolistEditComplete } =
+//     props;
+//   return (
+//     <Grid
+//       item
+//       className="content-container"
+//       style={{
+//         backgroundColor: '#1E1F26',
+//       }}
+//     >
+//       {todolist.map((data, idx) => {
+//         return (
+//           <TodolistContentElement
+//             content={data.content}
+//             complete={data.complete}
+//             index={index}
+//             setTodolistEditContent={setTodolistEditContent}
+//             subindex={idx}
+//             setTodolistEditComplete={setTodolistEditComplete}
+//           />
+//         );
+//       })}
+//     </Grid>
+//   );
+// };
 
-const TodolistContentElement = (props) => {
-  const {
-    content,
-    complete,
-    setTodolistEditContent,
-    index,
-    subindex,
-    setTodolistEditComplete,
-  } = props;
-  const onChangeHandler = (e) => {
-    setTodolistEditContent(index, subindex, e.target.value);
-  };
-  const checkBoxHandler = () => {
-    setTodolistEditComplete(index, subindex);
-  };
+// const TodolistContentElement = (props) => {
+//   const {
+//     content,
+//     complete,
+//     setTodolistEditContent,
+//     index,
+//     subindex,
+//     setTodolistEditComplete,
+//   } = props;
+//   const onChangeHandler = (e) => {
+//     setTodolistEditContent(index, subindex, e.target.value);
+//   };
+//   const checkBoxHandler = () => {
+//     setTodolistEditComplete(index, subindex);
+//   };
 
-  return (
-    <Grid container className="content-subcontainer">
-      <Grid item xs={2}>
-        <IconButton onClick={checkBoxHandler}>
-          {!complete && <CheckBoxOutlineBlankIcon htmlColor="white" />}
-          {complete && <CheckBoxIcon htmlColor="#4D4D4D" />}
-        </IconButton>
-      </Grid>
-      <Grid item xs={10}>
-        {!complete && (
-          <input
-            className="content-input"
-            value={content}
-            onChange={onChangeHandler}
-          />
-        )}
-        {complete && (
-          <input
-            className="content-input-complete"
-            value={content}
-            onChange={onChangeHandler}
-          />
-        )}
-      </Grid>
-    </Grid>
-  );
-};
+//   return (
+//     <Grid container className="content-subcontainer">
+//       <Grid item xs={2}>
+//         <IconButton onClick={checkBoxHandler}>
+//           {!complete && <CheckBoxOutlineBlankIcon htmlColor="white" />}
+//           {complete && <CheckBoxIcon htmlColor="#4D4D4D" />}
+//         </IconButton>
+//       </Grid>
+//       <Grid item xs={10}>
+//         {!complete && (
+//           <input
+//             className="content-input"
+//             value={content}
+//             onChange={onChangeHandler}
+//           />
+//         )}
+//         {complete && (
+//           <input
+//             className="content-input-complete"
+//             value={content}
+//             onChange={onChangeHandler}
+//           />
+//         )}
+//       </Grid>
+//     </Grid>
+//   );
+// };
 
-const TodolistComponent = (props) => {
-  let {
-    title,
-    todolist,
-    index,
-    setTodolistAddInput,
-    setTodolistEditTitle,
-    setTodolistEditContent,
-    setTodolistEditComplete,
-  } = props;
+// const TodolistComponent = (props) => {
+//   let {
+//     title,
+//     todolist,
+//     index,
+//     setTodolistAddInput,
+//     setTodolistEditTitle,
+//     setTodolistEditContent,
+//     setTodolistEditComplete,
+//   } = props;
 
-  return (
-    <Grid container direction="column" className="todolist-container">
-      <TodolistTitle
-        title={title}
-        index={index}
-        setTodolistAddInput={setTodolistAddInput}
-        setTodolistEditTitle={setTodolistEditTitle}
-      />
-      <TodolistContent
-        todolist={todolist}
-        setTodolistEditContent={setTodolistEditContent}
-        index={index}
-        setTodolistEditComplete={setTodolistEditComplete}
-      />
-    </Grid>
-  );
-};
+//   return (
+//     <Grid container direction="column" className="todolist-container">
+//       <TodolistTitle
+//         title={title}
+//         index={index}
+//         setTodolistAddInput={setTodolistAddInput}
+//         setTodolistEditTitle={setTodolistEditTitle}
+//       />
+//       <TodolistContent
+//         todolist={todolist}
+//         setTodolistEditContent={setTodolistEditContent}
+//         index={index}
+//         setTodolistEditComplete={setTodolistEditComplete}
+//       />
+//     </Grid>
+//   );
+// };
 
-const TodolistAdd = (props) => {
-  let { setTodolistAddContainer } = props;
-  const handleAddContainer = () => {
-    setTodolistAddContainer(document.querySelector('#add-title').value);
-  };
+// const TodolistAdd = (props) => {
+//   let { setTodolistAddContainer } = props;
+//   const handleAddContainer = () => {
+//     setTodolistAddContainer(document.querySelector('#add-title').value);
+//   };
 
-  return (
-    <Grid container direction="column" className="todolist-container">
-      <Grid
-        item
-        className="title-container"
-        style={{
-          backgroundColor: '#1E1F26',
-        }}
-      >
-        <Grid container className="title-subcontainer">
-          <Grid item xs={10} className="input-container">
-            <input className="title-input" id="add-title" />
-          </Grid>
-          <Grid item xs={2}>
-            <IconButton onClick={handleAddContainer}>
-              <AddCircleIcon htmlColor="#411AB0" />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-};
+//   return (
+//     <Grid container direction="column" className="todolist-container">
+//       <Grid
+//         item
+//         className="title-container"
+//         style={{
+//           backgroundColor: '#1E1F26',
+//         }}
+//       >
+//         <Grid container className="title-subcontainer">
+//           <Grid item xs={10} className="input-container">
+//             <input className="title-input" id="add-title" />
+//           </Grid>
+//           <Grid item xs={2}>
+//             <IconButton onClick={handleAddContainer}>
+//               <AddCircleIcon htmlColor="#411AB0" />
+//             </IconButton>
+//           </Grid>
+//         </Grid>
+//       </Grid>
+//     </Grid>
+//   );
+// };
 
 const MyTodolist = (props) => {
   let {
@@ -194,8 +197,17 @@ const MyTodolist = (props) => {
     setTodolistEditTitle,
     setTodolistEditContent,
     setTodolistEditComplete,
+    setTodolistSaveData,
   } = props;
-  console.log(todolistdata);
+  // console.log(todolistdata);
+
+  const onClickSaveTodolist = (e) => {
+    setTodolistSaveData();
+  };
+  const handleAddContainer = () => {
+    setTodolistAddContainer('');
+  };
+
   return (
     <Wrapper>
       <Grid
@@ -226,6 +238,11 @@ const MyTodolist = (props) => {
               >
                 {date}
               </Grid>
+              <Grid item>
+                <IconButton onClick={handleAddContainer}>
+                  <AddCircleIcon htmlColor="#411AB0" />
+                </IconButton>
+              </Grid>
             </Grid>
           </Grid>
 
@@ -233,6 +250,7 @@ const MyTodolist = (props) => {
             <Button
               className="enter-button"
               variant="outlined"
+              onClick={onClickSaveTodolist}
               style={{
                 fontSize: 15,
                 fontWeight: 'bold',
@@ -269,11 +287,14 @@ const MyTodolist = (props) => {
                     setTodolistEditTitle={setTodolistEditTitle}
                     setTodolistEditContent={setTodolistEditContent}
                     setTodolistEditComplete={setTodolistEditComplete}
+                    backColor={'#1E1F26'}
+                    textColor={'white'}
+                    completeTextColor={'#4D4D4D'}
                   />
                 </Grid>
               );
             })}
-            <Grid
+            {/* <Grid
               item
               lg={3}
               md={4}
@@ -281,8 +302,12 @@ const MyTodolist = (props) => {
               xs={12}
               className="todolist-component-container"
             >
-              <TodolistAdd setTodolistAddContainer={setTodolistAddContainer} />
-            </Grid>
+              <TodolistAdd
+                setTodolistAddContainer={setTodolistAddContainer}
+                backColor={'#1E1F26'}
+                textColor={'white'}
+              />
+            </Grid> */}
           </Grid>
         </Grid>
       </Grid>

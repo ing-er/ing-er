@@ -4,26 +4,30 @@ import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 
 import Room from '../../pages/Room';
-
-import UserModel from './user-model';
-
 import Wrapper from './styles';
 
 const Webrtc = () => {
   const OPENVIDU_SERVER_URL = 'https://localhost:4443';
   const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
-  const [flag, setFlag] = useState('init');
-  const [sessionId, setSessionId] = useState('defaultSession');
+  const [flag, setFlag] = useState(false);
   const [OV, setOV] = useState(undefined);
+  const [mySessionId, setMysessionId] = useState('SessionT');
+  const [myUsername, setMyUsername] = useState(
+    'Participant' + Math.floor(Math.random() * 100),
+  );
   const [session, setSession] = useState(undefined);
+  const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
-  const [user, setUser] = useState(new UserModel());
+  const [isLocalVideoActive, setIsLocalVideoActive] = useState(true);
 
   /* constructor hook */
   useEffect(() => {
     // 사용자가 화면을 떠날 때 leave session
     window.addEventListener('beforeunload', onbeforeunload);
+
+    // init OV
+    setOV(new OpenVidu());
 
     return () => {
       // component unmount 시 해당 이벤트 제거
@@ -31,132 +35,108 @@ const Webrtc = () => {
     };
   }, []);
 
+  const onbeforeunload = (event) => {
+    this.leaveSession();
+  };
+
+  /* to init session */
+  useEffect(() => {
+    if (!OV) return;
+    setSession(OV.initSession());
+  }, [OV]);
+
   /* session hook */
   useEffect(() => {
     if (!session) return;
+    // join Session
+    if (!flag) {
+      joinSession();
 
-    // on every stream received or destroyed
-    subscribeToStreamCreated();
-    subscribeToStreamDestroyed();
-    subscribeToUserChanged();
+      // on every stream received or destroyed
+      subscribeToStreamCreated();
+      subscribeToStreamDestroyed();
+      onException();
+      subscribeToUserChanged();
+    }
   }, [session]);
 
-  /* flag hook */
-  useEffect(() => {
-    if (flag === 'init') {
-      getOvSession().then((payload) => {
-        joinSession(payload);
-      });
-    } else if (flag) {
-      joinSession([OV, session]);
-    }
-  }, [flag]);
-
-  // init OV, session
-  const getOv = () => new OpenVidu();
-  const getOvSession = async () => {
-    const _ov = await getOv();
-    const _session = await _ov.initSession();
-    setOV(_ov);
-    setSession(_session);
-
-    return [_ov, _session];
-  };
+  /* subscriber test */
+  // useEffect(() => {
+  //   console.log(subscriber)
+  // }, [subscriber]);
 
   /* join session(방 입장) */
-  const joinSession = (payload) => {
-    // connect to Session
-    connectToSession(payload);
+  const joinSession = () => {
+    let mySession = session;
 
-    // prevent default event
-    // event.preventDefault();
-  };
-
-  // connect to session
-  const connectToSession = (payload) => {
     getToken().then((token) => {
-      payload[1]
-        .connect(token, { clientData: user })
+      mySession
+        .connect(token, { clientData: myUsername })
         .then(() => {
-          connectWebCam(payload);
+          let _publisher = OV.initPublisher('', {
+            audioSource: undefined,
+            videoSource: undefined,
+            publishAudio: false,
+            publishVideo: true,
+            resolution: '1920x1080',
+            frameRate: 30,
+            insertMode: 'APPEND',
+            mirror: false,
+          });
+
+          session.publish(_publisher);
+          setPublisher(_publisher);
+          setFlag(true);
         })
         .catch((err) => {
-          // console.log('There was an error while connecting.');
-          // console.log(err);
+          console.log(
+            'There was an error connecting to the session:',
+            err.code,
+            err.message,
+          );
         });
     });
   };
 
-  // webCam 연결
-  const connectWebCam = (payload) => {
-    let publisher = payload[0].initPublisher(undefined, {
-      audioSource: undefined,
-      videoSource: undefined,
-      publishAudio: false,
-      publishVideo: user.isVideoActive(),
-      resolution: '1920x1080',
-      frameRate: 30,
-      insertMode: 'APPEND',
-    });
-
-    // session publish then update Subscribers
-    payload[1].publish(publisher);
-
-    // set connectionId, streamManager
-    user.setConnectionId(payload[1].connection.connectionId);
-    user.setStreamManager(publisher);
-
-    // add subs
-    let newSubs = subscribers;
-    newSubs.push(user);
-    setSubscribers([...newSubs]);
-
-    // flag local user in session
-    setFlag(true);
+  // update streamer
+  const updateStreamer = (streamer) => {
+    let subs = subscribers;
+    subs.push(streamer);
+    setSubscribers([...subs]);
   };
 
   // ON EVERY new subscriber's stream received
   const subscribeToStreamCreated = () => {
     session.on('streamCreated', (event) => {
-      const sub = session.subscribe(event.stream, undefined);
+      let sub = session.subscribe(event.stream, '');
 
-      const newUser = new UserModel();
-      newUser.setStreamManager(sub);
-      newUser.setConnectionId(event.stream.connection.connectionId);
-
-      // const newUsername = event.stream.connection.data.split('%')[0];
-      // newUser.setname(JSON.parse(newUsername).clientData);
-
-      let newSubs = subscribers;
-      newSubs.push(newUser);
-      setSubscribers([...newSubs]);
+      updateStreamer(sub);
     });
   };
 
-  // ON EVERY new subscribers' stream destroyed
+  // ON EVERY new subscriber' stream destroyed
   const subscribeToStreamDestroyed = () => {
-    session.on('streamDestroyed', (e) => {
-      // remove the stream from subscribers array
-      deleteSubscriber(e.stream);
-      e.preventDefault();
+    session.on('streamDestroyed', (event) => {
+      // remove the stream from subscriber array
+      deleteSubscriber(event.stream.streamManager);
     });
   };
 
   // delete remote subscriber
-  const deleteSubscriber = (stream) => {
-    let remoteUsers = subscribers;
-    let userStream = remoteUsers.filter(
-      (user) => user.getStreamManager().stream === stream,
-    )[0];
-    let idx = remoteUsers.indexOf(userStream, 0);
+  const deleteSubscriber = (streamManager) => {
+    let subs = subscribers;
+    let idx = subs.indexOf(streamManager, 0);
     if (idx > -1) {
-      remoteUsers.splice(idx, 1);
-      setSubscribers([...remoteUsers]);
+      subs.splice(idx, 1);
+      setSubscribers([...subs]);
     }
   };
 
-  const onbeforeunload = (event) => {
-    this.leaveSession();
+  // ON EVERY exception
+  const onException = () => {
+    session.on('exception', (exception) => {
+      console.warn(exception);
+    });
   };
 
   /* leave session */
@@ -168,33 +148,32 @@ const Webrtc = () => {
     }
 
     // empty all properties
-    getOvSession();
+    initStates();
+  };
+
+  /* initParams */
+  const initStates = () => {
+    setOV(undefined);
+    setSession(undefined);
+    setMyUsername('Participant' + Math.floor(Math.random() * 100));
+    setPublisher(undefined);
+    setMysessionId('SessionO');
     setSubscribers([]);
-    setUser(new UserModel());
-    setFlag(undefined);
+    setIsLocalVideoActive(false);
+    setFlag(false);
   };
 
   /* handle video mute or unmute */
   const handleVideoMute = () => {
-    user.streamManager.publishVideo(!user.isVideoActive());
-    user.setVideoActive(!user.isVideoActive());
+    publisher.publishVideo(!isLocalVideoActive);
+    setIsLocalVideoActive(!isLocalVideoActive);
   };
 
   /* user 상태 변경 */
   const subscribeToUserChanged = () => {
-    session.on('StreamPropertyChanged', (e) => {
-      console.log('stream property changed!!!!!!!!!!!!!');
-      // let remoteUsers = subscribers;
-      // remoteUsers.forEach((user) => {
-      //   if (user.getConnectionId() === e.from.connectionId) {
-      //     const data = JSON.parse(e.data);
-
-      //     if (data.isVideoActive !== undefined) {
-      //       user.setVideoActive(data.isVideoActive);
-      //     }
-      //   }
-      // });
-      // setSubscribers([...remoteUsers]);
+    session.on('streamPropertyChanged', (e) => {
+      let remoteUsers = subscribers;
+      setSubscribers([...remoteUsers]);
     });
   };
 
@@ -211,7 +190,7 @@ const Webrtc = () => {
    */
 
   const getToken = () => {
-    return createSession(sessionId)
+    return createSession(mySessionId)
       .then((sessionId) => createToken(sessionId))
       .catch((Err) => console.error(Err));
   };
@@ -262,7 +241,7 @@ const Webrtc = () => {
 
   const createToken = (sessionId) => {
     return new Promise((resolve, reject) => {
-      const data = JSON.stringify({});
+      const data = {};
       axios
         .post(
           OPENVIDU_SERVER_URL +
@@ -279,9 +258,7 @@ const Webrtc = () => {
           },
         )
         .then((response) => {
-          // // console.log('TOKEN', response);
-          // console.log('/sessions/sessionId/connection 결과');
-          // console.log(response);
+          console.log('TOKEN', response);
           resolve(response.data.token);
         })
         .catch((error) => reject(error));
@@ -290,11 +267,15 @@ const Webrtc = () => {
 
   return (
     <Wrapper>
-      {!flag ? null : (
+      {!flag ? (
+        null
+      ) : (
         <Room
+          publisher={publisher}
           subscribers={subscribers}
           leaveSession={leaveSession}
           handleVideoMute={handleVideoMute}
+          isLocalVideoActive={isLocalVideoActive}
         />
       )}
     </Wrapper>

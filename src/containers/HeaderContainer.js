@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Header from '../layout/Header';
-import { typeLogOut } from '../modules/userAuthorization';
+import { typeLogOut , typeAuthUser} from '../modules/userAuthorization';
 import { useHistory } from 'react-router';
+import {
+  typeGetUserInfo,
+} from '../modules/memberSetting';
 
 function HeaderContainer() {
 
@@ -15,8 +18,13 @@ function HeaderContainer() {
     state: authorization.state,
   }));
 
+  useEffect(() => {
+    dispatch(typeGetUserInfo());
+    dispatch(typeAuthUser());
+  }, []);
+
 	const onLogOutHandler = () => {
-    localStorage.removeItem('CURRENT_USER');
+    window.localStorage.removeItem('CURRENT_USER');
     dispatch(typeLogOut());
     history.push({ pathname: '/' });
   };

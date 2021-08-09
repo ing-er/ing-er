@@ -268,7 +268,7 @@ const Webrtc = () => {
   return (
     <Wrapper>
       {!flag ? (
-        <p>멈춰!</p>
+        null
       ) : (
         <Room
           publisher={publisher}

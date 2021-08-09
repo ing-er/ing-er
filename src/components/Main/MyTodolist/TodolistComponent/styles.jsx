@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  border: 1px solid red;
   & .todolist-container {
     margin-top: 20px;
     padding: 20px;
@@ -23,7 +20,7 @@ const Wrapper = styled.div`
   & .title-input {
     background-color: transparent;
     border: none;
-    color: #000000;
+    color: white;
     width: 80%;
     height: 100%;
     font-size: 20px;
@@ -34,7 +31,7 @@ const Wrapper = styled.div`
   & .content-input {
     background-color: transparent;
     border: none;
-    color: #000000;
+    color: white;
     width: 100%;
     height: 100%;
     font-size: 18px;
@@ -45,7 +42,7 @@ const Wrapper = styled.div`
   & .content-input-complete {
     background-color: transparent;
     border: none;
-    color: #cecece;
+    color: #4d4d4d;
     width: 100%;
     height: 100%;
     font-size: 18px;

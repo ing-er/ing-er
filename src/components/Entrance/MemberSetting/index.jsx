@@ -5,6 +5,7 @@ import {
   Grid,
   Container,
   TextField,
+  makeStyles,
   IconButton,
   Switch,
   FormControlLabel,
@@ -34,6 +35,35 @@ const styles = (theme) => ({
     color: theme.palette.grey[500],
   },
 });
+
+const textStyles = makeStyles((theme) => ({
+  input: {
+    color: 'white',
+  },
+}));
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'white',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'white',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+        color: 'white',
+      },
+      '&:hover fieldset': {
+        borderColor: 'yellow',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'green',
+      },
+    },
+  },
+})(TextField);
 
 const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
@@ -69,17 +99,18 @@ const DialogActions = withStyles((theme) => ({
 function MEMBERSETTING({
   isJoin,
   isAuth,
-  nickname,
-  setNickname,
+  name,
+  setname,
   category,
   setCategory,
-  isPublic,
-  setIsPublic,
+  isOpen,
+  setisOpen,
   onUpdateInfo,
   onDuplicateHandler,
   onWithdrawalHandler,
 }) {
   const [open, setOpen] = React.useState(false);
+  const classes = textStyles();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -89,11 +120,25 @@ function MEMBERSETTING({
   };
 
   const handleSwitchChange = (newValue) => {
+    console.log(newValue);
     if (newValue === true) {
-      setIsPublic(false);
+      setisOpen(false);
     } else {
-      setIsPublic(true);
+      setisOpen(true);
     }
+  };
+
+  const categoryName = {
+    201: '수능',
+    202: '취준',
+    203: '자격증',
+    204: '고시',
+    205: '기타',
+  };
+
+  const isOpenName = {
+    true: '공개',
+    false: '비공개',
   };
 
   return (
@@ -105,6 +150,11 @@ function MEMBERSETTING({
         }}
       >
         <Grid container direction="column" className="container">
+          <Grid item xs={12}>
+            <div class="title" style={{ fontSize: '36px' }}>
+              회원 정보 입력
+            </div>
+          </Grid>
           <Grid item xs={12}>
             <Grid
               container
@@ -122,14 +172,15 @@ function MEMBERSETTING({
                     <AccountCircle />
                   </Grid>
                   <Grid item xs={11}>
-                    <TextField
-                      className="nickname-input"
-                      type="nickname"
-                      value={nickname}
-                      label="With a grid"
-                      borderColor="white"
+                    <CssTextField
+                      className="name-input"
+                      type="name"
+                      value={name || ''}
+                      InputProps={{
+                        className: classes.input,
+                      }}
                       onChange={(e) => {
-                        setNickname(e.target.value);
+                        setname(e.target.value);
                       }}
                     />
                   </Grid>
@@ -155,6 +206,9 @@ function MEMBERSETTING({
             <Grid container direction="column">
               <Grid item xs={12}>
                 <h1>카테고리 설정</h1>
+              </Grid>
+              <Grid item xs={12}>
+                <p>현재 카테고리 : {categoryName[category]}</p>
               </Grid>
               <Grid
                 container
@@ -237,8 +291,13 @@ function MEMBERSETTING({
                 <FormControlLabel
                   control={
                     <Switch
-                      value={isPublic}
-                      onChange={handleSwitchChange}
+                      // value={isOpen}
+                      checked={isOpen}
+                      // onChange={handleSwitchChange}
+                      onChange={(e) => {
+                        // console.log(e);
+                        setisOpen((isOpen) => !isOpen);
+                      }}
                       style={{ color: '#E96F02' }}
                     />
                   }
@@ -251,6 +310,7 @@ function MEMBERSETTING({
                 />
               </Grid>
             </Grid>
+            <p>현재 다짐 공개 여부 : {isOpenName[isOpen]}</p>
           </Grid>
           {!isJoin && isAuth ? (
             <Grid item xs={12}>
@@ -335,15 +395,15 @@ function MEMBERSETTING({
                   <HowToRegIcon />
                 </IconButton>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <IconButton class="cancel">
                   <CancelIcon />
                 </IconButton>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
           {/* <Grid item xs={12}>
-            <h1>{nickname}</h1>
+            <h1>{name}</h1>
             <h1>{category}</h1>
           </Grid> */}
         </Grid>

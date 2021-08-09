@@ -3,12 +3,11 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   height: 100%;
 
-  & .nickname-container {
+  & .name-container {
     display: flex;
     justify-content: center;
     margin: 1.3rem 0;
-    & .nickname {
-  
+    & .name {
     }
   }
   & .calendar-container {
@@ -31,7 +30,7 @@ const Wrapper = styled.div`
   & .pd-container {
     padding: 1rem;
     height: 300px;
-    overflow: auto; 
+    overflow: auto;
   }
   & .pd-content-container {
     height: 270px;

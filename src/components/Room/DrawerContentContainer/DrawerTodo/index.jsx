@@ -51,7 +51,7 @@ const DrawerTodo = (props) => {
       >
         <Grid container direction="row" justify="space-between">
           <Grid item>
-            <Grid container direction="row">
+            <Grid container direction="row" style={{ alignItems: 'center' }}>
               <Grid
                 item
                 style={{
@@ -71,7 +71,7 @@ const DrawerTodo = (props) => {
               </Grid>
               <Grid item>
                 <IconButton onClick={handleAddContainer}>
-                  <AddCircleIcon htmlColor="#411AB0" />
+                  <AddCircleIcon htmlColor="#411AB0" fontSize="large" />
                 </IconButton>
               </Grid>
             </Grid>

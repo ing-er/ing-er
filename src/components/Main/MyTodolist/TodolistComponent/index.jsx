@@ -3,16 +3,26 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Wrapper from './styles';
 
 const TodolistTitle = (props) => {
-  let { title, index, setTodolistAddInput, setTodolistEditTitle, backColor } =
-    props;
+  let {
+    title,
+    index,
+    setTodolistAddInput,
+    setTodolistEditTitle,
+    backColor,
+    setTodolistDeleteTodolist,
+  } = props;
   const handleAddInput = () => {
     setTodolistAddInput(index);
   };
   const onChangeHandler = (e) => {
     setTodolistEditTitle(index, e.target.value);
+  };
+  const onClickDeleteTodo = () => {
+    setTodolistDeleteTodolist(index);
   };
 
   return (
@@ -24,16 +34,22 @@ const TodolistTitle = (props) => {
       }}
     >
       <Grid container className="title-subcontainer">
-        <Grid item xs={10} className="input-container">
+        <Grid item xs={8} className="input-container">
           <input
             className="title-input"
             value={title}
             onChange={onChangeHandler}
           />
         </Grid>
+
         <Grid item xs={2}>
           <IconButton onClick={handleAddInput}>
-            <AddCircleIcon htmlColor="#411AB0" />
+            <AddCircleIcon htmlColor="#1172DA" />
+          </IconButton>
+        </Grid>
+        <Grid item xs={2}>
+          <IconButton onClick={onClickDeleteTodo}>
+            <HighlightOffIcon htmlColor="#F44336" />
           </IconButton>
         </Grid>
       </Grid>
@@ -50,6 +66,7 @@ const TodolistContent = (props) => {
     backColor,
     textColor,
     completeTextColor,
+    setTodolistDeleteDetail,
   } = props;
 
   return (
@@ -71,6 +88,7 @@ const TodolistContent = (props) => {
             setTodolistEditComplete={setTodolistEditComplete}
             textColor={textColor}
             completeTextColor={completeTextColor}
+            setTodolistDeleteDetail={setTodolistDeleteDetail}
           />
         );
       })}
@@ -88,12 +106,16 @@ const TodolistContentElement = (props) => {
     setTodolistEditComplete,
     textColor,
     completeTextColor,
+    setTodolistDeleteDetail,
   } = props;
   const onChangeHandler = (e) => {
     setTodolistEditContent(index, subindex, e.target.value);
   };
   const checkBoxHandler = () => {
     setTodolistEditComplete(index, subindex);
+  };
+  const onClickDelete = () => {
+    setTodolistDeleteDetail(index, subindex);
   };
 
   return (
@@ -104,7 +126,7 @@ const TodolistContentElement = (props) => {
           {complete && <CheckBoxIcon htmlColor={completeTextColor} />}
         </IconButton>
       </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={8}>
         {!complete && (
           <input
             className="content-input"
@@ -119,6 +141,11 @@ const TodolistContentElement = (props) => {
             onChange={onChangeHandler}
           />
         )}
+      </Grid>
+      <Grid item xs={2}>
+        <IconButton>
+          <HighlightOffIcon onClick={onClickDelete} htmlColor="#F44336" />
+        </IconButton>
       </Grid>
     </Grid>
   );
@@ -136,6 +163,8 @@ const TodolistComponent = (props) => {
     backColor,
     textColor,
     completeTextColor,
+    setTodolistDeleteDetail,
+    setTodolistDeleteTodolist,
   } = props;
 
   return (
@@ -147,6 +176,7 @@ const TodolistComponent = (props) => {
           setTodolistAddInput={setTodolistAddInput}
           setTodolistEditTitle={setTodolistEditTitle}
           backColor={backColor}
+          setTodolistDeleteTodolist={setTodolistDeleteTodolist}
         />
         <TodolistContent
           todolist={todolist}
@@ -156,6 +186,7 @@ const TodolistComponent = (props) => {
           backColor={backColor}
           textColor={textColor}
           completeTextColor={completeTextColor}
+          setTodolistDeleteDetail={setTodolistDeleteDetail}
         />
       </Grid>
     </Wrapper>

@@ -7,6 +7,8 @@ export const EDITCONTENT = 'EDITCONTENT';
 export const EDITCOMPLETE = 'EDITCOMPLETE';
 export const SAVETODOLIST = 'SAVETODOLIST';
 export const SETDATE = 'TODOLIST/SETDATE';
+export const DELETETODOLIST = 'DELETETODOLIST';
+export const DELETEDETAIL = 'DELETEDETAIL';
 
 const HOST = 'localhost:8080';
 const serverUrl = `http://${HOST}/api/v1`;
@@ -67,6 +69,21 @@ export const setTodolistSaveData = () => ({
 export const setTodolistSetDate = (date) => ({
   type: SETDATE,
   payload: date,
+});
+
+export const setTodolistDeleteTodolist = (index) => ({
+  type: DELETETODOLIST,
+  payload: {
+    index: index,
+  },
+});
+
+export const setTodolistDeleteDetail = (index, subindex) => ({
+  type: DELETEDETAIL,
+  payload: {
+    index: index,
+    subindex: subindex,
+  },
 });
 
 var todolistData = [];
@@ -138,6 +155,9 @@ const initialState = {
       : Math.round((todolistComplete / todolistTotal) * 100),
   requestdate: todaydate,
 };
+
+let deleteTodolistDetail = [];
+let deleteTodolist = [];
 
 const setTodolist = (state = initialState, action) => {
   switch (action.type) {
@@ -318,6 +338,30 @@ const setTodolist = (state = initialState, action) => {
               console.log(err);
             });
         }
+        if (deleteTodolistDetail.length !== 0) {
+          await axios
+            .delete(serverUrl + '/todoList/deleteDetail', {
+              data: deleteTodolistDetail,
+            })
+            .then((res) => {
+              console.log(res);
+              deleteTodolistDetail = [];
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+        if (deleteTodolist.length !== 0) {
+          await axios
+            .delete(serverUrl + '/todoList/delete', { data: deleteTodolist })
+            .then((res) => {
+              console.log(res);
+              deleteTodolist = [];
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
         await axios
           .get(serverUrl + '/todoList/select/' + userId)
           .then((res) => {
@@ -357,7 +401,7 @@ const setTodolist = (state = initialState, action) => {
             });
             state.allTodolist = todolistData;
             state.todolist = todolistToday;
-            console.log('load �료..');
+            console.log('load 완료..');
             // console.log('SAVEDATA : todolist');
             // console.log(state.todolist);
           })
@@ -367,7 +411,6 @@ const setTodolist = (state = initialState, action) => {
       };
 
       async();
-
       // todaydate = state.requestdate;
       // todolistData = [];
       // todolistToday = [];
@@ -412,6 +455,62 @@ const setTodolist = (state = initialState, action) => {
       }
       console.log('SETDATE : todolist');
       console.log(state.todolist);
+      return {
+        ...state,
+        todolist: todolistToday,
+        todopercent:
+          todolistTotal === 0
+            ? 0
+            : Math.round((todolistComplete / todolistTotal) * 100),
+      };
+    case DELETETODOLIST:
+      let tododata = todolistToday[action.payload.index];
+      if (tododata.id !== -1) {
+        deleteTodolist.push(tododata.id);
+      }
+      todolistToday.splice(action.payload.index, 1);
+      todolistData.splice(tododata.todoidx, 1);
+      tododata.list.map((x, idx) => {
+        todolistTotal--;
+        if (x.complete === true) {
+          todolistComplete--;
+        }
+      });
+      todolistData.map((x, idx) => {
+        if (idx >= tododata.todoidx) {
+          x.todoidx--;
+          x.list.map((y, subidx) => {
+            y.todoidx--;
+          });
+        }
+      });
+      console.log(todolistData);
+      return {
+        ...state,
+        todolist: todolistToday,
+        allTodolist: todolistData,
+        todopercent:
+          todolistTotal === 0
+            ? 0
+            : Math.round((todolistComplete / todolistTotal) * 100),
+      };
+    case DELETEDETAIL:
+      let data =
+        todolistToday[action.payload.index].list[action.payload.subindex];
+      if (data.id !== -1) {
+        deleteTodolistDetail.push(data.id);
+      }
+      todolistToday[action.payload.index].list.splice(
+        action.payload.subindex,
+        1,
+      );
+      todolistToday[action.payload.index].list.map((x, idx) => {
+        if (idx >= action.payload.subindex) {
+          x.detailidx--;
+        }
+      });
+      todolistTotal--;
+      if (data.complete) todolistComplete--;
       return {
         ...state,
         todolist: todolistToday,

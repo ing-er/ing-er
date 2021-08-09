@@ -3,6 +3,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Wrapper from './styles';
 
 const TodolistTitle = (props) => {
@@ -31,9 +32,10 @@ const TodolistTitle = (props) => {
             onChange={onChangeHandler}
           />
         </Grid>
+
         <Grid item xs={2}>
           <IconButton onClick={handleAddInput}>
-            <AddCircleIcon htmlColor="#411AB0" />
+            <AddCircleIcon htmlColor="#1172DA" />
           </IconButton>
         </Grid>
       </Grid>
@@ -104,7 +106,7 @@ const TodolistContentElement = (props) => {
           {complete && <CheckBoxIcon htmlColor={completeTextColor} />}
         </IconButton>
       </Grid>
-      <Grid item xs={10}>
+      <Grid item xs={8}>
         {!complete && (
           <input
             className="content-input"
@@ -119,6 +121,11 @@ const TodolistContentElement = (props) => {
             onChange={onChangeHandler}
           />
         )}
+      </Grid>
+      <Grid item xs={2}>
+        <IconButton>
+          <HighlightOffIcon htmlColor="#F44336" />
+        </IconButton>
       </Grid>
     </Grid>
   );

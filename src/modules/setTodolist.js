@@ -8,10 +8,10 @@ export const EDITCOMPLETE = 'EDITCOMPLETE';
 export const SAVETODOLIST = 'SAVETODOLIST';
 export const SETDATE = 'TODOLIST/SETDATE';
 
-// const HOST = 'localhost:8080';
-// const serverUrl = `http://${HOST}/api/v1`;
-const HOST = 'i5a208.p.ssafy.io:8080';
+const HOST = 'localhost:8080';
 const serverUrl = `http://${HOST}/api/v1`;
+// const HOST = 'i5a208.p.ssafy.io:8080';
+// const serverUrl = `http://${HOST}/api/v1`;
 
 export const setTodolistAddContainer = (title, todolist) => ({
   type: ADDCONTAINER,

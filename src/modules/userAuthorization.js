@@ -118,10 +118,6 @@ const initialState = {
 
 //* REDUCER
 export default function authorization(state=initialState, action) {
-// export default function authorization(state={}, action) {
-  console.log('auth check')
-  console.log(state)
-  console.log(action.payload)
   switch (action.type) {
     //* =====================
     //*   AUTH_USER

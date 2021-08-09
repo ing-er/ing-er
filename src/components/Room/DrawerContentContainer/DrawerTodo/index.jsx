@@ -34,6 +34,11 @@ const DrawerTodo = (props) => {
     setTodolistEditComplete,
     setTodolistSaveData,
   } = props;
+
+  const handleAddContainer = () => {
+    setTodolistAddContainer('');
+  };
+
   return (
     <Wrapper>
       <Grid
@@ -63,6 +68,11 @@ const DrawerTodo = (props) => {
                 }}
               >
                 {date}
+              </Grid>
+              <Grid item>
+                <IconButton onClick={handleAddContainer}>
+                  <AddCircleIcon htmlColor="#411AB0" />
+                </IconButton>
               </Grid>
             </Grid>
           </Grid>
@@ -128,11 +138,11 @@ const DrawerTodo = (props) => {
               xs={12}
               className="todolist-component-container"
             >
-              <TodolistAdd
+              {/* <TodolistAdd
                 setTodolistAddContainer={setTodolistAddContainer}
                 backColor={'#FFFFFF'}
                 textColor={'#000000'}
-              />
+              /> */}
             </Grid>
           </Grid>
         </Grid>

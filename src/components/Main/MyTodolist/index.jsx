@@ -204,6 +204,10 @@ const MyTodolist = (props) => {
   const onClickSaveTodolist = (e) => {
     setTodolistSaveData();
   };
+  const handleAddContainer = () => {
+    setTodolistAddContainer('');
+  };
+
   return (
     <Wrapper>
       <Grid
@@ -233,6 +237,11 @@ const MyTodolist = (props) => {
                 }}
               >
                 {date}
+              </Grid>
+              <Grid item>
+                <IconButton onClick={handleAddContainer}>
+                  <AddCircleIcon htmlColor="#411AB0" />
+                </IconButton>
               </Grid>
             </Grid>
           </Grid>
@@ -285,7 +294,7 @@ const MyTodolist = (props) => {
                 </Grid>
               );
             })}
-            <Grid
+            {/* <Grid
               item
               lg={3}
               md={4}
@@ -298,7 +307,7 @@ const MyTodolist = (props) => {
                 backColor={'#1E1F26'}
                 textColor={'white'}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
       </Grid>

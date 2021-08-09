@@ -20,14 +20,27 @@ const useInterval = (callback, delay) => {
   }, [delay]);
 };
 
-const Timer = ({ streamManager, isLocal, isLocalVideoActive }) => {
+const Timer = ({
+  streamManager,
+  isLocal,
+  isLocalVideoActive,
+  localSeconds,
+  setLocalSeconds,
+}) => {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
+
+  /* constructor hook */
+  useEffect(() => {}, []);
 
   /* interval hook */
   useInterval(
     () => {
-      setSeconds(seconds + 1);
+      if (isLocal) {
+        setLocalSeconds(localSeconds + 1);
+      } else {
+        setSeconds(seconds + 1);
+      }
     },
     isRunning ? 1000 : null,
   );
@@ -41,10 +54,12 @@ const Timer = ({ streamManager, isLocal, isLocalVideoActive }) => {
      * curr_time을 총 공부 시간으로 초기화
      * props username으로 api 호출
      */
-    const username = JSON.parse(streamManager?.stream.connection.data).clientData;
+    const username = JSON.parse(
+      streamManager?.stream.connection.data,
+    ).clientData;
     console.log('현재 또는 변화한 사용자: ' + username);
 
-    const curr_time = parseInt((+new Date() - streamManager.stream.connection.creationTime) / 1000);
+    const curr_time = parseInt((+new Date() - streamManager.stream.connection.creationTime) / 1000,);
     setSeconds(curr_time);
   }, [streamManager]);
 
@@ -67,21 +82,35 @@ const Timer = ({ streamManager, isLocal, isLocalVideoActive }) => {
       <div className="timer-container">
         <div className="timer-col">
           <p className="timer-label">
-            {seconds < 36000
-              ? '0' + parseInt(seconds / 3600)
-              : parseInt(seconds / 3600)}
+            {isLocal
+              ? localSeconds < 36000
+                ? '0' + parseInt(localSeconds / 3600)
+                : parseInt(localSeconds / 3600)
+              : seconds < 36000
+                ? '0' + parseInt(seconds / 3600)
+                : parseInt(seconds / 3600)}
           </p>
         </div>
         <div className="timer-col">
           <p className="timer-label">
-            {seconds < 600
-              ? '0' + parseInt(seconds / 60)
-              : parseInt(seconds / 60)}
+            {isLocal
+              ? localSeconds < 600
+                ? '0' + parseInt(localSeconds / 60)
+                : parseInt(localSeconds / 60)
+              : seconds < 600
+                ? '0' + parseInt(seconds / 60)
+                : parseInt(seconds / 60)}
           </p>
         </div>
         <div className="timer-col">
           <p className="timer-label">
-            {seconds % 60 < 10 ? '0' + (seconds % 60) : seconds % 60}
+            {isLocal
+              ? localSeconds % 60 < 10
+                ? '0' + (localSeconds % 60)
+                : localSeconds % 60
+              : seconds % 60 < 10
+                ? '0' + (seconds % 60)
+                : seconds % 60}
           </p>
         </div>
       </div>

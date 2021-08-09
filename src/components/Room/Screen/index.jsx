@@ -7,30 +7,36 @@ import Rest from './Rest';
 import Wrapper from './styles';
 import { motion } from 'framer-motion';
 
-const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {
+const Screen = ({
+  streamManager,
+  isLocalVideoActive,
+  isLocal,
+  localSeconds,
+  setLocalSeconds
+}) => {
   let videoRef = useRef();
-  const [username, setUsername] = useState(undefined)
+  const [username, setUsername] = useState(undefined);
 
   /* subscriber hook */
   useEffect(() => {
     if (streamManager && !!videoRef) {
-      streamManager.addVideoElement(videoRef.current)
+      streamManager.addVideoElement(videoRef.current);
 
       // username 초기화
       const name = JSON.parse(streamManager?.stream.connection.data).clientData;
       setUsername(name);
     }
-
-  }, [streamManager])
+  }, [streamManager]);
 
   return (
     <Wrapper>
       {streamManager !== undefined ? (
-        <motion.div className="conference-content"
-          whileHover={{ 
+        <motion.div
+          className="conference-content"
+          whileHover={{
             scale: 1.1,
-            textShadow: "0px 0px 8px rgb(255, 255, 255)",
-            boxShadow: "0px 0px 8px rgb(255, 255, 255)"
+            textShadow: '0px 0px 8px rgb(255, 255, 255)',
+            boxShadow: '0px 0px 8px rgb(255, 255, 255)',
           }}
         >
           <div className="screen-header-container">
@@ -40,20 +46,14 @@ const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {
               username={username}
               isLocal={isLocal}
               isLocalVideoActive={isLocalVideoActive}
+              localSeconds={localSeconds}
+              setLocalSeconds={setLocalSeconds}
             />
           </div>
-          {isLocal && !isLocalVideoActive && (
-            <Rest />
-          )}
-          {!isLocal && !streamManager.stream.videoActive && (
-            <Rest />
-          )}
+          {isLocal && !isLocalVideoActive && <Rest />}
+          {!isLocal && !streamManager.stream.videoActive && <Rest />}
           <div>
-            <video
-              className="screen"
-              autoPlay={true}
-              ref={videoRef}
-            />
+            <video className="screen" autoPlay={true} ref={videoRef} />
           </div>
         </motion.div>
       ) : (
@@ -62,7 +62,7 @@ const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {
         </div>
       )}
     </Wrapper>
-  )
-}
+  );
+};
 
 export default Screen;

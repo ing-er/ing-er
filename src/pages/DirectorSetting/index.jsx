@@ -1,13 +1,13 @@
 import React from 'react';
 import Layout from '../../layout';
-// import IntroduceContainer from '../../containers/IntroduceContainer';
-import DirectorSetting from '../../components/Entrance/DirectorSetting';
+import DirectorSettingContainer from '../../containers/DirectorSettingContainer';
+// import DirectorSetting from '../../components/Entrance/DirectorSetting';
 
 const index = () => {
   return (
     <Layout>
       {/* <DirectorSettingContainer/> */}
-      <DirectorSetting />
+      <DirectorSettingContainer />
     </Layout>
   );
 };

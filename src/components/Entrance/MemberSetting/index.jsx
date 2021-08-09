@@ -5,6 +5,7 @@ import {
   Grid,
   Container,
   TextField,
+  makeStyles,
   IconButton,
   Switch,
   FormControlLabel,
@@ -34,6 +35,35 @@ const styles = (theme) => ({
     color: theme.palette.grey[500],
   },
 });
+
+const textStyles = makeStyles((theme) => ({
+  input: {
+    color: 'white',
+  },
+}));
+
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'white',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'white',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+        color: 'white',
+      },
+      '&:hover fieldset': {
+        borderColor: 'yellow',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'green',
+      },
+    },
+  },
+})(TextField);
 
 const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
@@ -80,6 +110,7 @@ function MEMBERSETTING({
   onWithdrawalHandler,
 }) {
   const [open, setOpen] = React.useState(false);
+  const classes = textStyles();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -141,11 +172,13 @@ function MEMBERSETTING({
                     <AccountCircle />
                   </Grid>
                   <Grid item xs={11}>
-                    <TextField
+                    <CssTextField
                       className="name-input"
                       type="name"
                       value={name || ''}
-                      borderColor="white"
+                      InputProps={{
+                        className: classes.input,
+                      }}
                       onChange={(e) => {
                         setname(e.target.value);
                       }}

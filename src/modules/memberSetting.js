@@ -1,6 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import * as editApi from '../api/auth/memberSetting';
-import authorization from './userAuthorization';
 
 
 //* GET_USER_INFO
@@ -154,14 +153,9 @@ export default function memberSetting(state = initialState, action) {
         ...state,
       };
     case POST_UPDATE_USER_INFO_SUCCESS:
-      //* {
-      //*   "message": "정상",
-      //*   "statusCode": 200
-      //* }
       return {
         ...state,
         update: action.payload,
-        // info: action.payload,
       };
     case POST_UPDATE_USER_INFO_FAILURE:
       return {
@@ -170,15 +164,6 @@ export default function memberSetting(state = initialState, action) {
       };
 
     case INIT_USER_INFO:
-      // {
-      //   "message": "Success",
-      //   "id": 21,
-      //   "kakaoIdNum": "1810000000",
-      //   "name": "your_name",
-      //   "isOpen": false,
-      //   "usercode": 101,
-      //   "category": 201
-      // }
     return {
       ...state,
       };

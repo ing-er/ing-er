@@ -20,6 +20,7 @@ const Webrtc = () => {
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
   const [isLocalVideoActive, setIsLocalVideoActive] = useState(true);
+  const [localSeconds, setLocalSeconds] = useState(0);
 
   /* constructor hook */
   useEffect(() => {
@@ -59,11 +60,6 @@ const Webrtc = () => {
       subscribeToUserChanged();
     }
   }, [session]);
-
-  /* subscriber test */
-  // useEffect(() => {
-  //   console.log(subscriber)
-  // }, [subscriber]);
 
   /* join session(방 입장) */
   const joinSession = () => {
@@ -276,6 +272,8 @@ const Webrtc = () => {
           leaveSession={leaveSession}
           handleVideoMute={handleVideoMute}
           isLocalVideoActive={isLocalVideoActive}
+          localSeconds={localSeconds}
+          setLocalSeconds={setLocalSeconds}
         />
       )}
     </Wrapper>

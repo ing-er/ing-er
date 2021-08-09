@@ -13,7 +13,6 @@ import {
   ChevronRight,
   AccountBox,
   Assignment,
-  Whatshot,
 } from '@material-ui/icons';
 
 import { 
@@ -56,9 +55,6 @@ const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
             </IconButton>
             <IconButton id="drawerTodo" className="icon-button" onClick={handleDrawerNo}>
               <Assignment />
-            </IconButton>
-            <IconButton id="drawerPromise" className="icon-button" onClick={handleDrawerNo}>
-              <Whatshot />
             </IconButton>
           </div>
         </div>

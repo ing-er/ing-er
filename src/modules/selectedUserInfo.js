@@ -1,3 +1,5 @@
+// 삭제!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 /* action type */
 const SET_SELECTEDUSERINFO = 'selectedUserInfo/SET_SELECTEDUSERINFO';
 

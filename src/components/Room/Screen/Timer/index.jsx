@@ -24,20 +24,17 @@ const Timer = ({
   streamManager,
   isLocal,
   isLocalVideoActive,
-  localSeconds,
-  setLocalSeconds,
+  studyTime,
+  onIncrease,
 }) => {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
-
-  /* constructor hook */
-  useEffect(() => {}, []);
 
   /* interval hook */
   useInterval(
     () => {
       if (isLocal) {
-        setLocalSeconds(localSeconds + 1);
+        onIncrease();
       } else {
         setSeconds(seconds + 1);
       }
@@ -83,9 +80,9 @@ const Timer = ({
         <div className="timer-col">
           <p className="timer-label">
             {isLocal
-              ? localSeconds < 36000
-                ? '0' + parseInt(localSeconds / 3600)
-                : parseInt(localSeconds / 3600)
+              ? studyTime < 36000
+                ? '0' + parseInt(studyTime / 3600)
+                : parseInt(studyTime / 3600)
               : seconds < 36000
                 ? '0' + parseInt(seconds / 3600)
                 : parseInt(seconds / 3600)}
@@ -94,9 +91,9 @@ const Timer = ({
         <div className="timer-col">
           <p className="timer-label">
             {isLocal
-              ? localSeconds < 600
-                ? '0' + parseInt(localSeconds / 60)
-                : parseInt(localSeconds / 60)
+              ? studyTime < 600
+                ? '0' + parseInt(studyTime / 60)
+                : parseInt(studyTime / 60)
               : seconds < 600
                 ? '0' + parseInt(seconds / 60)
                 : parseInt(seconds / 60)}
@@ -105,9 +102,9 @@ const Timer = ({
         <div className="timer-col">
           <p className="timer-label">
             {isLocal
-              ? localSeconds % 60 < 10
-                ? '0' + (localSeconds % 60)
-                : localSeconds % 60
+              ? studyTime % 60 < 10
+                ? '0' + (studyTime % 60)
+                : studyTime % 60
               : seconds % 60 < 10
                 ? '0' + (seconds % 60)
                 : seconds % 60}

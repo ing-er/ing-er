@@ -9,8 +9,8 @@ const ScreenContainer = ({
   subscribers,
   publisher,
   isLocalVideoActive,
-  localSeconds,
-  setLocalSeconds,
+  studyTime,
+  onIncrease,
 }) => {
   const [subs, setSubs] = useState(new Array(5).fill(undefined));
 
@@ -31,8 +31,8 @@ const ScreenContainer = ({
           <Screen
             streamManager={publisher}
             isLocalVideoActive={isLocalVideoActive}
-            localSeconds={localSeconds}
-            setLocalSeconds={setLocalSeconds}
+            studyTime={studyTime}
+            onIncrease={onIncrease}
             isLocal={true}
           />
         </Grid>

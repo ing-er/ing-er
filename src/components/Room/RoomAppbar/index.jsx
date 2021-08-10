@@ -37,8 +37,7 @@ const RoomAppbar = ({ handleDrawerOpen, leaveSession, handleVideoMute, open, cla
           </motion.div>
         </IconButton>
         <Link
-          // to='/Main'
-          to="/TESTBUTTON" // tmp link
+          to='/Main'
           onClick={handleLeaveSession}
         >
           <IconButton 

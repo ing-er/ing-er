@@ -112,21 +112,16 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                   )}
                 </Grid>
 
-                <Grid item>
-                  {/* 방 입장 */}
+                {/* <Grid item>
+                  {// 방 입장 }
                   {isAuth && !isJoin ? (
                     <IconButton onClick={onClickRoom}>
                       <MeetingRoomIcon htmlColor="white" />
                     </IconButton>
                   ) : (
-                    // TMP TEST BUTTOn
-                    <Link to="/TESTBUTTON">
-                      <IconButton>
-                        <BrightnessLow htmlColor="white" />
-                      </IconButton>
-                    </Link>
+                    null
                   )}
-                </Grid>
+                </Grid> */}
               </Grid>
             </Grid>
 

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 
+import StudyTimeContainer from '../../containers/StudyTimeContainer';
 import Room from '../../pages/Room';
 import Wrapper from './styles';
 
@@ -20,7 +21,6 @@ const Webrtc = () => {
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
   const [isLocalVideoActive, setIsLocalVideoActive] = useState(true);
-  const [localSeconds, setLocalSeconds] = useState(0);
 
   /* constructor hook */
   useEffect(() => {
@@ -266,15 +266,15 @@ const Webrtc = () => {
       {!flag ? (
         null
       ) : (
-        <Room
-          publisher={publisher}
-          subscribers={subscribers}
-          leaveSession={leaveSession}
-          handleVideoMute={handleVideoMute}
-          isLocalVideoActive={isLocalVideoActive}
-          localSeconds={localSeconds}
-          setLocalSeconds={setLocalSeconds}
-        />
+        <StudyTimeContainer>
+          <Room
+            publisher={publisher}
+            subscribers={subscribers}
+            leaveSession={leaveSession}
+            handleVideoMute={handleVideoMute}
+            isLocalVideoActive={isLocalVideoActive}
+          />
+        </StudyTimeContainer>
       )}
     </Wrapper>
   );

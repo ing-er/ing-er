@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import ScreenContainer from '../../components/Room/ScreenContainer';
 import RoomDrawer from '../../components/Room/Drawer';
@@ -13,8 +13,8 @@ const Room = ({
   leaveSession,
   handleVideoMute,
   isLocalVideoActive,
-  localSeconds,
-  setLocalSeconds,
+  studyTime,
+  onIncrease
 }) => {
   /* drawer */
   const classes = useStyles();
@@ -47,8 +47,8 @@ const Room = ({
           publisher={publisher}
           subscribers={subscribers}
           isLocalVideoActive={isLocalVideoActive}
-          localSeconds={localSeconds}
-          setLocalSeconds={setLocalSeconds}
+          studyTime={studyTime}
+          onIncrease={onIncrease}
         />
       </RoomDrawer>
     </Wrapper>

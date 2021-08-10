@@ -11,6 +11,8 @@ const Screen = ({
   streamManager,
   isLocalVideoActive,
   isLocal,
+  studyTime,
+  onIncrease,
   localSeconds,
   setLocalSeconds
 }) => {
@@ -46,8 +48,8 @@ const Screen = ({
               username={username}
               isLocal={isLocal}
               isLocalVideoActive={isLocalVideoActive}
-              localSeconds={localSeconds}
-              setLocalSeconds={setLocalSeconds}
+              studyTime={studyTime}
+              onIncrease={onIncrease}
             />
           </div>
           {isLocal && !isLocalVideoActive && <Rest />}

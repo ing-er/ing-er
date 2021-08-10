@@ -9,6 +9,7 @@ import Wrapper from './styles';
 
 import TodolistComponent from './TodolistComponent';
 import TodolistAdd from './TodolistAdd';
+import { setTodolistDeleteTodolist } from '../../../modules/setTodolist';
 
 const LinearProgressOrange = withStyles({
   root: {
@@ -198,6 +199,8 @@ const MyTodolist = (props) => {
     setTodolistEditContent,
     setTodolistEditComplete,
     setTodolistSaveData,
+    setTodolistDeleteDetail,
+    setTodolistDeleteTodolist,
   } = props;
   // console.log(todolistdata);
 
@@ -220,7 +223,7 @@ const MyTodolist = (props) => {
       >
         <Grid container direction="row" justify="space-between">
           <Grid item>
-            <Grid container direction="row">
+            <Grid container direction="row" style={{ alignItems: 'center' }}>
               <Grid
                 item
                 style={{
@@ -240,7 +243,7 @@ const MyTodolist = (props) => {
               </Grid>
               <Grid item>
                 <IconButton onClick={handleAddContainer}>
-                  <AddCircleIcon htmlColor="#411AB0" />
+                  <AddCircleIcon htmlColor="#411AB0" fontSize="large" />
                 </IconButton>
               </Grid>
             </Grid>
@@ -290,6 +293,8 @@ const MyTodolist = (props) => {
                     backColor={'#1E1F26'}
                     textColor={'white'}
                     completeTextColor={'#4D4D4D'}
+                    setTodolistDeleteDetail={setTodolistDeleteDetail}
+                    setTodolistDeleteTodolist={setTodolistDeleteTodolist}
                   />
                 </Grid>
               );

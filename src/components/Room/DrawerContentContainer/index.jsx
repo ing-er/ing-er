@@ -5,7 +5,6 @@ import DrawerTodoContainer from '../../../containers/DrawerTodoContainer';
 import DrawerProfile from './DrawerProfile';
 import DrawerProfileContainer from '../../../containers/DrawerProfileContainer';
 import DrawerTodo from './DrawerTodo';
-import DrawerPromise from './DrawerPromise';
 
 import Wrapper from './styles';
 
@@ -22,8 +21,6 @@ const DrawerContentContainer = ({ drawerId }) => {
           <DrawerTodo />
         </DrawerTodoContainer>,
       );
-    } else if (drawerId === 'drawerPromise') {
-      setContentDiv(<DrawerPromise />);
     } else {
       setContentDiv(<DrawerProfile />);
     }

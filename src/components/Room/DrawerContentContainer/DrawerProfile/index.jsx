@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import RoomCalendar from '../../RoomCalendar';
 import CalendarComponent from '../../../Main/MyCalendar/CalendarComponent';
 import CalendarDiary from '../../../Main/MyCalendar/CalendarDiary';
 import CalendarPromise from '../../../Main/MyCalendar/CalendarPromise';
@@ -36,7 +35,7 @@ const DrawerProfile = (props) => {
       </Grid>
       <Grid className="date-time-container">
         <Typography className="date">{requestdate}</Typography>
-        <Typography className="time-text">�늘공� �간</Typography>
+        <Typography className="time-text">오늘 공부 시간</Typography>
         <Typography className="time">00 : 00 : 00</Typography>
       </Grid>
       <Grid className="pd-container">

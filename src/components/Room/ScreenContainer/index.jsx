@@ -5,7 +5,13 @@ import Wrapper from './styles';
 
 import { Grid } from '@material-ui/core';
 
-const ScreenContainer = ({ subscribers, publisher, isLocalVideoActive }) => {
+const ScreenContainer = ({
+  subscribers,
+  publisher,
+  isLocalVideoActive,
+  localSeconds,
+  setLocalSeconds,
+}) => {
   const [subs, setSubs] = useState(new Array(5).fill(undefined));
 
   /* subscribers hook */
@@ -25,16 +31,15 @@ const ScreenContainer = ({ subscribers, publisher, isLocalVideoActive }) => {
           <Screen
             streamManager={publisher}
             isLocalVideoActive={isLocalVideoActive}
+            localSeconds={localSeconds}
+            setLocalSeconds={setLocalSeconds}
             isLocal={true}
           />
         </Grid>
         {subs.map((sub, idx) => {
           return (
             <Grid item xs={12} md={6} lg={4} key={idx}>
-              <Screen
-                streamManager={sub}
-                isLocal={false}
-              />
+              <Screen streamManager={sub} isLocal={false} />
             </Grid>
           );
         })}

@@ -127,9 +127,6 @@ const initialState = {
 /* 리듀서 선언 */
 // 리듀서는 export default 로 내보내주세요.
 export default function memberSetting(state = initialState, action) {
-  console.log('mem func')
-  console.log(state)
-  console.log(action)
   
   switch (action.type) {
     //*   GET_USER_INFO
@@ -156,6 +153,7 @@ export default function memberSetting(state = initialState, action) {
       return {
         ...state,
         update: action.payload,
+        info: action.payload,
       };
     case POST_UPDATE_USER_INFO_FAILURE:
       return {
@@ -171,6 +169,7 @@ export default function memberSetting(state = initialState, action) {
       return {
         ...state,
         update: action.payload,
+        info: action.payload,
       };
     case INIT_USER_INFO_FAILURE:
       return {

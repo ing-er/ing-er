@@ -9,7 +9,12 @@ const Layout = (props) => {
   return (
     <div>
       {isEntrance && (
-        <Wrapper style={{ backgroundImage: 'url(img/inger_background.png)' }}>
+        <Wrapper
+          style={{
+            backgroundImage: 'url(img/inger_background2.png)',
+            backgroundSize: 'cover',
+          }}
+        >
           <CssBaseline />
           <HeaderContainer />
           <Container className="content">

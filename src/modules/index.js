@@ -7,6 +7,7 @@ import memberSetting, { userInfoSaga } from './memberSetting';
 import setTodolist from './setTodolist';
 import setCalendar from './setCalendar';
 import setTimer from './setTimer';
+import directorSetting, { adminSaga } from './directorSetting';
 
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -23,11 +24,12 @@ const rootReducer = combineReducers({
   setTodolist,
   setCalendar,
   authorization,
+  directorSetting,
   setTimer,
 });
 
 export function* rootSaga() {
-  yield all([userAuthorizationSaga(), userInfoSaga()]);
+  yield all([userAuthorizationSaga(), userInfoSaga(), adminSaga()]);
 }
 
 

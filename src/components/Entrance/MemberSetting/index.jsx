@@ -395,17 +395,8 @@ function MEMBERSETTING({
                   <HowToRegIcon />
                 </IconButton>
               </Grid>
-              {/* <Grid item>
-                <IconButton class="cancel">
-                  <CancelIcon />
-                </IconButton>
-              </Grid> */}
             </Grid>
           </Grid>
-          {/* <Grid item xs={12}>
-            <h1>{name}</h1>
-            <h1>{category}</h1>
-          </Grid> */}
         </Grid>
       </Container>
     </Wrapper>

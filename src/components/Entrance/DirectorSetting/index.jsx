@@ -19,6 +19,18 @@ import {
   Button,
   TextField,
   createTheme,
+  InputLabel,
+  MenuItem,
+  Select,
+  FormControl,
+  Input,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -171,9 +183,69 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
   },
+  table: {
+    minWidth: 650,
+  },
 }));
 
-const DIRECTORSETTING = () => {
+//* 회원 코드 변경 */
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+const kindsOfCode = ['일반 회원', '제재 회원', '관리자'];
+
+const numToAlpha = {
+  101: '일반 회원',
+  102: '관리자',
+  103: '제재 회원',
+};
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+      backgroundColor: '#292A33',
+      color: 'white',
+    },
+  },
+};
+
+//***************************** */
+
+//************공통 코드 관리 ***********************//
+
+function createData(name, calories, fat, carbs, protein) {
+  return { name, calories, fat, carbs, protein };
+}
+
+const rows = [
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Cupcake', 305, 3.7, 67, 4.3),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
+];
+
+//**************************************************//
+
+const DIRECTORSETTING = ({
+  onSearchUser,
+  name,
+  originUsercode,
+  usercode,
+  handleCode,
+  updateUsercode,
+}) => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -183,6 +255,12 @@ const DIRECTORSETTING = () => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const [personName, setPersonName] = React.useState([]);
+
+  const handleChange = (event) => {
+    setPersonName(event.target.value);
   };
 
   return (
@@ -204,7 +282,7 @@ const DIRECTORSETTING = () => {
               xs={12}
             >
               <Grid item xs={4}>
-                <h1>관리자 권한</h1>
+                <h1>회원 권한 변경</h1>
               </Grid>
               <Grid item xs={5}></Grid>
               <Grid item xs={3}>
@@ -222,6 +300,7 @@ const DIRECTORSETTING = () => {
                               root: classes.inputRoot,
                               input: classes.inputInput,
                             }}
+                            onKeyPress={onSearchUser}
                             inputProps={{ 'aria-label': 'search' }}
                           />
                         </div>
@@ -231,6 +310,74 @@ const DIRECTORSETTING = () => {
                 </Grid>
               </Grid>
               <Grid item xs={2}></Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              xs={12}
+            >
+              <Grid item xs={4}>
+                <p>닉네임</p>
+              </Grid>
+              <Grid item xs={5}>
+                <p>현재 유저 코드</p>
+              </Grid>
+              <Grid item xs={3}>
+                <p>코드 변경</p>
+              </Grid>
+              <Grid item xs={2}></Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              xs={12}
+            >
+              <Grid item xs={4}>
+                <p>{name}</p>
+              </Grid>
+              <Grid item xs={5}>
+                <p>{numToAlpha[originUsercode]}</p>
+              </Grid>
+              <Grid item xs={3}>
+                <FormControl className={classes.formControl}>
+                  <Select
+                    labelId="demo-mutiple-name-label"
+                    id="demo-mutiple-name"
+                    value={numToAlpha[usercode]}
+                    onChange={handleCode}
+                    input={<Input style={{ color: 'white' }} />}
+                    MenuProps={MenuProps}
+                  >
+                    {kindsOfCode.map((code) => (
+                      <MenuItem
+                        key={code}
+                        value={code}
+                        style={getStyles(code, personName, theme)}
+                      >
+                        {code}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={2}></Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container direction="row" justify="center" spacing={2}>
+              <Grid item>
+                <IconButton class="check" onClick={updateUsercode}>
+                  <HowToRegIcon />
+                </IconButton>
+              </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12}>
@@ -307,6 +454,168 @@ const DIRECTORSETTING = () => {
                   </DialogActions>
                 </Dialog>
               </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              xs={12}
+            >
+              <Grid item xs={12}>
+                <TableContainer component={Paper}>
+                  <Table className={classes.table} aria-label="simple table">
+                    <TableHead
+                      style={{
+                        backgroundColor: '#292A33',
+                      }}
+                    >
+                      <TableRow>
+                        <TableCell
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          유형
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          종류
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          수정
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          삭제
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody
+                      style={{
+                        backgroundColor: '#292A33',
+                      }}
+                    >
+                      {rows.map((row) => (
+                        <TableRow key={row.name}>
+                          <TableCell
+                            component="th"
+                            scope="row"
+                            style={{
+                              color: 'white',
+                            }}
+                          >
+                            {row.name}
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            style={{
+                              color: 'white',
+                            }}
+                          >
+                            {row.calories}
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            style={{
+                              color: 'white',
+                            }}
+                          >
+                            {row.fat}
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            style={{
+                              color: 'white',
+                            }}
+                          >
+                            {row.carbs}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Grid>
+
+              {/* <Grid item xs={7}></Grid>
+              <Grid item xs={2}>
+                <Button
+                  variant="outlined"
+                  style={{
+                    borderRadius: '1.25rem',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    backgroundColor: '#292A33',
+                  }}
+                  onClick={handleClickOpen}
+                >
+                  추가하기
+                </Button>
+                <Dialog
+                  onClose={handleClose}
+                  aria-labelledby="customized-dialog-title"
+                  open={open}
+                  PaperProps={{
+                    style: {
+                      backgroundColor: '#292A33',
+                      boxShadow: 'none',
+                      color: 'white',
+                    },
+                  }}
+                >
+                  <DialogTitle
+                    id="customized-dialog-title"
+                    onClose={handleClose}
+                  >
+                    코드 추가
+                  </DialogTitle>
+                  <CssTextField
+                    className={classes.margin}
+                    id="custom-css-standard-input"
+                    label="코드 유형"
+                    style={{
+                      color: 'white',
+                    }}
+                  />
+                  <CssTextField
+                    className={classes.margin}
+                    id="custom-css-standard-input"
+                    label="코드"
+                  />
+                  <CssTextField
+                    className={classes.margin}
+                    id="custom-css-standard-input"
+                    label="코드명"
+                  />
+                  <DialogActions>
+                    <Button
+                      autoFocus
+                      onClick={handleClose}
+                      style={{
+                        color: '#E96F02',
+                      }}
+                    >
+                      추가
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </Grid> */}
             </Grid>
           </Grid>
         </Grid>

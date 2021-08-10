@@ -29,6 +29,7 @@ const Timer = ({
 }) => {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
+  const [userData, setUserData] = useState(undefined)
 
   /* interval hook */
   useInterval(
@@ -51,12 +52,11 @@ const Timer = ({
      * curr_time을 총 공부 시간으로 초기화
      * props username으로 api 호출
      */
-    const username = JSON.parse(
-      streamManager?.stream.connection.data,
-    ).clientData;
-    console.log('현재 또는 변화한 사용자: ' + username);
+    const clientData = JSON.parse(streamManager?.stream.connection.data).clientData;
+    setUserData(clientData)
 
-    const curr_time = parseInt((+new Date() - streamManager.stream.connection.creationTime) / 1000,);
+
+    const curr_time = parseInt((+new Date() - streamManager.stream.connection.creationTime) / 1000);
     setSeconds(curr_time);
   }, [streamManager]);
 

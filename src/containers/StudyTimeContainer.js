@@ -8,9 +8,6 @@ const StudyTimecontainer = ({ children }) => {
   const { studyTime } = useSelector(state => state.studyTime );
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(studyTime)
-  }, [])
   const onIncrease = () => {
     return dispatch(increase())
   }

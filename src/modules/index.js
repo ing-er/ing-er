@@ -24,12 +24,8 @@ const rootReducer = combineReducers({
   setTodolist,
   setCalendar,
   authorization,
-<<<<<<< HEAD
-  studyTime,
-=======
   directorSetting,
-  timer,
->>>>>>> e1e03b3b1e162e44be9fb978aaa2c1146e8c9d35
+  studyTime,
 });
 
 export function* rootSaga() {

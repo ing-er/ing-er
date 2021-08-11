@@ -37,6 +37,8 @@ import {
   Paper,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
+import PostAddIcon from '@material-ui/icons/PostAdd';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
@@ -190,6 +192,9 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 650,
   },
+  input: {
+    color: 'white',
+  },
 }));
 
 //* 회원 코드 변경 */
@@ -226,22 +231,6 @@ const MenuProps = {
 
 //***************************** */
 
-//************공통 코드 관리 ***********************//
-
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
-// const rows = [
-//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//   createData('Eclair', 262, 16.0, 24, 6.0),
-//   createData('Cupcake', 305, 3.7, 67, 4.3),
-//   createData('Gingerbread', 356, 16.0, 49, 3.9),
-// ];
-
-//**************************************************//
-
 const DIRECTORSETTING = ({
   onSearchUser,
   name,
@@ -249,6 +238,14 @@ const DIRECTORSETTING = ({
   usercode,
   handleCode,
   updateUsercode,
+  commonCodes,
+  postCommonCode,
+  deleteCommonCode,
+  updatecode,
+  setUpdatecode,
+  updateCommonCode,
+  detailCodes,
+  deleteDetailCode,
 }) => {
   const classes = useStyles();
 
@@ -320,26 +317,30 @@ const DIRECTORSETTING = ({
                 <p>{numToAlpha[originUsercode]}</p>
               </Grid>
               <Grid className="infos-item">
-                <FormControl className={classes.formControl}>
-                  <Select
-                    labelId="demo-mutiple-name-label"
-                    id="demo-mutiple-name"
-                    value={numToAlpha[usercode]}
-                    onChange={handleCode}
-                    input={<Input style={{ color: 'white' }} />}
-                    MenuProps={MenuProps}
-                  >
-                    {kindsOfCode.map((code) => (
-                      <MenuItem
-                        key={code}
-                        value={code}
-                        style={getStyles(code, personName, theme)}
-                      >
-                        {code}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                {name === undefined ? (
+                  <div></div>
+                ) : (
+                  <FormControl className={classes.formControl}>
+                    <Select
+                      labelId="demo-mutiple-name-label"
+                      id="demo-mutiple-name"
+                      value={numToAlpha[usercode]}
+                      onChange={handleCode}
+                      input={<Input style={{ color: 'white' }} />}
+                      MenuProps={MenuProps}
+                    >
+                      {kindsOfCode.map((code) => (
+                        <MenuItem
+                          key={code}
+                          value={code}
+                          style={getStyles(code, personName, theme)}
+                        >
+                          {code}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                )}
               </Grid>
             </Grid>
           </Grid>
@@ -374,7 +375,9 @@ const DIRECTORSETTING = ({
                   fontWeight: 'bold',
                   backgroundColor: '#292A33',
                 }}
-                onClick={handleClickOpen}
+                onClick={(e) => {
+                  alert('준비 중입니다.');
+                }}
               >
                 세부코드 추가
               </Button>
@@ -393,7 +396,7 @@ const DIRECTORSETTING = ({
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                   코드 추가
                 </DialogTitle>
-                <CssTextField
+                {/* <CssTextField
                   className={classes.margin}
                   id="custom-css-standard-input"
                   label="코드 유형"
@@ -405,16 +408,24 @@ const DIRECTORSETTING = ({
                   className={classes.margin}
                   id="custom-css-standard-input"
                   label="코드"
-                />
+                /> */}
                 <CssTextField
                   className={classes.margin}
                   id="custom-css-standard-input"
-                  label="코드명"
+                  label="코드 종류"
+                  value={updatecode}
+                  InputProps={{
+                    className: classes.input,
+                  }}
+                  onChange={(e) => {
+                    setUpdatecode(e.target.value);
+                  }}
                 />
                 <DialogActions>
                   <Button
                     autoFocus
-                    onClick={handleClose}
+                    // onClick={handleClose}
+                    onClick={updateCommonCode}
                     style={{
                       color: '#E96F02',
                     }}
@@ -427,21 +438,217 @@ const DIRECTORSETTING = ({
           </Grid>
           <Grid className="contents-container">
             <Grid container spacing={5} className="my-table-container">
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                className="my-table-item"
-              >
-                <DirectorSettingTable />
+              <Grid item xs={12} sm={6} className="my-table-item">
+                <TableContainer
+                  component={Paper}
+                  style={{
+                    backgroundColor: '#292A33',
+                  }}
+                >
+                  <Table size="small" aria-label="a dense table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          코드
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          종류
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          수정
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          삭제
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {commonCodes.map((commonCode) => (
+                        <TableRow key={commonCode.id}>
+                          <TableCell
+                            component="th"
+                            scope="row"
+                            style={{
+                              color: 'white',
+                            }}
+                          >
+                            {commonCode.id}
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            style={{
+                              color: 'white',
+                            }}
+                          >
+                            {commonCode.kind}
+                          </TableCell>
+                          <TableCell align="right">
+                            <IconButton
+                              value={commonCode.id}
+                              onClick={postCommonCode}
+                            >
+                              <PostAddIcon
+                                style={{
+                                  color: 'white',
+                                }}
+                              ></PostAddIcon>
+                            </IconButton>
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            style={{
+                              color: 'white',
+                            }}
+                          >
+                            <IconButton
+                              value={commonCode.id}
+                              onClick={deleteCommonCode}
+                            >
+                              <HighlightOffIcon
+                                style={{
+                                  color: 'white',
+                                }}
+                              ></HighlightOffIcon>
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </Grid>
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                className="my-table-item"
-              >
-                <DirectorSettingTable />
+              <Grid item xs={12} sm={6} className="my-table-item">
+                <TableContainer
+                  component={Paper}
+                  style={{
+                    backgroundColor: '#292A33',
+                  }}
+                >
+                  <Table size="small" aria-label="a dense table">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          공통 코드
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          세부 코드
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          종류
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          수정
+                        </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color: 'white',
+                          }}
+                        >
+                          삭제
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {detailCodes.map((detailCode) => (
+                        <TableRow key={detailCode.id}>
+                          <TableCell
+                            component="th"
+                            scope="row"
+                            style={{
+                              color: 'white',
+                            }}
+                          >
+                            {detailCode.type}
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            style={{
+                              color: 'white',
+                            }}
+                          >
+                            {detailCode.id}
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            style={{
+                              color: 'white',
+                            }}
+                          >
+                            {detailCode.name}
+                          </TableCell>
+                          <TableCell align="right">
+                            <IconButton
+                              value={detailCode.id}
+                              onClick={postCommonCode}
+                            >
+                              <PostAddIcon
+                                style={{
+                                  color: 'white',
+                                }}
+                              ></PostAddIcon>
+                            </IconButton>
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            style={{
+                              color: 'white',
+                            }}
+                          >
+                            <IconButton
+                              value={detailCode.id}
+                              onClick={deleteDetailCode}
+                            >
+                              <HighlightOffIcon
+                                style={{
+                                  color: 'white',
+                                }}
+                              ></HighlightOffIcon>
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </Grid>
             </Grid>
           </Grid>

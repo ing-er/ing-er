@@ -14,6 +14,7 @@ import Wrapper from './styles';
 import CalendarComponent from './CalendarComponent';
 import CalendarPromise from './CalendarPromise';
 import CalendarDiary from './CalendarDiary';
+import { useState } from 'react';
 
 // const CalendarPromise = (props) => {
 //   let {
@@ -161,6 +162,16 @@ const MyCalendar = (props) => {
     setCalendarSaveData();
   };
 
+  const handleStudyTime = () => {
+    let hr = calendardata.studyTime / (60 * 60);
+    let min = (calendardata.studyTime - hr * 60 * 60) / 60;
+    let sec = calendardata.studyTime - hr * 60 * 60 - min * 60;
+    if (hr < 10) hr = '0' + hr;
+    if (min < 10) min = '0' + min;
+    if (sec < 10) sec = '0' + sec;
+    return hr + ' : ' + min + ' : ' + sec;
+  };
+
   return (
     <Wrapper>
       <Grid
@@ -207,7 +218,7 @@ const MyCalendar = (props) => {
                 fontSize: 40,
               }}
             >
-              01 : 53 : 05
+              {handleStudyTime()}
             </Grid>
             <Grid item>
               <CalendarComponent

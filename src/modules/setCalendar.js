@@ -70,6 +70,7 @@ export const getCalendarData = async (id) => {
         promise: x.promise,
         diary: x.diary,
         id: x.id,
+        studyTime: x.studyTime,
       });
       if (x.date === todaydate) {
         listToday = {
@@ -77,6 +78,7 @@ export const getCalendarData = async (id) => {
           promise: x.promise,
           diary: x.diary,
           id: x.id,
+          studyTime: x.studyTime,
         };
       }
     });
@@ -148,6 +150,7 @@ const setCalendar = (state = initialState, action) => {
           promise: '',
           diary: '',
           id: -1,
+          studyTime: 0,
         };
       }
       return {

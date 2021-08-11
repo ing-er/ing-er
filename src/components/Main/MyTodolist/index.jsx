@@ -3,6 +3,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import SaveIcon from '@material-ui/icons/Save';
 import { withStyles } from '@material-ui/styles';
 
 import Wrapper from './styles';
@@ -261,6 +262,7 @@ const MyTodolist = (props) => {
               }}
             >
               저장
+              <SaveIcon />
             </Button>
           </Grid>
         </Grid>

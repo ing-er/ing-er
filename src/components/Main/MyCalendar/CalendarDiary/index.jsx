@@ -6,6 +6,8 @@ import {
   Button,
 } from '@material-ui/core';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
+import EditIcon from '@material-ui/icons/Edit';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import dayjs from 'dayjs';
 
 const CalendarDiary = (props) => {
@@ -31,6 +33,7 @@ const CalendarDiary = (props) => {
           fontSize: 20,
         }}
       >
+        <AssignmentIcon />
         나의 오늘 일기
       </Grid>
       <Grid
@@ -41,7 +44,7 @@ const CalendarDiary = (props) => {
         }}
       >
         <IconButton onClick={onClickDiaryHandler}>
-          <SettingsApplicationsIcon />
+          <EditIcon />
         </IconButton>
         <TextField
           multiline={true}

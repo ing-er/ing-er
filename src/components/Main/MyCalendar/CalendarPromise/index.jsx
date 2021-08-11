@@ -6,6 +6,8 @@ import {
   Button,
 } from '@material-ui/core';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
+import EditIcon from '@material-ui/icons/Edit';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
 import dayjs from 'dayjs';
 
 const CalendarPromise = (props) => {
@@ -31,6 +33,7 @@ const CalendarPromise = (props) => {
           fontSize: 20,
         }}
       >
+        <WhatshotIcon />
         나의 오늘 다짐
       </Grid>
       <Grid
@@ -41,7 +44,7 @@ const CalendarPromise = (props) => {
         }}
       >
         <IconButton onClick={onClickPromiseHandler}>
-          <SettingsApplicationsIcon />
+          <EditIcon />
         </IconButton>
         <TextField
           multiline={true}

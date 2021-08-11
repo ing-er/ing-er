@@ -7,10 +7,10 @@ export const EDITDIARYISEDITABLE = 'EDITDIARYISEDITABLE';
 export const SETDATE = 'CALENDAR/SETDATE';
 export const SAVEDATA = 'SAVEDATA';
 
-const HOST = 'localhost:8080';
-const serverUrl = `http://${HOST}/api/v1`;
-// const HOST = 'i5a208.p.ssafy.io:8080';
+// const HOST = 'localhost:8080';
 // const serverUrl = `http://${HOST}/api/v1`;
+const HOST = 'i5a208.p.ssafy.io:8080';
+const serverUrl = `http://${HOST}/api/v1`;
 
 export const setCalendarEditPromise = (promise, requestcalendar) => ({
   type: EDITPROMISE,

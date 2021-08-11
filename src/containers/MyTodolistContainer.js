@@ -11,6 +11,7 @@ import {
   getTodolistData,
   setTodolistDeleteDetail,
   setTodolistDeleteTodolist,
+  setTodolistSetDate,
 } from '../modules/setTodolist';
 
 const MyTodolistComponent = ({ children }) => {
@@ -43,6 +44,11 @@ const MyTodolistComponent = ({ children }) => {
   const setTodolistDeleteTodo = (index) => {
     dispatch(setTodolistDeleteTodolist(index));
   };
+
+  useEffect(() => {
+    console.log('todolist');
+    console.log(todolist);
+  }, []);
 
   return cloneElement(children, {
     todolistdata: todolist,

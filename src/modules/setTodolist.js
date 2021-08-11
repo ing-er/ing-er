@@ -140,6 +140,11 @@ export const getTodolistData = async (id) => {
     .catch((err) => {
       // console.log(err);
     });
+  console.log('todolistData');
+  console.log(todolistData);
+  console.log('todolistToday');
+  console.log(todolistToday);
+  console.log('todaydate : ' + todaydate);
 };
 
 // getTodolistData();

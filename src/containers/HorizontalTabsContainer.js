@@ -8,16 +8,14 @@ import {
   setIsRandomRoomTrue,
   setIsRandomRoomFalse,
 } from '../modules/setIsRandomRoom';
-import { getCalendarData } from '../modules/setCalendar';
-import { getTodolistData } from '../modules/setTodolist';
+import { getCalendarData, setCalendarSetDate } from '../modules/setCalendar';
+import { getTodolistData, setTodolistSetDate } from '../modules/setTodolist';
 
 import HorizontalTabs from '../components/Main/HorizontalTabs';
 
 //* 민코
 // import MemberSetting from '../components/Entrance/MemberSetting';
-import {
-  typeAuthUser,
-} from '../modules/userAuthorization';
+import { typeAuthUser } from '../modules/userAuthorization';
 
 const HorizontalTabsComponent = () => {
   const dispatch = useDispatch();
@@ -39,21 +37,25 @@ const HorizontalTabsComponent = () => {
 
   // const { id } = useSelector(({authorization}) => authorization.info.id);
   // const { id } = useSelector((state) => state.authorization.userData);
-  const { id } = useSelector(({authorization }) => ({
+  const { id } = useSelector(({ authorization }) => ({
     id: authorization.userData.id,
   }));
 
-  console.log(id)
+  console.log(id);
 
+  const { requestdate } = useSelector((state) => state.setTodolist);
 
   useEffect(() => {
     typeAuthUser();
   }, []);
-  useEffect(() => {
-    getCalendarData(id);
-  }, []);
-  useEffect(() => {
-    getTodolistData(id);
+  useEffect(async () => {
+    await getCalendarData(id);
+    console.log('getCalendarData 완료');
+    await getTodolistData(id);
+    console.log('getTodolistData 완료');
+    console.log('requestdate : ' + requestdate);
+    await dispatch(setCalendarSetDate(requestdate));
+    await dispatch(setTodolistSetDate(requestdate));
   }, []);
 
   return (

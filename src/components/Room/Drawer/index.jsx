@@ -2,30 +2,21 @@ import clsx from 'clsx';
 import { useState } from 'react';
 
 import DrawerContentContainer from '../DrawerContentContainer';
+import DrawerContainer from '../../../containers/DrawerContainer';
 
-import { 
-  Drawer,
-  IconButton,
-  Container,
-} from '@material-ui/core';
+import { Drawer, IconButton, Container } from '@material-ui/core';
 
-import {
-  ChevronRight,
-  AccountBox,
-  Assignment,
-} from '@material-ui/icons';
+import { ChevronRight, AccountBox, Assignment } from '@material-ui/icons';
 
-import { 
-  Wrapper,
-} from './styles';
+import { Wrapper } from './styles';
 
 const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
   const [drawerId, setDrawerId] = useState('drawerProfile');
-  
+
   const handleDrawerNo = (e) => {
-    const drawerId = e.currentTarget.id
-    setDrawerId(drawerId)
-  }
+    const drawerId = e.currentTarget.id;
+    setDrawerId(drawerId);
+  };
 
   return (
     <Wrapper>
@@ -35,7 +26,7 @@ const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
             [classes.contentShift]: open,
           })}
         >
-        { children }
+          {children}
         </main>
       </Container>
 
@@ -50,20 +41,26 @@ const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
             <ChevronRight className="chevron-right" />
           </IconButton>
           <div className="drawerHeader-right-container">
-            <IconButton id="drawerProfile" className="icon-button" onClick={handleDrawerNo}>
+            <IconButton
+              id="drawerProfile"
+              className="icon-button"
+              onClick={handleDrawerNo}
+            >
               <AccountBox />
             </IconButton>
-            <IconButton id="drawerTodo" className="icon-button" onClick={handleDrawerNo}>
+            <IconButton
+              id="drawerTodo"
+              className="icon-button"
+              onClick={handleDrawerNo}
+            >
               <Assignment />
             </IconButton>
           </div>
         </div>
-        <DrawerContentContainer 
-          drawerId={drawerId}
-        />
+        <DrawerContainer drawerId={drawerId} />
       </Drawer>
     </Wrapper>
   );
-}
+};
 
-export default RoomDrawer
+export default RoomDrawer;

@@ -9,6 +9,8 @@ import {
   setTodolistEditComplete,
   setTodolistSaveData,
   getTodolistData,
+  setTodolistDeleteDetail,
+  setTodolistDeleteTodolist,
 } from '../modules/setTodolist';
 
 const DrawerTodoContainer = ({ children }) => {
@@ -34,6 +36,12 @@ const DrawerTodoContainer = ({ children }) => {
   const setTodolistSave = () => {
     dispatch(setTodolistSaveData());
   };
+  const setTodolistDeleteDt = (index, subindex) => {
+    dispatch(setTodolistDeleteDetail(index, subindex));
+  };
+  const setTodolistDeleteTodo = (index) => {
+    dispatch(setTodolistDeleteTodolist(index));
+  };
 
   console.log('todolist');
   console.log(todolist);
@@ -47,6 +55,8 @@ const DrawerTodoContainer = ({ children }) => {
     setTodolistEditContent: setTodolistEditCon,
     setTodolistEditComplete: setTodolistEditCompl,
     setTodolistSaveData: setTodolistSave,
+    setTodolistDeleteDetail: setTodolistDeleteDt,
+    setTodolistDeleteTodolist: setTodolistDeleteTodo,
   });
 };
 

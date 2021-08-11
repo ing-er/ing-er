@@ -33,6 +33,8 @@ const DrawerTodo = (props) => {
     setTodolistEditContent,
     setTodolistEditComplete,
     setTodolistSaveData,
+    setTodolistDeleteDetail,
+    setTodolistDeleteTodolist,
   } = props;
 
   const handleAddContainer = () => {
@@ -126,6 +128,8 @@ const DrawerTodo = (props) => {
                     backColor={'#FFFFFF'}
                     textColor={'#000000'}
                     completeTextColor={'#CECECE'}
+                    setTodolistDeleteDetail={setTodolistDeleteDetail}
+                    setTodolistDeleteTodolist={setTodolistDeleteTodolist}
                   />
                 </Grid>
               );

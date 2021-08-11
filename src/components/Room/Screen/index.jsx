@@ -13,8 +13,6 @@ const Screen = ({
   isLocal,
   studyTime,
   onIncrease,
-  localSeconds,
-  setLocalSeconds
 }) => {
   let videoRef = useRef();
   const [userData, setUserData] = useState(undefined);
@@ -49,6 +47,7 @@ const Screen = ({
               isLocalVideoActive={isLocalVideoActive}
               studyTime={studyTime}
               onIncrease={onIncrease}
+              userData={userData}
             />
           </div>
           {isLocal && !isLocalVideoActive && <Rest />}

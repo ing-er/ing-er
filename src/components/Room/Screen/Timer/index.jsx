@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
+import { getStudyTime } from '../../../../api/timer/timer';
+
 import Wrapper from './styles';
 
 const useInterval = (callback, delay) => {
@@ -29,7 +31,6 @@ const Timer = ({
 }) => {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
-  const [userData, setUserData] = useState(undefined)
 
   /* interval hook */
   useInterval(
@@ -47,17 +48,17 @@ const Timer = ({
   useEffect(() => {
     if (!streamManager) return;
 
-    /* 현재시간 계산
-     * db에 1분 단위로 총 공부시간을 전송하고,
-     * curr_time을 총 공부 시간으로 초기화
-     * props username으로 api 호출
-     */
-    const clientData = JSON.parse(streamManager?.stream.connection.data).clientData;
-    setUserData(clientData)
-
-
-    const curr_time = parseInt((+new Date() - streamManager.stream.connection.creationTime) / 1000);
-    setSeconds(curr_time);
+    const userData = JSON.parse(streamManager?.stream.connection.data).clientData;
+    const userId = userData.id;
+    
+    // 1급 객체
+    if (!isLocal) {
+      getStudyTime(userId)
+        .then((response) => {
+          const secs = response.data.studyTime
+          setSeconds(secs)
+        })
+    }
   }, [streamManager]);
 
   /* local video hook*/
@@ -91,12 +92,12 @@ const Timer = ({
         <div className="timer-col">
           <p className="timer-label">
             {isLocal
-              ? studyTime < 600
-                ? '0' + parseInt(studyTime / 60)
-                : parseInt(studyTime / 60)
-              : seconds < 600
-                ? '0' + parseInt(seconds / 60)
-                : parseInt(seconds / 60)}
+              ? parseInt((studyTime % 3600) / 60) < 10
+                ? '0' + parseInt((studyTime % 3600) / 60)
+                : parseInt((studyTime % 3600) / 60)
+              : parseInt((seconds % 3600) / 60) < 10
+                ? '0' + parseInt((seconds % 3600) / 60)
+                : parseInt((seconds % 3600) / 60)}
           </p>
         </div>
         <div className="timer-col">

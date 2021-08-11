@@ -14,7 +14,7 @@ import { Wrapper, useDrawerStyles } from './styles';
 const RoomAppbar = ({ handleDrawerOpen, leaveSession, handleVideoMute, open, classes }) => {
   const drawerClasses = useDrawerStyles();
 
-  const handleLeaveSession = (e) => {
+  const handleLeaveSession = () => {
     leaveSession()
   }
 
@@ -42,7 +42,6 @@ const RoomAppbar = ({ handleDrawerOpen, leaveSession, handleVideoMute, open, cla
         >
           <IconButton 
             className="room-buttons-container"
-            onClick={handleLeaveSession}
             style={{ display: "inline-block" }}
           >
             <motion.div

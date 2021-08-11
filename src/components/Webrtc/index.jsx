@@ -6,6 +6,8 @@ import axios from 'axios';
 
 import StudyTimeContainer from '../../containers/StudyTimeContainer';
 import Room from '../../pages/Room';
+
+import { setStudyTime } from '../../api/timer/timer';
 import Wrapper from './styles';
 
 const Webrtc = () => {
@@ -13,6 +15,7 @@ const Webrtc = () => {
   const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
   const userData = useSelector((state) => state.authorization.userData)
+  const localStudyTime = useSelector((state) => state.studyTime.studyTime)
 
   const [flag, setFlag] = useState(false);
   const [OV, setOV] = useState(undefined);
@@ -37,7 +40,7 @@ const Webrtc = () => {
   }, []);
 
   const onbeforeunload = (event) => {
-    this.leaveSession();
+    leaveSession(true);
   };
 
   /* to init session */
@@ -136,11 +139,17 @@ const Webrtc = () => {
   };
 
   /* leave session */
-  const leaveSession = () => {
+  const leaveSession = (isOnbeforeunload) => {
     const mySession = session;
 
-    if (mySession) {
+    if (mySession && flag) {
       mySession.disconnect();
+      
+      // 공부한 시간 db 저장
+      if(!isOnbeforeunload) {
+        setStudyTime(userData.id, localStudyTime)
+      }
+      
     }
 
     // empty all properties

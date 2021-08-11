@@ -3,7 +3,9 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px solid red;
+  & .all-container {
+    padding: 20px;
+  }
   & .todolist-container {
     margin-top: 20px;
     padding: 20px;

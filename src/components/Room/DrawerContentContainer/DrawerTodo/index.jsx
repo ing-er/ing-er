@@ -40,6 +40,9 @@ const DrawerTodo = (props) => {
   const handleAddContainer = () => {
     setTodolistAddContainer('');
   };
+  const onClickSaveTodolist = (e) => {
+    setTodolistSaveData();
+  };
 
   return (
     <Wrapper>
@@ -60,7 +63,7 @@ const DrawerTodo = (props) => {
                   marginRight: '10px',
                 }}
               >
-                <EventAvailableIcon htmlColor="white" fontSize="large" />
+                <EventAvailableIcon htmlColor="#000000" fontSize="large" />
               </Grid>
               <Grid
                 item
@@ -79,7 +82,7 @@ const DrawerTodo = (props) => {
             </Grid>
           </Grid>
 
-          {/* <Grid item>
+          <Grid item>
             <Button
               className="enter-button"
               variant="outlined"
@@ -92,7 +95,7 @@ const DrawerTodo = (props) => {
             >
               저장
             </Button>
-          </Grid> */}
+          </Grid>
         </Grid>
         <Grid item xs={12} style={{ marginTop: '10px' }}>
           <div>{todopercent}%</div>

@@ -39,6 +39,7 @@ const DrawerProfileContainer = () => {
   const { requestdate } = useSelector((state) => state.setCalendar);
   const { isEditablePromise } = useSelector((state) => state.setCalendar);
   const { isEditableDiary } = useSelector((state) => state.setCalendar);
+  const { studyTime } = useSelector((state) => state.studyTime);
 
   return (
     <DrawerProfile
@@ -53,6 +54,7 @@ const DrawerProfileContainer = () => {
       setCalendarSetDate={setCalendarSetDt}
       setCalendarSaveData={setCalendarSave}
       setTodolistSetDate={setTodolistSetdt}
+      studyTime={studyTime}
     />
   );
 };

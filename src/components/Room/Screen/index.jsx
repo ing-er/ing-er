@@ -11,11 +11,11 @@ const Screen = ({
   streamManager,
   isLocalVideoActive,
   isLocal,
-  localSeconds,
-  setLocalSeconds
+  studyTime,
+  onIncrease,
 }) => {
   let videoRef = useRef();
-  const [username, setUsername] = useState(undefined);
+  const [userData, setUserData] = useState(undefined);
 
   /* subscriber hook */
   useEffect(() => {
@@ -23,8 +23,8 @@ const Screen = ({
       streamManager.addVideoElement(videoRef.current);
 
       // username 초기화
-      const name = JSON.parse(streamManager?.stream.connection.data).clientData;
-      setUsername(name);
+      const userData = JSON.parse(streamManager?.stream.connection.data).clientData;
+      setUserData(userData);
     }
   }, [streamManager]);
 
@@ -40,14 +40,14 @@ const Screen = ({
           }}
         >
           <div className="screen-header-container">
-            <Name username={username} />
+            <Name username={userData?.name} />
             <Timer
               streamManager={streamManager}
-              username={username}
               isLocal={isLocal}
               isLocalVideoActive={isLocalVideoActive}
-              localSeconds={localSeconds}
-              setLocalSeconds={setLocalSeconds}
+              studyTime={studyTime}
+              onIncrease={onIncrease}
+              userData={userData}
             />
           </div>
           {isLocal && !isLocalVideoActive && <Rest />}

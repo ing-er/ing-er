@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
+import { getStudyTime } from '../../../../api/timer/timer';
+
 import Wrapper from './styles';
 
 const useInterval = (callback, delay) => {
@@ -24,20 +26,17 @@ const Timer = ({
   streamManager,
   isLocal,
   isLocalVideoActive,
-  localSeconds,
-  setLocalSeconds,
+  studyTime,
+  onIncrease,
 }) => {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
-
-  /* constructor hook */
-  useEffect(() => {}, []);
 
   /* interval hook */
   useInterval(
     () => {
       if (isLocal) {
-        setLocalSeconds(localSeconds + 1);
+        onIncrease();
       } else {
         setSeconds(seconds + 1);
       }
@@ -49,18 +48,16 @@ const Timer = ({
   useEffect(() => {
     if (!streamManager) return;
 
-    /* 현재시간 계산
-     * db에 1분 단위로 총 공부시간을 전송하고,
-     * curr_time을 총 공부 시간으로 초기화
-     * props username으로 api 호출
-     */
-    const username = JSON.parse(
-      streamManager?.stream.connection.data,
-    ).clientData;
-    console.log('현재 또는 변화한 사용자: ' + username);
-
-    const curr_time = parseInt((+new Date() - streamManager.stream.connection.creationTime) / 1000,);
-    setSeconds(curr_time);
+    const userData = JSON.parse(streamManager?.stream.connection.data).clientData;
+    const userId = userData.id;
+    
+    if (!isLocal) {
+      getStudyTime(userId)
+        .then((response) => {
+          const secs = response.data.studyTime
+          setSeconds(secs)
+        })
+    }
   }, [streamManager]);
 
   /* local video hook*/
@@ -83,9 +80,9 @@ const Timer = ({
         <div className="timer-col">
           <p className="timer-label">
             {isLocal
-              ? localSeconds < 36000
-                ? '0' + parseInt(localSeconds / 3600)
-                : parseInt(localSeconds / 3600)
+              ? studyTime < 36000
+                ? '0' + parseInt(studyTime / 3600)
+                : parseInt(studyTime / 3600)
               : seconds < 36000
                 ? '0' + parseInt(seconds / 3600)
                 : parseInt(seconds / 3600)}
@@ -94,20 +91,20 @@ const Timer = ({
         <div className="timer-col">
           <p className="timer-label">
             {isLocal
-              ? localSeconds < 600
-                ? '0' + parseInt(localSeconds / 60)
-                : parseInt(localSeconds / 60)
-              : seconds < 600
-                ? '0' + parseInt(seconds / 60)
-                : parseInt(seconds / 60)}
+              ? parseInt((studyTime % 3600) / 60) < 10
+                ? '0' + parseInt((studyTime % 3600) / 60)
+                : parseInt((studyTime % 3600) / 60)
+              : parseInt((seconds % 3600) / 60) < 10
+                ? '0' + parseInt((seconds % 3600) / 60)
+                : parseInt((seconds % 3600) / 60)}
           </p>
         </div>
         <div className="timer-col">
           <p className="timer-label">
             {isLocal
-              ? localSeconds % 60 < 10
-                ? '0' + (localSeconds % 60)
-                : localSeconds % 60
+              ? studyTime % 60 < 10
+                ? '0' + (studyTime % 60)
+                : studyTime % 60
               : seconds % 60 < 10
                 ? '0' + (seconds % 60)
                 : seconds % 60}

@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import CalendarComponent from '../../../Main/MyCalendar/CalendarComponent';
 import CalendarDiary from '../../../Main/MyCalendar/CalendarDiary';
 import CalendarPromise from '../../../Main/MyCalendar/CalendarPromise';
+
+import { secToTimeFormat } from '../../../../utils/timer';
 
 import { Grid, Typography } from '@material-ui/core';
 
@@ -21,7 +23,18 @@ const DrawerProfile = (props) => {
     isEditableDiary,
     setCalendarSaveData,
     setTodolistSetDate,
+    studyTime,
   } = props;
+
+  const [localDayStudyTime, setLocalDayStudyTime] = useState(undefined);
+
+  useEffect(() => {
+    if (calendardata.id !== -1) {
+
+    }
+    console.log(calendardata)
+  }, [])
+
   return (
     <Wrapper>
       <Grid className="name-container">
@@ -35,8 +48,10 @@ const DrawerProfile = (props) => {
       </Grid>
       <Grid className="date-time-container">
         <Typography className="date">{requestdate}</Typography>
-        <Typography className="time-text">오늘 공부 시간</Typography>
-        <Typography className="time">00 : 00 : 00</Typography>
+        <Typography className="time-text">오늘의 공부 시간</Typography>
+        <Typography className="time">{localDayStudyTime ? localDayStudyTime : '00 : 00 : 00'}</Typography>
+        
+        {/* <Typography className="time">{secToTimeFormat(studyTime)}</Typography> */}
       </Grid>
       <Grid className="pd-container">
         <Grid className="pd-content-container">

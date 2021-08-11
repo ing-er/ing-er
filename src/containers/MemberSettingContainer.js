@@ -113,8 +113,8 @@ function MemberSettingContainer() {
         if (name === undefined || name.length < 2 || name.length > 6 || !validation.test(name)) {
           alert('닉네임은 2자이상 6자 이하의 숫자, 한글, 알파벳으로만 설정해 주십시오.')
         } else {
-          fetch(`http://localhost:8080/api/v1/users/checkname/${name}`, {
-          // fetch(`http://i5a208.p.ssafy.io:8080/api/v1/users/checkname/${name}`, {
+          // fetch(`http://localhost:8080/api/v1/users/checkname/${name}`, {
+          fetch(`http://i5a208.p.ssafy.io:8080/api/v1/users/checkname/${name}`, {
               method: "GET",
             })
             .then(response => {if(response.status === 200){

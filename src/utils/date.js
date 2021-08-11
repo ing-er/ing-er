@@ -6,7 +6,6 @@ export const getToday = () => {
     return `0${value}`;
   };
   const date = new Date();
-  const today = `${date.getFullYear()}-${leftpad(date.getMonth())}-${leftpad(date.getDay())}`;
-
+  const today = `${date.getFullYear()}-${leftpad(date.getMonth() + 1)}-${leftpad(date.getDate())}`;
   return today;
 };

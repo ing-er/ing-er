@@ -51,7 +51,6 @@ const Timer = ({
     const userData = JSON.parse(streamManager?.stream.connection.data).clientData;
     const userId = userData.id;
     
-    // 1급 객체
     if (!isLocal) {
       getStudyTime(userId)
         .then((response) => {

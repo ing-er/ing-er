@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getToday } from '../../utils/date'
+import { getToday } from '../../utils/date';
 
 // common variables
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
@@ -26,6 +26,6 @@ export const setStudyTime = async (userId, studyTime) => {
   if (response.status === 200) {
     console.log('사용자 공부시간 업데이트 완료')
   }
-  
+
   return response
 }

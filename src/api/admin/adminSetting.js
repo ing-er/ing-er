@@ -2,8 +2,6 @@
 import axios from 'axios';
 
 export async function getUserInfoAsync(data) {
-	console.log('async');
-	console.log(data);
   const response = await axios.get(
 		`http://localhost:8080/api/v1/admin/getUserByName/${data}`,
 		// `http://localhost:8080/api/v1/admin/getUserByName/${data}`,
@@ -19,3 +17,45 @@ export async function updateUserCodeAsync(formData) {
   );
   return response.data;
 }
+
+export async function getCommonCodeAsync() {
+  const response = await axios.get(
+		`http://localhost:8080/api/v1/admin/getCommonCodeList`,
+  );
+  return response.data;
+}
+
+export async function deleteCommonCodeAsync(data) {
+  const response = await axios.delete(
+		`http://localhost:8080/api/v1/admin/deleteCommonCode/${data}`,
+  );
+  return response.data;
+}
+
+export async function updateCommonCodeAsync(data) {
+  const response = await axios.post(
+		`http://localhost:8080/api/v1/admin/setCommonCode/${data}`,
+  );
+  return response.data;
+}
+
+export async function getDetailCodeAsync() {
+  const response = await axios.get(
+		`http://localhost:8080/api/v1/admin/getDetailsCodeById`,
+  );
+  return response.data;
+}
+
+export async function deleteDetailCodeAsync(data) {
+  const response = await axios.delete(
+		`http://localhost:8080/api/v1/admin/deleteDetailsCode/${data}`,
+  );
+  return response.data;
+}
+
+// export async function updateDetailCodeAsync(data) {
+//   const response = await axios.post(
+// 		`http://localhost:8080/api/v1/admin/setDetailCode/${data}`,
+//   );
+//   return response.data;
+// }

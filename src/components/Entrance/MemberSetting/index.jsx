@@ -6,6 +6,7 @@ import {
   Container,
   TextField,
   makeStyles,
+  withStyles,
   IconButton,
   Switch,
   FormControlLabel,
@@ -17,7 +18,6 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
-import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import MuiDialogContent from '@material-ui/core/DialogContent';
@@ -128,11 +128,11 @@ function MEMBERSETTING({
   };
 
   const categoryName = {
-    201: '수능',
-    202: '취준',
-    203: '자격증',
-    204: '고시',
-    205: '기타',
+    204: '수능',
+    205: '취준',
+    206: '자격증',
+    207: '고시',
+    208: '기타',
   };
 
   const isOpenName = {
@@ -219,7 +219,7 @@ function MEMBERSETTING({
                 <Grid item xs={2}>
                   <Button
                     class="button"
-                    value="201"
+                    value="204"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
@@ -230,7 +230,7 @@ function MEMBERSETTING({
                 <Grid item xs={2}>
                   <Button
                     class="button"
-                    value="202"
+                    value="205"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
@@ -241,7 +241,7 @@ function MEMBERSETTING({
                 <Grid item xs={2}>
                   <Button
                     class="button"
-                    value="203"
+                    value="206"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
@@ -252,7 +252,7 @@ function MEMBERSETTING({
                 <Grid item xs={2}>
                   <Button
                     class="button"
-                    value="204"
+                    value="207"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
@@ -263,7 +263,7 @@ function MEMBERSETTING({
                 <Grid item xs={2}>
                   <Button
                     class="button"
-                    value="205"
+                    value="208"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
@@ -290,22 +290,14 @@ function MEMBERSETTING({
                 <FormControlLabel
                   control={
                     <Switch
-                      // value={isOpen}
                       checked={isOpen}
-                      // onChange={handleSwitchChange}
                       onChange={(e) => {
-                        // console.log(e);
                         setisOpen((isOpen) => !isOpen);
                       }}
                       style={{ color: '#E96F02' }}
                     />
                   }
                   labelPlacement="top"
-                  // label={
-                  //   <Box component="div" fontSize={12}>
-                  //     기본 값이 ‘공개’
-                  //   </Box>
-                  // }
                 />
               </Grid>
             </Grid>
@@ -354,20 +346,6 @@ function MEMBERSETTING({
                         <br></br>
                         복구가 불가능 합니다.
                       </Typography>
-                      {/* <Typography gutterBottom>
-                        그래도 탈퇴하시겠다면,
-                        <br></br>
-                        하단에 아이디를 한 번 더 입력해 주십시오.
-                      </Typography>
-                      <Grid item xs={12}>
-                        <Grid item xs={8}></Grid>
-                        <input
-                          type="text"
-                          style={{
-                            float: 'rignt',
-                          }}
-                        />
-                      </Grid> */}
                     </DialogContent>
                     <DialogActions>
                       <Button

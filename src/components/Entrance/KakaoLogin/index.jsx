@@ -29,7 +29,18 @@ const KakaoLogin = ({ socialLogin }) => {
       onSuccess={responseKakao}
       onFail={console.error}
       onLogout={console.info}
-      // style={buttonBlock}
+      style={{
+        margin: '0px 50px 10px',
+        borderRadius: '0.75rem',
+        color: 'white',
+        border: '0',
+        fontWeight: 'bold',
+        backgroundColor: '#ffeb00',
+        color: 'black',
+        marginRight: '1rem',
+        width: '200px',
+        height: '50px',
+      }}
     >
       <ButtoninnerText>카카오 계정으로 로그인</ButtoninnerText>
     </KaKaoLogin>

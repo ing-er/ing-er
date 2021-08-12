@@ -13,10 +13,7 @@ const DrawerContainer = (props) => {
   const { requestdate } = useSelector((state) => state.setTodolist);
   useEffect(async () => {
     await getCalendarData(id);
-    console.log('getCalendarData 완료');
     await getTodolistData(id);
-    console.log('getTodolistData 완료');
-    console.log('requestdate : ' + requestdate);
     await dispatch(setCalendarSetDate(requestdate));
     await dispatch(setTodolistSetDate(requestdate));
   }, []);

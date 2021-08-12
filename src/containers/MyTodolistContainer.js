@@ -45,11 +45,6 @@ const MyTodolistComponent = ({ children }) => {
     dispatch(setTodolistDeleteTodolist(index));
   };
 
-  useEffect(() => {
-    console.log('todolist');
-    console.log(todolist);
-  }, []);
-
   return cloneElement(children, {
     todolistdata: todolist,
     todopercent: todopercent,

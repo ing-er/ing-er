@@ -171,10 +171,10 @@ const setCalendar = (state = initialState, action) => {
           await axios
             .patch(serverUrl + '/calendar/modify/' + id, post)
             .then((res) => {
-              console.log(res);
+              // console.log(res);
             })
             .catch((err) => {
-              console.log(err);
+              // console.log(err);
             });
         } else {
           if (
@@ -188,10 +188,10 @@ const setCalendar = (state = initialState, action) => {
           await axios
             .post(serverUrl + '/calendar/regist', post)
             .then((res) => {
-              console.log(res);
+              // console.log(res);
             })
             .catch((err) => {
-              console.log(err);
+              // console.log(err);
             });
         }
       };

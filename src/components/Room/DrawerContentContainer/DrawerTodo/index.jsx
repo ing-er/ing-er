@@ -37,9 +37,9 @@ const DrawerTodo = (props) => {
     setTodolistDeleteTodolist,
   } = props;
 
-  const handleAddContainer = () => {
-    setTodolistAddContainer('');
-  };
+  // const handleAddContainer = () => {
+  //   setTodolistAddContainer('');
+  // };
   const onClickSaveTodolist = (e) => {
     setTodolistSaveData();
   };
@@ -74,11 +74,11 @@ const DrawerTodo = (props) => {
               >
                 {date}
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <IconButton onClick={handleAddContainer}>
                   <AddCircleIcon htmlColor="#411AB0" fontSize="large" />
                 </IconButton>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
 
@@ -110,6 +110,20 @@ const DrawerTodo = (props) => {
             justify="left"
             style={{ backgroundColor: '#F6F7F9', borderRadius: '30px' }}
           >
+            <Grid
+              item
+              // lg={3}
+              // md={4}
+              // sm={6}
+              xs={12}
+              className="todolist-component-container"
+            >
+              <TodolistAdd
+                setTodolistAddContainer={setTodolistAddContainer}
+                backColor={'#FFFFFF'}
+                textColor={'#000000'}
+              />
+            </Grid>
             {todolistdata.map((data, index) => {
               return (
                 <Grid

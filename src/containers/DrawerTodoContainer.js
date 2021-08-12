@@ -43,8 +43,6 @@ const DrawerTodoContainer = ({ children }) => {
     dispatch(setTodolistDeleteTodolist(index));
   };
 
-  console.log('todolist');
-  console.log(todolist);
   return cloneElement(children, {
     todolistdata: todolist,
     todopercent: todopercent,

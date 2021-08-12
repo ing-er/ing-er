@@ -4,7 +4,7 @@ const Wrapper = styled.div`
   & .title-container {
     padding: 10px;
     border-radius: 30px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
   }
   & .title-subcontainer {
     justify-content: center;
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   & .title-input {
     background-color: transparent;
     border: none;
-    color: white;
+    /* color: white; */
     width: 80%;
     height: 100%;
     font-size: 20px;

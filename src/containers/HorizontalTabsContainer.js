@@ -41,8 +41,6 @@ const HorizontalTabsComponent = () => {
     id: authorization.userData.id,
   }));
 
-  console.log(id);
-
   const { requestdate } = useSelector((state) => state.setTodolist);
 
   useEffect(() => {
@@ -50,10 +48,7 @@ const HorizontalTabsComponent = () => {
   }, []);
   useEffect(async () => {
     await getCalendarData(id);
-    console.log('getCalendarData 완료');
     await getTodolistData(id);
-    console.log('getTodolistData 완료');
-    console.log('requestdate : ' + requestdate);
     await dispatch(setCalendarSetDate(requestdate));
     await dispatch(setTodolistSetDate(requestdate));
   }, []);

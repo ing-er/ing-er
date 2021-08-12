@@ -85,20 +85,29 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
           >
             <Grid item>
               <Link to="/">
-                <Typography variant="h6" className="logo">
+                <img
+                  className="logo"
+                  alt="inger"
+                  src="img/inger.png"
+                  style={{
+                    height: '13%',
+                    width: '13%',
+                    margin: '10px 10px 10px 10px',
+                  }}
+                />
+                {/* <Typography variant="h6" className="logo">
                   Ing er
-                </Typography>
+                </Typography> */}
               </Link>
             </Grid>
 
             <Grid item className="title display-none">
               <Grid container justify="center">
-                <Grid item>
-                  {/*  소개 */}
+                {/* <Grid item>
                   <IconButton>
                     <InfoIcon htmlColor="white" style={{ fontSize: 30 }} />
                   </IconButton>
-                </Grid>
+                </Grid> */}
 
                 <Grid item>
                   {/* 마이페이지 */}
@@ -143,6 +152,7 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                         fontWeight: 'bold',
                         backgroundColor: '#E96F02',
                         marginRight: '1rem',
+                        margin: '10px 25px 30px',
                       }}
                       onClick={handleClickOpen}
                     >

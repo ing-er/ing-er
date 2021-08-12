@@ -164,9 +164,11 @@ const MyCalendar = (props) => {
   };
 
   const handleStudyTime = () => {
-    let hr = calendardata.studyTime / (60 * 60);
-    let min = (calendardata.studyTime - hr * 60 * 60) / 60;
-    let sec = calendardata.studyTime - hr * 60 * 60 - min * 60;
+    const secs = calendardata.studyTime;
+
+    let hr = (secs / (60 * 60)) | 0;
+    let min = ((secs % 3600) / 60) | 0;
+    let sec = (secs % 60) | 0;
     if (hr < 10) hr = '0' + hr;
     if (min < 10) min = '0' + min;
     if (sec < 10) sec = '0' + sec;

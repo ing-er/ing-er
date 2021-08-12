@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 import DrawerTodoContainer from '../../../containers/DrawerTodoContainer';
-import DrawerProfile from './DrawerProfile';
 import DrawerProfileContainer from '../../../containers/DrawerProfileContainer';
 import DrawerTodo from './DrawerTodo';
 

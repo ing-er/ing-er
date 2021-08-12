@@ -1,21 +1,31 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
+import { OpenVidu } from 'openvidu-browser';
 
 import StudyTimeContainer from '../../containers/StudyTimeContainer';
 import Room from '../../pages/Room';
 
+import { noRefreshEvent } from '../../utils/event';
 import { setStudyTime } from '../../api/timer/timer';
+
+import {
+  getCustomSessionAsync,
+  patchLeaveSession,
+  postStartRest,
+  patchEndRest,
+} from '../../api/session';
+
 import Wrapper from './styles';
 
 const Webrtc = () => {
   const OPENVIDU_SERVER_URL = process.env.REACT_APP_OPENVIDU_URL;
   const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
-  const userData = useSelector((state) => state.authorization.userData)
-  const localStudyTime = useSelector((state) => state.studyTime.studyTime)
+  const userData = useSelector((state) => state.authorization.userData);
+  const localStudyTime = useSelector((state) => state.studyTime.studyTime);
+  const isRandom = useSelector((state) => state.setIsRandomRoom)
 
   const [flag, setFlag] = useState(false);
   const [OV, setOV] = useState(undefined);
@@ -30,6 +40,7 @@ const Webrtc = () => {
   useEffect(() => {
     // 사용자가 화면을 떠날 때 leave session
     window.addEventListener('beforeunload', onbeforeunload);
+    window.addEventListener('keydown', noRefreshEvent);
 
     // init OV
     setOV(new OpenVidu());
@@ -37,11 +48,13 @@ const Webrtc = () => {
     return () => {
       // component unmount 시 해당 이벤트 제거
       window.removeEventListener('beforeunload', onbeforeunload);
+      window.removeEventListener('keydown', noRefreshEvent);
+
     };
   }, []);
 
-  const onbeforeunload = (event) => {
-    leaveSession(true);
+  const onbeforeunload = () => {
+    leaveSession();
   };
 
   /* to init session */
@@ -53,9 +66,16 @@ const Webrtc = () => {
   /* session hook */
   useEffect(() => {
     if (!session) return;
+
     // join Session
     if (!flag) {
-      joinSession();
+      getCustomSessionAsync(userData.id, userData.category-197)
+        .then((res) => {
+          const _mySessionId = res.data;
+          setMysessionId(_mySessionId);
+          joinSession(_mySessionId);
+        });
+
 
       // on every stream received or destroyed
       subscribeToStreamCreated();
@@ -66,10 +86,10 @@ const Webrtc = () => {
   }, [session]);
 
   /* join session(방 입장) */
-  const joinSession = () => {
+  const joinSession = (_mySessionId) => {
     let mySession = session;
 
-    getToken().then((token) => {
+    getToken(_mySessionId).then((token) => {
       mySession
         .connect(token, { clientData: userData })
         .then(() => {
@@ -140,17 +160,18 @@ const Webrtc = () => {
   };
 
   /* leave session */
-  const leaveSession = (isOnbeforeunload) => {
+  const leaveSession = () => {
     const mySession = session;
 
     if (mySession && flag) {
       mySession.disconnect();
-      
-      // 공부한 시간 db 저장
-      if(!isOnbeforeunload) {
-        setStudyTime(userData.id, localStudyTime)
+
+      // 공부시간, 종료시간 db 저장
+      setStudyTime(userData.id, localStudyTime);
+      patchLeaveSession(userData.id, mySessionId);
+      if (!isLocalVideoActive) {
+        patchEndRest(userData.id, mySessionId);
       }
-      
     }
 
     // empty all properties
@@ -162,7 +183,7 @@ const Webrtc = () => {
     setOV(undefined);
     setSession(undefined);
     setPublisher(undefined);
-    setMysessionId('SessionO');
+    setMysessionId(undefined);
     setSubscribers([]);
     setIsLocalVideoActive(false);
     setFlag(false);
@@ -171,6 +192,15 @@ const Webrtc = () => {
   /* handle video mute or unmute */
   const handleVideoMute = () => {
     publisher.publishVideo(!isLocalVideoActive);
+
+    // post user resting information
+    if (isLocalVideoActive) {
+      postStartRest(userData.id, mySessionId);
+    } else {
+      patchEndRest(userData.id, mySessionId);
+    }
+
+    // update state
     setIsLocalVideoActive(!isLocalVideoActive);
   };
 
@@ -186,7 +216,7 @@ const Webrtc = () => {
   const handleVideoClick = (e) => {
     const _currentUserData = e.target.dataset.userdata;
     setCurrentUserData(JSON.parse(_currentUserData));
-  }
+  };
 
   /**
    * --------------------------
@@ -200,8 +230,8 @@ const Webrtc = () => {
    *   3) The Connection.token must be consumed in Session.connect() method
    */
 
-  const getToken = () => {
-    return createSession(mySessionId)
+  const getToken = (_mySessionId) => {
+    return createSession(_mySessionId)
       .then((sessionId) => createToken(sessionId))
       .catch((Err) => console.error(Err));
   };
@@ -278,9 +308,7 @@ const Webrtc = () => {
 
   return (
     <Wrapper>
-      {!flag ? (
-        null
-      ) : (
+      {!flag ? null : (
         <StudyTimeContainer>
           <Room
             publisher={publisher}

@@ -1,7 +1,4 @@
-import React from 'react';
-
-import DirectorSettingTable from './DirectorSettingTable';
-
+import React, { Component } from 'react';
 import Wrapper from './styles';
 
 import AppBar from '@material-ui/core/AppBar';

@@ -60,16 +60,17 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
   };
 
   const onLoginHandler = () => {
-    if (isJoin === false && isAuth === false) {
-      alert('로그인 후 입장 가능합니다.');
-    } else {
-      if (isJoin) {
-        history.push({ pathname: '/joinsetting' });
-      } else {
-        setOpen(false);
-        history.push({ pathname: '/main' });
-      }
-    }
+    setOpen(false);
+    // if (isJoin === false && isAuth === false) {
+    //   alert('로그인 후 입장 가능합니다.');
+    // } else {
+    //   if (isJoin) {
+    //     history.push({ pathname: '/joinsetting' });
+    //   } else {
+    //     setOpen(false);
+    //     history.push({ pathname: '/main' });
+    //   }
+    // }
   };
 
   return (
@@ -95,7 +96,7 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                 <Grid item>
                   {/*  소개 */}
                   <IconButton>
-                    <InfoIcon htmlColor="white" />
+                    <InfoIcon htmlColor="white" style={{ fontSize: 30 }} />
                   </IconButton>
                 </Grid>
 
@@ -104,7 +105,10 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                   {isAuth && !isJoin ? (
                     <Link to="/Main">
                       <IconButton>
-                        <AccountCircleIcon htmlColor="white" />
+                        <AccountCircleIcon
+                          htmlColor="white"
+                          style={{ fontSize: 30 }}
+                        />
                       </IconButton>
                     </Link>
                   ) : (
@@ -131,9 +135,22 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                   {isAuth ? (
                     <div></div>
                   ) : (
-                    <IconButton onClick={handleClickOpen}>
-                      <LockIcon htmlColor="white" />
-                    </IconButton>
+                    <Button
+                      variant="outlined"
+                      style={{
+                        borderRadius: '1.25rem',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        backgroundColor: '#E96F02',
+                        marginRight: '1rem',
+                      }}
+                      onClick={handleClickOpen}
+                    >
+                      로그인
+                    </Button>
+                    // <IconButton onClick={handleClickOpen}>
+                    //   <LockIcon htmlColor="white" />
+                    // </IconButton>
                   )}
                   <Dialog
                     onClose={handleClose}
@@ -150,7 +167,7 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                     <DialogContent dividers>
                       <LoginContainer />
                     </DialogContent>
-                    <Button onClick={onLoginHandler}>확인</Button>
+                    <Button onClick={onLoginHandler}>닫기</Button>
                     {/* {isJoin ? (
                       <Button
                         onClick={() =>
@@ -176,7 +193,10 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                   ) : (
                     <Link to="/JoinSetting">
                       <IconButton>
-                        <SettingsIcon htmlColor="white" />
+                        <SettingsIcon
+                          htmlColor="white"
+                          style={{ fontSize: 30 }}
+                        />
                       </IconButton>
                     </Link>
                   )}
@@ -188,7 +208,10 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                     <div></div>
                   ) : (
                     <IconButton onClick={onLogOutHandler}>
-                      <LockOpenIcon htmlColor="white" />
+                      <LockOpenIcon
+                        htmlColor="white"
+                        style={{ fontSize: 30 }}
+                      />
                     </IconButton>
                   )}
                 </Grid>

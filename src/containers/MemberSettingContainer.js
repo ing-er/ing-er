@@ -16,6 +16,10 @@ import {
 
 import { useHistory } from 'react-router';
 
+
+const SERVER_URL = process.env.REACT_APP_SERVER_URL
+
+
 function MemberSettingContainer() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -60,7 +64,6 @@ function MemberSettingContainer() {
 
   const onUpdateInfo = () => {
     const validation = /^[0-9a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/;
-    console.log(isDupl)
     if(name != undefined && 2 <= name.length && name.length <= 6 && validation.test(name) && category != undefined && isOpen != undefined && isDupl === 1){
       if (isAuth && !isJoin){
         const data = {
@@ -114,7 +117,8 @@ function MemberSettingContainer() {
           alert('닉네임은 2자이상 6자 이하의 숫자, 한글, 알파벳으로만 설정해 주십시오.')
         } else {
           // fetch(`http://localhost:8080/api/v1/users/checkname/${name}`, {
-          fetch(`http://i5a208.p.ssafy.io:8080/api/v1/users/checkname/${name}`, {
+          // fetch(`http://i5a208.p.ssafy.io:8080/api/v1/users/checkname/${name}`, {
+          fetch(`${SERVER_URL}/users/checkname/${name}`, {
               method: "GET",
             })
             .then(response => {if(response.status === 200){

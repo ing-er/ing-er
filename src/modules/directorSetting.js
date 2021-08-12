@@ -37,10 +37,10 @@ const DELETE_DETAIL_CODE = 'directorSetting/DELETE_DETAIL_CODE';
 const DELETE_DETAIL_CODE_SUCCESS = 'directorSetting/DELETE_DETAIL_CODE_SUCCESS';
 const DELETE_DETAIL_CODE_FAILURE = 'directorSetting/DELETE_DETAIL_CODE_FAILURE';
 
-// //* UPDATE_DETAIL_CODE
-// const UPDATE_DETAIL_CODE = 'directorSetting/UPDATE_DETAIL_CODE';
-// const UPDATE_DETAIL_CODE_SUCCESS = 'directorSetting/UPDATE_DETAIL_CODE_SUCCESS';
-// const UPDATE_DETAIL_CODE_FAILURE = 'directorSetting/UPDATE_DETAIL_CODE_FAILURE';
+//* UPDATE_DETAIL_CODE
+const UPDATE_DETAIL_CODE = 'directorSetting/UPDATE_DETAIL_CODE';
+const UPDATE_DETAIL_CODE_SUCCESS = 'directorSetting/UPDATE_DETAIL_CODE_SUCCESS';
+const UPDATE_DETAIL_CODE_FAILURE = 'directorSetting/UPDATE_DETAIL_CODE_FAILURE';
 
 //* INIT_UPDATE_INFO
 const INIT_UPDATE_INFO = 'userEdit/INIT_UPDATE_INFO';
@@ -86,10 +86,10 @@ export const typeDeleteDetailCode = (data) => ({
 	payload: data,
 });
 
-// export const typeUpdateteDetailCode = (data) => ({
-//   type: UPDATE_DETAIL_CODE,
-// 	payload: data,
-// });
+export const typeUpdateteDetailCode = (data) => ({
+  type: UPDATE_DETAIL_CODE,
+	payload: data,
+});
 
 //* MAIN_SAGA_FUNCTION
 
@@ -109,8 +109,6 @@ export function* getUserInfoSaga(data) {
 }
 
 export function* postUserCodeSaga(data) {
-	console.log('data')
-	console.log(data)
   try {
     const result = yield call(adminApi.updateUserCodeAsync, data.payload);
     yield put({
@@ -202,20 +200,20 @@ export function* deleteDetailCodeSaga(data) {
   }
 }
 
-// export function* updateCommonCodeSaga(data) {
-//   try {
-//     const result = yield call(adminApi.updateCommonCodeAsync, data.payload);
-//     yield put({
-//       type: UPDATE_COMMON_CODE_SUCCESS,
-//       payload: result,
-//     });
-//   } catch (e) {
-//     yield put({
-//       type: UPDATE_COMMON_CODE_FAILURE,
-//       payload: e,
-//     });
-//   }
-// }
+export function* updateDetailCodeSaga(data) {
+  try {
+    const result = yield call(adminApi.updateDetailCodeAsync, data.payload);
+    yield put({
+      type: UPDATE_DETAIL_CODE_SUCCESS,
+      payload: result,
+    });
+  } catch (e) {
+    yield put({
+      type: UPDATE_DETAIL_CODE_FAILURE,
+      payload: e,
+    });
+  }
+}
 
 //* WATCHER_SAGA_FUNCTION
 export function* adminSaga() {
@@ -226,14 +224,12 @@ export function* adminSaga() {
   yield takeLatest(UPDATE_COMMON_CODE, updateCommonCodeSaga);
   yield takeLatest(GET_DETAIL_CODE, getDetailCodeSaga);
   yield takeLatest(DELETE_DETAIL_CODE, deleteDetailCodeSaga);
-  // yield takeLatest(UPDATE_DETAIL_CODE, updateDetailCodeSaga);
+  yield takeLatest(UPDATE_DETAIL_CODE, updateDetailCodeSaga);
 }
 
 //* 초기 state
 const initialState = {
   users: {},
-  // commonCode: {},
-  // detailCode: {},
 };
 
 /* 리듀서 선언 */
@@ -351,25 +347,30 @@ export default function directorSetting(state = initialState, action) {
         error: action.payload,
       };
 
-    // case UPDATE_COMMON_CODE:
-    //   return {
-    //     ...state,
-    //   };
-    // case UPDATE_COMMON_CODE_SUCCESS:
-    //   return {
-    //     ...state,
-    //     updateCommonCodeSuccess: action.payload,
-    //   };
-    // case UPDATE_COMMON_CODE_FAILURE:
-    //   return {
-    //     ...state,
-    //     error: action.payload,
-    //   };
+    case UPDATE_DETAIL_CODE:
+      return {
+        ...state,
+      };
+    case UPDATE_DETAIL_CODE_SUCCESS:
+      return {
+        ...state,
+        updateDetailCodeSuccess: action.payload,
+      };
+    case UPDATE_DETAIL_CODE_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
 
     case INIT_UPDATE_INFO:
       return {
         ...state,
         updateSuccess: {},
+        deleteCommonCodeSuccess: {},
+        updateCommonCodeSuccess: {},
+        deleteDetailCodeSuccess: {},
+        updateDetailCodeSuccess: {},
+        error: {},
       };
 
     default:

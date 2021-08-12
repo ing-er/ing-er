@@ -1,4 +1,4 @@
-import { Pause } from '@material-ui/icons';
+import { PlayArrow } from '@material-ui/icons';
 import {
   IconButton
 } from '@material-ui/core';
@@ -9,7 +9,7 @@ const RoomPlay = () => {
   return (
     <Wrapper>
       <IconButton>
-        <Pause className="button"/>
+        <PlayArrow className="button"/>
       </IconButton>
     </Wrapper>
   )

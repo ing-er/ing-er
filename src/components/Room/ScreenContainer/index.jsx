@@ -11,6 +11,7 @@ const ScreenContainer = ({
   isLocalVideoActive,
   studyTime,
   onIncrease,
+  handleVideoClick,
 }) => {
   const [subs, setSubs] = useState(new Array(5).fill(undefined));
 
@@ -34,12 +35,17 @@ const ScreenContainer = ({
             studyTime={studyTime}
             onIncrease={onIncrease}
             isLocal={true}
+            handleVideoClick={handleVideoClick}
           />
         </Grid>
         {subs.map((sub, idx) => {
           return (
             <Grid item xs={12} md={6} lg={4} key={idx}>
-              <Screen streamManager={sub} isLocal={false} />
+              <Screen
+                streamManager={sub}
+                isLocal={false}
+                handleVideoClick={handleVideoClick}
+              />
             </Grid>
           );
         })}

@@ -10,9 +10,9 @@ export const SETDATE = 'TODOLIST/SETDATE';
 export const DELETETODOLIST = 'DELETETODOLIST';
 export const DELETEDETAIL = 'DELETEDETAIL';
 
-// const HOST = 'localhost:8080';
+const HOST = 'localhost:8080';
 // const serverUrl = `http://${HOST}/api/v1`;
-const HOST = 'i5a208.p.ssafy.io:8080';
+// const HOST = 'i5a208.p.ssafy.io:8080';
 const serverUrl = `http://${HOST}/api/v1`;
 
 export const setTodolistAddContainer = (title, todolist) => ({

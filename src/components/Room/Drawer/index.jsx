@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 
-import DrawerContentContainer from '../DrawerContentContainer';
 import DrawerContainer from '../../../containers/DrawerContainer';
 
 import { Drawer, IconButton, Container } from '@material-ui/core';
@@ -10,7 +9,13 @@ import { ChevronRight, AccountBox, Assignment } from '@material-ui/icons';
 
 import { Wrapper } from './styles';
 
-const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
+const RoomDrawer = ({
+  children,
+  handleDrawerClose,
+  open,
+  classes,
+  currentUserData,
+}) => {
   const [drawerId, setDrawerId] = useState('drawerProfile');
 
   const handleDrawerNo = (e) => {
@@ -57,7 +62,7 @@ const RoomDrawer = ({ children, handleDrawerClose, open, classes }) => {
             </IconButton>
           </div>
         </div>
-        <DrawerContainer drawerId={drawerId} />
+        <DrawerContainer drawerId={drawerId} currentUserData={currentUserData} />
       </Drawer>
     </Wrapper>
   );

@@ -14,7 +14,9 @@ const Room = ({
   handleVideoMute,
   isLocalVideoActive,
   studyTime,
-  onIncrease
+  onIncrease,
+  currentUserData,
+  handleVideoClick,
 }) => {
   /* drawer */
   const classes = useStyles();
@@ -26,14 +28,13 @@ const Room = ({
     setOpen(false);
   };
 
-  /* webrtc */
-
   return (
     <Wrapper>
       <CssBaseline />
       <RoomAppbar
         handleVideoMute={handleVideoMute}
         handleDrawerOpen={handleDrawerOpen}
+        isLocalVideoActive={isLocalVideoActive}
         leaveSession={leaveSession}
         open={open}
         classes={classes}
@@ -42,6 +43,8 @@ const Room = ({
         handleDrawerClose={handleDrawerClose}
         open={open}
         classes={classes}
+        studyTime={studyTime}
+        currentUserData={currentUserData}
       >
         <ScreenContainer
           publisher={publisher}
@@ -49,6 +52,7 @@ const Room = ({
           isLocalVideoActive={isLocalVideoActive}
           studyTime={studyTime}
           onIncrease={onIncrease}
+          handleVideoClick={handleVideoClick}
         />
       </RoomDrawer>
     </Wrapper>

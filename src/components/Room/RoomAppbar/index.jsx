@@ -2,6 +2,7 @@ import clsx from 'clsx';
 
 import RoomClose from '../../buttons/RoomClose';
 import RoomPause from '../../buttons/RoomPause';
+import RoomPlay from '../../buttons/RoomPlay';
 
 import { Link } from 'react-router-dom';
 
@@ -11,41 +12,50 @@ import { ChevronLeft } from '@material-ui/icons';
 import { motion } from 'framer-motion';
 import { Wrapper, useDrawerStyles } from './styles';
 
-const RoomAppbar = ({ handleDrawerOpen, leaveSession, handleVideoMute, open, classes }) => {
+const RoomAppbar = ({
+  handleDrawerOpen,
+  leaveSession,
+  isLocalVideoActive,
+  handleVideoMute,
+  open,
+  classes,
+}) => {
   const drawerClasses = useDrawerStyles();
 
   const handleLeaveSession = () => {
-    leaveSession()
-  }
-
+    leaveSession();
+  };
 
   return (
     <Wrapper>
-      <div className={clsx(drawerClasses.content, {
-        [drawerClasses.contentShift]: open,
-      })}>
+      <div
+        className={clsx(drawerClasses.content, {
+          [drawerClasses.contentShift]: open,
+        })}
+      >
         <IconButton
           onClick={handleVideoMute}
           className="room-buttons-container"
         >
           <motion.div
-            whileHover={{ 
+            whileHover={{
               scale: 1.3,
             }}
           >
-            <RoomPause className="room-pause" />
+            {isLocalVideoActive ? (
+              <RoomPause className="room-pause" />
+            ) : (
+              <RoomPlay />
+            )}
           </motion.div>
         </IconButton>
-        <Link
-          to='/Main'
-          onClick={handleLeaveSession}
-        >
-          <IconButton 
+        <Link to="/Main" onClick={handleLeaveSession}>
+          <IconButton
             className="room-buttons-container"
-            style={{ display: "inline-block" }}
+            style={{ display: 'inline-block' }}
           >
             <motion.div
-              whileHover={{ 
+              whileHover={{
                 scale: 1.3,
               }}
             >

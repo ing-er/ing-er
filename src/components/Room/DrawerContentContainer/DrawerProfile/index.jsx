@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 import CalendarComponent from '../../../Main/MyCalendar/CalendarComponent';
 import CalendarDiary from '../../../Main/MyCalendar/CalendarDiary';
 import CalendarPromise from '../../../Main/MyCalendar/CalendarPromise';
+import RemotePromise from './RemotePromise';
+import RemoteDiary from './RemoteDiary';
 
 import { getUserCalendarInfo } from '../../../../api/user';
 import { secToTimeFormat } from '../../../../utils/timer';
@@ -24,7 +25,7 @@ const DrawerProfile = (props) => {
     requestdate,
     isEditablePromise,
     isEditableDiary,
-    setCalendarSaveData,
+    // setCalendarSaveData,
     setTodolistSetDate,
     studyTime,
     localUserData,
@@ -42,6 +43,7 @@ const DrawerProfile = (props) => {
     if (currentUserData.id === localUserData.id) {
       setIsLocal(true);
     } else {
+      setCurrUserData(currentUserData);
       setIsLocal(false);
     }
   }, [currentUserData]);
@@ -64,7 +66,6 @@ const DrawerProfile = (props) => {
         })
     }
   }
-
 
   return (
     <Wrapper>
@@ -111,14 +112,18 @@ const DrawerProfile = (props) => {
               height: '100%',
             }}
           >
-            <CalendarPromise
-              calendardata={calendardata}
-              isEditablePromise={isEditablePromise}
-              setCalendarEditPromise={setCalendarEditPromise}
-              setCalendarEditPromiseIsEditable={
-                setCalendarEditPromiseIsEditable
-              }
-            />
+            {isLocal ? (
+              <CalendarPromise
+                calendardata={calendardata}
+                isEditablePromise={isEditablePromise}
+                setCalendarEditPromise={setCalendarEditPromise}
+                setCalendarEditPromiseIsEditable={
+                  setCalendarEditPromiseIsEditable
+                }
+              />
+            ) : (
+              <RemotePromise remotePromise={currUserCalendarInfo?.promise} />
+            )}
           </div>
         </Grid>
         <Grid className="pd-content-container">
@@ -129,12 +134,16 @@ const DrawerProfile = (props) => {
               height: '100%',
             }}
           >
-            <CalendarDiary
-              calendardata={calendardata}
-              isEditableDiary={isEditableDiary}
-              setCalendarEditDiary={setCalendarEditDiary}
-              setCalendarEditDiaryIsEditable={setCalendarEditDiaryIsEditable}
-            />
+            {isLocal ? (
+              <CalendarDiary
+                calendardata={calendardata}
+                isEditableDiary={isEditableDiary}
+                setCalendarEditDiary={setCalendarEditDiary}
+                setCalendarEditDiaryIsEditable={setCalendarEditDiaryIsEditable}
+              />
+            ) : (
+              <RemoteDiary remoteDiary={currUserCalendarInfo?.diary} />
+            )}
           </div>
         </Grid>
       </Grid>

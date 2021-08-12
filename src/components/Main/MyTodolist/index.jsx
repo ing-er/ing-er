@@ -3,6 +3,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import SaveIcon from '@material-ui/icons/Save';
 import { withStyles } from '@material-ui/styles';
 
 import Wrapper from './styles';
@@ -207,9 +208,9 @@ const MyTodolist = (props) => {
   const onClickSaveTodolist = (e) => {
     setTodolistSaveData();
   };
-  const handleAddContainer = () => {
-    setTodolistAddContainer('');
-  };
+  // const handleAddContainer = () => {
+  //   setTodolistAddContainer('');
+  // };
 
   return (
     <Wrapper>
@@ -241,11 +242,11 @@ const MyTodolist = (props) => {
               >
                 {date}
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <IconButton onClick={handleAddContainer}>
                   <AddCircleIcon htmlColor="#411AB0" fontSize="large" />
                 </IconButton>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
 
@@ -261,6 +262,7 @@ const MyTodolist = (props) => {
               }}
             >
               저장
+              <SaveIcon />
             </Button>
           </Grid>
         </Grid>
@@ -269,6 +271,22 @@ const MyTodolist = (props) => {
           <div>
             <LinearProgressOrange variant="determinate" value={todopercent} />
           </div>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid
+            item
+            // lg={3}
+            // md={4}
+            // sm={6}
+            // xs={12}
+            className="todolist-component-container"
+          >
+            <TodolistAdd
+              setTodolistAddContainer={setTodolistAddContainer}
+              backColor={'#1E1F26'}
+              textColor={'white'}
+            />
+          </Grid>
         </Grid>
         <Grid item xs={12}>
           <Grid container direction="row" justify="left">

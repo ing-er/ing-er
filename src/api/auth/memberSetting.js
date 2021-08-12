@@ -1,10 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import axios from 'axios';
 
+const SERVER_URL = process.env.REACT_APP_SERVER_URL
+
 export async function registUserInfoAsync(formData) {
   const response = await axios.post(
-    `http://localhost:8080/api/v1/users/regist`,
+    // `http://localhost:8080/api/v1/users/regist`,
     // `http://i5a208.p.ssafy.io:8080/api/v1/users/regist`,
+    `${SERVER_URL}/users/regist`,
     formData
   );
   return response.data;
@@ -13,8 +16,9 @@ export async function registUserInfoAsync(formData) {
 export async function WithdrawalUserAsync() {
   const kakaoIdNum = window.localStorage.getItem('CURRENT_USER');
   const response = await axios.delete(
-    `http://localhost:8080/api/v1/users/${kakaoIdNum}`,
+    // `http://localhost:8080/api/v1/users/${kakaoIdNum}`,
     // `http://i5a208.p.ssafy.io:8080/api/v1/users/${kakaoIdNum}`,
+    `${SERVER_URL}/users/${kakaoIdNum}`,
   );
   if (response.status == 401) {
     throw new Error("인증이 실패하였습니다.");
@@ -34,8 +38,9 @@ export async function editUserInfoAsync(formData) {
     name: formData.name
   }
   const response = await axios.patch(
-    `http://localhost:8080/api/v1/users/modify/${kakaoIdNum}`,
+    // `http://localhost:8080/api/v1/users/modify/${kakaoIdNum}`,
     // `http://i5a208.p.ssafy.io:8080/api/v1/users/modify/${kakaoIdNum}`,
+    `${SERVER_URL}/users/modify/${kakaoIdNum}`,
     data
   );
   return response.data;
@@ -44,8 +49,9 @@ export async function editUserInfoAsync(formData) {
 export async function getUserInfoAsync() {
   const kakaoIdNum = window.localStorage.getItem('CURRENT_USER');
   const response = await axios.get(
-    `http://localhost:8080/api/v1/users/${kakaoIdNum}`,
+    // `http://localhost:8080/api/v1/users/${kakaoIdNum}`,
     // `http://i5a208.p.ssafy.io:8080/api/v1/users/${kakaoIdNum}`,
+    `${SERVER_URL}/users/${kakaoIdNum}`,
 		// formData,
     // {
     //   headers: {
@@ -61,8 +67,9 @@ export async function getUserInfoAsync() {
 export async function postUserUpdateAsync(data) {
   const { token } = JSON.parse(localStorage.getItem('CURRENT_USER'));
   const response = await axios.post(
-    'http://localhost:8080/api/v1/regist',
+    // 'http://localhost:8080/api/v1/regist',
     // 'http://i5a208.p.ssafy.io:8080/api/v1/regist',
+    `${SERVER_URL}/regist`,
     data,
   );
   return response.data;

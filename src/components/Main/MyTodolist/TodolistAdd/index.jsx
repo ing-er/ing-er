@@ -7,9 +7,10 @@ import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import Wrapper from './styles';
 
 const TodolistAdd = (props) => {
-  let { setTodolistAddContainer, backColor } = props;
+  let { setTodolistAddContainer, backColor, textColor } = props;
   const handleAddContainer = () => {
     setTodolistAddContainer(document.querySelector('#add-title').value);
+    document.querySelector('#add-title').value = '';
   };
 
   return (
@@ -23,7 +24,12 @@ const TodolistAdd = (props) => {
       >
         <Grid container className="title-subcontainer">
           <Grid item xs={10} className="input-container">
-            <input className="title-input" id="add-title" />
+            <input
+              className="title-input"
+              id="add-title"
+              placeholder="카테고리를 입력하세요"
+              style={{ color: textColor }}
+            />
           </Grid>
           <Grid item xs={2}>
             <IconButton onClick={handleAddContainer}>

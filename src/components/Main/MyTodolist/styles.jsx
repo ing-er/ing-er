@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   & .title-container {
     padding: 10px;
     border-radius: 30px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
   }
   & .title-subcontainer {
     justify-content: center;

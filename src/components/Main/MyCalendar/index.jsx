@@ -6,6 +6,7 @@ import {
   Button,
 } from '@material-ui/core';
 import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
+import SaveIcon from '@material-ui/icons/Save';
 import Calendar from 'react-calendar';
 import './Calendar.css';
 import dayjs from 'dayjs';
@@ -185,7 +186,7 @@ const MyCalendar = (props) => {
         <Grid
           container
           xs={12}
-          justify="right"
+          justify="flex-end"
           style={{ marginBottom: '20px' }}
         >
           <Button
@@ -198,6 +199,7 @@ const MyCalendar = (props) => {
             onClick={onClickSaveHandler}
           >
             저장
+            <SaveIcon />
           </Button>
         </Grid>
         <Grid item xs={12} sm={6}>

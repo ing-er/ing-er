@@ -246,14 +246,25 @@ const DIRECTORSETTING = ({
   updateCommonCode,
   detailCodes,
   deleteDetailCode,
+  updatecodeFlag,
+  setUpdatecodeFlag,
+  commonType,
+  setCommonType,
 }) => {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+  const handleCommonOpen = () => {
+    setUpdatecodeFlag(1);
     setOpen(true);
   };
+
+  const handleDetailOpen = () => {
+    setUpdatecodeFlag(2);
+    setOpen(true);
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -363,7 +374,7 @@ const DIRECTORSETTING = ({
                   backgroundColor: '#292A33',
                   marginRight: '1rem',
                 }}
-                onClick={handleClickOpen}
+                onClick={handleCommonOpen}
               >
                 공통코드 추가
               </Button>
@@ -375,9 +386,7 @@ const DIRECTORSETTING = ({
                   fontWeight: 'bold',
                   backgroundColor: '#292A33',
                 }}
-                onClick={(e) => {
-                  alert('준비 중입니다.');
-                }}
+                onClick={handleDetailOpen}
               >
                 세부코드 추가
               </Button>
@@ -403,12 +412,23 @@ const DIRECTORSETTING = ({
                   style={{
                     color: 'white',
                   }}
-                />
-                <CssTextField
-                  className={classes.margin}
-                  id="custom-css-standard-input"
-                  label="코드"
                 /> */}
+                {updatecodeFlag === 2 ? (
+                  <CssTextField
+                    className={classes.margin}
+                    id="custom-css-standard-input"
+                    label="공통 코드 번호"
+                    value={commonType}
+                    InputProps={{
+                      className: classes.input,
+                    }}
+                    onChange={(e) => {
+                      setCommonType(e.target.value);
+                    }}
+                  />
+                ) : (
+                  <div></div>
+                )}
                 <CssTextField
                   className={classes.margin}
                   id="custom-css-standard-input"

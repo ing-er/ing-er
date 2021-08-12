@@ -10,6 +10,7 @@ import {
 	typeUpdateteCommonCode,
 	typeGetDetailCode,
 	typeDeleteDetailCode,
+	typeUpdateteDetailCode,
 } from '../modules/directorSetting';
 
 const DirectorSettingContainer = () => {
@@ -23,6 +24,8 @@ const DirectorSettingContainer = () => {
 		updateCommonCodeSuccess,
 		detailCode,
 		deleteDetailCodeSuccess,
+		updateDetailCodeSuccess,
+		error,
 		 } = useSelector(({ directorSetting }) => ({
 		users: directorSetting.users,
 		updateSuccess: directorSetting.updateSuccess,
@@ -31,12 +34,15 @@ const DirectorSettingContainer = () => {
 		updateCommonCodeSuccess: directorSetting.updateCommonCodeSuccess,
 		detailCode: directorSetting.detailCode,
 		deleteDetailCodeSuccess: directorSetting.deleteDetailCodeSuccess,
-		// updateCommonCodeSuccess: directorSetting.updateCommonCodeSuccess,
+		updateDetailCodeSuccess: directorSetting.updateDetailCodeSuccess,
+		error: directorSetting.error,
   }));
 	
   const [name, setName] = useState('');
   const [usercode, setUsercode] = useState('');
   const [updatecode, setUpdatecode] = useState('');
+  const [commonType, setCommonType] = useState('');
+  const [updatecodeFlag, setUpdatecodeFlag] = useState('');
 
 	const alphaToNum = {
 		'일반 회원': 101,
@@ -54,6 +60,9 @@ const DirectorSettingContainer = () => {
 			setName(users.name);
 			setUsercode(users.usercode);
 		}
+		if (error != undefined) {
+			alert('존재하지 않는 회원입니다.')
+		}
   }, [users]);
 
 	useEffect(() => {
@@ -67,26 +76,30 @@ const DirectorSettingContainer = () => {
 	useEffect(() => {
 		if (deleteCommonCodeSuccess?.message){
 			dispatch(typeGetCommonCode());
+			dispatch(typeInitUpdateInfo())
 		}
   }, [deleteCommonCodeSuccess]);
 
 	useEffect(() => {
 		if (updateCommonCodeSuccess?.message){
 			dispatch(typeGetCommonCode());
+			dispatch(typeInitUpdateInfo())
 		}
   }, [updateCommonCodeSuccess]);
 	
 	useEffect(() => {
 		if (deleteDetailCodeSuccess?.message){
 			dispatch(typeGetDetailCode());
+			dispatch(typeInitUpdateInfo())
 		}
   }, [deleteDetailCodeSuccess]);
 
-	// useEffect(() => {
-	// 	if (updateCommonCodeSuccess?.message){
-	// 		dispatch(typeGetDetailCode());
-	// 	}
-  // }, [updateCommonCodeSuccess]);
+	useEffect(() => {
+		if (updateDetailCodeSuccess?.message){
+			dispatch(typeGetDetailCode());
+			dispatch(typeInitUpdateInfo())
+		}
+  }, [updateDetailCodeSuccess]);
 
 	const onSearchUser = (e) => {
 		// if (e.keyCode == 0){
@@ -116,7 +129,16 @@ const DirectorSettingContainer = () => {
   };
 
   const updateCommonCode = () => {
-		dispatch(typeUpdateteCommonCode(updatecode));
+		if (updatecodeFlag === 1){
+			dispatch(typeUpdateteCommonCode(updatecode));
+		} else {
+			const data = {
+				'name': updatecode,
+				'type': commonType,
+			};
+			dispatch(typeUpdateteDetailCode(data));
+			setCommonType('');
+		}
 		setUpdatecode('')
   };
 
@@ -178,6 +200,10 @@ const DirectorSettingContainer = () => {
 			updateCommonCode={updateCommonCode}
 			detailCodes={detailCodes}
 			deleteDetailCode={deleteDetailCode}
+			updatecodeFlag={updatecodeFlag}
+			setUpdatecodeFlag={setUpdatecodeFlag}
+			commonType={commonType}
+			setCommonType={setCommonType}
 			/>
 		</div>
 	)

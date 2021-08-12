@@ -25,6 +25,7 @@ const Webrtc = () => {
 
   const userData = useSelector((state) => state.authorization.userData);
   const localStudyTime = useSelector((state) => state.studyTime.studyTime);
+  const isRandom = useSelector((state) => state.setIsRandomRoom)
 
   const [flag, setFlag] = useState(false);
   const [OV, setOV] = useState(undefined);
@@ -69,11 +70,11 @@ const Webrtc = () => {
     // join Session
     if (!flag) {
       getCustomSessionAsync(userData.id, userData.category-197)
-      .then((res) => {
-        const _mySessionId = res.data;
-        setMysessionId(_mySessionId);
-        joinSession(_mySessionId);
-      });
+        .then((res) => {
+          const _mySessionId = res.data;
+          setMysessionId(_mySessionId);
+          joinSession(_mySessionId);
+        });
 
 
       // on every stream received or destroyed

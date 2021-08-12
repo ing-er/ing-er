@@ -34,6 +34,7 @@ const Room = ({
       <RoomAppbar
         handleVideoMute={handleVideoMute}
         handleDrawerOpen={handleDrawerOpen}
+        isLocalVideoActive={isLocalVideoActive}
         leaveSession={leaveSession}
         open={open}
         classes={classes}

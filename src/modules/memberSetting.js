@@ -67,8 +67,6 @@ export function* getUserInfoSaga() {
 export function* registUserInfoSaga(action) {
   try {
     const result = yield call(editApi.registUserInfoAsync, action.payload);
-    console.log('reg result')
-    console.log(result)
     yield put({
       type: INIT_USER_INFO_SUCCESS,
       payload: result,

@@ -120,7 +120,6 @@ function MEMBERSETTING({
   };
 
   const handleSwitchChange = (newValue) => {
-    console.log(newValue);
     if (newValue === true) {
       setisOpen(false);
     } else {

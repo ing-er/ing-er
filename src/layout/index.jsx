@@ -1,5 +1,5 @@
 import Header from './Header';
-import { Container, CssBaseline } from '@material-ui/core';
+import { Container, CssBaseline, Hidden } from '@material-ui/core';
 import Wrapper from './styles';
 import HeaderContainer from '../containers/HeaderContainer';
 
@@ -11,7 +11,7 @@ const Layout = (props) => {
       {isEntrance && (
         <Wrapper
           style={{
-            backgroundImage: 'url(img/inger_background2.png)',
+            backgroundImage: 'url(img/inger_background5.png)',
             backgroundSize: 'cover',
           }}
         >

@@ -39,8 +39,6 @@ function MemberSettingContainer() {
   const [isOpen, setisOpen] = useState('');
   const [isDupl, setIsDupl] = useState('');
 
-  let a = false;
-
   useEffect(() => {
     dispatch(typeGetUserInfo());
     // dispatch(typeAuthUser());
@@ -58,13 +56,16 @@ function MemberSettingContainer() {
     setname(info.name);
     setCategory(info.category);
     setisOpen(info.isOpen);
-    // history.push({ pathname: '/main' });
+    if (Object.keys(info).includes('isOpen') === false) {
+      setisOpen(true);
+    };
   }, [info]);
 
 
   const onUpdateInfo = () => {
     const validation = /^[0-9a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/;
     if(name != undefined && 2 <= name.length && name.length <= 6 && validation.test(name) && category != undefined && isOpen != undefined && isDupl === 1){
+      //* 기존 존재하는 회원일 경우,
       if (isAuth && !isJoin){
         const data = {
           "category": Number(category),
@@ -74,7 +75,7 @@ function MemberSettingContainer() {
         dispatch(typeUpdateUserInfo(data));
         alert('저장되었습니다.')
       } else {
-        
+        //* 새로 가입하는 회원일 경우,
           const data = {
             "category": Number(category),
             "isOpen": isOpen,
@@ -93,16 +94,8 @@ function MemberSettingContainer() {
     if (update?.message) {
       dispatch(typeAuthUser());
       dispatch(typeInitialize());
-      a = true;
     }
   }, [update]);
-
-  useEffect(() => {
-    if (a === true) {
-     history.push({ pathname: '/main' });
-     a = false;
-    }
-  }, [a]);
 
   const onDuplicateHandler = () => {
     const validation = /^[0-9a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/;
@@ -133,7 +126,6 @@ function MemberSettingContainer() {
             }
           })
         }
-
     }
 
   };
@@ -147,8 +139,6 @@ function MemberSettingContainer() {
       history.push({ pathname: '/' });
     }
   }, [isJoin, isAuth]);
-
-
 
 
   return (

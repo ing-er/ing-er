@@ -119,7 +119,8 @@ export function* userInfoSaga() {
 
 //* 초기 state
 const initialState = {
-  info: {},
+  info: {
+  },
 };
 
 /* 리듀서 선언 */

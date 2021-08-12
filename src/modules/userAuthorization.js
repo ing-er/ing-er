@@ -183,6 +183,9 @@ export default function authorization(state=initialState, action) {
         return {
           ...state,
           kakaoIdNum: action.payload,
+          userData: {
+            'isOpen': false,
+          },
           isJoin: true,
           isAuth: true,
         };

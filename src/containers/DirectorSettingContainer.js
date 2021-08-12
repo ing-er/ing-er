@@ -13,6 +13,11 @@ import {
 	typeUpdateteDetailCode,
 } from '../modules/directorSetting';
 
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
+
+const MySwal = withReactContent(Swal)
+
 const DirectorSettingContainer = () => {
   const dispatch = useDispatch();
 
@@ -60,9 +65,9 @@ const DirectorSettingContainer = () => {
 			setName(users.name);
 			setUsercode(users.usercode);
 		}
-		if (error != undefined) {
-			alert('존재하지 않는 회원입니다.')
-		}
+		// if (error != undefined) {
+		// 	alert('존재하지 않는 회원입니다.')
+		// }
   }, [users]);
 
 	useEffect(() => {
@@ -121,7 +126,17 @@ const DirectorSettingContainer = () => {
 
 	//* 공통 코드 관련 event
   const postCommonCode = (e) => {
-		alert('준비 중입니다.');
+		// alert('준비 중입니다.')
+		MySwal.fire({
+			title: 'Custom width, padding, background.',
+			footer: 'Copyright 2018',
+			background: '#292A33',
+			didOpen: () => {
+				MySwal.clickConfirm()
+			}
+		}).then(() => {
+			return MySwal.fire(<p>준비 중입니다.</p>)
+		})
   };
 
   const deleteCommonCode = (e) => {

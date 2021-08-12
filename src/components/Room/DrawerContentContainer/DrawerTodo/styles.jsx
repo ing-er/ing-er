@@ -7,13 +7,13 @@ const Wrapper = styled.div`
     padding: 20px;
   }
   & .todolist-container {
-    margin-top: 20px;
+    /* margin-top: 20px; */
     padding: 20px;
   }
   & .title-container {
     padding: 10px;
     border-radius: 30px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
   }
   & .title-subcontainer {
     justify-content: center;

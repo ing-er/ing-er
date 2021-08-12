@@ -98,7 +98,7 @@ const HorizontalTabs = (props) => {
                 </Box>
               }
             />
-            <Link to="/webrtc">
+            <Link to="/webrtc" style={{ textDecoration: "none" }}>
               <Button
                 className="enter-button"
                 variant="outlined"

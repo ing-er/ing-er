@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setCalendarEditPromise,
@@ -12,7 +14,7 @@ import { setTodolistSetDate } from '../modules/setTodolist';
 
 import DrawerProfile from '../components/Room/DrawerContentContainer/DrawerProfile';
 
-const DrawerProfileContainer = () => {
+const DrawerProfileContainer = ({ currentUserData }) => {
   const dispatch = useDispatch();
   const setCalendarEditPro = (promise) => {
     dispatch(setCalendarEditPromise(promise));
@@ -40,6 +42,7 @@ const DrawerProfileContainer = () => {
   const { isEditablePromise } = useSelector((state) => state.setCalendar);
   const { isEditableDiary } = useSelector((state) => state.setCalendar);
   const { studyTime } = useSelector((state) => state.studyTime);
+  const { userData } = useSelector((state) => state.authorization)
 
   return (
     <DrawerProfile
@@ -55,6 +58,8 @@ const DrawerProfileContainer = () => {
       setCalendarSaveData={setCalendarSave}
       setTodolistSetDate={setTodolistSetdt}
       studyTime={studyTime}
+      currentUserData={currentUserData}
+      localUserData={userData}
     />
   );
 };

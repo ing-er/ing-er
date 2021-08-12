@@ -10,9 +10,9 @@ export const SETDATE = 'TODOLIST/SETDATE';
 export const DELETETODOLIST = 'DELETETODOLIST';
 export const DELETEDETAIL = 'DELETEDETAIL';
 
-// const HOST = 'localhost:8080';
+const HOST = 'localhost:8080';
 // const serverUrl = `http://${HOST}/api/v1`;
-const HOST = 'i5a208.p.ssafy.io:8080';
+// const HOST = 'i5a208.p.ssafy.io:8080';
 const serverUrl = `http://${HOST}/api/v1`;
 
 export const setTodolistAddContainer = (title, todolist) => ({
@@ -140,11 +140,11 @@ export const getTodolistData = async (id) => {
     .catch((err) => {
       // console.log(err);
     });
-  console.log('todolistData');
-  console.log(todolistData);
-  console.log('todolistToday');
-  console.log(todolistToday);
-  console.log('todaydate : ' + todaydate);
+  // console.log('todolistData');
+  // console.log(todolistData);
+  // console.log('todolistToday');
+  // console.log(todolistToday);
+  // console.log('todaydate : ' + todaydate);
 };
 
 // getTodolistData();
@@ -458,8 +458,6 @@ const setTodolist = (state = initialState, action) => {
       if (todolistTotal === 0) {
         state.todopercent = 0;
       }
-      console.log('SETDATE : todolist');
-      console.log(state.todolist);
       return {
         ...state,
         todolist: todolistToday,

@@ -41,8 +41,6 @@ const HorizontalTabsComponent = () => {
     id: authorization.userData.id,
   }));
 
-  console.log(id);
-
   const { requestdate } = useSelector((state) => state.setTodolist);
 
   useEffect(() => {

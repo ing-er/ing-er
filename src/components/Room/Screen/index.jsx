@@ -13,6 +13,7 @@ const Screen = ({
   isLocal,
   studyTime,
   onIncrease,
+  handleVideoClick,
 }) => {
   let videoRef = useRef();
   const [userData, setUserData] = useState(undefined);
@@ -53,7 +54,13 @@ const Screen = ({
           {isLocal && !isLocalVideoActive && <Rest />}
           {!isLocal && !streamManager.stream.videoActive && <Rest />}
           <div>
-            <video className="screen" autoPlay={true} ref={videoRef} />
+            <video
+              data-userdata={JSON.stringify(userData)}
+              onClick={handleVideoClick}
+              className="screen"
+              autoPlay={true}
+              ref={videoRef}
+            />
           </div>
         </motion.div>
       ) : (

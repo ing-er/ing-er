@@ -11,7 +11,7 @@ import { setStudyTime } from '../../api/timer/timer';
 import Wrapper from './styles';
 
 const Webrtc = () => {
-  const OPENVIDU_SERVER_URL = 'https://localhost:4443';
+  const OPENVIDU_SERVER_URL = process.env.REACT_APP_OPENVIDU_URL;
   const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
   const userData = useSelector((state) => state.authorization.userData)
@@ -24,6 +24,7 @@ const Webrtc = () => {
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
   const [isLocalVideoActive, setIsLocalVideoActive] = useState(true);
+  const [currentUserData, setCurrentUserData] = useState(undefined);
 
   /* constructor hook */
   useEffect(() => {
@@ -181,6 +182,12 @@ const Webrtc = () => {
     });
   };
 
+  /* 유저 비디오 클릭 */
+  const handleVideoClick = (e) => {
+    const _currentUserData = e.target.dataset.userdata;
+    setCurrentUserData(JSON.parse(_currentUserData));
+  }
+
   /**
    * --------------------------
    * SERVER-SIDE RESPONSIBILITY
@@ -281,6 +288,8 @@ const Webrtc = () => {
             leaveSession={leaveSession}
             handleVideoMute={handleVideoMute}
             isLocalVideoActive={isLocalVideoActive}
+            currentUserData={currentUserData}
+            handleVideoClick={handleVideoClick}
           />
         </StudyTimeContainer>
       )}

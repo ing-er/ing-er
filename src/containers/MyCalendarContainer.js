@@ -40,6 +40,7 @@ const MyCalendarComponent = () => {
   const { requestdate } = useSelector((state) => state.setCalendar);
   const { isEditablePromise } = useSelector((state) => state.setCalendar);
   const { isEditableDiary } = useSelector((state) => state.setCalendar);
+  const { isLightMode } = useSelector((state) => state.setLightMode);
 
   return (
     <MyCalendar
@@ -54,6 +55,7 @@ const MyCalendarComponent = () => {
       setCalendarSetDate={setCalendarSetDt}
       setCalendarSaveData={setCalendarSave}
       setTodolistSetDate={setTodolistSetdt}
+      isLightMode={isLightMode}
     />
   );
 };

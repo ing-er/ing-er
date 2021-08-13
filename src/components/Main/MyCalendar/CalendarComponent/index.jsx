@@ -9,11 +9,12 @@ import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
 import Calendar from 'react-calendar';
 import '../Calendar.css';
 import dayjs from 'dayjs';
+import { shadows } from '@material-ui/system';
 
 import Wrapper from './styles';
 
 const CalendarComponent = (props) => {
-  let { setCalendarSetDate, setTodolistSetDate } = props;
+  let { setCalendarSetDate, setTodolistSetDate, isLightMode } = props;
   const onChangeDate = (value, event) => {
     let year = value.getFullYear();
     let month = ('0' + (value.getMonth() + 1)).slice(-2);

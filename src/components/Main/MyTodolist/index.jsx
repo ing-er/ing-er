@@ -15,7 +15,7 @@ import { setTodolistDeleteTodolist } from '../../../modules/setTodolist';
 const LinearProgressOrange = withStyles({
   root: {
     height: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F9F9F9',
     borderRadius: '20px',
   },
   bar: {
@@ -202,6 +202,7 @@ const MyTodolist = (props) => {
     setTodolistSaveData,
     setTodolistDeleteDetail,
     setTodolistDeleteTodolist,
+    isLightMode,
   } = props;
   // console.log(todolistdata);
 
@@ -211,6 +212,20 @@ const MyTodolist = (props) => {
   // const handleAddContainer = () => {
   //   setTodolistAddContainer('');
   // };
+  const changeBackgroundColor = () => {
+    if (!isLightMode) {
+      return '#292A33';
+    } else {
+      return '#FFFFFF';
+    }
+  };
+  const changeTextColor = () => {
+    if (!isLightMode) {
+      return 'white';
+    } else {
+      return '#0E263E';
+    }
+  };
 
   return (
     <Wrapper>
@@ -219,7 +234,7 @@ const MyTodolist = (props) => {
         className="all-container"
         direction="column"
         style={{
-          backgroundColor: '#292A33',
+          backgroundColor: changeBackgroundColor(),
         }}
       >
         <Grid container direction="row" justify="space-between">
@@ -231,13 +246,17 @@ const MyTodolist = (props) => {
                   marginRight: '10px',
                 }}
               >
-                <EventAvailableIcon htmlColor="white" fontSize="large" />
+                <EventAvailableIcon
+                  htmlColor={changeTextColor()}
+                  fontSize="large"
+                />
               </Grid>
               <Grid
                 item
                 style={{
                   fontWeight: 'bold',
                   fontSize: 30,
+                  color: changeTextColor(),
                 }}
               >
                 {date}
@@ -266,7 +285,11 @@ const MyTodolist = (props) => {
             </Button>
           </Grid>
         </Grid>
-        <Grid item xs={12} style={{ marginTop: '10px' }}>
+        <Grid
+          item
+          xs={12}
+          style={{ marginTop: '10px', color: changeTextColor() }}
+        >
           <div>{todopercent}%</div>
           <div>
             <LinearProgressOrange variant="determinate" value={todopercent} />
@@ -285,6 +308,7 @@ const MyTodolist = (props) => {
               setTodolistAddContainer={setTodolistAddContainer}
               backColor={'#1E1F26'}
               textColor={'white'}
+              isLightMode={isLightMode}
             />
           </Grid>
         </Grid>
@@ -313,6 +337,7 @@ const MyTodolist = (props) => {
                     completeTextColor={'#4D4D4D'}
                     setTodolistDeleteDetail={setTodolistDeleteDetail}
                     setTodolistDeleteTodolist={setTodolistDeleteTodolist}
+                    isLightMode={isLightMode}
                   />
                 </Grid>
               );

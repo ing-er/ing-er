@@ -14,6 +14,8 @@ const TodolistTitle = (props) => {
     setTodolistEditTitle,
     backColor,
     setTodolistDeleteTodolist,
+    isLightMode,
+    textColor,
   } = props;
   const handleAddInput = () => {
     setTodolistAddInput(index);
@@ -24,13 +26,34 @@ const TodolistTitle = (props) => {
   const onClickDeleteTodo = () => {
     setTodolistDeleteTodolist(index);
   };
+  const changeTitleBackColor = () => {
+    if (!isLightMode) {
+      return backColor;
+    } else {
+      return '#F6F7F9';
+    }
+  };
+  const changeTitleTextColor = () => {
+    if (!isLightMode) {
+      return textColor;
+    } else {
+      return '#000000';
+    }
+  };
+  const changePlusButtonColor = () => {
+    if (!isLightMode) {
+      return '#1172DA';
+    } else {
+      return '#411AB0';
+    }
+  };
 
   return (
     <Grid
       item
       className="title-container"
       style={{
-        backgroundColor: backColor,
+        backgroundColor: changeTitleBackColor(),
       }}
     >
       <Grid container className="title-subcontainer">
@@ -39,12 +62,13 @@ const TodolistTitle = (props) => {
             className="title-input"
             value={title}
             onChange={onChangeHandler}
+            style={{ color: changeTitleTextColor() }}
           />
         </Grid>
 
         <Grid item xs={2}>
           <IconButton onClick={handleAddInput}>
-            <AddCircleIcon htmlColor="#1172DA" />
+            <AddCircleIcon htmlColor={changePlusButtonColor()} />
           </IconButton>
         </Grid>
         <Grid item xs={2}>
@@ -67,14 +91,23 @@ const TodolistContent = (props) => {
     textColor,
     completeTextColor,
     setTodolistDeleteDetail,
+    isLightMode,
   } = props;
+
+  const changeContentBackColor = () => {
+    if (!isLightMode) {
+      return backColor;
+    } else {
+      return '#F6F7F9';
+    }
+  };
 
   return (
     <Grid
       item
       className="content-container"
       style={{
-        backgroundColor: backColor,
+        backgroundColor: changeContentBackColor(),
       }}
     >
       {todolist.map((data, idx) => {
@@ -89,6 +122,7 @@ const TodolistContent = (props) => {
             textColor={textColor}
             completeTextColor={completeTextColor}
             setTodolistDeleteDetail={setTodolistDeleteDetail}
+            isLightMode={isLightMode}
           />
         );
       })}
@@ -107,6 +141,7 @@ const TodolistContentElement = (props) => {
     textColor,
     completeTextColor,
     setTodolistDeleteDetail,
+    isLightMode,
   } = props;
   const onChangeHandler = (e) => {
     setTodolistEditContent(index, subindex, e.target.value);
@@ -117,13 +152,29 @@ const TodolistContentElement = (props) => {
   const onClickDelete = () => {
     setTodolistDeleteDetail(index, subindex);
   };
+  const changeContentTextColor = () => {
+    if (!isLightMode) {
+      return textColor;
+    } else {
+      return '#000000';
+    }
+  };
+  const changeCompleteTextColor = () => {
+    if (!isLightMode) {
+      return completeTextColor;
+    } else {
+      return '#CECECE';
+    }
+  };
 
   return (
     <Grid container className="content-subcontainer">
       <Grid item xs={2}>
         <IconButton onClick={checkBoxHandler}>
-          {!complete && <CheckBoxOutlineBlankIcon htmlColor={textColor} />}
-          {complete && <CheckBoxIcon htmlColor={completeTextColor} />}
+          {!complete && (
+            <CheckBoxOutlineBlankIcon htmlColor={changeContentTextColor()} />
+          )}
+          {complete && <CheckBoxIcon htmlColor={changeCompleteTextColor()} />}
         </IconButton>
       </Grid>
       <Grid item xs={8}>
@@ -132,6 +183,7 @@ const TodolistContentElement = (props) => {
             className="content-input"
             value={content}
             onChange={onChangeHandler}
+            style={{ color: changeContentTextColor() }}
           />
         )}
         {complete && (
@@ -139,6 +191,7 @@ const TodolistContentElement = (props) => {
             className="content-input-complete"
             value={content}
             onChange={onChangeHandler}
+            style={{ color: changeCompleteTextColor() }}
           />
         )}
       </Grid>
@@ -165,6 +218,7 @@ const TodolistComponent = (props) => {
     completeTextColor,
     setTodolistDeleteDetail,
     setTodolistDeleteTodolist,
+    isLightMode,
   } = props;
 
   return (
@@ -176,7 +230,9 @@ const TodolistComponent = (props) => {
           setTodolistAddInput={setTodolistAddInput}
           setTodolistEditTitle={setTodolistEditTitle}
           backColor={backColor}
+          textColor={textColor}
           setTodolistDeleteTodolist={setTodolistDeleteTodolist}
+          isLightMode={isLightMode}
         />
         <TodolistContent
           todolist={todolist}
@@ -187,6 +243,7 @@ const TodolistComponent = (props) => {
           textColor={textColor}
           completeTextColor={completeTextColor}
           setTodolistDeleteDetail={setTodolistDeleteDetail}
+          isLightMode={isLightMode}
         />
       </Grid>
     </Wrapper>

@@ -20,6 +20,8 @@ const MyTodolistComponent = ({ children }) => {
   const { todopercent } = useSelector((state) => state.setTodolist);
   const { requestdate } = useSelector((state) => state.setCalendar);
   const { allTodolist } = useSelector((state) => state.setTodolist);
+  const { isLightMode } = useSelector((state) => state.setLightMode);
+
   const setTodolistAddCon = (title) => {
     dispatch(setTodolistAddContainer(title));
   };
@@ -49,6 +51,7 @@ const MyTodolistComponent = ({ children }) => {
     todolistdata: todolist,
     todopercent: todopercent,
     date: requestdate,
+    isLightMode: isLightMode,
     setTodolistAddContainer: setTodolistAddCon,
     setTodolistAddInput: setTodolistAddInp,
     setTodolistEditTitle: setTodolistEditTi,

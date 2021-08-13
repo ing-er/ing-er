@@ -16,6 +16,7 @@ const CalendarPromise = (props) => {
     isEditablePromise,
     setCalendarEditPromise,
     setCalendarEditPromiseIsEditable,
+    isLightMode,
   } = props;
 
   const onChangePromiseHandler = (e) => {
@@ -24,6 +25,20 @@ const CalendarPromise = (props) => {
   const onClickPromiseHandler = () => {
     setCalendarEditPromiseIsEditable();
   };
+  const changeTextColor = () => {
+    if (!isLightMode) {
+      return 'white';
+    } else {
+      return '#0E263E';
+    }
+  };
+  const changeTextFieldColor = () => {
+    if (!isLightMode) {
+      return 'white';
+    } else {
+      return '#F6F7F9';
+    }
+  };
 
   return (
     <Grid container direction="column" alignItems="center">
@@ -31,6 +46,7 @@ const CalendarPromise = (props) => {
         item
         style={{
           fontSize: 20,
+          color: changeTextColor(),
         }}
       >
         <WhatshotIcon />
@@ -40,7 +56,7 @@ const CalendarPromise = (props) => {
         item
         className="textfield-grid"
         style={{
-          backgroundColor: 'white',
+          backgroundColor: changeTextFieldColor(),
         }}
       >
         <IconButton onClick={onClickPromiseHandler}>
@@ -53,6 +69,7 @@ const CalendarPromise = (props) => {
           value={calendardata.promise}
           onChange={onChangePromiseHandler}
           disabled={!isEditablePromise}
+          InputProps={{ disableUnderline: true }}
         />
       </Grid>
     </Grid>

@@ -8,6 +8,7 @@ import {
   setIsRandomRoomTrue,
   setIsRandomRoomFalse,
 } from '../modules/setIsRandomRoom';
+import { setIsLightMode } from '../modules/setLightMode';
 import { getCalendarData, setCalendarSetDate } from '../modules/setCalendar';
 import { getTodolistData, setTodolistSetDate } from '../modules/setTodolist';
 
@@ -33,6 +34,11 @@ const HorizontalTabsComponent = () => {
   };
   const setIsRandomRoomF = () => {
     dispatch(setIsRandomRoomFalse());
+  };
+
+  const { isLightMode } = useSelector((state) => state.setLightMode);
+  const setIsLight = (isLightMode) => {
+    dispatch(setIsLightMode(isLightMode));
   };
 
   // const { id } = useSelector(({authorization}) => authorization.info.id);
@@ -61,6 +67,8 @@ const HorizontalTabsComponent = () => {
       isRandomRoom={isRandomRoom}
       setIsRandomRoomTrue={setIsRandomRoomT}
       setIsRandomRoomFalse={setIsRandomRoomF}
+      setIsLightMode={setIsLight}
+      isLightMode={isLightMode}
     />
   );
 };

@@ -7,9 +7,10 @@ export const EDITDIARYISEDITABLE = 'EDITDIARYISEDITABLE';
 export const SETDATE = 'CALENDAR/SETDATE';
 export const SAVEDATA = 'SAVEDATA';
 
-const HOST = 'localhost:8080';
+// const HOST = 'localhost:8080';
 // const HOST = 'i5a208.p.ssafy.io:8080';
-const serverUrl = `http://${HOST}/api/v1`;
+// const serverUrl = `http://${HOST}/api/v1`;
+const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 export const setCalendarEditPromise = (promise, requestcalendar) => ({
   type: EDITPROMISE,
@@ -62,7 +63,7 @@ let todaydate = year + '-' + month + '-' + day;
 
 export const getCalendarData = async (id) => {
   userId = id;
-  await axios.get(serverUrl + '/calendar/list/' + id).then((res) => {
+  await axios.get(serverUrl + 'calendar/list/' + id).then((res) => {
     res.data.map((x, index) => {
       list.push({
         date: x.date,
@@ -168,7 +169,7 @@ const setCalendar = (state = initialState, action) => {
       const async = async () => {
         if (id !== -1) {
           await axios
-            .patch(serverUrl + '/calendar/modify/' + id, post)
+            .patch(serverUrl + 'calendar/modify/' + id, post)
             .then((res) => {
               // console.log(res);
             })
@@ -185,7 +186,7 @@ const setCalendar = (state = initialState, action) => {
             };
           }
           await axios
-            .post(serverUrl + '/calendar/regist', post)
+            .post(serverUrl + 'calendar/regist', post)
             .then((res) => {
               // console.log(res);
             })

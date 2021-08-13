@@ -1,14 +1,6 @@
-import {
-  TextField,
-  Grid,
-  Container,
-  IconButton,
-  Button,
-} from '@material-ui/core';
-import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
+import { TextField, Grid, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import dayjs from 'dayjs';
 
 const CalendarDiary = (props) => {
   let {
@@ -16,6 +8,7 @@ const CalendarDiary = (props) => {
     isEditableDiary,
     setCalendarEditDiary,
     setCalendarEditDiaryIsEditable,
+    isLightMode,
   } = props;
 
   const onChangeDiaryHandler = (e) => {
@@ -25,12 +18,29 @@ const CalendarDiary = (props) => {
   const onClickDiaryHandler = () => {
     setCalendarEditDiaryIsEditable();
   };
+
+  const changeTextColor = () => {
+    if (!isLightMode) {
+      return 'white';
+    } else {
+      return '#0E263E';
+    }
+  };
+  const changeTextFieldColor = () => {
+    if (!isLightMode) {
+      return 'white';
+    } else {
+      return '#F6F7F9';
+    }
+  };
+
   return (
     <Grid container direction="column" alignItems="center">
       <Grid
         item
         style={{
           fontSize: 20,
+          color: changeTextColor(),
         }}
       >
         <AssignmentIcon />
@@ -40,7 +50,7 @@ const CalendarDiary = (props) => {
         item
         className="textfield-grid"
         style={{
-          backgroundColor: 'white',
+          backgroundColor: changeTextFieldColor(),
         }}
       >
         <IconButton onClick={onClickDiaryHandler}>
@@ -53,6 +63,7 @@ const CalendarDiary = (props) => {
           value={calendardata.diary}
           onChange={onChangeDiaryHandler}
           disabled={!isEditableDiary}
+          InputProps={{ disableUnderline: true }}
         />
       </Grid>
     </Grid>

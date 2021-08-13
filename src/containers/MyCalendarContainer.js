@@ -6,12 +6,10 @@ import {
   setCalendarEditDiaryIsEditable,
   setCalendarSetDate,
   setCalendarSaveData,
-  getCalendarData,
 } from '../modules/setCalendar';
 import { setTodolistSetDate } from '../modules/setTodolist';
 
 import MyCalendar from '../components/Main/MyCalendar';
-import { useEffect } from 'react';
 
 const MyCalendarComponent = () => {
   const dispatch = useDispatch();
@@ -40,6 +38,7 @@ const MyCalendarComponent = () => {
   const { requestdate } = useSelector((state) => state.setCalendar);
   const { isEditablePromise } = useSelector((state) => state.setCalendar);
   const { isEditableDiary } = useSelector((state) => state.setCalendar);
+  const { isLightMode } = useSelector((state) => state.setLightMode);
 
   return (
     <MyCalendar
@@ -54,6 +53,7 @@ const MyCalendarComponent = () => {
       setCalendarSetDate={setCalendarSetDt}
       setCalendarSaveData={setCalendarSave}
       setTodolistSetDate={setTodolistSetdt}
+      isLightMode={isLightMode}
     />
   );
 };

@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Wrapper from './styles';
 
-import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { alpha, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
-import CancelIcon from '@material-ui/icons/Cancel';
 import { green } from '@material-ui/core/colors';
 
 import {
@@ -20,7 +17,6 @@ import {
   Button,
   TextField,
   createTheme,
-  InputLabel,
   MenuItem,
   Select,
   FormControl,
@@ -34,13 +30,13 @@ import {
   Paper,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import PostAddIcon from '@material-ui/icons/PostAdd';
+// import PostAddIcon from '@material-ui/icons/PostAdd';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
+// import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 
 const CssTextField = withStyles({
@@ -64,25 +60,6 @@ const CssTextField = withStyles({
     },
   },
 })(TextField);
-
-const useStylesReddit = makeStyles((theme) => ({
-  root: {
-    border: '1px solid #e2e2e1',
-    overflow: 'hidden',
-    borderRadius: 4,
-    backgroundColor: '#fcfcfb',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    '&:hover': {
-      backgroundColor: '#fff',
-    },
-    '&$focused': {
-      backgroundColor: '#fff',
-      boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 2px`,
-      borderColor: theme.palette.primary.main,
-    },
-  },
-  focused: {},
-}));
 
 const theme = createTheme({
   palette: {
@@ -233,10 +210,12 @@ const DIRECTORSETTING = ({
   name,
   originUsercode,
   usercode,
+  setUsercode,
   handleCode,
   updateUsercode,
   commonCodes,
-  postCommonCode,
+  // patchCommonCode,
+  // postCommonCode,
   deleteCommonCode,
   updatecode,
   setUpdatecode,
@@ -257,6 +236,10 @@ const DIRECTORSETTING = ({
     setOpen(true);
   };
 
+  // const patchCommonOpen = () => {
+  //   setOpen(true);
+  // };
+
   const handleDetailOpen = () => {
     setUpdatecodeFlag(2);
     setOpen(true);
@@ -268,13 +251,9 @@ const DIRECTORSETTING = ({
 
   const [personName, setPersonName] = React.useState([]);
 
-  const handleChange = (event) => {
-    setPersonName(event.target.value);
-  };
-
   return (
     <Wrapper>
-      <Container clssName="main-container">
+      <Container className="main-container">
         <Grid container spacing={2} className="container">
           <Grid className="contents-container header">
             <Grid>
@@ -402,14 +381,6 @@ const DIRECTORSETTING = ({
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
                   코드 추가
                 </DialogTitle>
-                {/* <CssTextField
-                  className={classes.margin}
-                  id="custom-css-standard-input"
-                  label="코드 유형"
-                  style={{
-                    color: 'white',
-                  }}
-                /> */}
                 {updatecodeFlag === 2 ? (
                   <CssTextField
                     className={classes.margin}
@@ -480,14 +451,14 @@ const DIRECTORSETTING = ({
                         >
                           종류
                         </TableCell>
-                        <TableCell
+                        {/* <TableCell
                           align="right"
                           style={{
                             color: 'white',
                           }}
                         >
                           수정
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell
                           align="right"
                           style={{
@@ -518,10 +489,10 @@ const DIRECTORSETTING = ({
                           >
                             {commonCode.kind}
                           </TableCell>
-                          <TableCell align="right">
+                          {/* <TableCell align="right">
                             <IconButton
                               value={commonCode.id}
-                              onClick={postCommonCode}
+                              onClick={patchCommonCode}
                             >
                               <PostAddIcon
                                 style={{
@@ -529,7 +500,7 @@ const DIRECTORSETTING = ({
                                 }}
                               ></PostAddIcon>
                             </IconButton>
-                          </TableCell>
+                          </TableCell> */}
                           <TableCell
                             align="right"
                             style={{
@@ -586,14 +557,14 @@ const DIRECTORSETTING = ({
                         >
                           종류
                         </TableCell>
-                        <TableCell
+                        {/* <TableCell
                           align="right"
                           style={{
                             color: 'white',
                           }}
                         >
                           수정
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell
                           align="right"
                           style={{
@@ -632,7 +603,7 @@ const DIRECTORSETTING = ({
                           >
                             {detailCode.name}
                           </TableCell>
-                          <TableCell align="right">
+                          {/* <TableCell align="right">
                             <IconButton
                               value={detailCode.id}
                               onClick={postCommonCode}
@@ -643,7 +614,7 @@ const DIRECTORSETTING = ({
                                 }}
                               ></PostAddIcon>
                             </IconButton>
-                          </TableCell>
+                          </TableCell> */}
                           <TableCell
                             align="right"
                             style={{

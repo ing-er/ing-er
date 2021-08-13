@@ -8,9 +8,9 @@ export const SETDATE = 'CALENDAR/SETDATE';
 export const SAVEDATA = 'SAVEDATA';
 
 // const HOST = 'localhost:8080';
-// const HOST = 'i5a208.p.ssafy.io:8080';
-// const serverUrl = `http://${HOST}/api/v1`;
-const serverUrl = process.env.REACT_APP_SERVER_URL;
+const HOST = 'i5a208.p.ssafy.io:8080';
+const serverUrl = `https://${HOST}/api/v1`;
+// const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 export const setCalendarEditPromise = (promise, requestcalendar) => ({
   type: EDITPROMISE,

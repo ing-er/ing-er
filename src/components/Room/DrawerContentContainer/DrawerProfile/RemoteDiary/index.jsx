@@ -1,7 +1,6 @@
 import {
   TextField,
-  Grid,
-  IconButton
+  Grid
 } from '@material-ui/core';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 

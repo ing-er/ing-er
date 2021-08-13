@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setCalendarEditPromise,
@@ -7,8 +5,7 @@ import {
   setCalendarEditPromiseIsEditable,
   setCalendarEditDiaryIsEditable,
   setCalendarSetDate,
-  setCalendarSaveData,
-  getCalendarData,
+  setCalendarSaveData
 } from '../modules/setCalendar';
 import { setTodolistSetDate } from '../modules/setTodolist';
 

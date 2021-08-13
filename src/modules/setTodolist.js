@@ -12,7 +12,7 @@ export const DELETEDETAIL = 'DELETEDETAIL';
 
 // const HOST = 'localhost:8080';
 // const serverUrl = `http://${HOST}/api/v1`;
-const HOST = 'i5a208.p.ssafy.io:8080';
+const HOST = 'i5a208.p.ssafy.io';
 const serverUrl = `https://${HOST}/api/v1`;
 // const serverUrl = process.env.REACT_APP_SERVER_URL;
 

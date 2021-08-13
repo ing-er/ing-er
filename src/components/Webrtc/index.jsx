@@ -25,7 +25,7 @@ const Webrtc = () => {
 
   const userData = useSelector((state) => state.authorization.userData);
   const localStudyTime = useSelector((state) => state.studyTime.studyTime);
-  const isRandom = useSelector((state) => state.setIsRandomRoom)
+  // const isRandom = useSelector((state) => state.setIsRandomRoom)
 
   const [flag, setFlag] = useState(false);
   const [OV, setOV] = useState(undefined);
@@ -299,7 +299,6 @@ const Webrtc = () => {
           },
         )
         .then((response) => {
-          console.log('TOKEN', response);
           resolve(response.data.token);
         })
         .catch((error) => reject(error));

@@ -23,9 +23,5 @@ export const setStudyTime = async (userId, studyTime) => {
   }
 
   const response = await axios.post(url, formData);
-  if (response.status === 200) {
-    console.log('사용자 공부시간 업데이트 완료')
-  }
-
   return response
 }

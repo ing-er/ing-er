@@ -8,7 +8,6 @@ import {
   setTodolistEditContent,
   setTodolistEditComplete,
   setTodolistSaveData,
-  getTodolistData,
   setTodolistDeleteDetail,
   setTodolistDeleteTodolist,
 } from '../modules/setTodolist';

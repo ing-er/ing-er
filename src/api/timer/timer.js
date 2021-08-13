@@ -7,7 +7,7 @@ const date = getToday();
 
 // get user's study time
 export const getStudyTime = async (userId) => {
-  const url = `${SERVER_URL}/timer/${userId}/${date}`
+  const url = `${SERVER_URL}timer/${userId}/${date}`
   
   const response = await axios.get(url);
   return response
@@ -15,7 +15,7 @@ export const getStudyTime = async (userId) => {
 
 // save user's current study time
 export const setStudyTime = async (userId, studyTime) => {
-  const url = `${SERVER_URL}/timer/regist`
+  const url = `${SERVER_URL}timer/regist`
   const formData = {
     date,
     studyTime,

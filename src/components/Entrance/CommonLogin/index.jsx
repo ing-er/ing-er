@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  TextField,
-  withStyles,
-  makeStyles,
-  IconButton,
-} from '@material-ui/core';
+import { TextField, withStyles, IconButton } from '@material-ui/core';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 
 const CssTextField = withStyles({
@@ -30,18 +25,18 @@ const CssTextField = withStyles({
   },
 })(TextField);
 
-const textStyles = makeStyles((theme) => ({
-  input: {
-    color: 'white',
-  },
-}));
+// const textStyles = makeStyles((theme) => ({
+//   input: {
+//     color: 'white',
+//   },
+// }));
 
 const CommonLogin = ({
   uniqueNumber,
   setUniqueNumber,
   onPressUniqueNumber,
 }) => {
-  const classes = textStyles();
+  // const classes = textStyles();
 
   return (
     <div>

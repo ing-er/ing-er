@@ -8,15 +8,14 @@ import {
 	typeGetCommonCode, 
 	typeDeleteCommonCode,
 	typeUpdateteCommonCode,
+	// typePatchCommonCode,
 	typeGetDetailCode,
 	typeDeleteDetailCode,
 	typeUpdateteDetailCode,
 } from '../modules/directorSetting';
 
-import withReactContent from 'sweetalert2-react-content';
+// import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
-
-const MySwal = withReactContent(Swal)
 
 const DirectorSettingContainer = () => {
   const dispatch = useDispatch();
@@ -27,24 +26,29 @@ const DirectorSettingContainer = () => {
 		commonCode, 
 		deleteCommonCodeSuccess,
 		updateCommonCodeSuccess,
+		patchCommonCodeSuccess,
 		detailCode,
 		deleteDetailCodeSuccess,
 		updateDetailCodeSuccess,
 		error,
+		user_error,
 		 } = useSelector(({ directorSetting }) => ({
 		users: directorSetting.users,
 		updateSuccess: directorSetting.updateSuccess,
 		commonCode: directorSetting.commonCode,
 		deleteCommonCodeSuccess: directorSetting.deleteCommonCodeSuccess,
 		updateCommonCodeSuccess: directorSetting.updateCommonCodeSuccess,
+		patchCommonCodeSuccess: directorSetting.patchCommonCodeSuccess,
 		detailCode: directorSetting.detailCode,
 		deleteDetailCodeSuccess: directorSetting.deleteDetailCodeSuccess,
 		updateDetailCodeSuccess: directorSetting.updateDetailCodeSuccess,
 		error: directorSetting.error,
+		user_error: directorSetting.user_error,
   }));
 	
   const [name, setName] = useState('');
   const [usercode, setUsercode] = useState('');
+  const [id, setId] = useState('');
   const [updatecode, setUpdatecode] = useState('');
   const [commonType, setCommonType] = useState('');
   const [updatecodeFlag, setUpdatecodeFlag] = useState('');
@@ -58,6 +62,7 @@ const DirectorSettingContainer = () => {
 	useEffect(() => {
 		dispatch(typeGetCommonCode());
 		dispatch(typeGetDetailCode());
+		dispatch(typeInitUpdateInfo());
   }, []);
 
 	useEffect(() => {
@@ -65,16 +70,34 @@ const DirectorSettingContainer = () => {
 			setName(users.name);
 			setUsercode(users.usercode);
 		}
-		// if (error != undefined) {
-		// 	alert('존재하지 않는 회원입니다.')
-		// }
   }, [users]);
+
+	useEffect(() => {
+		if (user_error){
+			Swal.fire({
+				title: '<span style="color: white">없는 사용자입니다. <span>',
+				icon: 'error',
+				background: '#292A33',
+				confirmButtonColor: '#E96F02',
+				confirmButtonText: 'OK!',
+			}).then((result) => {
+			});
+			dispatch(typeInitUpdateInfo());
+		}
+  }, [user_error]);
 
 	useEffect(() => {
 		if (updateSuccess?.message){
 			dispatch(typeInitUpdateInfo())
 			dispatch(typeGetUserInfo(users.name))
-			alert('변경되었습니다.')
+			Swal.fire({
+				title: '<span style="color: white">변경되었습니다. <span>',
+				icon: 'success',
+				background: '#292A33',
+				confirmButtonColor: '#E96F02',
+				confirmButtonText: 'OK!',
+			}).then((result) => {
+			})
 		}
   }, [updateSuccess]);
 
@@ -91,6 +114,13 @@ const DirectorSettingContainer = () => {
 			dispatch(typeInitUpdateInfo())
 		}
   }, [updateCommonCodeSuccess]);
+
+	useEffect(() => {
+		if (patchCommonCodeSuccess?.message){
+			dispatch(typeGetCommonCode());
+			dispatch(typeInitUpdateInfo())
+		}
+  }, [patchCommonCodeSuccess]);
 	
 	useEffect(() => {
 		if (deleteDetailCodeSuccess?.message){
@@ -107,9 +137,9 @@ const DirectorSettingContainer = () => {
   }, [updateDetailCodeSuccess]);
 
 	const onSearchUser = (e) => {
-		// if (e.keyCode == 0){
+		if (e.which == 13){
 			dispatch(typeGetUserInfo(e.target.value));
-		// }
+		}
 	};
 
 	const handleCode = (e) => {
@@ -125,18 +155,14 @@ const DirectorSettingContainer = () => {
 	};
 
 	//* 공통 코드 관련 event
-  const postCommonCode = (e) => {
+  const patchCommonCode = (e) => {
+		setId(e.currentTarget.value)
+		// const data = {
+		// 	'id': id,
+		// 	'kind': updatecode,
+		// };
+		// dispatch(typePatchCommonCode(data));
 		// alert('준비 중입니다.')
-		MySwal.fire({
-			title: 'Custom width, padding, background.',
-			footer: 'Copyright 2018',
-			background: '#292A33',
-			didOpen: () => {
-				MySwal.clickConfirm()
-			}
-		}).then(() => {
-			return MySwal.fire(<p>준비 중입니다.</p>)
-		})
   };
 
   const deleteCommonCode = (e) => {
@@ -208,7 +234,7 @@ const DirectorSettingContainer = () => {
 			handleCode={handleCode}
 			updateUsercode={updateUsercode}
 			commonCodes={commonCodes}
-      postCommonCode={postCommonCode}
+      patchCommonCode={patchCommonCode}
 			deleteCommonCode={deleteCommonCode}
 			updatecode={updatecode}
 			setUpdatecode={setUpdatecode}

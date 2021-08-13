@@ -4,9 +4,7 @@ const SERVER_URL = process.env.REACT_APP_SERVER_URL
 
 export async function loginAsync(formData) {
   const response = await axios.get(
-    // `http://localhost:8080/api/v1/users/${formData.oAuthId}`
-    // `http://i5a208.p.ssafy.io:8080/api/v1/users/${formData.oAuthId}`
-    `${SERVER_URL}/users/${formData.oAuthId}`
+    `${SERVER_URL}users/${formData.oAuthId}`
     );
   window.localStorage.setItem('CURRENT_USER', formData.oAuthId);
   //* 이미 등록된 유저일 때,
@@ -23,9 +21,7 @@ export async function isAuthAsync() {
     return 1
   }
   const response = await axios.get(
-    // `http://localhost:8080/api/v1/users/${token}/`,
-    // `http://i5a208.p.ssafy.io:8080/api/v1/users/${token}/`,
-    `${SERVER_URL}/users/${token}/`,
+    `${SERVER_URL}users/${token}`,
     // { 헤더 추가할 일 있으면 써야지
     //   headers: {
     //     xauth: token,
@@ -46,9 +42,7 @@ export async function isAuthAsync() {
 export async function WithdrawalUserAsync() {
   const kakaoIdNum = window.localStorage.getItem('CURRENT_USER');
   const response = await axios.delete(
-    // `http://localhost:8080/api/v1/users/${kakaoIdNum}`,
-    // `http://i5a208.p.ssafy.io:8080/api/v1/users/${kakaoIdNum}`,
-    `${SERVER_URL}/users/${kakaoIdNum}`,
+    `${SERVER_URL}users/${kakaoIdNum}`,
   );
   if (response.status == 401) {
     throw new Error("인증이 실패하였습니다.");

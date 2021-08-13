@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Wrapper from './styles';
 import {
   Button,
@@ -10,11 +10,9 @@ import {
   IconButton,
   Switch,
   FormControlLabel,
-  Box,
 } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
-import CancelIcon from '@material-ui/icons/Cancel';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 
@@ -119,14 +117,6 @@ function MEMBERSETTING({
     setOpen(false);
   };
 
-  const handleSwitchChange = (newValue) => {
-    if (newValue === true) {
-      setisOpen(false);
-    } else {
-      setisOpen(true);
-    }
-  };
-
   const categoryName = {
     204: '수능',
     205: '취준',
@@ -174,7 +164,8 @@ function MEMBERSETTING({
                     <CssTextField
                       className="name-input"
                       type="name"
-                      value={name || ''}
+                      value={name}
+                      // value={name || ''}
                       InputProps={{
                         className: classes.input,
                       }}
@@ -337,17 +328,32 @@ function MEMBERSETTING({
                     <DialogTitle
                       id="customized-dialog-title"
                       onClose={handleClose}
+                      style={{
+                        backgroundColor: '#292A33',
+                        color: 'white',
+                      }}
                     >
                       회원 탈퇴
                     </DialogTitle>
-                    <DialogContent dividers>
+                    <DialogContent
+                      dividers
+                      style={{
+                        backgroundColor: '#292A33',
+                        color: 'white',
+                      }}
+                    >
                       <Typography gutterBottom>
                         공부기록 등 그 외 사용자가 설정한 모든 정보가 사라지고,
                         <br></br>
                         복구가 불가능 합니다.
                       </Typography>
                     </DialogContent>
-                    <DialogActions>
+                    <DialogActions
+                      style={{
+                        backgroundColor: '#292A33',
+                        borderColor: 'white',
+                      }}
+                    >
                       <Button
                         autoFocus
                         onClick={onWithdrawalHandler}

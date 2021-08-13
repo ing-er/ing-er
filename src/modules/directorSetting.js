@@ -27,6 +27,11 @@ const UPDATE_COMMON_CODE = 'directorSetting/UPDATE_COMMON_CODE';
 const UPDATE_COMMON_CODE_SUCCESS = 'directorSetting/UPDATE_COMMON_CODE_SUCCESS';
 const UPDATE_COMMON_CODE_FAILURE = 'directorSetting/UPDATE_COMMON_CODE_FAILURE';
 
+//* PATCH_COMMON_CODE
+const PATCH_COMMON_CODE = 'directorSetting/PATCH_COMMON_CODE';
+const PATCH_COMMON_CODE_SUCCESS = 'directorSetting/PATCH_COMMON_CODE_SUCCESS';
+const PATCH_COMMON_CODE_FAILURE = 'directorSetting/PATCH_COMMON_CODE_FAILURE';
+
 //* GET_DETAIL_CODE
 const GET_DETAIL_CODE = 'directorSetting/GET_DETAIL_CODE';
 const GET_DETAIL_CODE_SUCCESS = 'directorSetting/GET_DETAIL_CODE_SUCCESS';
@@ -73,6 +78,11 @@ export const typeDeleteCommonCode = (data) => ({
 
 export const typeUpdateteCommonCode = (data) => ({
   type: UPDATE_COMMON_CODE,
+	payload: data,
+});
+
+export const typePatchCommonCode = (data) => ({
+  type: PATCH_COMMON_CODE,
 	payload: data,
 });
 
@@ -169,6 +179,21 @@ export function* updateCommonCodeSaga(data) {
   }
 }
 
+export function* patchCommonCodeSaga(data) {
+  try {
+    const result = yield call(adminApi.patchCommonCodeAsync, data.payload);
+    yield put({
+      type: PATCH_COMMON_CODE_SUCCESS,
+      payload: result,
+    });
+  } catch (e) {
+    yield put({
+      type: PATCH_COMMON_CODE_FAILURE,
+      payload: e,
+    });
+  }
+}
+
 //* DETAIL CODE
 export function* getDetailCodeSaga() {
   try {
@@ -222,6 +247,7 @@ export function* adminSaga() {
   yield takeLatest(GET_COMMON_CODE, getCommonCodeSaga);
   yield takeLatest(DELETE_COMMON_CODE, deleteCommonCodeSaga);
   yield takeLatest(UPDATE_COMMON_CODE, updateCommonCodeSaga);
+  yield takeLatest(PATCH_COMMON_CODE, patchCommonCodeSaga);
   yield takeLatest(GET_DETAIL_CODE, getDetailCodeSaga);
   yield takeLatest(DELETE_DETAIL_CODE, deleteDetailCodeSaga);
   yield takeLatest(UPDATE_DETAIL_CODE, updateDetailCodeSaga);
@@ -235,9 +261,6 @@ const initialState = {
 /* 리듀서 선언 */
 // 리듀서는 export default 로 내보내주세요.
 export default function directorSetting(state = initialState, action) {
-	// console.log('reducer')
-	// console.log(state)
-	// console.log(action.payload)
 
   switch (action.type) {
     //*   GET_USER_INFO
@@ -254,7 +277,8 @@ export default function directorSetting(state = initialState, action) {
       return {
         ...state,
 				users: {},
-        // error: action.payload,
+        error: action.payload,
+        user_error: true,
       };
 
     case POST_USER_CODE:
@@ -317,6 +341,21 @@ export default function directorSetting(state = initialState, action) {
         error: action.payload,
       };
 
+    case PATCH_COMMON_CODE:
+      return {
+        ...state,
+      };
+    case PATCH_COMMON_CODE_SUCCESS:
+      return {
+        ...state,
+        patchCommonCodeSuccess: action.payload,
+      };
+    case PATCH_COMMON_CODE_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
     case GET_DETAIL_CODE:
       return {
         ...state,
@@ -365,6 +404,8 @@ export default function directorSetting(state = initialState, action) {
     case INIT_UPDATE_INFO:
       return {
         ...state,
+        users: {},
+        user_error: false,
         updateSuccess: {},
         deleteCommonCodeSuccess: {},
         updateCommonCodeSuccess: {},

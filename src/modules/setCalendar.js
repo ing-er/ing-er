@@ -60,6 +60,8 @@ let todaydate = year + '-' + month + '-' + day;
 
 export const getCalendarData = async (id) => {
   userId = id;
+  list = [];
+  listToday = {};
   await axios.get(serverUrl + 'calendar/list/' + id).then((res) => {
     res.data.map((x, index) => {
       list.push({
@@ -154,6 +156,7 @@ const setCalendar = (state = initialState, action) => {
       }
       return {
         ...state,
+        calendar: list,
         requestcalendar: listToday,
         requestdate: state.requestdate,
       };

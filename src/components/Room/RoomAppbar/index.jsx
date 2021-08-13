@@ -11,6 +11,7 @@ import { ChevronLeft } from '@material-ui/icons';
 
 import { motion } from 'framer-motion';
 import { Wrapper, useDrawerStyles } from './styles';
+import { useHistory } from 'react-router';
 
 const RoomAppbar = ({
   handleDrawerOpen,
@@ -22,8 +23,10 @@ const RoomAppbar = ({
 }) => {
   const drawerClasses = useDrawerStyles();
 
-  const handleLeaveSession = () => {
-    leaveSession();
+  const history = useHistory();
+  const handleLeaveSession = async () => {
+    await leaveSession();
+    history.push('/Main');
   };
 
   return (
@@ -49,7 +52,7 @@ const RoomAppbar = ({
             )}
           </motion.div>
         </IconButton>
-        <Link to="/Main" onClick={handleLeaveSession}>
+        <Link onClick={handleLeaveSession}>
           <IconButton
             className="room-buttons-container"
             style={{ display: 'inline-block' }}

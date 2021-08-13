@@ -24,6 +24,12 @@ const CalendarComponent = (props) => {
     setTodolistSetDate(year + '-' + month + '-' + day);
   };
 
+  const changeCalendarShadow = () => {
+    if (isLightMode) {
+      return '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)';
+    }
+  };
+
   const formatDate = (locale, date) => {
     let day = dayjs(date).format('DD');
     if (day.charAt(0) === '0') {
@@ -34,7 +40,10 @@ const CalendarComponent = (props) => {
 
   return (
     <Wrapper>
-      <Container className="calendar-container">
+      <Container
+        className="calendar-container"
+        style={{ boxShadow: changeCalendarShadow() }}
+      >
         <Calendar
           className="calendar"
           onChange={onChangeDate}

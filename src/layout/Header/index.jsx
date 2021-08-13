@@ -55,10 +55,6 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
     setOpen(false);
   };
 
-  const onClickRoom = () => {
-    alert('준비 중입니다.');
-  };
-
   const onLoginHandler = () => {
     setOpen(false);
     // if (isJoin === false && isAuth === false) {

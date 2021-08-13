@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import KaKaoLogin from 'react-kakao-login';
 // import Wrapper from './styles';
 import PropTypes from 'prop-types';
-import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
 
 const ButtoninnerText = styled.h3`
   margin: 0;

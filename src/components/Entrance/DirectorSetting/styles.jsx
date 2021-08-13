@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   & .main-container {
-    border: 1px solid red;
     box-shadow: '0px 0px 0px rgb(255, 255, 255)';
   }
   .name-input {
@@ -91,10 +90,7 @@ const Wrapper = styled.div`
     justify-content: center;
   }
   & .my-table-item {
-
   }
-
-
 `;
 
 export default Wrapper;

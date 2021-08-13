@@ -1,5 +1,4 @@
-import Header from './Header';
-import { Container, CssBaseline, Hidden } from '@material-ui/core';
+import { Container, CssBaseline } from '@material-ui/core';
 import Wrapper from './styles';
 import HeaderContainer from '../containers/HeaderContainer';
 

@@ -9,6 +9,7 @@ import {
   setKakoDialogClose,
 } from '../modules/userAuthorization';
 import { useHistory } from 'react-router';
+import Swal from 'sweetalert2';
 
 // * =====================
 // *   LOGIN_CONTAINER(CT)
@@ -37,7 +38,16 @@ function LoginContainer() {
 
   const onPressUniqueNumber = () => {
     if (uniqueNumber == '') {
-      alert('코드를 입력해 주세요')
+      alert('코드를 입력해 주세요.')
+      // Swal.fire({
+      //   title: '<span style="color: white">코드를 입력해 주세요. <span>',
+      //   icon: 'error',
+      //   background: '#292A33',
+      //   confirmButtonColor: '#E96F02',
+      //   confirmButtonText: 'OK!',
+      //   zIndex: 'X',
+      // }).then((result) => {
+      // });
     } else {
       const formData = {
         oAuthId: Number(uniqueNumber)

@@ -31,6 +31,8 @@ const HorizontalTabs = (props) => {
     isRandomRoom,
     setIsRandomRoomTrue,
     setIsRandomRoomFalse,
+    setIsLightMode,
+    isLightMode,
   } = props;
 
   const labels = ['Calendar', 'Todo-list'];
@@ -49,6 +51,10 @@ const HorizontalTabs = (props) => {
     } else {
       setIsRandomRoomFalse();
     }
+  };
+
+  const handleLightModeChange = (event, newValue) => {
+    setIsLightMode(newValue);
   };
 
   return (
@@ -86,6 +92,21 @@ const HorizontalTabs = (props) => {
             <FormControlLabel
               control={
                 <Switch
+                  checked={isLightMode}
+                  onChange={handleLightModeChange}
+                  style={{ color: '#E96F02' }}
+                />
+              }
+              labelPlacement="top"
+              label={
+                <Box component="div" fontSize={12}>
+                  LIGHT MODE
+                </Box>
+              }
+            />
+            <FormControlLabel
+              control={
+                <Switch
                   checked={isRandomRoom}
                   onChange={handleSwitchChange}
                   style={{ color: '#E96F02' }}
@@ -98,7 +119,7 @@ const HorizontalTabs = (props) => {
                 </Box>
               }
             />
-            <Link to="/webrtc" style={{ textDecoration: "none" }}>
+            <Link to="/webrtc" style={{ textDecoration: 'none' }}>
               <Button
                 className="enter-button"
                 variant="outlined"

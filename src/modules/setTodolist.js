@@ -10,10 +10,11 @@ export const SETDATE = 'TODOLIST/SETDATE';
 export const DELETETODOLIST = 'DELETETODOLIST';
 export const DELETEDETAIL = 'DELETEDETAIL';
 
-const HOST = 'localhost:8080';
+// const HOST = 'localhost:8080';
 // const serverUrl = `http://${HOST}/api/v1`;
-// const HOST = 'i5a208.p.ssafy.io:8080';
-const serverUrl = `http://${HOST}/api/v1`;
+const HOST = 'i5a208.p.ssafy.io:8080';
+const serverUrl = `https://${HOST}/api/v1`;
+// const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 export const setTodolistAddContainer = (title, todolist) => ({
   type: ADDCONTAINER,
@@ -104,7 +105,7 @@ export const getTodolistData = async (id) => {
   todolistTotal = 0;
   todolistComplete = 0;
   await axios
-    .get(serverUrl + '/todoList/select/' + id)
+    .get(serverUrl + 'todoList/select/' + id)
     .then((res) => {
       // console.log(res);
       res.data.map((x, index) => {
@@ -300,7 +301,7 @@ const setTodolist = (state = initialState, action) => {
       const async = async () => {
         if (createTodolist.length !== 0) {
           await axios
-            .post(serverUrl + '/todoList/create', createTodolist)
+            .post(serverUrl + 'todoList/create', createTodolist)
             .then((res) => {
               // console.log(res);
             })
@@ -310,7 +311,7 @@ const setTodolist = (state = initialState, action) => {
         }
         if (createTodolistDetail.length !== 0) {
           await axios
-            .post(serverUrl + '/todoList/createDetail', createTodolistDetail)
+            .post(serverUrl + 'todoList/createDetail', createTodolistDetail)
             .then((res) => {
               // console.log(res);
             })
@@ -330,7 +331,7 @@ const setTodolist = (state = initialState, action) => {
         }
         if (updateTodolistDetail.length !== 0) {
           await axios
-            .patch(serverUrl + '/todoList/updateDetail', updateTodolistDetail)
+            .patch(serverUrl + 'todoList/updateDetail', updateTodolistDetail)
             .then((res) => {
               // console.log(res);
             })
@@ -340,7 +341,7 @@ const setTodolist = (state = initialState, action) => {
         }
         if (deleteTodolistDetail.length !== 0) {
           await axios
-            .delete(serverUrl + '/todoList/deleteDetail', {
+            .delete(serverUrl + 'todoList/deleteDetail', {
               data: deleteTodolistDetail,
             })
             .then((res) => {
@@ -353,7 +354,7 @@ const setTodolist = (state = initialState, action) => {
         }
         if (deleteTodolist.length !== 0) {
           await axios
-            .delete(serverUrl + '/todoList/delete', { data: deleteTodolist })
+            .delete(serverUrl + 'todoList/delete', { data: deleteTodolist })
             .then((res) => {
               // console.log(res);
               deleteTodolist = [];
@@ -363,7 +364,7 @@ const setTodolist = (state = initialState, action) => {
             });
         }
         await axios
-          .get(serverUrl + '/todoList/select/' + userId)
+          .get(serverUrl + 'todoList/select/' + userId)
           .then((res) => {
             // console.log(res);
             todaydate = state.requestdate;

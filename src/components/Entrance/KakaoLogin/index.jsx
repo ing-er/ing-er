@@ -11,12 +11,15 @@ const ButtoninnerText = styled.h3`
 
 const KakaoLogin = ({ socialLogin }) => {
   const responseKakao = (response) => {
+    console.log(response)
     const { id } = response.profile;
     const { email } = response.profile.kakao_account;
     const userData = {
       oAuthId: id,
       email,
     };
+    console.log('kakaoLogin test')
+    console.log(userData)
     socialLogin(userData);
   };
 

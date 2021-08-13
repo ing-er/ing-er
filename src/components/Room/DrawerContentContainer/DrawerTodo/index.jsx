@@ -1,7 +1,4 @@
-import { Grid, LinearProgress, IconButton, Button } from '@material-ui/core';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import { Grid, LinearProgress, Button } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import { withStyles } from '@material-ui/styles';
 

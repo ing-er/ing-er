@@ -1,4 +1,4 @@
-import { cloneElement, useEffect } from 'react';
+import { cloneElement } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -8,10 +8,8 @@ import {
   setTodolistEditContent,
   setTodolistEditComplete,
   setTodolistSaveData,
-  getTodolistData,
   setTodolistDeleteDetail,
   setTodolistDeleteTodolist,
-  setTodolistSetDate,
 } from '../modules/setTodolist';
 
 const MyTodolistComponent = ({ children }) => {
@@ -19,7 +17,6 @@ const MyTodolistComponent = ({ children }) => {
   const { todolist } = useSelector((state) => state.setTodolist);
   const { todopercent } = useSelector((state) => state.setTodolist);
   const { requestdate } = useSelector((state) => state.setCalendar);
-  const { allTodolist } = useSelector((state) => state.setTodolist);
   const { isLightMode } = useSelector((state) => state.setLightMode);
 
   const setTodolistAddCon = (title) => {

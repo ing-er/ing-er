@@ -1,15 +1,7 @@
-import {
-  TextField,
-  Grid,
-  Container,
-  IconButton,
-  Button,
-} from '@material-ui/core';
-import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
+import { Container } from '@material-ui/core';
 import Calendar from 'react-calendar';
 import '../Calendar.css';
 import dayjs from 'dayjs';
-import { shadows } from '@material-ui/system';
 
 import Wrapper from './styles';
 

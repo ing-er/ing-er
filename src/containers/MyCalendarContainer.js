@@ -6,12 +6,10 @@ import {
   setCalendarEditDiaryIsEditable,
   setCalendarSetDate,
   setCalendarSaveData,
-  getCalendarData,
 } from '../modules/setCalendar';
 import { setTodolistSetDate } from '../modules/setTodolist';
 
 import MyCalendar from '../components/Main/MyCalendar';
-import { useEffect } from 'react';
 
 const MyCalendarComponent = () => {
   const dispatch = useDispatch();

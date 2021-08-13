@@ -1,10 +1,5 @@
-import { Grid, LinearProgress, IconButton, Button } from '@material-ui/core';
+import { Grid, IconButton } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import EventAvailableIcon from '@material-ui/icons/EventAvailable';
-
-import Wrapper from './styles';
 
 const TodolistAdd = (props) => {
   let { setTodolistAddContainer, backColor, textColor, isLightMode } = props;

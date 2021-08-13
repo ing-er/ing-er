@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Header2 from '../layout/Header2';
+import Header from '../layout/Header';
 // import Header from '../layout/Header';
 import { typeLogOut , typeAuthUser} from '../modules/userAuthorization';
 import { useHistory } from 'react-router';
@@ -30,7 +30,7 @@ function HeaderContainer() {
   };
 
   return (
-    <Header2
+    <Header
 			isJoin={isJoin}
 			isAuth={isAuth}
 			onLogOutHandler={onLogOutHandler}

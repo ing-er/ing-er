@@ -32,6 +32,9 @@ const Wrapper = styled.div`
     :focus {
       outline: none;
     }
+    ::placeholder {
+      font-size: 0.8em;
+    }
   }
   & .content-input {
     background-color: transparent;

@@ -33,9 +33,9 @@ const MyCalendarComponent = () => {
     await dispatch(setCalendarSaveData());
     await Swal.fire({
       title:
-        '<span style="color: white">' +
+        '<span style="color: white; font-size: 20px">' +
         requestdate +
-        '\n다짐, 일기가 저장되었습니다. <span>',
+        '\n다짐, 일기가 저장되었습니다.</span>',
       icon: 'success',
       background: '#292A33',
       confirmButtonColor: '#E96F02',

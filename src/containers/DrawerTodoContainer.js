@@ -12,6 +12,8 @@ import {
   setTodolistDeleteTodolist,
 } from '../modules/setTodolist';
 
+import Swal from 'sweetalert2';
+
 const DrawerTodoContainer = ({ children }) => {
   const dispatch = useDispatch();
   const { todolist } = useSelector((state) => state.setTodolist);
@@ -32,8 +34,18 @@ const DrawerTodoContainer = ({ children }) => {
   const setTodolistEditCompl = (index, subindex) => {
     dispatch(setTodolistEditComplete(index, subindex));
   };
-  const setTodolistSave = () => {
-    dispatch(setTodolistSaveData());
+  const setTodolistSave = async () => {
+    await dispatch(setTodolistSaveData());
+    await Swal.fire({
+      title:
+        '<span style="color: white; font-size: 20px">' +
+        requestdate +
+        '\nTodolist가 저장되었습니다. <span>',
+      icon: 'success',
+      background: '#292A33',
+      confirmButtonColor: '#E96F02',
+      confirmButtonText: 'OK!',
+    });
   };
   const setTodolistDeleteDt = (index, subindex) => {
     dispatch(setTodolistDeleteDetail(index, subindex));

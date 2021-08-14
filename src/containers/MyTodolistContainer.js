@@ -40,9 +40,9 @@ const MyTodolistComponent = ({ children }) => {
     await dispatch(setTodolistSaveData());
     await Swal.fire({
       title:
-        '<span style="color: white">' +
+        '<span style="color: white; font-size: 20px">' +
         requestdate +
-        '\nTodolist가 저장되었습니다. <span>',
+        '\nTodolist가 저장되었습니다.</span>',
       icon: 'success',
       background: '#292A33',
       confirmButtonColor: '#E96F02',

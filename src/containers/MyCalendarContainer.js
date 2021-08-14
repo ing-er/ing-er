@@ -10,7 +10,6 @@ import {
 import { setTodolistSetDate } from '../modules/setTodolist';
 
 import MyCalendar from '../components/Main/MyCalendar';
-import Swal from 'sweetalert2';
 
 const MyCalendarComponent = () => {
   const dispatch = useDispatch();
@@ -29,18 +28,8 @@ const MyCalendarComponent = () => {
   const setCalendarSetDt = (date) => {
     dispatch(setCalendarSetDate(date));
   };
-  const setCalendarSave = async () => {
-    await dispatch(setCalendarSaveData());
-    await Swal.fire({
-      title:
-        '<span style="color: white; font-size: 20px">' +
-        requestdate +
-        '\n다짐, 일기가 저장되었습니다.</span>',
-      icon: 'success',
-      background: '#292A33',
-      confirmButtonColor: '#E96F02',
-      confirmButtonText: 'OK!',
-    });
+  const setCalendarSave = () => {
+    dispatch(setCalendarSaveData());
   };
   const setTodolistSetdt = (date) => {
     dispatch(setTodolistSetDate(date));

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export const ADDCONTAINER = 'ADDCONTAINER';
 export const ADDINPUT = 'ADDINPUT';
@@ -298,15 +299,20 @@ const setTodolist = (state = initialState, action) => {
           });
         }
       });
+
       const async = async () => {
+        let check = false;
+        let checkError = false;
         if (createTodolist.length !== 0) {
           await axios
             .post(serverUrl + 'todoList/create', createTodolist)
             .then((res) => {
               // console.log(res);
+              check = true;
             })
             .catch((err) => {
               // console.log(err);
+              checkError = true;
             });
         }
         if (createTodolistDetail.length !== 0) {
@@ -314,9 +320,11 @@ const setTodolist = (state = initialState, action) => {
             .post(serverUrl + 'todoList/createDetail', createTodolistDetail)
             .then((res) => {
               // console.log(res);
+              check = true;
             })
             .catch((err) => {
               // console.log(err);
+              checkError = true;
             });
         }
         if (updateTodolist.length !== 0) {
@@ -324,9 +332,11 @@ const setTodolist = (state = initialState, action) => {
             .patch(serverUrl + '/todoList/update', updateTodolist)
             .then((res) => {
               // console.log(res);
+              check = true;
             })
             .catch((err) => {
               // console.log(err);
+              checkError = true;
             });
         }
         if (updateTodolistDetail.length !== 0) {
@@ -334,9 +344,11 @@ const setTodolist = (state = initialState, action) => {
             .patch(serverUrl + 'todoList/updateDetail', updateTodolistDetail)
             .then((res) => {
               // console.log(res);
+              check = true;
             })
             .catch((err) => {
               // console.log(err);
+              checkError = true;
             });
         }
         if (deleteTodolistDetail.length !== 0) {
@@ -347,9 +359,11 @@ const setTodolist = (state = initialState, action) => {
             .then((res) => {
               // console.log(res);
               deleteTodolistDetail = [];
+              check = true;
             })
             .catch((err) => {
               // console.log(err);
+              checkError = true;
             });
         }
         if (deleteTodolist.length !== 0) {
@@ -358,11 +372,14 @@ const setTodolist = (state = initialState, action) => {
             .then((res) => {
               // console.log(res);
               deleteTodolist = [];
+              check = true;
             })
             .catch((err) => {
               // console.log(err);
+              checkError = true;
             });
         }
+
         await axios
           .get(serverUrl + 'todoList/select/' + userId)
           .then((res) => {
@@ -406,6 +423,41 @@ const setTodolist = (state = initialState, action) => {
           .catch((err) => {
             // console.log(err);
           });
+
+        if (check && !checkError) {
+          await Swal.fire({
+            title:
+              '<span style="color: white; font-size: 20px">' +
+              state.requestdate +
+              '\nTodolist가 저장되었습니다</span>',
+            icon: 'success',
+            background: '#292A33',
+            confirmButtonColor: '#E96F02',
+            confirmButtonText: 'OK!',
+          });
+        } else if (!check && !checkError) {
+          await Swal.fire({
+            title:
+              '<span style="color: white; font-size: 20px">' +
+              state.requestdate +
+              '\nTodolist 저장할 내용이 없습니다</span>',
+            icon: 'warning',
+            background: '#292A33',
+            confirmButtonColor: '#E96F02',
+            confirmButtonText: 'OK!',
+          });
+        } else if (checkError) {
+          await Swal.fire({
+            title:
+              '<span style="color: white; font-size: 20px">' +
+              state.requestdate +
+              '\nTodolist 저장하는 중 오류 발생</span>',
+            icon: 'error',
+            background: '#292A33',
+            confirmButtonColor: '#E96F02',
+            confirmButtonText: 'OK!',
+          });
+        }
       };
 
       async();

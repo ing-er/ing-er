@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export const EDITPROMISE = 'EDITPROMISE';
 export const EDITDIARY = 'EDITDIARY';
@@ -168,32 +169,74 @@ const setCalendar = (state = initialState, action) => {
         promise: listToday.promise,
         userId: userId,
       };
+      let check = false;
+      let checkError = false;
       const async = async () => {
         if (id !== -1) {
           await axios
             .patch(serverUrl + 'calendar/modify/' + id, post)
             .then((res) => {
-              // console.log(res);
+              console.log(res);
+              check = true;
             })
             .catch((err) => {
               // console.log(err);
+              checkError = true;
             });
         } else {
-          if (listToday.promise === '' && listToday.diary === '') {
-            return {
-              ...state,
-              requestcalendar: listToday,
-              calendar: list,
-            };
+          // if (listToday.promise === '' && listToday.diary === '') {
+          //   return {
+          //     ...state,
+          //     requestcalendar: listToday,
+          //     calendar: list,
+          //   };
+          // }
+          if (listToday.promise !== '' || listToday.diary !== '') {
+            await axios
+              .post(serverUrl + 'calendar/regist', post)
+              .then((res) => {
+                // console.log(res);
+                check = true;
+              })
+              .catch((err) => {
+                // console.log(err);
+                checkError = true;
+              });
           }
-          await axios
-            .post(serverUrl + 'calendar/regist', post)
-            .then((res) => {
-              // console.log(res);
-            })
-            .catch((err) => {
-              // console.log(err);
-            });
+        }
+        if (check && !checkError) {
+          await Swal.fire({
+            title:
+              '<span style="color: white; font-size: 20px">' +
+              listToday.date +
+              '\n다짐, 일기가 저장되었습니다</span>',
+            icon: 'success',
+            background: '#292A33',
+            confirmButtonColor: '#E96F02',
+            confirmButtonText: 'OK!',
+          });
+        } else if (!check && !checkError) {
+          await Swal.fire({
+            title:
+              '<span style="color: white; font-size: 20px">' +
+              listToday.date +
+              '\n다짐, 일기 저장할 내용이 없습니다</span>',
+            icon: 'warning',
+            background: '#292A33',
+            confirmButtonColor: '#E96F02',
+            confirmButtonText: 'OK!',
+          });
+        } else if (checkError) {
+          await Swal.fire({
+            title:
+              '<span style="color: white; font-size: 20px">' +
+              listToday.date +
+              '\n다짐, 일기를 저장하는 중 오류 발생</span>',
+            icon: 'error',
+            background: '#292A33',
+            confirmButtonColor: '#E96F02',
+            confirmButtonText: 'OK!',
+          });
         }
       };
       async();

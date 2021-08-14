@@ -16,7 +16,8 @@ import {
 } from '@material-ui/core';
 
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import EventNoteIcon from '@material-ui/icons/EventNote';
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import Wrapper from './styles';
@@ -36,7 +37,7 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
 
   useEffect(() => {
     scrollHeader();
-  }, [])
+  }, []);
 
   return (
     <Wrapper>
@@ -48,7 +49,7 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
               alt="inger"
               src="img/inger.png"
               whileHover={{
-                scale: 1.2
+                scale: 1.2,
               }}
             />
           </Link>
@@ -62,26 +63,18 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                 <IconButton>
                   <motion.div
                     whileHover={{
-                      scale: 1.2
+                      scale: 1.2,
                     }}
                   >
-                    <AccountCircleIcon
-                      htmlColor="white"
-                      style={{ fontSize: 30 }}
-                    />
+                    <EventNoteIcon htmlColor="white" style={{ fontSize: 30 }} />
                   </motion.div>
                 </IconButton>
               </Link>
             </Grid>
           </Grid>
-        ) : (
-          null
-        )}
+        ) : null}
 
-          
-        {!isAuth ? (
-          null
-        ) : (
+        {!isAuth ? null : (
           // 멤버설정 & 로그아웃
           <Grid className="setting-container">
             <Grid>
@@ -89,13 +82,10 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
                 <IconButton>
                   <motion.div
                     whileHover={{
-                      scale: 1.2
+                      scale: 1.2,
                     }}
                   >
-                    <SettingsIcon
-                      htmlColor="white"
-                      style={{ fontSize: 30 }}
-                    />
+                    <SettingsIcon htmlColor="white" style={{ fontSize: 30 }} />
                   </motion.div>
                 </IconButton>
               </Link>
@@ -104,13 +94,10 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
               <IconButton onClick={onLogOutHandler}>
                 <motion.div
                   whileHover={{
-                    scale: 1.2
+                    scale: 1.2,
                   }}
                 >
-                  <LockOpenIcon
-                    htmlColor="white"
-                    style={{ fontSize: 30 }}
-                  />
+                  <LockOpenIcon htmlColor="white" style={{ fontSize: 30 }} />
                 </motion.div>
               </IconButton>
             </Grid>
@@ -118,13 +105,11 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
         )}
 
         {/* login */}
-        {isAuth ? (
-          null
-        ) : (
+        {isAuth ? null : (
           <Grid>
             <motion.div
               whileHover={{
-                scale: 1.2
+                scale: 1.2,
               }}
             >
               <Button
@@ -145,10 +130,7 @@ const Header = ({ isJoin, isAuth, onLogOutHandler }) => {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <DialogTitle
-          id="customized-dialog-title"
-          onClose={handleClose}
-        >
+        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           로그인 & 회원가입
         </DialogTitle>
         <DialogContent dividers>

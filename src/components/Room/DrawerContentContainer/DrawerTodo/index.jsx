@@ -119,6 +119,8 @@ const DrawerTodo = (props) => {
                 setTodolistAddContainer={setTodolistAddContainer}
                 backColor={'#FFFFFF'}
                 textColor={'#000000'}
+                plusButtonColor={'#411AB0'}
+                isLightMode={false}
               />
             </Grid>
             {todolistdata.map((data, index) => {
@@ -142,8 +144,10 @@ const DrawerTodo = (props) => {
                     backColor={'#FFFFFF'}
                     textColor={'#000000'}
                     completeTextColor={'#CECECE'}
+                    plusButtonColor={'#411AB0'}
                     setTodolistDeleteDetail={setTodolistDeleteDetail}
                     setTodolistDeleteTodolist={setTodolistDeleteTodolist}
+                    isLightMode={false}
                   />
                 </Grid>
               );

@@ -9,7 +9,7 @@ import StudyTimeContainer from '../../containers/StudyTimeContainer';
 import Room from '../../pages/Room';
 
 import { noRefreshEvent } from '../../utils/event';
-import { getTodaySeconds, getYesterday } from '../../utils/date';
+import { getToday, getTodaySeconds, getYesterday } from '../../utils/date';
 import { setStudyTime } from '../../api/timer/timer';
 import { setReduxStudyTime } from '../../modules/studyTime';
 
@@ -185,18 +185,19 @@ const Webrtc = () => {
       // api call
       const todaySeconds = getTodaySeconds();
       if (localStudyTime > todaySeconds) {  // 자정이 넘은 것이면
+        // 어제 공부시간 db 저장
         const yesterdayStudyTime = localStudyTime - todaySeconds;
         const yesterdayFormat = getYesterday();
-        // api patch yesterday
-
+        setStudyTime(userData.id, yesterdayStudyTime, yesterdayFormat)
+        
+        // 오늘 공부시간 db 저장 & update redux studyTime
         const todayStudyTime = todaySeconds;
+        setStudyTime(userData.id, todayStudyTime, getToday());
         dispatch(setReduxStudyTime(todayStudyTime));
-        setStudyTime(userData.id, todayStudyTime);
       } else {
-        // api patch today
-        setStudyTime(userData.id, localStudyTime);
+        // 자정 넘지 않은 경우 오늘 공부시간 db 저장
+        setStudyTime(userData.id, localStudyTime, getToday());
       }
-
       
       patchLeaveSession(userData.id, mySessionId);
       if (!isLocalVideoActive) {

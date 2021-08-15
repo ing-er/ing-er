@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import ScreenContainer from '../../components/Room/ScreenContainer';
 import RoomDrawer from '../../components/Room/Drawer';
@@ -17,16 +17,12 @@ const Room = ({
   onIncrease,
   currentUserData,
   handleVideoClick,
+  handleDrawerOpen,
+  handleDrawerClose,
+  open,
 }) => {
   /* drawer */
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
 
   return (
     <Wrapper>

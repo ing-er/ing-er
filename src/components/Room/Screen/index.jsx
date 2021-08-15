@@ -21,7 +21,6 @@ const Screen = ({
   /* subscriber hook */
   useEffect(() => {
     if (streamManager && !!videoRef) {
-      console.log(!!videoRef)
       streamManager.addVideoElement(videoRef.current);
 
       // username 초기화

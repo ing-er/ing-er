@@ -35,6 +35,7 @@ const Webrtc = () => {
   const [subscribers, setSubscribers] = useState([]);
   const [isLocalVideoActive, setIsLocalVideoActive] = useState(false);
   const [currentUserData, setCurrentUserData] = useState(undefined);
+  const [open, setOpen] = useState(false);
 
   /* constructor hook */
   useEffect(() => {
@@ -216,6 +217,18 @@ const Webrtc = () => {
   const handleVideoClick = (e) => {
     const _currentUserData = e.target.dataset.userdata;
     setCurrentUserData(JSON.parse(_currentUserData));
+    
+    if (!open) {
+      setOpen(true);
+    }
+  };
+
+  /* drawer open & close */
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
 
   /**
@@ -317,6 +330,9 @@ const Webrtc = () => {
             isLocalVideoActive={isLocalVideoActive}
             currentUserData={currentUserData}
             handleVideoClick={handleVideoClick}
+            handleDrawerOpen={handleDrawerOpen}
+            handleDrawerClose={handleDrawerClose}
+            open={open}
           />
         </StudyTimeContainer>
       )}

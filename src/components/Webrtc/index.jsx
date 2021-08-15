@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // import { useHistory } from 'react-router';
 
 import axios from 'axios';
@@ -9,7 +9,9 @@ import StudyTimeContainer from '../../containers/StudyTimeContainer';
 import Room from '../../pages/Room';
 
 import { noRefreshEvent } from '../../utils/event';
+import { getTodaySeconds, getYesterday } from '../../utils/date';
 import { setStudyTime } from '../../api/timer/timer';
+import { setReduxStudyTime } from '../../modules/studyTime';
 
 import {
   getCustomSessionAsync,
@@ -27,6 +29,7 @@ const Webrtc = () => {
   const userData = useSelector((state) => state.authorization.userData);
   const localStudyTime = useSelector((state) => state.studyTime.studyTime);
   const { isRandomRoom } = useSelector((state) => state.setIsRandomRoom);
+  const dispatch = useDispatch();
   // const { isJoin, isAuth } = useSelector(({authorization }) => ({
   //   isJoin: authorization.isJoin,
   //   isAuth: authorization.isAuth,
@@ -179,8 +182,22 @@ const Webrtc = () => {
     if (mySession && flag) {
       mySession.disconnect();
 
-      // 공부시간, 종료시간 db 저장
-      setStudyTime(userData.id, localStudyTime);
+      // api call
+      const todaySeconds = getTodaySeconds();
+      if (localStudyTime > todaySeconds) {  // 자정이 넘은 것이면
+        const yesterdayStudyTime = localStudyTime - todaySeconds;
+        const yesterdayFormat = getYesterday();
+        // api patch yesterday
+
+        const todayStudyTime = todaySeconds;
+        dispatch(setReduxStudyTime(todayStudyTime));
+        setStudyTime(userData.id, todayStudyTime);
+      } else {
+        // api patch today
+        setStudyTime(userData.id, localStudyTime);
+      }
+
+      
       patchLeaveSession(userData.id, mySessionId);
       if (!isLocalVideoActive) {
         patchEndRest(userData.id, mySessionId);

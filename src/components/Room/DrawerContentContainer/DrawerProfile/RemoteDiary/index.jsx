@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
-const CalendarDiary = ({ remoteDiary }) => {
+const CalendarDiary = ({ remoteUserInfo }) => {
   return (
     <Grid container direction="column" alignItems="center">
       <Grid
@@ -27,7 +27,7 @@ const CalendarDiary = ({ remoteDiary }) => {
           multiline={true}
           rows={8}
           fullWidth
-          value={remoteDiary}
+          value={remoteUserInfo?.diary}
           disabled={true}
         />
       </Grid>

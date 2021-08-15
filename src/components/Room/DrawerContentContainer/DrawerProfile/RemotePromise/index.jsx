@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
-const RemotePromise = ({ remotePromise }) => {
+const RemotePromise = ({ remoteUserInfo }) => {
   return (
     <Grid container direction="column" alignItems="center">
       <Grid
@@ -27,7 +27,7 @@ const RemotePromise = ({ remotePromise }) => {
           multiline={true}
           rows={8}
           fullWidth
-          value={remotePromise}
+          value={remoteUserInfo?.promise}
           disabled={true}
         />
       </Grid>

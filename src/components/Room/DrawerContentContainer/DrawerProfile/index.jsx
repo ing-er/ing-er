@@ -58,6 +58,7 @@ const DrawerProfile = (props) => {
     if (currUserData) {
       getUserCalendarInfo(currUserData.id, requestdate)
         .then((res) => {
+          console.log(res.data)
           if (res.data) {
             setCurrUserCalendarInfo(res.data);
           } else {
@@ -122,7 +123,7 @@ const DrawerProfile = (props) => {
                 }
               />
             ) : (
-              <RemotePromise remotePromise={currUserCalendarInfo?.promise} />
+              <RemotePromise remoteUserInfo={currUserCalendarInfo} />
             )}
           </div>
         </Grid>
@@ -142,7 +143,7 @@ const DrawerProfile = (props) => {
                 setCalendarEditDiaryIsEditable={setCalendarEditDiaryIsEditable}
               />
             ) : (
-              <RemoteDiary remoteDiary={currUserCalendarInfo?.diary} />
+              <RemoteDiary remoteUserInfo={currUserCalendarInfo} />
             )}
           </div>
         </Grid>

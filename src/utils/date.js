@@ -25,6 +25,12 @@ export const getTodaySeconds = () => {
   return totalSeconds
 }
 
+export const changeKRFormat = (date) => {
+  const [year, month, day] = date.split('-');
+  
+  return `${year}년 ${month}월 ${day}일`
+}
+
 
 const leftpad = (value) => {
   if (value >= 10) {

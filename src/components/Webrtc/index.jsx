@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
+import Swal from 'sweetalert2';
 
 import StudyTimeContainer from '../../containers/StudyTimeContainer';
 import Room from '../../pages/Room';
@@ -175,7 +176,7 @@ const Webrtc = () => {
     });
   };
 
-  /* leave session */
+  /* leave session */  
   const leaveSession = () => {
     const mySession = session;
 
@@ -365,6 +366,7 @@ const Webrtc = () => {
             open={open}
           />
         </StudyTimeContainer>
+        
       )}
     </Wrapper>
   );

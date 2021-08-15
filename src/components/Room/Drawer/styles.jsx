@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
 
     & .MuiDrawer-paper {
       width: 400px;
+      z-index: 50;
     }
   }
   & .chevron-right {
@@ -19,7 +20,7 @@ export const Wrapper = styled.div`
     border-radius: 5px;
   }
   & .drawer1-container {
-    z-index: 10000;
+    z-index: 100;
   }
   & .drawerHeader-right-container {
     display: flex;

@@ -1,10 +1,10 @@
+import { useState } from 'react';
+
 import clsx from 'clsx';
 
 import RoomClose from '../../buttons/RoomClose';
 import RoomPause from '../../buttons/RoomPause';
 import RoomPlay from '../../buttons/RoomPlay';
-
-import { Link } from 'react-router-dom';
 
 import { IconButton } from '@material-ui/core';
 import { ChevronLeft } from '@material-ui/icons';
@@ -12,6 +12,8 @@ import { ChevronLeft } from '@material-ui/icons';
 import { motion } from 'framer-motion';
 import { Wrapper, useDrawerStyles } from './styles';
 import { useHistory } from 'react-router';
+
+import Modal from './modal';
 
 const RoomAppbar = ({
   handleDrawerOpen,
@@ -22,8 +24,13 @@ const RoomAppbar = ({
   classes,
 }) => {
   const drawerClasses = useDrawerStyles();
-
   const history = useHistory();
+  const [showModal, setShowModal] = useState(false);
+
+  const handleBeforeLeaveSession = () => {
+    setShowModal(true);
+  };
+
   const handleLeaveSession = async () => {
     await leaveSession();
     history.push('/Main');
@@ -31,6 +38,11 @@ const RoomAppbar = ({
 
   return (
     <Wrapper>
+      <Modal 
+        showModal={showModal}
+        setShowModal={setShowModal}
+        handleLeaveSession={handleLeaveSession}
+      />
       <div
         className={clsx(drawerClasses.content, {
           [drawerClasses.contentShift]: open,
@@ -52,20 +64,19 @@ const RoomAppbar = ({
             )}
           </motion.div>
         </IconButton>
-        <Link onClick={handleLeaveSession}>
-          <IconButton
-            className="room-buttons-container"
-            style={{ display: 'inline-block' }}
+        <IconButton
+          onClick={handleBeforeLeaveSession}
+          className="room-buttons-container"
+          style={{ display: 'inline-block' }}
+        >
+          <motion.div
+            whileHover={{
+              scale: 1.3,
+            }}
           >
-            <motion.div
-              whileHover={{
-                scale: 1.3,
-              }}
-            >
-              <RoomClose className="room-close" />
-            </motion.div>
-          </IconButton>
-        </Link>
+            <RoomClose className="room-close" />
+          </motion.div>
+        </IconButton>
       </div>
       <div className="open-drawer-container">
         <IconButton

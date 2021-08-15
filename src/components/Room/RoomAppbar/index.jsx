@@ -1,17 +1,17 @@
 import { useState } from 'react';
-
+import { useHistory } from 'react-router';
 import clsx from 'clsx';
 
 import RoomClose from '../../buttons/RoomClose';
 import RoomPause from '../../buttons/RoomPause';
 import RoomPlay from '../../buttons/RoomPlay';
 
-import { IconButton } from '@material-ui/core';
-import { ChevronLeft } from '@material-ui/icons';
+import { changeSessionFormat } from '../../../utils/room';
 
 import { motion } from 'framer-motion';
+import { IconButton } from '@material-ui/core';
+import { ChevronLeft } from '@material-ui/icons';
 import { Wrapper, useDrawerStyles } from './styles';
-import { useHistory } from 'react-router';
 
 import Modal from './modal';
 
@@ -20,6 +20,7 @@ const RoomAppbar = ({
   leaveSession,
   isLocalVideoActive,
   handleVideoMute,
+  mySessionId,
   open,
   classes,
 }) => {
@@ -48,6 +49,9 @@ const RoomAppbar = ({
           [drawerClasses.contentShift]: open,
         })}
       >
+        <div className="room-title">
+          {changeSessionFormat(mySessionId)}
+        </div>
         <IconButton
           onClick={handleVideoMute}
           className="room-buttons-container"

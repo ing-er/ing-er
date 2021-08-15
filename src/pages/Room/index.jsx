@@ -18,6 +18,7 @@ const Room = ({
   handleDrawerOpen,
   handleDrawerClose,
   open,
+  mySessionId,
 }) => {
   /* drawer */
   const classes = useStyles();
@@ -30,6 +31,7 @@ const Room = ({
         handleDrawerOpen={handleDrawerOpen}
         isLocalVideoActive={isLocalVideoActive}
         leaveSession={leaveSession}
+        mySessionId={mySessionId}
         open={open}
         classes={classes}
       />

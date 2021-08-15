@@ -8,6 +8,16 @@ export const Wrapper = styled.div`
   margin-right: 0;
   min-height: 64px;
 
+  & .room-title {
+    position:absolute;
+    align-self: center;
+    left: 0;
+    margin-left: 1rem;
+    font-family: 'Jua';
+    color: #ffffff;
+    font-size: 1.5rem;
+
+  }
   & .center-buttons {
     display: flex;
     justify-content: center;
@@ -19,12 +29,6 @@ export const Wrapper = styled.div`
     padding: 0;
     margin: 1rem;
     cursor: pointer;
-  }
-  & .room-pause {
-    
-  }
-  & .room-close {
-    
   }
   & .center-buttons-container {
     display: flex;

@@ -363,6 +363,7 @@ const Webrtc = () => {
             handleDrawerOpen={handleDrawerOpen}
             handleDrawerClose={handleDrawerClose}
             open={open}
+            mySessionId={mySessionId}
           />
         </StudyTimeContainer>
         

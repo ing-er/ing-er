@@ -71,10 +71,10 @@ const DrawerProfile = (props) => {
     <Wrapper>
       <Grid className="name-container">
         <Typography variant="h4" className="name">
-          {currUserData ? (
-            currUserData.name
-          ) : (
+          {isLocal ? (
             localUserData.name
+            ) : (
+            currUserData.name
           )}
         </Typography>
       </Grid>

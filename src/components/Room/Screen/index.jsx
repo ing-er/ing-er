@@ -58,7 +58,7 @@ const Screen = ({
               data-userdata={JSON.stringify(userData)}
               onClick={handleVideoClick}
               className="screen"
-              autoPlay={true}
+              autoPlay="false"
               ref={videoRef}
             />
           </div>

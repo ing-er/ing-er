@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+// import { useHistory } from 'react-router';
 
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
@@ -25,7 +26,12 @@ const Webrtc = () => {
 
   const userData = useSelector((state) => state.authorization.userData);
   const localStudyTime = useSelector((state) => state.studyTime.studyTime);
-  // const isRandom = useSelector((state) => state.setIsRandomRoom)
+  const { isRandomRoom } = useSelector((state) => state.setIsRandomRoom);
+  // const { isJoin, isAuth } = useSelector(({authorization }) => ({
+  //   isJoin: authorization.isJoin,
+  //   isAuth: authorization.isAuth,
+  // }));
+  // const history = useHistory();
 
   const [flag, setFlag] = useState(false);
   const [OV, setOV] = useState(undefined);
@@ -33,8 +39,9 @@ const Webrtc = () => {
   const [session, setSession] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
-  const [isLocalVideoActive, setIsLocalVideoActive] = useState(true);
+  const [isLocalVideoActive, setIsLocalVideoActive] = useState(false);
   const [currentUserData, setCurrentUserData] = useState(undefined);
+  const [open, setOpen] = useState(false);
 
   /* constructor hook */
   useEffect(() => {
@@ -44,6 +51,11 @@ const Webrtc = () => {
 
     // init OV
     setOV(new OpenVidu());
+
+    // login 사용자
+    // if (!(isJoin && isAuth)) {
+    //   history.push({ pathname: '/' });
+    // }
 
     return () => {
       // component unmount 시 해당 이벤트 제거
@@ -69,7 +81,8 @@ const Webrtc = () => {
 
     // join Session
     if (!flag) {
-      getCustomSessionAsync(userData.id, userData.category-197)
+      const _category = isRandomRoom ? 8 : userData.category - 200;
+      getCustomSessionAsync(userData.id, _category)
         .then((res) => {
           const _mySessionId = res.data;
           setMysessionId(_mySessionId);
@@ -97,8 +110,8 @@ const Webrtc = () => {
             audioSource: undefined,
             videoSource: undefined,
             publishAudio: false,
-            publishVideo: true,
-            resolution: '1920x1080',
+            publishVideo: false,
+            resolution: '640x480',
             frameRate: 30,
             insertMode: 'APPEND',
             mirror: false,
@@ -216,6 +229,18 @@ const Webrtc = () => {
   const handleVideoClick = (e) => {
     const _currentUserData = e.target.dataset.userdata;
     setCurrentUserData(JSON.parse(_currentUserData));
+    
+    if (!open) {
+      setOpen(true);
+    }
+  };
+
+  /* drawer open & close */
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
 
   /**
@@ -317,6 +342,9 @@ const Webrtc = () => {
             isLocalVideoActive={isLocalVideoActive}
             currentUserData={currentUserData}
             handleVideoClick={handleVideoClick}
+            handleDrawerOpen={handleDrawerOpen}
+            handleDrawerClose={handleDrawerClose}
+            open={open}
           />
         </StudyTimeContainer>
       )}

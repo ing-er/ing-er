@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+// import { useHistory } from 'react-router';
 
 import axios from 'axios';
 import { OpenVidu } from 'openvidu-browser';
@@ -25,7 +26,11 @@ const Webrtc = () => {
 
   const userData = useSelector((state) => state.authorization.userData);
   const localStudyTime = useSelector((state) => state.studyTime.studyTime);
-  // const isRandom = useSelector((state) => state.setIsRandomRoom)
+  // const { isJoin, isAuth } = useSelector(({authorization }) => ({
+  //   isJoin: authorization.isJoin,
+  //   isAuth: authorization.isAuth,
+  // }));
+  // const history = useHistory();
 
   const [flag, setFlag] = useState(false);
   const [OV, setOV] = useState(undefined);
@@ -45,6 +50,11 @@ const Webrtc = () => {
 
     // init OV
     setOV(new OpenVidu());
+
+    // login 사용자
+    // if (!(isJoin && isAuth)) {
+    //   history.push({ pathname: '/' });
+    // }
 
     return () => {
       // component unmount 시 해당 이벤트 제거

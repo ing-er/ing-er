@@ -276,9 +276,9 @@ const MyTodolist = (props) => {
                 fontWeight: 'bold',
                 backgroundColor: '#E96F02',
               }}
+              endIcon={<SaveIcon />}
             >
               저장
-              <SaveIcon />
             </Button>
           </Grid>
         </Grid>

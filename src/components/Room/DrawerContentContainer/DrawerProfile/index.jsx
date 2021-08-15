@@ -10,7 +10,8 @@ import { getUserCalendarInfo } from '../../../../api/user';
 import { secToTimeFormat } from '../../../../utils/timer';
 import { getToday } from '../../../../utils/date';
 
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, IconButton } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
 
 import Wrapper from './styles';
 
@@ -25,7 +26,7 @@ const DrawerProfile = (props) => {
     requestdate,
     isEditablePromise,
     isEditableDiary,
-    // setCalendarSaveData,
+    setCalendarSaveData,
     setTodolistSetDate,
     studyTime,
     localUserData,
@@ -66,6 +67,10 @@ const DrawerProfile = (props) => {
     }
   };
 
+  const onClickSaveHandler = () => {
+    setCalendarSaveData();
+  };
+
   return (
     <Wrapper>
       <Grid className="name-container">
@@ -93,6 +98,14 @@ const DrawerProfile = (props) => {
             : secToTimeFormat(0)}
         </Typography>
       </Grid>
+      {isLocal && (
+        <Grid container justify="center">
+          <IconButton onClick={onClickSaveHandler}>
+            <SaveIcon htmlColor="#E96F02" />
+          </IconButton>
+        </Grid>
+      )}
+
       <Grid className="pd-container">
         <Grid className="pd-content-container">
           <div

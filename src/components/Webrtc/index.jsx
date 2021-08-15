@@ -26,6 +26,7 @@ const Webrtc = () => {
 
   const userData = useSelector((state) => state.authorization.userData);
   const localStudyTime = useSelector((state) => state.studyTime.studyTime);
+  const { isRandomRoom } = useSelector((state) => state.setIsRandomRoom);
   // const { isJoin, isAuth } = useSelector(({authorization }) => ({
   //   isJoin: authorization.isJoin,
   //   isAuth: authorization.isAuth,
@@ -80,7 +81,8 @@ const Webrtc = () => {
 
     // join Session
     if (!flag) {
-      getCustomSessionAsync(userData.id, userData.category-197)
+      const _category = isRandomRoom ? 8 : userData.category - 200;
+      getCustomSessionAsync(userData.id, _category)
         .then((res) => {
           const _mySessionId = res.data;
           setMysessionId(_mySessionId);

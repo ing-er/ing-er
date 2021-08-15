@@ -33,7 +33,7 @@ const Webrtc = () => {
   const [session, setSession] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [subscribers, setSubscribers] = useState([]);
-  const [isLocalVideoActive, setIsLocalVideoActive] = useState(true);
+  const [isLocalVideoActive, setIsLocalVideoActive] = useState(false);
   const [currentUserData, setCurrentUserData] = useState(undefined);
 
   /* constructor hook */
@@ -97,7 +97,7 @@ const Webrtc = () => {
             audioSource: undefined,
             videoSource: undefined,
             publishAudio: false,
-            publishVideo: true,
+            publishVideo: false,
             resolution: '640x480',
             frameRate: 30,
             insertMode: 'APPEND',

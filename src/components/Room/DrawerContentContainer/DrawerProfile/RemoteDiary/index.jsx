@@ -27,7 +27,7 @@ const CalendarDiary = ({ remoteUserInfo }) => {
           multiline={true}
           rows={8}
           fullWidth
-          value={remoteUserInfo?.diary}
+          value={remoteUserInfo ? remoteUserInfo.diary : ''}
           disabled={true}
         />
       </Grid>

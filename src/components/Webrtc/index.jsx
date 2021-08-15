@@ -98,7 +98,7 @@ const Webrtc = () => {
             videoSource: undefined,
             publishAudio: false,
             publishVideo: true,
-            resolution: '1920x1080',
+            resolution: '640x480',
             frameRate: 30,
             insertMode: 'APPEND',
             mirror: false,

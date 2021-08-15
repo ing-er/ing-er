@@ -27,7 +27,7 @@ const RemotePromise = ({ remoteUserInfo }) => {
           multiline={true}
           rows={8}
           fullWidth
-          value={remoteUserInfo?.promise}
+          value={remoteUserInfo ? remoteUserInfo.promise : ''}
           disabled={true}
         />
       </Grid>

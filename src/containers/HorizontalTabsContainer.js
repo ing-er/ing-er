@@ -41,8 +41,6 @@ const HorizontalTabsComponent = () => {
     dispatch(setIsLightMode(isLightMode));
   };
 
-  // const { id } = useSelector(({authorization}) => authorization.info.id);
-  // const { id } = useSelector((state) => state.authorization.userData);
   const { id } = useSelector(({ authorization }) => ({
     id: authorization.userData.id,
   }));

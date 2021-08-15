@@ -13,7 +13,6 @@ import {
 } from '../modules/userAuthorization';
 
 import { useHistory } from 'react-router';
-// import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
 
 
@@ -53,13 +52,20 @@ function MemberSettingContainer() {
   }, [name]);
 
   useEffect(() => {
-    setname(info.name);
-    setCategory(info.category);
-    setisOpen(info.isOpen);
-    if (Object.keys(info).includes('isOpen') === false) {
+    if (isJoin && isAuth){
+      setname('');
       setisOpen(true);
-    };
-  }, [info]);
+    } else if (!isJoin && isAuth) {
+      setname(info.name);
+      setisOpen(info.isOpen);
+    }
+    setCategory(info.category);
+
+    //* 회원 탈퇴 시.
+    if (!isJoin && !isAuth) {
+      history.push({ pathname: '/' });
+    }
+  }, [info, isJoin, isAuth]);
   
   useEffect(() => {
     if (update?.message) {
@@ -67,13 +73,6 @@ function MemberSettingContainer() {
       dispatch(typeInitialize());
     }
   }, [update]);
-
-  useEffect(() => {
-    if (!isJoin && !isAuth) {      
-      history.push({ pathname: '/' });
-    }
-  }, [isJoin, isAuth]);
-
 
   const onUpdateInfo = () => {
     const validation = /^[0-9a-zA-Zㄱ-ㅎ|ㅏ-ㅣ|가-힣]+$/;
@@ -91,9 +90,14 @@ function MemberSettingContainer() {
           icon: 'success',
           background: '#292A33',
           confirmButtonColor: '#E96F02',
-          confirmButtonText: 'OK!',
+          confirmButtonText: '방으로 이동',
+          showCancelButton: true,
+          cancelButtonText: '취소',
         }).then((result) => {
-        })
+          if (result.isConfirmed) {
+            history.push({ pathname: '/main' });
+          };
+        });
       } else {
         //* 새로 가입하는 회원일 경우,
           const data = {
@@ -105,16 +109,20 @@ function MemberSettingContainer() {
         dispatch(typeInitInfo(data));
         // alert('저장되었습니다.');
         Swal.fire({
-          title: '<span style="color: white">저장되었습니다. <span>',
+          title: '<span style="color: white">가입되었습니다. <span>',
           icon: 'success',
           background: '#292A33',
           confirmButtonColor: '#E96F02',
-          confirmButtonText: 'OK!',
+          confirmButtonText: '방으로 이동',
+          showCancelButton: true,
+          cancelButtonText: '취소',
         }).then((result) => {
-        })
-      }
+          if (result.isConfirmed) {
+            history.push({ pathname: '/main' });
+          };
+        });
+      };
     } else {
-      // alert('다음과 같은 기준을 맞춰 주십시오. \n 닉네임은 2자 이상, 6자 이하, 숫자, 알파벳, 한글만 가능 \n 닉네임 중복 확인 \n 카테고리, 다짐 공개여부 선택')
       Swal.fire({
         title: '<span style="color: white">기준을 맞춰 주십시오. <span>',
         // text: '닉네임은 2자 이상, 6자 이하, 숫자, 알파벳, 한글만 가능 \n 닉네임 중복 확인 \n 카테고리, 다짐 공개여부 선택',

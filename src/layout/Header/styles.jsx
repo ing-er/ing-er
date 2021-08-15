@@ -16,7 +16,7 @@ const Wrapper = styled.div`
     padding: 0.4rem;
     background-color: transparent;
     box-shadow: none;
-    transition: all .3s ease;
+    transition: all 0.3s ease;
   }
   & .hide {
     top: -70px;
@@ -32,12 +32,12 @@ const Wrapper = styled.div`
     border-radius: 1.25rem;
     color: white;
     font-weight: bold;
-    background-color: #E96F02;
+    background-color: #e96f02;
     margin: 0.5rem;
 
     &:hover {
       background-color: white;
-      color: #E96F02;
+      color: #e96f02;
     }
   }
 

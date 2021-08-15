@@ -17,6 +17,7 @@ return formData.oAuthId;
 
 export async function isAuthAsync() {
   const token = window.localStorage.getItem('CURRENT_USER');
+  //* 처음 이용하는 사용자
   if (token == null){
     return 1
   }
@@ -33,6 +34,7 @@ export async function isAuthAsync() {
   if (!response.status == 200) {
     throw new Error('사용자 인증에 실패했습니다.');
   }
+  //* 회원가입을 하려는 사용자
   if (response.data == "") {
     return 2
   }

@@ -58,7 +58,6 @@ const DrawerProfile = (props) => {
     if (currUserData) {
       getUserCalendarInfo(currUserData.id, requestdate)
         .then((res) => {
-          console.log(res.data)
           if (res.data) {
             setCurrUserCalendarInfo(res.data);
           } else {

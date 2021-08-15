@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { typeLogin } from '../modules/userAuthorization';
 import KakaoLogin from '../components/Entrance/KakaoLogin';
 import CommonLogin from '../components/Entrance/CommonLogin';
-
 import {
   setKakoDialogOpen,
   setKakoDialogClose,
+  typeAuthUser,
 } from '../modules/userAuthorization';
 import { useHistory } from 'react-router';
-import Swal from 'sweetalert2';
 
 // * =====================
 // *   LOGIN_CONTAINER(CT)
@@ -18,23 +17,32 @@ import Swal from 'sweetalert2';
 function LoginContainer() {
   //* useDispatch
   const dispatch = useDispatch();
-  const history = useHistory();  
+  const history = useHistory();
 
-  let { isJoin, isAuth } = useSelector(({authorization }) => ({
+  let { isJoin, isAuth, isAdmin } = useSelector(({ authorization }) => ({
     isJoin: authorization.isJoin,
     isAuth: authorization.isAuth,
+    isAdmin: authorization.isAdmin,
   }));
   
   const [uniqueNumber, setUniqueNumber] = useState('');
   //* dispatch 'LOGIN_USER' type
 
   useEffect(() => {
-    if (isJoin && isAuth) {
-      history.push({ pathname: '/joinsetting' });
-    } else if (!isJoin && isAuth) {
-      history.push({ pathname: '/main' });
-    };
-  }, [isJoin, isAuth]);
+    dispatch(typeAuthUser());
+  }, []);
+
+  useEffect(() => {
+    if (isAdmin){
+      history.push({ pathname: '/adminsetting' });
+    } else {
+      if (isJoin && isAuth) {
+        history.push({ pathname: '/joinsetting' });
+      } else if (!isJoin && isAuth) {
+        history.push({ pathname: '/main' });
+      };
+    }
+  }, [isAdmin, isJoin, isAuth]);
 
   const onPressUniqueNumber = () => {
     if (uniqueNumber == '') {
@@ -68,8 +76,6 @@ function LoginContainer() {
     dispatch(setKakoDialogClose());
   };
 
-  // const { isOpen } = useSelector((state) => state.authorization);
-
   //* RENDER
   return (
     <>
@@ -82,7 +88,6 @@ function LoginContainer() {
         socialLogin={socialLogin}
         setKakaoDialogOpen={setKakaoDialogOp}
         setKakaoDialogClose={setKakoDialogCl}
-        // isOpen={isOpen}
       />
     </>
   );

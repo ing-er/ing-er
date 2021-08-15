@@ -64,6 +64,9 @@ export async function updateDetailCodeAsync(data) {
   const response = await axios.post(
 		`${SERVER_URL}admin/setDetailsCode/${data.name}/${data.type}`,
   );
-  return response.data;
+  if (response.status == 200){
+    return response.data;
+  };
+  return {message: 'fail'};
 }
 

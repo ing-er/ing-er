@@ -44,14 +44,6 @@ export async function getUserInfoAsync() {
   const kakaoIdNum = window.localStorage.getItem('CURRENT_USER');
   const response = await axios.get(
     `${SERVER_URL}users/${kakaoIdNum}`,
-		// formData,
-    // {
-    //   headers: {
-    //     xauth: token,
-    //     'Content-Type': 'application/json',
-    //   },
-    //   withCredentials: true,
-    // }
   );
   return response.data;
 }

@@ -1,6 +1,8 @@
+import { useHistory } from 'react-router';
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import DirectorSetting from '../components/Entrance/DirectorSetting';
+import {typeAuthUser} from '../modules/userAuthorization';
 import {
 	typeGetUserInfo, 
 	typePostUserCode, 
@@ -16,8 +18,19 @@ import {
 
 // import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
+// import styled from 'styled-components';
+// import mySwal from '../App.css';
+
+// const mySwal = styled.div`
+// 	z-index: 1000000;
+// `;
 
 const DirectorSettingContainer = () => {
+	
+// const mySwal = {
+// 	zIndex: '100000000',
+// };
+	const history = useHistory();
   const dispatch = useDispatch();
 
 	let { 
@@ -32,7 +45,9 @@ const DirectorSettingContainer = () => {
 		updateDetailCodeSuccess,
 		error,
 		user_error,
-		 } = useSelector(({ directorSetting }) => ({
+		updateDetailError,
+		isAdmin,
+		 } = useSelector(({ directorSetting, authorization }) => ({
 		users: directorSetting.users,
 		updateSuccess: directorSetting.updateSuccess,
 		commonCode: directorSetting.commonCode,
@@ -44,6 +59,8 @@ const DirectorSettingContainer = () => {
 		updateDetailCodeSuccess: directorSetting.updateDetailCodeSuccess,
 		error: directorSetting.error,
 		user_error: directorSetting.user_error,
+		updateDetailError: directorSetting.updateDetailError,
+    isAdmin: authorization.isAdmin,
   }));
 	
   const [name, setName] = useState('');
@@ -54,16 +71,31 @@ const DirectorSettingContainer = () => {
   const [updatecodeFlag, setUpdatecodeFlag] = useState('');
 
 	const alphaToNum = {
-		'일반 회원': 101,
-		관리자: 102,
-		'제재 회원': 103,
+		'일반 회원': 1,
+		관리자: 2,
+		'제재 회원': 3,
 	};
 
 	useEffect(() => {
 		dispatch(typeGetCommonCode());
 		dispatch(typeGetDetailCode());
 		dispatch(typeInitUpdateInfo());
+		dispatch(typeAuthUser());
   }, []);
+
+	useEffect(() => {
+		if (!isAdmin){
+			Swal.fire({
+				title: '<span style="color: white">잘못된 접근입니다. <span>',
+				icon: 'error',
+				background: '#292A33',
+				// confirmButtonColor: '#E96F02',
+				// confirmButtonText: 'OK!',
+			}).then((result) => {
+			});
+			history.push({ pathname: '/' });
+		};
+  }, [isAdmin]);
 
 	useEffect(() => {
 		if (users?.name && users?.usercode){
@@ -104,6 +136,7 @@ const DirectorSettingContainer = () => {
 	useEffect(() => {
 		if (deleteCommonCodeSuccess?.message){
 			dispatch(typeGetCommonCode());
+			dispatch(typeGetDetailCode());
 			dispatch(typeInitUpdateInfo())
 		}
   }, [deleteCommonCodeSuccess]);
@@ -125,16 +158,35 @@ const DirectorSettingContainer = () => {
 	useEffect(() => {
 		if (deleteDetailCodeSuccess?.message){
 			dispatch(typeGetDetailCode());
-			dispatch(typeInitUpdateInfo())
+			dispatch(typeInitUpdateInfo());
 		}
   }, [deleteDetailCodeSuccess]);
 
 	useEffect(() => {
 		if (updateDetailCodeSuccess?.message){
 			dispatch(typeGetDetailCode());
-			dispatch(typeInitUpdateInfo())
+			dispatch(typeInitUpdateInfo());
 		}
   }, [updateDetailCodeSuccess]);
+
+	useEffect(() => {
+		if (updateDetailError == 'fail'){
+			alert('존재하지 않는 공통코드입니다.')
+			// Swal.fire({
+			// 	target: document.getElementById('form-modal'),
+			// 	title: '<span style="color: white">존재하지 않는 공통코드입니다. <span>',
+			// 	icon: 'error',
+			// 	background: '#292A33',
+			// 	confirmButtonColor: '#E96F02',
+			// 	confirmButtonText: 'OK!',
+			// 	customClass: {
+			// 		container: 'mySwal',
+			// 		// content: mySwal,
+			// 	},
+			// }).then((result) => {
+			// });
+		}
+  }, [updateDetailError]);
 
 	const onSearchUser = (e) => {
 		if (e.which == 13){

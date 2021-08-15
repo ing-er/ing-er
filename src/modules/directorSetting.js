@@ -261,7 +261,6 @@ const initialState = {
 /* 리듀서 선언 */
 // 리듀서는 export default 로 내보내주세요.
 export default function directorSetting(state = initialState, action) {
-
   switch (action.type) {
     //*   GET_USER_INFO
     case GET_USER_INFO_A:
@@ -398,7 +397,7 @@ export default function directorSetting(state = initialState, action) {
     case UPDATE_DETAIL_CODE_FAILURE:
       return {
         ...state,
-        error: action.payload,
+        updateDetailError: 'fail',
       };
 
     case INIT_UPDATE_INFO:
@@ -412,6 +411,7 @@ export default function directorSetting(state = initialState, action) {
         deleteDetailCodeSuccess: {},
         updateDetailCodeSuccess: {},
         error: {},
+        updateDetailError: {}
       };
 
     default:

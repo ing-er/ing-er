@@ -184,9 +184,9 @@ function getStyles(name, personName, theme) {
 const kindsOfCode = ['일반 회원', '제재 회원', '관리자'];
 
 const numToAlpha = {
-  101: '일반 회원',
-  102: '관리자',
-  103: '제재 회원',
+  1: '일반 회원',
+  2: '관리자',
+  3: '제재 회원',
 };
 
 const ITEM_HEIGHT = 48;
@@ -255,6 +255,35 @@ const DIRECTORSETTING = ({
     <Wrapper>
       <Container className="main-container">
         <Grid container spacing={2} className="container">
+          <Grid className="contents-container header">
+            <Grid>
+              <h1>회원 신고 내역</h1>
+            </Grid>
+            <Grid>
+              <Grid>
+                <div className={classes.root}>
+                  <Button
+                    variant="outlined"
+                    style={{
+                      borderRadius: '1.25rem',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      backgroundColor: '#292A33',
+                      marginRight: '1rem',
+                    }}
+                    onClick={() =>
+                      window.open(
+                        'https://docs.google.com/forms/d/1pwqR9RI6NNMvqef3TzP3L6LeYVW2YIdQkuy9dnEZ61Q/edit?ts=61162cc9#responses',
+                        '_blank',
+                      )
+                    }
+                  >
+                    이동하기
+                  </Button>
+                </div>
+              </Grid>
+            </Grid>
+          </Grid>
           <Grid className="contents-container header">
             <Grid>
               <h1>회원 권한 변경</h1>

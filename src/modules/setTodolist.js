@@ -473,8 +473,8 @@ const setTodolist = (state = initialState, action) => {
         ...state,
         todolist: todolistToday,
         allTodolist: todolistData,
-        // todocomplete: todolistComplete,
-        // todototal: todolistTotal,
+        todocomplete: todolistComplete,
+        todototal: todolistTotal,
         todopercent:
           todolistTotal === 0
             ? 0

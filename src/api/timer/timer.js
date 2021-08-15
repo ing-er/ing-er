@@ -1,12 +1,10 @@
 import axios from 'axios';
-import { getToday } from '../../utils/date';
 
 // common variables
 const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-const date = getToday();
 
 // get user's study time
-export const getStudyTime = async (userId) => {
+export const getStudyTime = async (userId, date) => {
   const url = `${SERVER_URL}timer/${userId}/${date}`
   
   const response = await axios.get(url);
@@ -14,7 +12,7 @@ export const getStudyTime = async (userId) => {
 }
 
 // save user's current study time
-export const setStudyTime = async (userId, studyTime) => {
+export const setStudyTime = async (userId, studyTime, date) => {
   const url = `${SERVER_URL}timer/regist`
   const formData = {
     date,

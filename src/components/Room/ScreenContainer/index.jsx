@@ -28,7 +28,9 @@ const ScreenContainer = ({
   return (
     <Wrapper>
       <Grid container spacing={9}>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} md={6} lg={4}
+          className="screen-item-container"
+        >
           <Screen
             streamManager={publisher}
             isLocalVideoActive={isLocalVideoActive}
@@ -40,7 +42,9 @@ const ScreenContainer = ({
         </Grid>
         {subs.map((sub, idx) => {
           return (
-            <Grid item xs={12} md={6} lg={4} key={idx}>
+            <Grid item xs={12} md={6} lg={4} key={idx}
+              className="screen-item-container"
+            >
               <Screen
                 streamManager={sub}
                 isLocal={false}

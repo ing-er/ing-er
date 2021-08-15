@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 import { getStudyTime } from '../../../../api/timer/timer';
+import { getToday } from '../../../../utils/date';
 
 import Wrapper from './styles';
 
@@ -52,7 +53,7 @@ const Timer = ({
     const userId = userData.id;
     
     if (!isLocal) {
-      getStudyTime(userId)
+      getStudyTime(userId, getToday())
         .then((response) => {
           const secs = response.data.studyTime
           setSeconds(secs)

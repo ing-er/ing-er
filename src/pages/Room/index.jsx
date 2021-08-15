@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 import ScreenContainer from '../../components/Room/ScreenContainer';
 import RoomDrawer from '../../components/Room/Drawer';
 import RoomAppbar from '../../components/Room/RoomAppbar';
@@ -20,6 +18,7 @@ const Room = ({
   handleDrawerOpen,
   handleDrawerClose,
   open,
+  mySessionId,
 }) => {
   /* drawer */
   const classes = useStyles();
@@ -32,6 +31,7 @@ const Room = ({
         handleDrawerOpen={handleDrawerOpen}
         isLocalVideoActive={isLocalVideoActive}
         leaveSession={leaveSession}
+        mySessionId={mySessionId}
         open={open}
         classes={classes}
       />

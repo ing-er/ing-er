@@ -16,8 +16,3 @@ export const secToTimeFormat = (sec) => {
 
   return time;
 };
-
-
-export const tmp = () => {
-  
-}

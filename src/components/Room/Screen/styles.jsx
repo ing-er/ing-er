@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   &:before {
     content: '';
     display: block;
-    padding-top: 56.25%;
+    padding-top: 75%;
   }
 
   & .conference-content {

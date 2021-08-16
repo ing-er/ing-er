@@ -7,7 +7,8 @@ export const changeSessionFormat = (sessionId) => {
     8: '기타',
   };
 
-  const category_name = categories[sessionId.charAt(0)];
+  let category_name = categories[sessionId.charAt(0)];
+  category_name = (category_name === undefined) ? '기타' : category_name;
   const title = `${category_name}방`;
 
   return title;

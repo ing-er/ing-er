@@ -9,11 +9,11 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import { useEffect } from 'react';
 
 const CalendarDiary = ({ remoteUserInfo }) => {
-  const [diary, setDiary] = useState(remoteUserInfo.diary);
+  const [diary, setDiary] = useState(remoteUserInfo?.diary);
   
   useEffect(() => {
     console.log('calendarDiary constructor hook')
-    setDiary(remoteUserInfo.diary)
+    setDiary(remoteUserInfo?.diary)
   }, [remoteUserInfo])
   
   return (

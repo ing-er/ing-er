@@ -7,11 +7,11 @@ import {
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 const RemotePromise = ({ remoteUserInfo }) => {
-  const [promise, setPromise] = useState(remoteUserInfo.promise);
+  const [promise, setPromise] = useState(remoteUserInfo?.promise);
 
   useEffect(() => {
     console.log('calendarPromise constructor hook')
-    setPromise(remoteUserInfo.promise);
+    setPromise(remoteUserInfo?.promise);
   }, [remoteUserInfo])
 
   return (

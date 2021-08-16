@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import {
-  TextField,
-  Grid
-} from '@material-ui/core';
+import { TextField, Grid } from '@material-ui/core';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 const RemotePromise = ({ remoteUserInfo }) => {
@@ -30,7 +27,8 @@ const RemotePromise = ({ remoteUserInfo }) => {
         item
         className="textfield-grid"
         style={{
-          backgroundColor: 'white',
+          backgroundColor: '#F6F7F9',
+          padding: '20px',
         }}
       >
         {isSecret ? (
@@ -48,6 +46,7 @@ const RemotePromise = ({ remoteUserInfo }) => {
             fullWidth
             value={promise ? promise : ''}
             disabled={true}
+            InputProps={{ disableUnderline: true }}
           />
         )}
       </Grid>

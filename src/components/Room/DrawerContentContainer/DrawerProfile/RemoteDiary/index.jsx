@@ -1,9 +1,6 @@
 import { useState } from 'react';
 
-import {
-  TextField,
-  Grid
-} from '@material-ui/core';
+import { TextField, Grid } from '@material-ui/core';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import { useEffect } from 'react';
@@ -23,6 +20,7 @@ const CalendarDiary = ({ remoteUserInfo }) => {
         item
         style={{
           fontSize: 20,
+          color: '#0E263E',
         }}
       >
         <AssignmentIcon />
@@ -32,7 +30,8 @@ const CalendarDiary = ({ remoteUserInfo }) => {
         item
         className="textfield-grid"
         style={{
-          backgroundColor: 'white',
+          backgroundColor: '#F6F7F9',
+          padding: '20px',
         }}
       >
         {isSecret ? (
@@ -50,6 +49,7 @@ const CalendarDiary = ({ remoteUserInfo }) => {
             fullWidth
             value={diary ? diary : ''}
             disabled={true}
+            InputProps={{ disableUnderline: true }}
           />
         )}
       </Grid>

@@ -84,7 +84,7 @@ const Webrtc = () => {
 
     // join Session
     if (!flag) {
-      const _category = isRandomRoom ? 8 : userData.category - 200;
+      const _category = isRandomRoom ? 8 : userData.category;
       getCustomSessionAsync(userData.id, _category)
         .then((res) => {
           const _mySessionId = res.data;

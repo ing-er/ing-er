@@ -4,7 +4,15 @@ import {
 } from '@material-ui/core';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
+import { useEffect } from 'react';
+
 const CalendarDiary = ({ remoteUserInfo }) => {
+  
+  useEffect(() => {
+    console.log('calendarDiary constructor hook')
+    console.log(remoteUserInfo)
+  }, [remoteUserInfo])
+  
   return (
     <Grid container direction="column" alignItems="center">
       <Grid

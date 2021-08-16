@@ -77,7 +77,7 @@ const DrawerProfile = (props) => {
     setRemoterequestdate(currDate);
   };
 
-  // 2.remote request date 변수
+  // 2.remote request date hook
   useEffect(() => {
     console.log('remote 요청 날짜 변경')
     handleRemoteUserCalendarInfo();
@@ -143,8 +143,8 @@ const DrawerProfile = (props) => {
               ? secToTimeFormat(studyTime)
               : secToTimeFormat(calendardata.studyTime)
             : remoteUserCalendarInfo
-            ? secToTimeFormat(remoteUserCalendarList.studyTime)
-            : secToTimeFormat(0)}
+              ? secToTimeFormat(remoteUserCalendarInfo.studyTime)
+              : secToTimeFormat(0)}
         </Typography>
       </Grid>
       {isLocal && (

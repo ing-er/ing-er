@@ -25,13 +25,13 @@ export const setCalendarBackground = (calendar) => {
 const getColor = (time) => {
   let colorCode = '';
 
-  if (0 < time && time < 3) {
+  if (0 < time && time < 10800) {
     colorCode = '#fff5ed';
-  } else if (time < 6) {
+  } else if (time < 21600) {
     colorCode = '#ffe0ca';
-  } else if (time < 10) {
+  } else if (time < 36000) {
     colorCode = '#ffab72';
-  } else if (time >= 10) {
+  } else if (time >= 36000) {
     colorCode = '#E96F02';
   }
 

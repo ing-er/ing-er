@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCalendarSetDate } from '../../../modules/setCalendar';
+
+import { getToday } from '../../../utils/date';
 
 import { motion } from 'framer-motion';
 import { Button } from '@material-ui/core';
@@ -25,16 +27,26 @@ const modal = {
 const Modal = ({ showModal, setShowModal, handleLeaveSession }) => {
   const dispatch = useDispatch();
   const { requestcalendar } = useSelector((state) => state.setCalendar);
-  const printTodayPromise = () => {
-    let today = new Date();
-    let year = today.getFullYear();
-    let month = ('0' + (today.getMonth() + 1)).slice(-2);
-    let day = ('0' + today.getDate()).slice(-2);
-    let todaydate = year + '-' + month + '-' + day;
-    dispatch(setCalendarSetDate(todaydate));
-    console.log(requestcalendar.promise);
-    return requestcalendar.promise;
-  };
+  const [myPromise, setMyPromise] = useState('');
+
+  /* constructor */
+  useEffect(() => {
+    const today = getToday();
+    dispatch(setCalendarSetDate(today));
+
+    const _promise = requestcalendar.promise
+    setMyPromise(_promise);
+  }, [])
+
+  /* requestcalendar hook */
+  useEffect(() => {
+    const today = getToday();
+    const currDate = requestcalendar.date;
+    if (currDate !== today) return
+    
+    const _promise = requestcalendar.promise
+    setMyPromise(_promise)
+  }, [requestcalendar]);
 
   return (
     <>
@@ -49,7 +61,9 @@ const Modal = ({ showModal, setShowModal, handleLeaveSession }) => {
           <motion.div className="modal" variants={modal}>
             <p>오늘 이런 다짐을 하셨네요!</p>
             <div className="promise-container">
-              <p className="promise"></p>
+              <p className="promise">
+                {myPromise ? myPromise : '오늘 작성한 다짐이 없습니다.'}
+              </p>
             </div>
             <p>정말로 나가시겠어요?</p>
             <div className="button-container">

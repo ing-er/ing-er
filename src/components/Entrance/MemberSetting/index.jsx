@@ -118,16 +118,16 @@ function MEMBERSETTING({
   };
 
   const categoryName = {
-    204: '수능',
-    205: '취준',
-    206: '자격증',
+    204: '?��?��',
+    205: '취�??',
+    206: '?��격증',
     207: '고시',
-    208: '기타',
+    208: '기�??',
   };
 
   const isOpenName = {
     true: '공개',
-    false: '비공개',
+    false: '비공�?',
   };
 
   return (
@@ -141,7 +141,7 @@ function MEMBERSETTING({
         <Grid container direction="column" className="container">
           <Grid item xs={12}>
             <div class="title" style={{ fontSize: '36px' }}>
-              회원 정보 입력
+              ?��?�� ?���? ?��?��
             </div>
           </Grid>
           <Grid item xs={12}>
@@ -153,7 +153,7 @@ function MEMBERSETTING({
               xs={12}
             >
               <Grid item xs={2}>
-                <h1>닉네임</h1>
+                <h1>?��?��?��</h1>
               </Grid>
               <Grid item xs={8}>
                 <Grid container spacing={1} alignItems="flex-end">
@@ -187,7 +187,7 @@ function MEMBERSETTING({
                   }}
                   onClick={onDuplicateHandler}
                 >
-                  중복 확인
+                  중복 ?��?��
                 </Button>
               </Grid>
             </Grid>
@@ -195,10 +195,10 @@ function MEMBERSETTING({
           <Grid item xs={12} className="category-container">
             <Grid container direction="column">
               <Grid item xs={12}>
-                <h1>카테고리 설정</h1>
+                <h1>카테고리 ?��?��</h1>
               </Grid>
               <Grid item xs={12}>
-                <p>현재 카테고리 : {categoryName[category]}</p>
+                <p>?��?�� 카테고리 : {categoryName[category]}</p>
               </Grid>
               <Grid
                 container
@@ -215,7 +215,7 @@ function MEMBERSETTING({
                       setCategory(e.currentTarget.value);
                     }}
                   >
-                    수능
+                    ?��?��
                   </Button>
                 </Grid>
                 <Grid item xs={2}>
@@ -226,7 +226,7 @@ function MEMBERSETTING({
                       setCategory(e.currentTarget.value);
                     }}
                   >
-                    취준
+                    취�??
                   </Button>
                 </Grid>
                 <Grid item xs={2}>
@@ -237,7 +237,7 @@ function MEMBERSETTING({
                       setCategory(e.currentTarget.value);
                     }}
                   >
-                    자격증
+                    ?��격증
                   </Button>
                 </Grid>
                 <Grid item xs={2}>
@@ -259,7 +259,7 @@ function MEMBERSETTING({
                       setCategory(e.currentTarget.value);
                     }}
                   >
-                    기타
+                    기�??
                   </Button>
                 </Grid>
               </Grid>
@@ -274,7 +274,7 @@ function MEMBERSETTING({
               xs={12}
             >
               <Grid item xs={3}>
-                <h1>다짐 공개 여부</h1>
+                <h1>?���? 공개 ?���?</h1>
               </Grid>
               <Grid item xs={7}></Grid>
               <Grid item xs={2}>
@@ -292,7 +292,7 @@ function MEMBERSETTING({
                 />
               </Grid>
             </Grid>
-            <p>현재 다짐 공개 여부 : {isOpenName[isOpen]}</p>
+            <p>?��?�� ?���? 공개 ?���? : {isOpenName[isOpen]}</p>
           </Grid>
           {!isJoin && isAuth ? (
             <Grid item xs={12}>
@@ -304,7 +304,7 @@ function MEMBERSETTING({
                 xs={12}
               >
                 <Grid item xs={2}>
-                  <h1>회원 탈퇴</h1>
+                  <h1>?��?�� ?��?��</h1>
                 </Grid>
                 <Grid item xs={8}></Grid>
                 <Grid item xs={2}>
@@ -318,7 +318,7 @@ function MEMBERSETTING({
                     }}
                     onClick={handleClickOpen}
                   >
-                    탈퇴하기
+                    ?��?��?���?
                   </Button>
                   <Dialog
                     onClose={handleClose}
@@ -333,7 +333,7 @@ function MEMBERSETTING({
                         color: 'white',
                       }}
                     >
-                      회원 탈퇴
+                      ?��?�� ?��?��
                     </DialogTitle>
                     <DialogContent
                       dividers
@@ -343,9 +343,9 @@ function MEMBERSETTING({
                       }}
                     >
                       <Typography gutterBottom>
-                        공부기록 등 그 외 사용자가 설정한 모든 정보가 사라지고,
+                        공�??기록 ?�� �? ?�� ?��?��?���? ?��?��?�� 모든 ?��보�?? ?��?���?�?,
                         <br></br>
-                        복구가 불가능 합니다.
+                        복구�? 불�???�� ?��?��?��.
                       </Typography>
                     </DialogContent>
                     <DialogActions
@@ -361,7 +361,7 @@ function MEMBERSETTING({
                           color: '#CD0C22',
                         }}
                       >
-                        탈퇴하기
+                        ?��?��?���?
                       </Button>
                     </DialogActions>
                   </Dialog>

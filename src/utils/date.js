@@ -26,7 +26,14 @@ export const getTodaySeconds = () => {
 }
 
 export const changeKRFormat = (date) => {
-  const [year, month, day] = date.split('-');
+  let [year, month, day] = date.split('-');
+  
+  if (month.charAt(0) === '0') {
+    month = month.slice(1);
+  }
+  if (day.charAt(0) === '0') {
+    day = day.slice(1);
+  }
   
   return `${year}년 ${month}월 ${day}일`
 }

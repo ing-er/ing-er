@@ -1,12 +1,29 @@
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+import { setCalendarBackground } from '../../../../utils/calendar';
+
 import { Container } from '@material-ui/core';
 import Calendar from 'react-calendar';
 import '../Calendar.css';
 import dayjs from 'dayjs';
-
 import Wrapper from './styles';
 
 const CalendarComponent = (props) => {
   let { setCalendarSetDate, setTodolistSetDate, isLightMode } = props;
+
+  const [activeMonth, setActiveMonth] = useState(new Date().getMonth() + 1)
+  const { calendar } = useSelector((state) => state.setCalendar);
+
+  useEffect(() => {
+    setCalendarBackground(calendar);
+  }, [activeMonth]);
+
+  const handleChange = ({ activeStartDate }) => {
+    const _activeMonth = activeStartDate.getMonth() + 1;
+    setActiveMonth(_activeMonth)
+  }
+
   const onChangeDate = (value, event) => {
     let year = value.getFullYear();
     let month = ('0' + (value.getMonth() + 1)).slice(-2);
@@ -39,6 +56,7 @@ const CalendarComponent = (props) => {
         <Calendar
           className="calendar"
           onChange={onChangeDate}
+          onActiveStartDateChange={handleChange}
           calendarType="US"
           formatDay={(locale, date) => formatDate(locale, date)}
         />

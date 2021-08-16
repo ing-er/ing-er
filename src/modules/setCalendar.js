@@ -8,10 +8,7 @@ export const EDITDIARYISEDITABLE = 'EDITDIARYISEDITABLE';
 export const SETDATE = 'CALENDAR/SETDATE';
 export const SAVEDATA = 'SAVEDATA';
 
-// const HOST = 'localhost:8080';
-const HOST = 'i5a208.p.ssafy.io';
-const serverUrl = `https://${HOST}/api/v1`;
-// const serverUrl = process.env.REACT_APP_SERVER_URL;
+const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 export const setCalendarEditPromise = (promise) => ({
   type: EDITPROMISE,

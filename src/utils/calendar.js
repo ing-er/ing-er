@@ -13,9 +13,14 @@ export const setCalendarBackground = (calendar) => {
   const abbr = document.querySelectorAll('abbr');
   for (let ab of abbr) {
     const myAriaLabel = ab.getAttribute('aria-label');
+    const parentEle = ab.parentElement;
+    
+    // 초기화
+    parentEle.style.backgroundColor = 'transparent';
+    
+    // 색칠
     const idx = dateList.indexOf(myAriaLabel);
     if (idx !== -1) {
-      const parentEle = ab.parentElement;
       const color = getColor(studyTimes[idx]);
       parentEle.style.backgroundColor = color;
     }

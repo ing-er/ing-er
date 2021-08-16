@@ -7,11 +7,11 @@ import Wrapper from './styles';
 
 const CalendarDiary = ({ remoteUserInfo, currentUserData }) => {
   const [diary, setDiary] = useState(remoteUserInfo?.diary);
-  const [isSecret, setIsSecret] = useState(remoteUserInfo?.isOpen);
+  const [isSecret, setIsSecret] = useState(currentUserData?.isOpen);
   
   useEffect(() => {
     setDiary(remoteUserInfo?.diary);
-    setIsSecret(remoteUserInfo?.isOpen);
+    setIsSecret(currentUserData?.isOpen);
   }, [remoteUserInfo])
   
   return (

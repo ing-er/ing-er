@@ -11,10 +11,7 @@ const RemotePromise = ({ remoteUserInfo, currentUserData }) => {
 
   useEffect(() => {
     setPromise(remoteUserInfo?.promise);
-    setIsSecret(remoteUserInfo?.isOpen);
-    console.log(currentUserData)
-    console.log(remoteUserInfo)
-    console.log(isSecret)
+    setIsSecret(currentUserData?.isOpen);
   }, [remoteUserInfo, currentUserData])
 
   return (

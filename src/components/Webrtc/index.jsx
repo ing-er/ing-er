@@ -65,7 +65,6 @@ const Webrtc = () => {
       .then((res) => {
         let dbStudyTime = res.data.studyTime;
         dbStudyTime = dbStudyTime ? dbStudyTime : 0;
-        console.log(dbStudyTime)
         dispatch(setReduxStudyTime(dbStudyTime));
       })
 

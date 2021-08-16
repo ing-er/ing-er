@@ -12,7 +12,6 @@ const CalendarDiary = ({ remoteUserInfo }) => {
   const [diary, setDiary] = useState(remoteUserInfo?.diary);
   
   useEffect(() => {
-    console.log('calendarDiary constructor hook')
     setDiary(remoteUserInfo?.diary)
   }, [remoteUserInfo])
   

@@ -10,7 +10,6 @@ const RemotePromise = ({ remoteUserInfo }) => {
   const [promise, setPromise] = useState(remoteUserInfo?.promise);
 
   useEffect(() => {
-    console.log('calendarPromise constructor hook')
     setPromise(remoteUserInfo?.promise);
   }, [remoteUserInfo])
 

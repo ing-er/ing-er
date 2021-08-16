@@ -65,7 +65,11 @@ const Screen = ({
         </motion.div>
       ) : (
         <div>
-          <p>empty</p>
+          <img
+            className="empty-img" 
+            src="img/inger.png"
+            alt="inger"
+          />
         </div>
       )}
     </Wrapper>

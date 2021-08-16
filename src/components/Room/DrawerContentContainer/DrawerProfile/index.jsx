@@ -56,8 +56,6 @@ const DrawerProfile = (props) => {
       setIsLocal(false);
 
       // update remote user's single calendar info
-      console.log('current user data hook 에서의 current user 데이터 변경 시 data')
-      console.log(currentUserData)
       getUserCalendarInfo(currentUserData.id, remoteRequestdate).then((res) => {
         setRemoteUserCalendarInfo(res.data);
       });
@@ -71,7 +69,6 @@ const DrawerProfile = (props) => {
 
   // 1.remote requestdate
   const handleRemoteRequestdate = (value) => {
-    console.log('handleRemoteRequestdate');
     const currDate = changeZeroDateFormat(value);
 
     setRemoterequestdate(currDate);
@@ -79,7 +76,6 @@ const DrawerProfile = (props) => {
 
   // 2.remote request date hook
   useEffect(() => {
-    console.log('remote 요청 날짜 변경')
     handleRemoteUserCalendarInfo();
   }, [remoteRequestdate]);
 
@@ -88,23 +84,19 @@ const DrawerProfile = (props) => {
     if (!currentUserData) return
 
     getUserCalendarInfo(currentUserData.id, remoteRequestdate).then((res) => {
-      console.log('remote 요청 날짜 변경 후 현재 날짜 calendar info get')
-      console.log(res.data)
       setRemoteUserCalendarInfo(res.data);
     });
   };
 
   // 4. handle calendar list
   const handleChange = ({ activeStartDate }) => {
-    console.log('active month 변경')
-    console.log(activeStartDate)
     const _activeMonth = activeStartDate.getMonth() + 1;
     setActiveMonth(_activeMonth);
   }
 
   // 5. update background colors
   useEffect(() => {
-    console.log('background 변경 실행 후 calendarlist')
+    console.log('background 변경 실행을 위한 avtiveMonth, remoteusercalendarlist 변경 hook')
     console.log(remoteUserCalendarList)
     setCalendarBackground(remoteUserCalendarList);
   }, [activeMonth, remoteUserCalendarList]);
@@ -135,7 +127,13 @@ const DrawerProfile = (props) => {
         )}
       </Grid>
       <Grid className="date-time-container">
-        <Typography className="date">{requestdate}</Typography>
+        <Typography className="date">
+          {isLocal ? (
+            {requestdate}
+          ) : (
+            {remoteRequestdate}
+          )}
+        </Typography>
         <Typography className="time-text">오늘 공부 시간</Typography>
         <Typography className="time">
           {isLocal
@@ -148,7 +146,7 @@ const DrawerProfile = (props) => {
         </Typography>
       </Grid>
       {isLocal && (
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           <IconButton onClick={onClickSaveHandler}>
             <SaveIcon htmlColor="#E96F02" />
           </IconButton>
@@ -159,7 +157,6 @@ const DrawerProfile = (props) => {
         <Grid className="pd-content-container">
           <div
             style={{
-              // border: '1px solid black',
               textAlign: 'center',
               height: '100%',
             }}

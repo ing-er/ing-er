@@ -10,7 +10,7 @@ import Room from '../../pages/Room';
 
 import { noRefreshEvent } from '../../utils/event';
 import { getToday, getTodaySeconds, getYesterday } from '../../utils/date';
-import { setStudyTime } from '../../api/timer/timer';
+import { getStudyTime, setStudyTime } from '../../api/timer/timer';
 import { setReduxStudyTime } from '../../modules/studyTime';
 
 import {
@@ -27,7 +27,7 @@ const Webrtc = () => {
   const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
   const userData = useSelector((state) => state.authorization.userData);
-  const localStudyTime = useSelector((state) => state.studyTime.studyTime);
+  let localStudyTime = useSelector((state) => state.studyTime.studyTime);
   const { isRandomRoom } = useSelector((state) => state.setIsRandomRoom);
   const dispatch = useDispatch();
   const { isJoin, isAuth } = useSelector(({authorization }) => ({
@@ -59,6 +59,15 @@ const Webrtc = () => {
 
     // init OV
     setOV(new OpenVidu());
+
+    // set redux studytime
+    getStudyTime(userData.id, getToday())
+      .then((res) => {
+        let dbStudyTime = res.data.studyTime;
+        dbStudyTime = dbStudyTime ? dbStudyTime : 0;
+        console.log(dbStudyTime)
+        dispatch(setReduxStudyTime(dbStudyTime));
+      })
 
     return () => {
       // component unmount 시 해당 이벤트 제거

@@ -96,8 +96,6 @@ const DrawerProfile = (props) => {
 
   // 5. update background colors
   useEffect(() => {
-    console.log('background 변경 실행을 위한 avtiveMonth, remoteusercalendarlist 변경 hook')
-    console.log(remoteUserCalendarList)
     setCalendarBackground(remoteUserCalendarList);
   }, [activeMonth, remoteUserCalendarList]);
 

@@ -64,7 +64,7 @@ const DrawerProfile = (props) => {
       setIsLocal(false);
 
       // update remote user's single calendar info
-      getUserCalendarInfo(currentUserData).then((res) => {
+      getUserCalendarInfo(currentUserData.id, remoteRequestdate).then((res) => {
         setRemoteUserCalendarInfo(res.data);
       });
 
@@ -91,7 +91,7 @@ const DrawerProfile = (props) => {
 
   // 3. handle remote user's single calendar info
   const handleRemoteUserCalendarInfo = () => {
-    getUserCalendarInfo(currentUserData).then((res) => {
+    getUserCalendarInfo(currentUserData.id, remoteRequestdate).then((res) => {
       console.log('remote 요청 날짜 변경 후 현재 날짜 calendar info get')
       console.log(res.data)
       setRemoteUserCalendarInfo(res.data);

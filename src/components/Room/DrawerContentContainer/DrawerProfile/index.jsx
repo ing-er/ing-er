@@ -48,14 +48,6 @@ const DrawerProfile = (props) => {
 
   // remote user 변수
   useEffect(() => {
-    console.log('currentuserData!!');
-    console.log(currentUserData);
-    console.log('remoteRequestdate');
-    console.log(remoteRequestdate);
-    console.log('remote user calendar 단일 데이터');
-    console.log(remoteUserCalendarInfo);
-    console.log('remoteUserCalendarList');
-    console.log(remoteUserCalendarList);
     if (!currentUserData) return;
 
     if (currentUserData.id === localUserData.id) {
@@ -64,7 +56,9 @@ const DrawerProfile = (props) => {
       setIsLocal(false);
 
       // update remote user's single calendar info
-      getUserCalendarInfo(currentUserData.id, remoteRequestdate).then((res) => {
+      console.log('current user data hook 에서의 current user 데이터 변경 시 data')
+      console.log(currentUserData)
+      getUserCalendarInfo(currentUserData?.id, remoteRequestdate).then((res) => {
         setRemoteUserCalendarInfo(res.data);
       });
 

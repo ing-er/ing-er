@@ -5,7 +5,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 
 import Wrapper from './styles';
 
-const CalendarDiary = ({ remoteUserInfo }) => {
+const CalendarDiary = ({ remoteUserInfo, currentUserData }) => {
   const [diary, setDiary] = useState(remoteUserInfo?.diary);
   const [isSecret, setIsSecret] = useState(remoteUserInfo?.isOpen);
   

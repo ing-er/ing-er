@@ -2,7 +2,13 @@ import { Grid, IconButton } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const TodolistAdd = (props) => {
-  let { setTodolistAddContainer, backColor, textColor, isLightMode } = props;
+  let {
+    setTodolistAddContainer,
+    backColor,
+    textColor,
+    isLightMode,
+    plusButtonColor,
+  } = props;
   const handleAddContainer = () => {
     setTodolistAddContainer(document.querySelector('#add-title').value);
     document.querySelector('#add-title').value = '';
@@ -23,7 +29,7 @@ const TodolistAdd = (props) => {
   };
   const changePlusButtonColor = () => {
     if (!isLightMode) {
-      return '#1172DA';
+      return plusButtonColor;
     } else {
       return '#411AB0';
     }

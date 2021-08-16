@@ -35,6 +35,13 @@ const Wrapper = styled.div`
     height: 270px;
     margin: 2px 0;
   }
+  .textfield-grid {
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+    border-radius: 30px;
+    width: 100%;
+  }
 `;
 
 export default Wrapper;

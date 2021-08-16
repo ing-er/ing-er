@@ -16,7 +16,8 @@ import {
 } from '@material-ui/core';
 
 import LockOpenIcon from '@material-ui/icons/LockOpen';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import EventNoteIcon from '@material-ui/icons/EventNote';
 import SettingsIcon from '@material-ui/icons/Settings';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
@@ -61,7 +62,7 @@ const Header = ({
           </Link>
         </Grid>
 
-        {/* 마이페이지 */}
+        {/* 마이�이지 */}
         {isAuth && !isJoin && !isAdmin ? (
           <Grid className="title">
             <Grid container justifyContent="center">
@@ -72,10 +73,7 @@ const Header = ({
                       scale: 1.2,
                     }}
                   >
-                    <MeetingRoomIcon
-                      htmlColor="white"
-                      style={{ fontSize: 30 }}
-                    />
+                    <EventNoteIcon htmlColor="white" style={{ fontSize: 30 }} />
                     {/* <AccountCircleIcon
                       htmlColor="white"
                       style={{ fontSize: 30 }}
@@ -88,7 +86,7 @@ const Header = ({
         ) : null}
 
         {!isAuth ? null : (
-          // 멤버설정 & 로그아웃
+          // 멤버�정 & 로그�웃
           <Grid className="setting-container">
             <Grid>
               <IconButton onClick={onSettingHandler}>
@@ -141,7 +139,7 @@ const Header = ({
                 className="login-button"
                 onClick={handleClickOpen}
               >
-                로그인
+                로그
               </Button>
             </motion.div>
           </Grid>
@@ -155,12 +153,12 @@ const Header = ({
         open={open}
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          로그인 & 회원가입
+          로그& �원가
         </DialogTitle>
         <DialogContent dividers>
           <LoginContainer />
         </DialogContent>
-        <Button onClick={onLoginHandler}>닫기</Button>
+        <Button onClick={onLoginHandler}>�기</Button>
       </Dialog>
     </Wrapper>
   );

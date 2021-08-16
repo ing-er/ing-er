@@ -10,7 +10,8 @@ import { getUserCalendarInfo } from '../../../../api/user';
 import { secToTimeFormat } from '../../../../utils/timer';
 import { getToday } from '../../../../utils/date';
 
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Typography, IconButton } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
 
 import Wrapper from './styles';
 
@@ -25,7 +26,7 @@ const DrawerProfile = (props) => {
     requestdate,
     isEditablePromise,
     isEditableDiary,
-    // setCalendarSaveData,
+    setCalendarSaveData,
     setTodolistSetDate,
     studyTime,
     localUserData,
@@ -33,12 +34,12 @@ const DrawerProfile = (props) => {
   } = props;
 
   const [isLocal, setIsLocal] = useState(true);
-  const [currUserData, setCurrUserData] = useState(localUserData)
-  const [currUserCalendarInfo, setCurrUserCalendarInfo] = useState(undefined)
+  const [currUserData, setCurrUserData] = useState(localUserData);
+  const [currUserCalendarInfo, setCurrUserCalendarInfo] = useState(undefined);
 
-  // current user 변경 시
+  // current user 변�
   useEffect(() => {
-    if (!currentUserData) return
+    if (!currentUserData) return;
 
     if (currentUserData.id === localUserData.id) {
       setIsLocal(true);
@@ -47,25 +48,28 @@ const DrawerProfile = (props) => {
       setIsLocal(false);
     }
   }, [currentUserData]);
-  
-  // request date 변경 시
+
+  // request date 변�
   useEffect(() => {
     handleCurrentUserCalendarInfo();
   }, [requestdate]);
 
-  // requestdate 변경 시 현재 클릭된 유저 정보 기준 state 변경
+  // requestdate 변겄재 �릭�� �보 기� state 변�
   const handleCurrentUserCalendarInfo = () => {
     if (currUserData) {
-      getUserCalendarInfo(currUserData.id, requestdate)
-        .then((res) => {
-          if (res.data) {
-            setCurrUserCalendarInfo(res.data);
-          } else {
-            setCurrUserCalendarInfo(undefined);
-          }
-        })
+      getUserCalendarInfo(currUserData.id, requestdate).then((res) => {
+        if (res.data) {
+          setCurrUserCalendarInfo(res.data);
+        } else {
+          setCurrUserCalendarInfo(undefined);
+        }
+      });
     }
-  }
+  };
+
+  const onClickSaveHandler = () => {
+    setCalendarSaveData();
+  };
 
   return (
     <Wrapper>
@@ -82,11 +86,12 @@ const DrawerProfile = (props) => {
         <CalendarComponent
           setCalendarSetDate={setCalendarSetDate}
           setTodolistSetDate={setTodolistSetDate}
+          isLightMode={false}
         />
       </Grid>
       <Grid className="date-time-container">
         <Typography className="date">{requestdate}</Typography>
-        <Typography className="time-text">오늘의 공부 시간</Typography>
+        <Typography className="time-text">�늘공� �간</Typography>
         <Typography className="time">
           {isLocal ? (
             (calendardata.date === getToday() ? (
@@ -103,11 +108,19 @@ const DrawerProfile = (props) => {
           )}
         </Typography>
       </Grid>
+      {isLocal && (
+        <Grid container justify="center">
+          <IconButton onClick={onClickSaveHandler}>
+            <SaveIcon htmlColor="#E96F02" />
+          </IconButton>
+        </Grid>
+      )}
+
       <Grid className="pd-container">
         <Grid className="pd-content-container">
           <div
             style={{
-              border: '1px solid black',
+              // border: '1px solid black',
               textAlign: 'center',
               height: '100%',
             }}
@@ -120,6 +133,7 @@ const DrawerProfile = (props) => {
                 setCalendarEditPromiseIsEditable={
                   setCalendarEditPromiseIsEditable
                 }
+                isLightMode={true}
               />
             ) : (
               <RemotePromise remoteUserInfo={currUserCalendarInfo} />
@@ -129,7 +143,7 @@ const DrawerProfile = (props) => {
         <Grid className="pd-content-container">
           <div
             style={{
-              border: '1px solid black',
+              // border: '1px solid black',
               textAlign: 'center',
               height: '100%',
             }}
@@ -140,6 +154,7 @@ const DrawerProfile = (props) => {
                 isEditableDiary={isEditableDiary}
                 setCalendarEditDiary={setCalendarEditDiary}
                 setCalendarEditDiaryIsEditable={setCalendarEditDiaryIsEditable}
+                isLightMode={true}
               />
             ) : (
               <RemoteDiary remoteUserInfo={currUserCalendarInfo} />

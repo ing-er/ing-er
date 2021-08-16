@@ -276,9 +276,9 @@ const MyTodolist = (props) => {
                 fontWeight: 'bold',
                 backgroundColor: '#E96F02',
               }}
+              endIcon={<SaveIcon />}
             >
               저장
-              <SaveIcon />
             </Button>
           </Grid>
         </Grid>
@@ -306,6 +306,7 @@ const MyTodolist = (props) => {
               backColor={'#1E1F26'}
               textColor={'white'}
               isLightMode={isLightMode}
+              plusButtonColor={'#1172DA'}
             />
           </Grid>
         </Grid>
@@ -332,6 +333,7 @@ const MyTodolist = (props) => {
                     backColor={'#1E1F26'}
                     textColor={'white'}
                     completeTextColor={'#4D4D4D'}
+                    plusButtonColor={'#1172DA'}
                     setTodolistDeleteDetail={setTodolistDeleteDetail}
                     setTodolistDeleteTodolist={setTodolistDeleteTodolist}
                     isLightMode={isLightMode}

@@ -1,5 +1,6 @@
-import { Grid, LinearProgress, Button } from '@material-ui/core';
+import { Grid, LinearProgress, IconButton } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import SaveIcon from '@material-ui/icons/Save';
 import { withStyles } from '@material-ui/styles';
 
 import TodolistComponent from '../../../Main/MyTodolist/TodolistComponent';
@@ -80,7 +81,7 @@ const DrawerTodo = (props) => {
           </Grid>
 
           <Grid item>
-            <Button
+            {/* <Button
               className="enter-button"
               variant="outlined"
               onClick={onClickSaveTodolist}
@@ -91,7 +92,10 @@ const DrawerTodo = (props) => {
               }}
             >
               저장
-            </Button>
+            </Button> */}
+            <IconButton onClick={onClickSaveTodolist}>
+              <SaveIcon htmlColor="#E96F02" />
+            </IconButton>
           </Grid>
         </Grid>
         <Grid item xs={12} style={{ marginTop: '10px' }}>
@@ -119,6 +123,8 @@ const DrawerTodo = (props) => {
                 setTodolistAddContainer={setTodolistAddContainer}
                 backColor={'#FFFFFF'}
                 textColor={'#000000'}
+                plusButtonColor={'#411AB0'}
+                isLightMode={false}
               />
             </Grid>
             {todolistdata.map((data, index) => {
@@ -142,8 +148,10 @@ const DrawerTodo = (props) => {
                     backColor={'#FFFFFF'}
                     textColor={'#000000'}
                     completeTextColor={'#CECECE'}
+                    plusButtonColor={'#411AB0'}
                     setTodolistDeleteDetail={setTodolistDeleteDetail}
                     setTodolistDeleteTodolist={setTodolistDeleteTodolist}
+                    isLightMode={false}
                   />
                 </Grid>
               );

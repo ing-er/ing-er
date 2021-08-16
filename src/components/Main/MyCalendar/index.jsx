@@ -205,9 +205,9 @@ const MyCalendar = (props) => {
               backgroundColor: '#E96F02',
             }}
             onClick={onClickSaveHandler}
+            endIcon={<SaveIcon />}
           >
             저장
-            <SaveIcon />
           </Button>
         </Grid>
         <Grid item xs={12} sm={6}>

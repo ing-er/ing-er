@@ -15,6 +15,7 @@ const TodolistTitle = (props) => {
     setTodolistDeleteTodolist,
     isLightMode,
     textColor,
+    plusButtonColor,
   } = props;
   const handleAddInput = () => {
     setTodolistAddInput(index);
@@ -41,7 +42,7 @@ const TodolistTitle = (props) => {
   };
   const changePlusButtonColor = () => {
     if (!isLightMode) {
-      return '#1172DA';
+      return plusButtonColor;
     } else {
       return '#411AB0';
     }
@@ -218,6 +219,7 @@ const TodolistComponent = (props) => {
     setTodolistDeleteDetail,
     setTodolistDeleteTodolist,
     isLightMode,
+    plusButtonColor,
   } = props;
 
   return (
@@ -232,6 +234,7 @@ const TodolistComponent = (props) => {
           textColor={textColor}
           setTodolistDeleteTodolist={setTodolistDeleteTodolist}
           isLightMode={isLightMode}
+          plusButtonColor={plusButtonColor}
         />
         <TodolistContent
           todolist={todolist}

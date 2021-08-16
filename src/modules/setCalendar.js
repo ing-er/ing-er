@@ -64,16 +64,16 @@ export const getCalendarData = async (id) => {
     res.data.map((x, index) => {
       list.push({
         date: x.date,
-        promise: x.promise,
-        diary: x.diary,
+        promise: x.promise === null ? '' : x.promise,
+        diary: x.diary === null ? '' : x.diary,
         id: x.id,
         studyTime: x.studyTime,
       });
       if (x.date === todaydate) {
         listToday = {
           date: x.date,
-          promise: x.promise,
-          diary: x.diary,
+          promise: x.promise === null ? '' : x.promise,
+          diary: x.diary === null ? '' : x.diary,
           id: x.id,
           studyTime: x.studyTime,
         };

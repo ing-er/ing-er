@@ -17,7 +17,7 @@ const CalendarComponent = (props) => {
 
   useEffect(() => {
     setCalendarBackground(calendar);
-  }, [activeMonth]);
+  }, [activeMonth, calendar]);
 
   const handleChange = ({ activeStartDate }) => {
     const _activeMonth = activeStartDate.getMonth() + 1;

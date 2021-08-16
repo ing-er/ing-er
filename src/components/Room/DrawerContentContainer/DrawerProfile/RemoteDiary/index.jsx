@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   TextField,
   Grid
@@ -7,10 +9,11 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import { useEffect } from 'react';
 
 const CalendarDiary = ({ remoteUserInfo }) => {
+  const [diary, setDiary] = useState(remoteUserInfo.diary);
   
   useEffect(() => {
     console.log('calendarDiary constructor hook')
-    console.log(remoteUserInfo)
+    setDiary(remoteUserInfo.diary)
   }, [remoteUserInfo])
   
   return (
@@ -35,7 +38,7 @@ const CalendarDiary = ({ remoteUserInfo }) => {
           multiline={true}
           rows={8}
           fullWidth
-          value={remoteUserInfo ? remoteUserInfo.diary : ''}
+          value={diary ? diary : ''}
           disabled={true}
         />
       </Grid>

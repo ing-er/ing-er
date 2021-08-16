@@ -141,7 +141,7 @@ function MEMBERSETTING({
         <Grid container direction="column" className="container">
           <Grid item xs={12}>
             <div class="title" style={{ fontSize: '36px' }}>
-              ?��?�� ?���? ?��?��
+              
             </div>
           </Grid>
           <Grid item xs={12}>
@@ -153,7 +153,7 @@ function MEMBERSETTING({
               xs={12}
             >
               <Grid item xs={2}>
-                <h1>?��?��?��</h1>
+                
               </Grid>
               <Grid item xs={8}>
                 <Grid container spacing={1} alignItems="flex-end">

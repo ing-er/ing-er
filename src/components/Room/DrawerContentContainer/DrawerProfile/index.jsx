@@ -58,7 +58,7 @@ const DrawerProfile = (props) => {
       // update remote user's single calendar info
       console.log('current user data hook 에서의 current user 데이터 변경 시 data')
       console.log(currentUserData)
-      getUserCalendarInfo(currentUserData?.id, remoteRequestdate).then((res) => {
+      getUserCalendarInfo(currentUserData.id, remoteRequestdate).then((res) => {
         setRemoteUserCalendarInfo(res.data);
       });
 
@@ -85,6 +85,8 @@ const DrawerProfile = (props) => {
 
   // 3. handle remote user's single calendar info
   const handleRemoteUserCalendarInfo = () => {
+    if (!currentUserData) return
+
     getUserCalendarInfo(currentUserData.id, remoteRequestdate).then((res) => {
       console.log('remote 요청 날짜 변경 후 현재 날짜 calendar info get')
       console.log(res.data)

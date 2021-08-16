@@ -140,7 +140,7 @@ function MEMBERSETTING({
       >
         <Grid container direction="column" className="container">
           <Grid item xs={12}>
-            <div class="title" style={{ fontSize: '36px' }}>
+            <div className="title" style={{ fontSize: '36px' }}>
               회원 정보 입력
             </div>
           </Grid>
@@ -148,7 +148,7 @@ function MEMBERSETTING({
             <Grid
               container
               direction="row"
-              justify="center"
+              justifyContent="center"
               alignItems="center"
               xs={12}
             >
@@ -164,8 +164,7 @@ function MEMBERSETTING({
                     <CssTextField
                       className="name-input"
                       type="name"
-                      value={name}
-                      // value={name || ''}
+                      value={name || ''}
                       InputProps={{
                         className: classes.input,
                       }}
@@ -203,13 +202,13 @@ function MEMBERSETTING({
               <Grid
                 container
                 direction="row"
-                justify="center"
+                justifyContent="center"
                 spacing={2}
                 xs={12}
               >
                 <Grid item xs={2}>
                   <Button
-                    class="button"
+                    className="button"
                     value="204"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
@@ -220,7 +219,7 @@ function MEMBERSETTING({
                 </Grid>
                 <Grid item xs={2}>
                   <Button
-                    class="button"
+                    className="button"
                     value="205"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
@@ -231,7 +230,7 @@ function MEMBERSETTING({
                 </Grid>
                 <Grid item xs={2}>
                   <Button
-                    class="button"
+                    className="button"
                     value="206"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
@@ -242,7 +241,7 @@ function MEMBERSETTING({
                 </Grid>
                 <Grid item xs={2}>
                   <Button
-                    class="button"
+                    className="button"
                     value="207"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
@@ -253,7 +252,7 @@ function MEMBERSETTING({
                 </Grid>
                 <Grid item xs={2}>
                   <Button
-                    class="button"
+                    className="button"
                     value="208"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
@@ -269,7 +268,7 @@ function MEMBERSETTING({
             <Grid
               container
               direction="row"
-              justify="center"
+              justifyContent="center"
               alignItems="center"
               xs={12}
             >
@@ -281,7 +280,7 @@ function MEMBERSETTING({
                 <FormControlLabel
                   control={
                     <Switch
-                      checked={isOpen}
+                      checked={isOpen || ''}
                       onChange={(e) => {
                         setisOpen((isOpen) => !isOpen);
                       }}
@@ -299,7 +298,7 @@ function MEMBERSETTING({
               <Grid
                 container
                 direction="row"
-                justify="center"
+                justifyContent="center"
                 alignItems="center"
                 xs={12}
               >
@@ -372,9 +371,9 @@ function MEMBERSETTING({
             <div></div>
           )}
           <Grid item xs={12}>
-            <Grid container direction="row" justify="center" spacing={2}>
+            <Grid container direction="row" justifyContent="center" spacing={2}>
               <Grid item>
-                <IconButton class="check" onClick={onUpdateInfo}>
+                <IconButton className="check" onClick={onUpdateInfo}>
                   <HowToRegIcon />
                 </IconButton>
               </Grid>

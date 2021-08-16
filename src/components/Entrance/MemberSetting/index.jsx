@@ -118,11 +118,11 @@ function MEMBERSETTING({
   };
 
   const categoryName = {
-    204: '수능',
-    205: '취준',
-    206: '자격증',
-    207: '고시',
-    208: '기타',
+    4: '수능',
+    5: '취준',
+    6: '자격증',
+    7: '고시',
+    8: '기타',
   };
 
   const isOpenName = {
@@ -209,7 +209,7 @@ function MEMBERSETTING({
                 <Grid item xs={2}>
                   <Button
                     className="button"
-                    value="204"
+                    value="4"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
@@ -220,7 +220,7 @@ function MEMBERSETTING({
                 <Grid item xs={2}>
                   <Button
                     className="button"
-                    value="205"
+                    value="5"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
@@ -231,7 +231,7 @@ function MEMBERSETTING({
                 <Grid item xs={2}>
                   <Button
                     className="button"
-                    value="206"
+                    value="6"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
@@ -242,7 +242,7 @@ function MEMBERSETTING({
                 <Grid item xs={2}>
                   <Button
                     className="button"
-                    value="207"
+                    value="7"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
@@ -253,7 +253,7 @@ function MEMBERSETTING({
                 <Grid item xs={2}>
                   <Button
                     className="button"
-                    value="208"
+                    value="8"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}

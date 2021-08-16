@@ -118,16 +118,16 @@ function MEMBERSETTING({
   };
 
   const categoryName = {
-    204: '?��?��',
-    205: '취�??',
-    206: '?��격증',
-    207: '고시',
-    208: '기�??',
+    4: '수능',
+    5: '취준',
+    6: '자격증',
+    7: '고시',
+    8: '기타',
   };
 
   const isOpenName = {
     true: '공개',
-    false: '비공�?',
+    false: '비공개',
   };
 
   return (
@@ -153,7 +153,7 @@ function MEMBERSETTING({
               xs={12}
             >
               <Grid item xs={2}>
-                
+                <h1>닉네임</h1>
               </Grid>
               <Grid item xs={8}>
                 <Grid container spacing={1} alignItems="flex-end">
@@ -186,7 +186,7 @@ function MEMBERSETTING({
                   }}
                   onClick={onDuplicateHandler}
                 >
-                  중복 ?��?��
+                  중복 확인
                 </Button>
               </Grid>
             </Grid>
@@ -194,10 +194,10 @@ function MEMBERSETTING({
           <Grid item xs={12} className="category-container">
             <Grid container direction="column">
               <Grid item xs={12}>
-                <h1>카테고리 ?��?��</h1>
+                <h1>카테고리 설정</h1>
               </Grid>
               <Grid item xs={12}>
-                <p>?��?�� 카테고리 : {categoryName[category]}</p>
+                <p>현재 카테고리 : {categoryName[category]}</p>
               </Grid>
               <Grid
                 container
@@ -209,40 +209,40 @@ function MEMBERSETTING({
                 <Grid item xs={2}>
                   <Button
                     className="button"
-                    value="204"
+                    value="4"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
                   >
-                    ?��?��
+                    수능
                   </Button>
                 </Grid>
                 <Grid item xs={2}>
                   <Button
                     className="button"
-                    value="205"
+                    value="5"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
                   >
-                    취�??
+                    취준
                   </Button>
                 </Grid>
                 <Grid item xs={2}>
                   <Button
                     className="button"
-                    value="206"
+                    value="6"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
                   >
-                    ?��격증
+                    자격증
                   </Button>
                 </Grid>
                 <Grid item xs={2}>
                   <Button
                     className="button"
-                    value="207"
+                    value="7"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
@@ -253,12 +253,12 @@ function MEMBERSETTING({
                 <Grid item xs={2}>
                   <Button
                     className="button"
-                    value="208"
+                    value="8"
                     onClick={(e) => {
                       setCategory(e.currentTarget.value);
                     }}
                   >
-                    기�??
+                    기타
                   </Button>
                 </Grid>
               </Grid>
@@ -273,7 +273,7 @@ function MEMBERSETTING({
               xs={12}
             >
               <Grid item xs={3}>
-                <h1>?���? 공개 ?���?</h1>
+                <h1>다짐 공개 여부</h1>
               </Grid>
               <Grid item xs={7}></Grid>
               <Grid item xs={2}>
@@ -291,7 +291,7 @@ function MEMBERSETTING({
                 />
               </Grid>
             </Grid>
-            <p>?��?�� ?���? 공개 ?���? : {isOpenName[isOpen]}</p>
+            <p>현재 다짐 공개 여부 : {isOpenName[isOpen]}</p>
           </Grid>
           {!isJoin && isAuth ? (
             <Grid item xs={12}>
@@ -303,7 +303,7 @@ function MEMBERSETTING({
                 xs={12}
               >
                 <Grid item xs={2}>
-                  <h1>?��?�� ?��?��</h1>
+                  <h1>회원 탈퇴</h1>
                 </Grid>
                 <Grid item xs={8}></Grid>
                 <Grid item xs={2}>
@@ -317,7 +317,7 @@ function MEMBERSETTING({
                     }}
                     onClick={handleClickOpen}
                   >
-                    ?��?��?���?
+                    탈퇴하기
                   </Button>
                   <Dialog
                     onClose={handleClose}
@@ -332,7 +332,7 @@ function MEMBERSETTING({
                         color: 'white',
                       }}
                     >
-                      ?��?�� ?��?��
+                      회원 탈퇴
                     </DialogTitle>
                     <DialogContent
                       dividers
@@ -342,9 +342,9 @@ function MEMBERSETTING({
                       }}
                     >
                       <Typography gutterBottom>
-                        공�??기록 ?�� �? ?�� ?��?��?���? ?��?��?�� 모든 ?��보�?? ?��?���?�?,
+                        공부기록 등 그 외 사용자가 설정한 모든 정보가 사라지고,
                         <br></br>
-                        복구�? 불�???�� ?��?��?��.
+                        복구가 불가능 합니다.
                       </Typography>
                     </DialogContent>
                     <DialogActions
@@ -360,7 +360,7 @@ function MEMBERSETTING({
                           color: '#CD0C22',
                         }}
                       >
-                        ?��?��?���?
+                        탈퇴하기
                       </Button>
                     </DialogActions>
                   </Dialog>

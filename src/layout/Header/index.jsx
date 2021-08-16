@@ -62,7 +62,7 @@ const Header = ({
           </Link>
         </Grid>
 
-        {/* 마이�이지 */}
+        {/* 마이페이지 */}
         {isAuth && !isJoin && !isAdmin ? (
           <Grid className="title">
             <Grid container justifyContent="center">
@@ -86,7 +86,7 @@ const Header = ({
         ) : null}
 
         {!isAuth ? null : (
-          // 멤버�정 & 로그�웃
+          // 멤버수정 & 로그아웃
           <Grid className="setting-container">
             <Grid>
               <IconButton onClick={onSettingHandler}>

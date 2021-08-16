@@ -54,7 +54,7 @@ const DrawerProfile = (props) => {
     handleCurrentUserCalendarInfo();
   }, [requestdate]);
 
-  // requestdate 변겄재 �릭�� �보 기� state 변�
+  // requestdate
   const handleCurrentUserCalendarInfo = () => {
     if (currUserData) {
       getUserCalendarInfo(currUserData.id, requestdate).then((res) => {

@@ -133,7 +133,7 @@ export const getTodolistData = async (id) => {
           todolistToday.push(todolistData[index]);
         }
       });
-      // console.log('load �료..');
+      // console.log('load 완료..');
     })
     .catch((err) => {
       // console.log(err);

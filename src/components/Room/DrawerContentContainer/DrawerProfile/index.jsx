@@ -7,10 +7,14 @@ import RemotePromise from './RemotePromise';
 import RemoteDiary from './RemoteDiary';
 import RemoteCalendar from './RemoteCalendar';
 
-import { getUserCalendarInfo, getUserCalendarList } from '../../../../api/user';
+import {
+  getUserCalendarInfo,
+  getUserCalendarList
+} from '../../../../api/user';
 import { secToTimeFormat } from '../../../../utils/timer';
 import { getToday } from '../../../../utils/date';
 import { changeZeroDateFormat } from '../../../../utils/date';
+import { setCalendarBackground } from '../../../../utils/calendar';
 
 import { Grid, Typography, IconButton } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
@@ -36,17 +40,22 @@ const DrawerProfile = (props) => {
   } = props;
 
   const [isLocal, setIsLocal] = useState(true);
-  const [remoteRequestdate, setRemoterequestdate] = useState(undefined);
-  const [remoteUserCalendarInfo, setRemoteUserCalendarInfo] = useState(undefined);
+  const [remoteRequestdate, setRemoterequestdate] = useState(getToday());
+  const [remoteUserCalendarInfo, setRemoteUserCalendarInfo] =
+    useState(undefined);
+  const [remoteUserCalendarList, setRemoteUserCalendarList] = useState([]);
+  const [activeMonth, setActiveMonth] = useState(new Date().getMonth() + 1);
 
   // remote user 변수
   useEffect(() => {
-    console.log('currentuserData!!')
-    console.log(currentUserData)
-    console.log('remoteRequestdate')
-    console.log(remoteRequestdate)
-    console.log('remoteUserCalendarInfo')
-    console.log(remoteUserCalendarInfo)
+    console.log('currentuserData!!');
+    console.log(currentUserData);
+    console.log('remoteRequestdate');
+    console.log(remoteRequestdate);
+    console.log('remote user calendar 단일 데이터');
+    console.log(remoteUserCalendarInfo);
+    console.log('remoteUserCalendarList');
+    console.log(remoteUserCalendarList);
     if (!currentUserData) return;
 
     if (currentUserData.id === localUserData.id) {
@@ -54,39 +63,55 @@ const DrawerProfile = (props) => {
     } else {
       setIsLocal(false);
 
-      // remoteUserCalendarInfo call
-      getUserCalendarList(currentUserData.id)
-        .then((res) => {
-          setRemoteUserCalendarInfo(res.data);
-        })
+      // update remote user's single calendar info
+      getUserCalendarInfo(currentUserData).then((res) => {
+        setRemoteUserCalendarInfo(res.data);
+      });
+
+      // update remoteUserCalendarList
+      getUserCalendarList(currentUserData.id).then((res) => {
+        setRemoteUserCalendarList(res.data);
+      });
     }
   }, [currentUserData]);
 
-  // remote request date 변수
-  useEffect(() => {
-    handleRemoteUserCalendarInfo();
-  }, [remoteRequestdate]);
-
-  // remote requestdate
-  const handleRemoteUserCalendarInfo = () => {
-    if (currentUserData) {
-      getUserCalendarInfo(currentUserData.id, requestdate).then((res) => {
-        if (res.data) {
-          setRemoteUserCalendarInfo(res.data);
-        } else {
-          setRemoteUserCalendarInfo(undefined);
-        }
-      });
-    }
-  };
-
-  // remote request date handler
+  // 1.remote requestdate
   const handleRemoteRequestdate = (value) => {
     console.log('handleRemoteRequestdate');
     const currDate = changeZeroDateFormat(value);
 
     setRemoterequestdate(currDate);
+  };
+
+  // 2.remote request date 변수
+  useEffect(() => {
+    console.log('remote 요청 날짜 변경')
+    handleRemoteUserCalendarInfo();
+  }, [remoteRequestdate]);
+
+  // 3. handle remote user's single calendar info
+  const handleRemoteUserCalendarInfo = () => {
+    getUserCalendarInfo(currentUserData).then((res) => {
+      console.log('remote 요청 날짜 변경 후 현재 날짜 calendar info get')
+      console.log(res.data)
+      setRemoteUserCalendarInfo(res.data);
+    });
+  };
+
+  // 4. handle calendar list
+  const handleChange = ({ activeStartDate }) => {
+    console.log('active month 변경')
+    console.log(activeStartDate)
+    const _activeMonth = activeStartDate.getMonth() + 1;
+    setActiveMonth(_activeMonth);
   }
+
+  // 5. update background colors
+  useEffect(() => {
+    console.log('background 변경 실행 후 calendarlist')
+    console.log(remoteUserCalendarList)
+    setCalendarBackground(remoteUserCalendarList);
+  }, [activeMonth, remoteUserCalendarList]);
 
   const onClickSaveHandler = () => {
     setCalendarSaveData();
@@ -107,8 +132,9 @@ const DrawerProfile = (props) => {
             isLightMode={false}
           />
         ) : (
-          <RemoteCalendar 
+          <RemoteCalendar
             handleRemoteRequestdate={handleRemoteRequestdate}
+            handleChange={handleChange}
           />
         )}
       </Grid>
@@ -121,8 +147,8 @@ const DrawerProfile = (props) => {
               ? secToTimeFormat(studyTime)
               : secToTimeFormat(calendardata.studyTime)
             : remoteUserCalendarInfo
-              ? secToTimeFormat(remoteUserCalendarInfo.studyTime)
-              : secToTimeFormat(0)}
+            ? secToTimeFormat(remoteUserCalendarList.studyTime)
+            : secToTimeFormat(0)}
         </Typography>
       </Grid>
       {isLocal && (

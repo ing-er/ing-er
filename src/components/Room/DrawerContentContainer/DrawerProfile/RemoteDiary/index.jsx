@@ -37,6 +37,7 @@ const CalendarDiary = ({ remoteUserInfo, currentUserData }) => {
         >
           {!isSecret ? (
             <TextField 
+              className="text-container"
               multiline={true}
               rows={1}
               fullWidth

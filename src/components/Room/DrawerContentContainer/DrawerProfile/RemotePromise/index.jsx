@@ -35,14 +35,16 @@ const RemotePromise = ({ remoteUserInfo, currentUserData }) => {
           }}
         >
           {!isSecret ? (
-            <TextField 
-              multiline={true}
-              rows={1}
-              fullWidth
-              value={'비공개'}
-              disabled={true}
-              InputProps={{ disableUnderline: true }}
-            />
+            <div className="text-container">
+              <TextField
+                multiline={true}
+                rows={1}
+                fullWidth
+                value={'비공개'}
+                disabled={true}
+                InputProps={{ disableUnderline: true }}
+              />
+            </div>
           ) : (
             <TextField
               multiline={true}

@@ -4,9 +4,8 @@ const Wrapper = styled.div`
   & .MuiInputBase-input {
     color: black;
   }
-  & textarea {
-    text-align: center;
-    font-weight: bold;
+  & .text-container {
+    text-align-last: center;
   }
 `
 

@@ -25,6 +25,20 @@ export const getTodaySeconds = () => {
   return totalSeconds
 }
 
+export const changeZeroDateFormat = (date) => {
+  let dateForamt = '';
+  
+  const year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  month = month < 10 ? '0' + month : month;
+
+  let day = date.getDate();
+  day = day < 10 ? '0' + day : day;
+  
+  dateForamt = `${year}-${month}-${day}`;
+  return dateForamt;
+};
+
 export const changeKRFormat = (date) => {
   let [year, month, day] = date.split('-');
   

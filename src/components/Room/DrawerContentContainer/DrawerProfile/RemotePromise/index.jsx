@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import {
   TextField,
   Grid
@@ -5,6 +7,12 @@ import {
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 const RemotePromise = ({ remoteUserInfo }) => {
+  const [promise, setPromise] = useState(remoteUserInfo?.promise);
+
+  useEffect(() => {
+    setPromise(remoteUserInfo?.promise);
+  }, [remoteUserInfo])
+
   return (
     <Grid container direction="column" alignItems="center">
       <Grid
@@ -27,7 +35,7 @@ const RemotePromise = ({ remoteUserInfo }) => {
           multiline={true}
           rows={8}
           fullWidth
-          value={remoteUserInfo ? remoteUserInfo.promise : ''}
+          value={promise ? promise : ''}
           disabled={true}
         />
       </Grid>

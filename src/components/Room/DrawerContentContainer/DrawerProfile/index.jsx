@@ -5,10 +5,16 @@ import CalendarDiary from '../../../Main/MyCalendar/CalendarDiary';
 import CalendarPromise from '../../../Main/MyCalendar/CalendarPromise';
 import RemotePromise from './RemotePromise';
 import RemoteDiary from './RemoteDiary';
+import RemoteCalendar from './RemoteCalendar';
 
-import { getUserCalendarInfo } from '../../../../api/user';
+import {
+  getUserCalendarInfo,
+  getUserCalendarList
+} from '../../../../api/user';
 import { secToTimeFormat } from '../../../../utils/timer';
 import { getToday } from '../../../../utils/date';
+import { changeZeroDateFormat } from '../../../../utils/date';
+import { setCalendarBackground } from '../../../../utils/calendar';
 
 import { Grid, Typography, IconButton } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
@@ -34,38 +40,64 @@ const DrawerProfile = (props) => {
   } = props;
 
   const [isLocal, setIsLocal] = useState(true);
-  const [currUserData, setCurrUserData] = useState(localUserData);
-  const [currUserCalendarInfo, setCurrUserCalendarInfo] = useState(undefined);
+  const [remoteRequestdate, setRemoterequestdate] = useState(getToday());
+  const [remoteUserCalendarInfo, setRemoteUserCalendarInfo] =
+    useState(undefined);
+  const [remoteUserCalendarList, setRemoteUserCalendarList] = useState([]);
+  const [activeMonth, setActiveMonth] = useState(new Date().getMonth() + 1);
 
-  // current user 변수
+  // remote user 변수
   useEffect(() => {
     if (!currentUserData) return;
 
     if (currentUserData.id === localUserData.id) {
       setIsLocal(true);
     } else {
-      setCurrUserData(currentUserData);
       setIsLocal(false);
+
+      // update remote user's single calendar info
+      getUserCalendarInfo(currentUserData.id, remoteRequestdate).then((res) => {
+        setRemoteUserCalendarInfo(res.data);
+      });
+
+      // update remoteUserCalendarList
+      getUserCalendarList(currentUserData.id).then((res) => {
+        setRemoteUserCalendarList(res.data);
+      });
     }
   }, [currentUserData]);
 
-  // request date 변수
-  useEffect(() => {
-    handleCurrentUserCalendarInfo();
-  }, [requestdate]);
+  // 1.remote requestdate
+  const handleRemoteRequestdate = (value) => {
+    const currDate = changeZeroDateFormat(value);
 
-  // requestdate
-  const handleCurrentUserCalendarInfo = () => {
-    if (currUserData) {
-      getUserCalendarInfo(currUserData.id, requestdate).then((res) => {
-        if (res.data) {
-          setCurrUserCalendarInfo(res.data);
-        } else {
-          setCurrUserCalendarInfo(undefined);
-        }
-      });
-    }
+    setRemoterequestdate(currDate);
   };
+
+  // 2.remote request date hook
+  useEffect(() => {
+    handleRemoteUserCalendarInfo();
+  }, [remoteRequestdate]);
+
+  // 3. handle remote user's single calendar info
+  const handleRemoteUserCalendarInfo = () => {
+    if (!currentUserData) return
+
+    getUserCalendarInfo(currentUserData.id, remoteRequestdate).then((res) => {
+      setRemoteUserCalendarInfo(res.data);
+    });
+  };
+
+  // 4. handle calendar list
+  const handleChange = ({ activeStartDate }) => {
+    const _activeMonth = activeStartDate.getMonth() + 1;
+    setActiveMonth(_activeMonth);
+  }
+
+  // 5. update background colors
+  useEffect(() => {
+    setCalendarBackground(remoteUserCalendarList);
+  }, [activeMonth, remoteUserCalendarList]);
 
   const onClickSaveHandler = () => {
     setCalendarSaveData();
@@ -75,27 +107,40 @@ const DrawerProfile = (props) => {
     <Wrapper>
       <Grid className="name-container">
         <Typography variant="h4" className="name">
-          {isLocal ? localUserData.name : currUserData.name}
+          {isLocal ? localUserData.name : currentUserData.name}
         </Typography>
       </Grid>
       <Grid className="calendar-container">
-        <CalendarComponent
-          setCalendarSetDate={setCalendarSetDate}
-          setTodolistSetDate={setTodolistSetDate}
-          isLightMode={false}
-        />
+        {isLocal ? (
+          <CalendarComponent
+            setCalendarSetDate={setCalendarSetDate}
+            setTodolistSetDate={setTodolistSetDate}
+            isLightMode={false}
+          />
+        ) : (
+          <RemoteCalendar
+            handleRemoteRequestdate={handleRemoteRequestdate}
+            handleChange={handleChange}
+          />
+        )}
       </Grid>
       <Grid className="date-time-container">
-        <Typography className="date">{requestdate}</Typography>
+        <Typography className="date">
+          {isLocal ? (
+            requestdate
+          ) : (
+            remoteRequestdate
+          )}
+        </Typography>
         <Typography className="time-text">오늘 공부 시간</Typography>
         <Typography className="time">
           {isLocal
             ? calendardata.date === getToday()
               ? secToTimeFormat(studyTime)
               : secToTimeFormat(calendardata.studyTime)
-            : currUserCalendarInfo
-            ? secToTimeFormat(currUserCalendarInfo.studyTime)
-            : secToTimeFormat(0)}
+            : remoteUserCalendarInfo
+              ? secToTimeFormat(remoteUserCalendarInfo.studyTime)
+              : secToTimeFormat(0)}
         </Typography>
       </Grid>
       {isLocal && (
@@ -110,7 +155,6 @@ const DrawerProfile = (props) => {
         <Grid className="pd-content-container">
           <div
             style={{
-              // border: '1px solid black',
               textAlign: 'center',
               height: '100%',
             }}
@@ -126,7 +170,7 @@ const DrawerProfile = (props) => {
                 isLightMode={true}
               />
             ) : (
-              <RemotePromise remoteUserInfo={currUserCalendarInfo} />
+              <RemotePromise remoteUserInfo={remoteUserCalendarInfo} />
             )}
           </div>
         </Grid>
@@ -147,7 +191,7 @@ const DrawerProfile = (props) => {
                 isLightMode={true}
               />
             ) : (
-              <RemoteDiary remoteUserInfo={currUserCalendarInfo} />
+              <RemoteDiary remoteUserInfo={remoteUserCalendarInfo} />
             )}
           </div>
         </Grid>

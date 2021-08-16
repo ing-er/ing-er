@@ -1,11 +1,13 @@
 import { changeKRFormat } from './date';
 
 export const setCalendarBackground = (calendar) => {
-  const dateList = ['2021년 8월 13일', '2021년 8월 14일', '2021년 8월 15일', '2021년 8월 16일'];
-  const _studyTime = [2, 5, 8, 10]
+  const dateList = [];
+  const studyTimes = []
   for (let cal of calendar) {
     const KRdate = changeKRFormat(cal.date);
+    const _sTime = cal.studyTime;
     dateList.push(KRdate);
+    studyTimes.push(_sTime)
   }
 
   const abbr = document.querySelectorAll('abbr');
@@ -14,7 +16,7 @@ export const setCalendarBackground = (calendar) => {
     const idx = dateList.indexOf(myAriaLabel);
     if (idx !== -1) {
       const parentEle = ab.parentElement;
-      const color = getColor(_studyTime[idx]);
+      const color = getColor(studyTimes[idx]);
       parentEle.style.backgroundColor = color;
     }
   }

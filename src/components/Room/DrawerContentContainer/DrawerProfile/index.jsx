@@ -37,7 +37,7 @@ const DrawerProfile = (props) => {
   const [currUserData, setCurrUserData] = useState(localUserData);
   const [currUserCalendarInfo, setCurrUserCalendarInfo] = useState(undefined);
 
-  // current user 변�
+  // current user 변수
   useEffect(() => {
     if (!currentUserData) return;
 
@@ -49,12 +49,12 @@ const DrawerProfile = (props) => {
     }
   }, [currentUserData]);
 
-  // request date 변�
+  // request date 변수
   useEffect(() => {
     handleCurrentUserCalendarInfo();
   }, [requestdate]);
 
-  // requestdate 변겄재 �릭�� �보 기� state 변�
+  // requestdate
   const handleCurrentUserCalendarInfo = () => {
     if (currUserData) {
       getUserCalendarInfo(currUserData.id, requestdate).then((res) => {
@@ -87,7 +87,7 @@ const DrawerProfile = (props) => {
       </Grid>
       <Grid className="date-time-container">
         <Typography className="date">{requestdate}</Typography>
-        <Typography className="time-text">오늘의 공부 시간</Typography>
+        <Typography className="time-text">오늘 공부 시간</Typography>
         <Typography className="time">
           {isLocal
             ? calendardata.date === getToday()

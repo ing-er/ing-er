@@ -11,11 +11,7 @@ export const SETDATE = 'TODOLIST/SETDATE';
 export const DELETETODOLIST = 'DELETETODOLIST';
 export const DELETEDETAIL = 'DELETEDETAIL';
 
-// const HOST = 'localhost:8080';
-// const serverUrl = `http://${HOST}/api/v1`;
-const HOST = 'i5a208.p.ssafy.io';
-const serverUrl = `https://${HOST}/api/v1`;
-// const serverUrl = process.env.REACT_APP_SERVER_URL;
+const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 export const setTodolistAddContainer = (title, todolist) => ({
   type: ADDCONTAINER,
@@ -137,7 +133,7 @@ export const getTodolistData = async (id) => {
           todolistToday.push(todolistData[index]);
         }
       });
-      // console.log('load �료..');
+      // console.log('load 완료..');
     })
     .catch((err) => {
       // console.log(err);

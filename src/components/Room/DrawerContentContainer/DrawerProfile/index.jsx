@@ -37,7 +37,6 @@ const DrawerProfile = (props) => {
 
   const [isLocal, setIsLocal] = useState(true);
   const [remoteRequestdate, setRemoterequestdate] = useState(undefined);
-  const [remoteUserData, setRemoteUserData] = useState(undefined);
   const [remoteUserCalendarInfo, setRemoteUserCalendarInfo] = useState(undefined);
 
   // remote user 변수
@@ -46,8 +45,6 @@ const DrawerProfile = (props) => {
     console.log(currentUserData)
     console.log('remoteRequestdate')
     console.log(remoteRequestdate)
-    console.log('remoteUserData')
-    console.log(remoteUserData)
     console.log('remoteUserCalendarInfo')
     console.log(remoteUserCalendarInfo)
     if (!currentUserData) return;
@@ -55,7 +52,6 @@ const DrawerProfile = (props) => {
     if (currentUserData.id === localUserData.id) {
       setIsLocal(true);
     } else {
-      setRemoteUserData(currentUserData);
       setIsLocal(false);
 
       // remoteUserCalendarInfo call
@@ -73,8 +69,8 @@ const DrawerProfile = (props) => {
 
   // remote requestdate
   const handleRemoteUserCalendarInfo = () => {
-    if (remoteUserData) {
-      getUserCalendarInfo(remoteUserData.id, requestdate).then((res) => {
+    if (currentUserData) {
+      getUserCalendarInfo(currentUserData.id, requestdate).then((res) => {
         if (res.data) {
           setRemoteUserCalendarInfo(res.data);
         } else {
@@ -100,7 +96,7 @@ const DrawerProfile = (props) => {
     <Wrapper>
       <Grid className="name-container">
         <Typography variant="h4" className="name">
-          {isLocal ? localUserData.name : remoteUserData.name}
+          {isLocal ? localUserData.name : currentUserData.name}
         </Typography>
       </Grid>
       <Grid className="calendar-container">

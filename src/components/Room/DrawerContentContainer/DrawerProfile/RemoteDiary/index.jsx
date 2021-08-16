@@ -12,10 +12,7 @@ const CalendarDiary = ({ remoteUserInfo, currentUserData }) => {
   useEffect(() => {
     setDiary(remoteUserInfo?.diary);
     setIsSecret(currentUserData?.isOpen);
-    console.log('hook!!!!!!!!!!!!!')
-    console.log(currentUserData)
-    console.log(isSecret)
-  }, [remoteUserInfo, currentUserData, isSecret])
+  }, [remoteUserInfo, currentUserData])
   
   return (
     <Wrapper>
@@ -38,13 +35,14 @@ const CalendarDiary = ({ remoteUserInfo, currentUserData }) => {
             padding: '20px',
           }}
         >
-          {isSecret ? (
+          {!isSecret ? (
             <TextField 
               multiline={true}
-              rows={8}
+              rows={1}
               fullWidth
               value={'비공개'}
               disabled={true}
+              InputProps={{ disableUnderline: true }}
             />
           ) : (
             <TextField

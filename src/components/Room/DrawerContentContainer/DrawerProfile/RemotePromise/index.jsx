@@ -34,13 +34,14 @@ const RemotePromise = ({ remoteUserInfo, currentUserData }) => {
             padding: '20px',
           }}
         >
-          {isSecret ? (
+          {!isSecret ? (
             <TextField 
               multiline={true}
-              rows={8}
+              rows={1}
               fullWidth
               value={'비공개'}
               disabled={true}
+              InputProps={{ disableUnderline: true }}
             />
           ) : (
             <TextField

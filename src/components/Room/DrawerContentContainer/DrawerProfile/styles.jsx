@@ -28,12 +28,10 @@ const Wrapper = styled.div`
   }
   & .pd-container {
     padding: 1rem;
-    height: 300px;
     overflow: auto;
   }
   & .pd-content-container {
-    height: 270px;
-    margin: 2px 0;
+    margin-bottom: 1.5rem;
   }
   .textfield-grid {
     padding-right: 20px;

@@ -27,7 +27,7 @@ const Webrtc = () => {
   const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
   const userData = useSelector((state) => state.authorization.userData);
-  let localStudyTime = useSelector((state) => state.studyTime.studyTime);
+  const localStudyTime = useSelector((state) => state.studyTime.studyTime);
   const { isRandomRoom } = useSelector((state) => state.setIsRandomRoom);
   const dispatch = useDispatch();
   const { isJoin, isAuth } = useSelector(({authorization }) => ({

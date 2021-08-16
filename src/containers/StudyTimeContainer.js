@@ -4,8 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { increase } from '../modules/studyTime';
 
 const StudyTimecontainer = ({ children }) => {
-  let { studyTime } = useSelector(state => state.studyTime );
-  studyTime = studyTime ? studyTime : 0;
+  const { studyTime } = useSelector(state => state.studyTime );
   const dispatch = useDispatch();
 
   const onIncrease = () => {

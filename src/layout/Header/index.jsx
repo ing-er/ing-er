@@ -62,7 +62,7 @@ const Header = ({
           </Link>
         </Grid>
 
-        {/* 마이�이지 */}
+        {/* 마이�이지 */}
         {isAuth && !isJoin && !isAdmin ? (
           <Grid className="title">
             <Grid container justifyContent="center">
@@ -86,7 +86,7 @@ const Header = ({
         ) : null}
 
         {!isAuth ? null : (
-          // 멤버�정 & 로그�웃
+          // 멤버�정 & 로그�웃
           <Grid className="setting-container">
             <Grid>
               <IconButton onClick={onSettingHandler}>
@@ -139,7 +139,7 @@ const Header = ({
                 className="login-button"
                 onClick={handleClickOpen}
               >
-                로그
+                로그인
               </Button>
             </motion.div>
           </Grid>
@@ -153,12 +153,12 @@ const Header = ({
         open={open}
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          로그& �원가
+          로그인 & 회원가입
         </DialogTitle>
         <DialogContent dividers>
           <LoginContainer />
         </DialogContent>
-        <Button onClick={onLoginHandler}>�기</Button>
+        <Button onClick={onLoginHandler}>닫기</Button>
       </Dialog>
     </Wrapper>
   );

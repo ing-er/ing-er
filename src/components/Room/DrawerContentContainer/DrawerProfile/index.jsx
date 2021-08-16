@@ -37,7 +37,7 @@ const DrawerProfile = (props) => {
   const [currUserData, setCurrUserData] = useState(localUserData);
   const [currUserCalendarInfo, setCurrUserCalendarInfo] = useState(undefined);
 
-  // current user 변�
+  // current user 변�
   useEffect(() => {
     if (!currentUserData) return;
 
@@ -49,12 +49,12 @@ const DrawerProfile = (props) => {
     }
   }, [currentUserData]);
 
-  // request date 변�
+  // request date 변�
   useEffect(() => {
     handleCurrentUserCalendarInfo();
   }, [requestdate]);
 
-  // requestdate 변겄재 �릭�� �보 기� state 변�
+  // requestdate 변겄재 �릭�� �보 기� state 변�
   const handleCurrentUserCalendarInfo = () => {
     if (currUserData) {
       getUserCalendarInfo(currUserData.id, requestdate).then((res) => {
@@ -75,11 +75,7 @@ const DrawerProfile = (props) => {
     <Wrapper>
       <Grid className="name-container">
         <Typography variant="h4" className="name">
-          {isLocal ? (
-            localUserData.name
-            ) : (
-            currUserData.name
-          )}
+          {isLocal ? localUserData.name : currUserData.name}
         </Typography>
       </Grid>
       <Grid className="calendar-container">
@@ -91,21 +87,15 @@ const DrawerProfile = (props) => {
       </Grid>
       <Grid className="date-time-container">
         <Typography className="date">{requestdate}</Typography>
-        <Typography className="time-text">�늘공� �간</Typography>
+        <Typography className="time-text">오늘의 공부 시간</Typography>
         <Typography className="time">
-          {isLocal ? (
-            (calendardata.date === getToday() ? (
-              secToTimeFormat(studyTime)
-            ) : ( 
-              secToTimeFormat(calendardata.studyTime)
-            ))
-          ) : (
-            (currUserCalendarInfo ? (
-              secToTimeFormat(currUserCalendarInfo.studyTime)
-            ) : (
-              secToTimeFormat(0)
-            ))
-          )}
+          {isLocal
+            ? calendardata.date === getToday()
+              ? secToTimeFormat(studyTime)
+              : secToTimeFormat(calendardata.studyTime)
+            : currUserCalendarInfo
+            ? secToTimeFormat(currUserCalendarInfo.studyTime)
+            : secToTimeFormat(0)}
         </Typography>
       </Grid>
       {isLocal && (

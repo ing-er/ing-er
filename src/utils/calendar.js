@@ -27,13 +27,12 @@ const getColor = (time) => {
 
   if (0 < time && time < 10800) {
     colorCode = '#fff5ed';
-  } else if (time < 21600) {
+  } else if (10800 <= time && time < 21600) {
     colorCode = '#ffe0ca';
-  } else if (time < 36000) {
+  } else if (21600 <= time && time < 36000) {
     colorCode = '#ffab72';
   } else if (time >= 36000) {
     colorCode = '#E96F02';
   }
-
   return colorCode;
 };

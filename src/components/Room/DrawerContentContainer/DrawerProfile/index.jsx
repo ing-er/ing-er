@@ -129,9 +129,9 @@ const DrawerProfile = (props) => {
       <Grid className="date-time-container">
         <Typography className="date">
           {isLocal ? (
-            {requestdate}
+            requestdate
           ) : (
-            {remoteRequestdate}
+            remoteRequestdate
           )}
         </Typography>
         <Typography className="time-text">오늘 공부 시간</Typography>
@@ -146,7 +146,7 @@ const DrawerProfile = (props) => {
         </Typography>
       </Grid>
       {isLocal && (
-        <Grid container justifyContent="center">
+        <Grid container justify="center">
           <IconButton onClick={onClickSaveHandler}>
             <SaveIcon htmlColor="#E96F02" />
           </IconButton>

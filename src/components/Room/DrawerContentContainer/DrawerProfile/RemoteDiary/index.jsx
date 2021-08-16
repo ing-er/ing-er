@@ -7,11 +7,13 @@ import { useEffect } from 'react';
 
 const CalendarDiary = ({ remoteUserInfo }) => {
   const [diary, setDiary] = useState(remoteUserInfo?.diary);
-
+  const [isSecret, setIsSecret] = useState(remoteUserInfo?.isOpen);
+  
   useEffect(() => {
     setDiary(remoteUserInfo?.diary);
-  }, [remoteUserInfo]);
-
+    setIsSecret(remoteUserInfo?.isOpen);
+  }, [remoteUserInfo])
+  
   return (
     <Grid container direction="column" alignItems="center">
       <Grid
@@ -22,7 +24,7 @@ const CalendarDiary = ({ remoteUserInfo }) => {
         }}
       >
         <AssignmentIcon />
-        나의 오늘 일기
+        오늘의 일기
       </Grid>
       <Grid
         item
@@ -32,14 +34,24 @@ const CalendarDiary = ({ remoteUserInfo }) => {
           padding: '20px',
         }}
       >
-        <TextField
-          multiline={true}
-          rows={8}
-          fullWidth
-          value={diary ? diary : ''}
-          disabled={true}
-          InputProps={{ disableUnderline: true }}
-        />
+        {isSecret ? (
+          <TextField 
+            multiline={true}
+            rows={8}
+            fullWidth
+            value={'비공개'}
+            disabled={true}
+          />
+        ) : (
+          <TextField
+            multiline={true}
+            rows={8}
+            fullWidth
+            value={diary ? diary : ''}
+            disabled={true}
+            InputProps={{ disableUnderline: true }}
+          />
+        )}
       </Grid>
     </Grid>
   );

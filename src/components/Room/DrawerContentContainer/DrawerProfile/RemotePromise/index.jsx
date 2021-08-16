@@ -5,10 +5,12 @@ import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 const RemotePromise = ({ remoteUserInfo }) => {
   const [promise, setPromise] = useState(remoteUserInfo?.promise);
+  const [isSecret, setIsSecret] = useState(remoteUserInfo?.isOpen);
 
   useEffect(() => {
     setPromise(remoteUserInfo?.promise);
-  }, [remoteUserInfo]);
+    setIsSecret(remoteUserInfo?.isOpen);
+  }, [remoteUserInfo])
 
   return (
     <Grid container direction="column" alignItems="center">
@@ -19,7 +21,7 @@ const RemotePromise = ({ remoteUserInfo }) => {
         }}
       >
         <WhatshotIcon />
-        나의 오늘 다짐
+        오늘의 다짐
       </Grid>
       <Grid
         item
@@ -29,14 +31,24 @@ const RemotePromise = ({ remoteUserInfo }) => {
           padding: '20px',
         }}
       >
-        <TextField
-          multiline={true}
-          rows={8}
-          fullWidth
-          value={promise ? promise : ''}
-          disabled={true}
-          InputProps={{ disableUnderline: true }}
-        />
+        {isSecret ? (
+          <TextField 
+            multiline={true}
+            rows={8}
+            fullWidth
+            value={'비공개'}
+            disabled={true}
+          />
+        ) : (
+          <TextField
+            multiline={true}
+            rows={8}
+            fullWidth
+            value={promise ? promise : ''}
+            disabled={true}
+            InputProps={{ disableUnderline: true }}
+          />
+        )}
       </Grid>
     </Grid>
   );

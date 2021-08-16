@@ -12,7 +12,10 @@ const CalendarDiary = ({ remoteUserInfo, currentUserData }) => {
   useEffect(() => {
     setDiary(remoteUserInfo?.diary);
     setIsSecret(currentUserData?.isOpen);
-  }, [remoteUserInfo])
+    console.log('hook!!!!!!!!!!!!!')
+    console.log(currentUserData)
+    console.log(isSecret)
+  }, [remoteUserInfo, currentUserData, isSecret])
   
   return (
     <Wrapper>

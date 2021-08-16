@@ -37,11 +37,7 @@ const DrawerProfile = (props) => {
   const [currUserData, setCurrUserData] = useState(localUserData);
   const [currUserCalendarInfo, setCurrUserCalendarInfo] = useState(undefined);
 
-<<<<<<< Updated upstream
-  // current user 변�
-=======
   // current user 변수
->>>>>>> Stashed changes
   useEffect(() => {
     if (!currentUserData) return;
 
@@ -53,11 +49,7 @@ const DrawerProfile = (props) => {
     }
   }, [currentUserData]);
 
-<<<<<<< Updated upstream
-  // request date 변�
-=======
   // request date 변수
->>>>>>> Stashed changes
   useEffect(() => {
     handleCurrentUserCalendarInfo();
   }, [requestdate]);

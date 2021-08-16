@@ -16,3 +16,10 @@ export const getUserInfo = async (userData) => {
   const response = await axios.get(url);
   return response;
 }
+
+export const getUserCalendarList = async (userId) => {
+  const url = `${SERVER_URL}calendar/list/${userId}`
+
+  const response = await axios.get(url);
+  return response
+}

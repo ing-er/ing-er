@@ -5,10 +5,12 @@ import CalendarDiary from '../../../Main/MyCalendar/CalendarDiary';
 import CalendarPromise from '../../../Main/MyCalendar/CalendarPromise';
 import RemotePromise from './RemotePromise';
 import RemoteDiary from './RemoteDiary';
+import RemoteCalendar from './RemoteCalendar';
 
-import { getUserCalendarInfo } from '../../../../api/user';
+import { getUserCalendarInfo, getUserCalendarList } from '../../../../api/user';
 import { secToTimeFormat } from '../../../../utils/timer';
 import { getToday } from '../../../../utils/date';
+import { changeZeroDateFormat } from '../../../../utils/date';
 
 import { Grid, Typography, IconButton } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
@@ -34,38 +36,61 @@ const DrawerProfile = (props) => {
   } = props;
 
   const [isLocal, setIsLocal] = useState(true);
-  const [currUserData, setCurrUserData] = useState(localUserData);
-  const [currUserCalendarInfo, setCurrUserCalendarInfo] = useState(undefined);
+  const [remoteRequestdate, setRemoterequestdate] = useState(undefined);
+  const [remoteUserData, setRemoteUserData] = useState(undefined);
+  const [remoteUserCalendarInfo, setRemoteUserCalendarInfo] = useState(undefined);
 
-  // current user 변수
+  // remote user 변수
   useEffect(() => {
+    console.log('currentuserData!!')
+    console.log(currentUserData)
+    console.log('remoteRequestdate')
+    console.log(remoteRequestdate)
+    console.log('remoteUserData')
+    console.log(remoteUserData)
+    console.log('remoteUserCalendarInfo')
+    console.log(remoteUserCalendarInfo)
     if (!currentUserData) return;
 
     if (currentUserData.id === localUserData.id) {
       setIsLocal(true);
     } else {
-      setCurrUserData(currentUserData);
+      setRemoteUserData(currentUserData);
       setIsLocal(false);
+
+      // remoteUserCalendarInfo call
+      getUserCalendarList(currentUserData.id)
+        .then((res) => {
+          setRemoteUserCalendarInfo(res.data);
+        })
     }
   }, [currentUserData]);
 
-  // request date 변수
+  // remote request date 변수
   useEffect(() => {
-    handleCurrentUserCalendarInfo();
-  }, [requestdate]);
+    handleRemoteUserCalendarInfo();
+  }, [remoteRequestdate]);
 
-  // requestdate
-  const handleCurrentUserCalendarInfo = () => {
-    if (currUserData) {
-      getUserCalendarInfo(currUserData.id, requestdate).then((res) => {
+  // remote requestdate
+  const handleRemoteUserCalendarInfo = () => {
+    if (remoteUserData) {
+      getUserCalendarInfo(remoteUserData.id, requestdate).then((res) => {
         if (res.data) {
-          setCurrUserCalendarInfo(res.data);
+          setRemoteUserCalendarInfo(res.data);
         } else {
-          setCurrUserCalendarInfo(undefined);
+          setRemoteUserCalendarInfo(undefined);
         }
       });
     }
   };
+
+  // remote request date handler
+  const handleRemoteRequestdate = (value) => {
+    console.log('handleRemoteRequestdate');
+    const currDate = changeZeroDateFormat(value);
+
+    setRemoterequestdate(currDate);
+  }
 
   const onClickSaveHandler = () => {
     setCalendarSaveData();
@@ -75,15 +100,21 @@ const DrawerProfile = (props) => {
     <Wrapper>
       <Grid className="name-container">
         <Typography variant="h4" className="name">
-          {isLocal ? localUserData.name : currUserData.name}
+          {isLocal ? localUserData.name : remoteUserData.name}
         </Typography>
       </Grid>
       <Grid className="calendar-container">
-        <CalendarComponent
-          setCalendarSetDate={setCalendarSetDate}
-          setTodolistSetDate={setTodolistSetDate}
-          isLightMode={false}
-        />
+        {isLocal ? (
+          <CalendarComponent
+            setCalendarSetDate={setCalendarSetDate}
+            setTodolistSetDate={setTodolistSetDate}
+            isLightMode={false}
+          />
+        ) : (
+          <RemoteCalendar 
+            handleRemoteRequestdate={handleRemoteRequestdate}
+          />
+        )}
       </Grid>
       <Grid className="date-time-container">
         <Typography className="date">{requestdate}</Typography>
@@ -93,9 +124,9 @@ const DrawerProfile = (props) => {
             ? calendardata.date === getToday()
               ? secToTimeFormat(studyTime)
               : secToTimeFormat(calendardata.studyTime)
-            : currUserCalendarInfo
-            ? secToTimeFormat(currUserCalendarInfo.studyTime)
-            : secToTimeFormat(0)}
+            : remoteUserCalendarInfo
+              ? secToTimeFormat(remoteUserCalendarInfo.studyTime)
+              : secToTimeFormat(0)}
         </Typography>
       </Grid>
       {isLocal && (
@@ -126,7 +157,7 @@ const DrawerProfile = (props) => {
                 isLightMode={true}
               />
             ) : (
-              <RemotePromise remoteUserInfo={currUserCalendarInfo} />
+              <RemotePromise remoteUserInfo={remoteUserCalendarInfo} />
             )}
           </div>
         </Grid>
@@ -147,7 +178,7 @@ const DrawerProfile = (props) => {
                 isLightMode={true}
               />
             ) : (
-              <RemoteDiary remoteUserInfo={currUserCalendarInfo} />
+              <RemoteDiary remoteUserInfo={remoteUserCalendarInfo} />
             )}
           </div>
         </Grid>

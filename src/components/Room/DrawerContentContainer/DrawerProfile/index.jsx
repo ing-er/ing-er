@@ -170,7 +170,10 @@ const DrawerProfile = (props) => {
                 isLightMode={true}
               />
             ) : (
-              <RemotePromise remoteUserInfo={remoteUserCalendarInfo} />
+              <RemotePromise
+                remoteUserInfo={remoteUserCalendarInfo}
+                currentUserData={currentUserData}
+              />
             )}
           </div>
         </Grid>
@@ -191,7 +194,10 @@ const DrawerProfile = (props) => {
                 isLightMode={true}
               />
             ) : (
-              <RemoteDiary remoteUserInfo={remoteUserCalendarInfo} />
+              <RemoteDiary
+                remoteUserInfo={remoteUserCalendarInfo}
+                currentUserData={currentUserData}
+              />
             )}
           </div>
         </Grid>

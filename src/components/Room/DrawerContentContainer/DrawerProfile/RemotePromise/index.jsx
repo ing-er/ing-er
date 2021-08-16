@@ -5,16 +5,17 @@ import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 import Wrapper from './styles';
 
-const RemotePromise = ({ remoteUserInfo }) => {
+const RemotePromise = ({ remoteUserInfo, currentUserData }) => {
   const [promise, setPromise] = useState(remoteUserInfo?.promise);
-  const [isSecret, setIsSecret] = useState(remoteUserInfo?.isOpen);
+  const [isSecret, setIsSecret] = useState(currentUserData?.isOpen);
 
   useEffect(() => {
     setPromise(remoteUserInfo?.promise);
     setIsSecret(remoteUserInfo?.isOpen);
+    console.log(currentUserData)
     console.log(remoteUserInfo)
     console.log(isSecret)
-  }, [remoteUserInfo])
+  }, [remoteUserInfo, currentUserData])
 
   return (
     <Wrapper>

@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
   min-height: ${defaultHeight}px;
   width: 100%;
   background-color: #1E1F26;
+  font-family: 'regular' !important;
 `
 
 const drawerWidth = 400;

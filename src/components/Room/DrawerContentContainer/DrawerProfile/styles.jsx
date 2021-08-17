@@ -7,6 +7,7 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
     & .name {
+      font-family: 'bold';
     }
   }
   & .calendar-container {
@@ -16,10 +17,10 @@ const Wrapper = styled.div`
     text-align: center;
     & .date {
       margin: 0.5rem 0;
-      font-weight: 700;
+      font-family: 'bold';
     }
     & .time-text {
-      font-weight: 400;
+      font-family: 'regular';
     }
     & .time {
       font-size: 3rem;

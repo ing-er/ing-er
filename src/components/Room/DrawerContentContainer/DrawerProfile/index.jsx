@@ -132,7 +132,7 @@ const DrawerProfile = (props) => {
             remoteRequestdate
           )}
         </Typography>
-        <Typography className="time-text">오늘 공부 시간</Typography>
+        <Typography className="time-text">오늘의 공부 시간</Typography>
         <Typography className="time">
           {isLocal
             ? calendardata.date === getToday()

@@ -15,6 +15,19 @@ export async function loginAsync(formData) {
 return formData.oAuthId;
 }
 
+export async function testLoginAsync(formData) {
+  const response = await axios.get(
+    `${SERVER_URL}users/${formData.oAuthId}`
+    );
+    //* 이미 등록된 유저일 때,
+    if (response.data != ''){
+    window.localStorage.setItem('CURRENT_USER', formData.oAuthId);
+    return response.data
+  }
+  //* 등록되지 않은 유저일 때,
+return 'fail';
+}
+
 export async function isAuthAsync() {
   const token = window.localStorage.getItem('CURRENT_USER');
   //* 처음 이용하는 사용자

@@ -13,6 +13,11 @@ const LOGIN_USER = 'userAuthorization/LOGIN_USER';
 const LOGIN_USER_SUCCESS = 'userAuthorization/LOGIN_USER_SUCCESS';
 const LOGIN_USER_FAILURE = 'userAuthorization/LOGIN_USER_FAILURE';
 
+//* TEST_LOGIN_USER
+const TEST_LOGIN_USER = 'userAuthorization/TEST_LOGIN_USER';
+const TEST_LOGIN_USER_SUCCESS = 'userAuthorization/TEST_LOGIN_USER_SUCCESS';
+const TEST_LOGIN_USER_FAILURE = 'userAuthorization/TEST_LOGIN_USER_FAILURE';
+
 //* LOG_OUT_USER
 const LOG_OUT_USER = 'userAuthorization/LOG_OUT_USER';
 
@@ -20,6 +25,8 @@ const LOG_OUT_USER = 'userAuthorization/LOG_OUT_USER';
 const WITHDRAWAL_USER = 'userAuthorization/WITHDRAWAL_USER';
 const WITHDRAWAL_USER_SUCCESS = 'userAuthorization/WITHDRAWAL_USER_SUCCESS';
 const WITHDRAWAL_USER_FAILURE = 'userAuthorization/WITHDRAWAL_USER_FAILURE';
+
+const INIT_STATE = 'userAuthorization/INIT_STATE';
 
 const DIALOGOPEN = 'DIALOGOPEN';
 const DIALOGCLOSE = 'DIALOGCLOSE';
@@ -32,12 +39,20 @@ export const typeLogin = (formData) => ({
   type: LOGIN_USER,
   payload: formData,
 });
+export const typeTestLogin = (formData) => ({
+  type: TEST_LOGIN_USER,
+  payload: formData,
+});
 export const typeLogOut = () => ({
   type: LOG_OUT_USER,
 });
 
 export const typeWithdrawal = () => ({
   type: WITHDRAWAL_USER,
+});
+
+export const typeInitState = () => ({
+  type: INIT_STATE,
 });
 
 
@@ -73,6 +88,21 @@ export function* loginSaga(action) {
   }
 }
 
+export function* testLoginSaga(action) {
+  try {
+    const loginResult = yield call(loginApi.testLoginAsync, action.payload);
+    yield put({
+      type: TEST_LOGIN_USER_SUCCESS,
+      payload: loginResult,
+    });
+  } catch (e) {
+    yield put({
+      type: TEST_LOGIN_USER_FAILURE,
+      payload: e,
+    });
+  }
+}
+
 export function* withdrawalSaga() {
   try {
     const withdrawalResult = yield call(loginApi.WithdrawalUserAsync);
@@ -93,6 +123,7 @@ export function* withdrawalSaga() {
 export function* userAuthorizationSaga() {
   yield takeLatest(AUTH_USER, authSaga);
   yield takeLatest(LOGIN_USER, loginSaga);
+  yield takeLatest(TEST_LOGIN_USER, testLoginSaga);
   yield takeLatest(WITHDRAWAL_USER, withdrawalSaga);
 }
 
@@ -217,6 +248,48 @@ export default function authorization(state=initialState, action) {
         error: action.payload.message,
       };
 
+    case TEST_LOGIN_USER:
+      return {
+        ...state,
+      };
+    case TEST_LOGIN_USER_SUCCESS:
+      if(action.payload == 'fail') {
+        return {
+          ...state,
+          loginError: true,
+        };
+      } else {
+        if (action.payload.usercode === 2){
+          //* 로그인되어 있는 상태(관리자)
+          return {
+            ...state,
+            id: action.payload.id,
+            userData: action.payload,
+            isAuth: true,
+            isJoin: false,
+            isAdmin: true,
+            kakaoIdNum: Number(action.payload.kakaoIdNum),
+          };
+        } else {
+          return {
+            ...state,
+            id: action.payload.id,
+            userData: action.payload,
+            isAuth: true,
+            isJoin: false,
+            isAdmin: false,
+            kakaoIdNum: action.kakaoIdNum,
+          };
+        };
+      }
+
+    case TEST_LOGIN_USER_FAILURE:
+      return {
+        ...state,
+        isAuth: false,
+        error: action.payload.message,
+      };
+
     //* =====================
     //*   LOG_OUT_USER
     //* =====================
@@ -246,6 +319,12 @@ export default function authorization(state=initialState, action) {
     case WITHDRAWAL_USER_FAILURE:
       return {
         ...state,
+      };
+
+    case INIT_STATE:
+      return {
+        ...state,
+        loginError: false,
       };
 
     case DIALOGOPEN:

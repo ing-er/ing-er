@@ -257,20 +257,20 @@ const DIRECTORSETTING = ({
         <Grid container spacing={2} className="container">
           <Grid className="contents-container header">
             <Grid>
-              <h1>회원 신고 내역</h1>
+              <h1
+                style={{
+                  fontFamily: 'bold',
+                }}
+              >
+                회원 신고 내역
+              </h1>
             </Grid>
             <Grid>
               <Grid>
                 <div className={classes.root}>
                   <Button
+                    className="ad-button"
                     variant="outlined"
-                    style={{
-                      borderRadius: '1.25rem',
-                      color: 'white',
-                      fontWeight: 'bold',
-                      backgroundColor: '#292A33',
-                      marginRight: '1rem',
-                    }}
                     onClick={() =>
                       window.open(
                         'https://docs.google.com/forms/d/1pwqR9RI6NNMvqef3TzP3L6LeYVW2YIdQkuy9dnEZ61Q/edit?ts=61162cc9#responses',
@@ -286,7 +286,13 @@ const DIRECTORSETTING = ({
           </Grid>
           <Grid className="contents-container header">
             <Grid>
-              <h1>회원 권한 변경</h1>
+              <h1
+                style={{
+                  fontFamily: 'bold',
+                }}
+              >
+                회원 권한 변경
+              </h1>
             </Grid>
             <Grid>
               <Grid>
@@ -342,7 +348,15 @@ const DIRECTORSETTING = ({
                       id="demo-mutiple-name"
                       value={numToAlpha[usercode]}
                       onChange={handleCode}
-                      input={<Input style={{ color: 'white' }} />}
+                      input={
+                        <Input
+                          style={{
+                            color: 'white',
+                            fontSize: '16px',
+                            fontFamily: 'regular',
+                          }}
+                        />
+                      }
                       MenuProps={MenuProps}
                     >
                       {kindsOfCode.map((code) => (
@@ -367,30 +381,25 @@ const DIRECTORSETTING = ({
           </Grid>
           <Grid className="contents-container managament-container">
             <Grid>
-              <h1>공통 코드 관리</h1>
+              <h1
+                style={{
+                  fontFamily: 'bold',
+                }}
+              >
+                공통 코드 관리
+              </h1>
             </Grid>
             <Grid className="add-button-container">
               <Button
+                className="ad-button"
                 variant="outlined"
-                style={{
-                  borderRadius: '1.25rem',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  backgroundColor: '#292A33',
-                  marginRight: '1rem',
-                }}
                 onClick={handleCommonOpen}
               >
                 공통코드 추가
               </Button>
               <Button
+                className="ad-button"
                 variant="outlined"
-                style={{
-                  borderRadius: '1.25rem',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  backgroundColor: '#292A33',
-                }}
                 onClick={handleDetailOpen}
               >
                 세부코드 추가
@@ -465,19 +474,8 @@ const DIRECTORSETTING = ({
                   <Table size="small" aria-label="a dense table">
                     <TableHead>
                       <TableRow>
-                        <TableCell
-                          style={{
-                            color: 'white',
-                          }}
-                        >
-                          코드
-                        </TableCell>
-                        <TableCell
-                          align="right"
-                          style={{
-                            color: 'white',
-                          }}
-                        >
+                        <TableCell className="table">코드</TableCell>
+                        <TableCell align="right" className="table">
                           종류
                         </TableCell>
                         {/* <TableCell
@@ -488,12 +486,7 @@ const DIRECTORSETTING = ({
                         >
                           수정
                         </TableCell> */}
-                        <TableCell
-                          align="right"
-                          style={{
-                            color: 'white',
-                          }}
-                        >
+                        <TableCell align="right" className="table">
                           삭제
                         </TableCell>
                       </TableRow>
@@ -504,18 +497,11 @@ const DIRECTORSETTING = ({
                           <TableCell
                             component="th"
                             scope="row"
-                            style={{
-                              color: 'white',
-                            }}
+                            className="table"
                           >
                             {commonCode.id}
                           </TableCell>
-                          <TableCell
-                            align="right"
-                            style={{
-                              color: 'white',
-                            }}
-                          >
+                          <TableCell align="right" className="table">
                             {commonCode.kind}
                           </TableCell>
                           {/* <TableCell align="right">
@@ -563,27 +549,11 @@ const DIRECTORSETTING = ({
                   <Table size="small" aria-label="a dense table">
                     <TableHead>
                       <TableRow>
-                        <TableCell
-                          style={{
-                            color: 'white',
-                          }}
-                        >
-                          공통 코드
-                        </TableCell>
-                        <TableCell
-                          align="right"
-                          style={{
-                            color: 'white',
-                          }}
-                        >
+                        <TableCell className="table">공통 코드</TableCell>
+                        <TableCell align="right" className="table">
                           세부 코드
                         </TableCell>
-                        <TableCell
-                          align="right"
-                          style={{
-                            color: 'white',
-                          }}
-                        >
+                        <TableCell align="right" className="table">
                           종류
                         </TableCell>
                         {/* <TableCell
@@ -594,12 +564,7 @@ const DIRECTORSETTING = ({
                         >
                           수정
                         </TableCell> */}
-                        <TableCell
-                          align="right"
-                          style={{
-                            color: 'white',
-                          }}
-                        >
+                        <TableCell align="right" className="table">
                           삭제
                         </TableCell>
                       </TableRow>
@@ -610,26 +575,14 @@ const DIRECTORSETTING = ({
                           <TableCell
                             component="th"
                             scope="row"
-                            style={{
-                              color: 'white',
-                            }}
+                            className="table"
                           >
                             {detailCode.type}
                           </TableCell>
-                          <TableCell
-                            align="right"
-                            style={{
-                              color: 'white',
-                            }}
-                          >
+                          <TableCell align="right" className="table">
                             {detailCode.id}
                           </TableCell>
-                          <TableCell
-                            align="right"
-                            style={{
-                              color: 'white',
-                            }}
-                          >
+                          <TableCell align="right" className="table">
                             {detailCode.name}
                           </TableCell>
                           {/* <TableCell align="right">

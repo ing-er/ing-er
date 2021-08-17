@@ -4,17 +4,6 @@ const Wrapper = styled.div`
   & .main-container {
     box-shadow: '0px 0px 0px rgb(255, 255, 255)';
   }
-  .name-input {
-    background-color: transparent;
-    border: none;
-    color: white;
-    width: 90%;
-    height: 100%;
-    font-size: 20px;
-    :focus {
-      outline: none;
-    }
-  }
   & .header {
     display: flex;
     justify-content: space-between;
@@ -32,6 +21,7 @@ const Wrapper = styled.div`
   & .infos-container {
     display: flex;
     justify-content: space-between;
+    font-family: 'regular';
   }
   .category-container {
     margin-bottom: 100px;
@@ -74,22 +64,23 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
   }
-  .cancel {
-    color: white;
-    background: #292a33;
-    padding: 10px;
-    border-radius: 3rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    transform: translateY(4px);
-    border: 0;
-    outline: 0;
-  }
   & .my-table-container {
     display: flex;
     justify-content: center;
   }
   & .my-table-item {
+  }
+  .ad-button {
+    border-radius: 1.25rem;
+    color: white;
+    font-weight: 'bold';
+    background-color: #292a33;
+    margin-right: 1rem;
+    font-family: 'regular';
+  }
+  .table {
+    color: white;
+    font-family: 'regular';
   }
 `;
 

@@ -37,6 +37,8 @@ const styles = (theme) => ({
 const textStyles = makeStyles((theme) => ({
   input: {
     color: 'white',
+    fontFamily: 'regular',
+    fontSize: '20px',
   },
 }));
 
@@ -140,7 +142,10 @@ function MEMBERSETTING({
       >
         <Grid container direction="column" className="container">
           <Grid item xs={12}>
-            <div className="title" style={{ fontSize: '36px' }}>
+            <div
+              className="title"
+              style={{ fontSize: '36px', fontFamily: 'bold' }}
+            >
               회원 정보 입력
             </div>
           </Grid>
@@ -153,7 +158,13 @@ function MEMBERSETTING({
               xs={12}
             >
               <Grid item xs={2}>
-                <h1>닉네임</h1>
+                <h1
+                  style={{
+                    fontFamily: 'bold',
+                  }}
+                >
+                  닉네임
+                </h1>
               </Grid>
               <Grid item xs={8}>
                 <Grid container spacing={1} alignItems="flex-end">
@@ -177,13 +188,8 @@ function MEMBERSETTING({
               </Grid>
               <Grid item xs={2}>
                 <Button
+                  className="duple"
                   variant="outlined"
-                  style={{
-                    borderRadius: '1.25rem',
-                    color: 'white',
-                    fontWeight: 'bold',
-                    backgroundColor: '#E96F02',
-                  }}
                   onClick={onDuplicateHandler}
                 >
                   중복 확인
@@ -194,10 +200,23 @@ function MEMBERSETTING({
           <Grid item xs={12} className="category-container">
             <Grid container direction="column">
               <Grid item xs={12}>
-                <h1>카테고리 설정</h1>
+                <h1
+                  style={{
+                    fontFamily: 'bold',
+                  }}
+                >
+                  카테고리 설정
+                </h1>
               </Grid>
               <Grid item xs={12}>
-                <p>현재 카테고리 : {categoryName[category]}</p>
+                <p
+                  style={{
+                    fontSize: '16px',
+                    fontFamily: 'regular',
+                  }}
+                >
+                  현재 카테고리 : {categoryName[category]}
+                </p>
               </Grid>
               <Grid
                 container
@@ -273,7 +292,13 @@ function MEMBERSETTING({
               xs={12}
             >
               <Grid item xs={3}>
-                <h1>다짐 공개 여부</h1>
+                <h1
+                  style={{
+                    fontFamily: 'bold',
+                  }}
+                >
+                  다짐 공개 여부
+                </h1>
               </Grid>
               <Grid item xs={7}></Grid>
               <Grid item xs={2}>
@@ -291,7 +316,14 @@ function MEMBERSETTING({
                 />
               </Grid>
             </Grid>
-            <p>현재 다짐 공개 여부 : {isOpenName[isOpen]}</p>
+            <p
+              style={{
+                fontFamily: 'bold',
+                fontSize: '16px',
+              }}
+            >
+              현재 다짐 공개 여부 : {isOpenName[isOpen]}
+            </p>
           </Grid>
           {!isJoin && isAuth ? (
             <Grid item xs={12}>
@@ -303,18 +335,19 @@ function MEMBERSETTING({
                 xs={12}
               >
                 <Grid item xs={2}>
-                  <h1>회원 탈퇴</h1>
+                  <h1
+                    style={{
+                      fontFamily: 'bold',
+                    }}
+                  >
+                    회원 탈퇴
+                  </h1>
                 </Grid>
                 <Grid item xs={8}></Grid>
                 <Grid item xs={2}>
                   <Button
+                    className="withdrawal"
                     variant="outlined"
-                    style={{
-                      borderRadius: '1.25rem',
-                      color: 'white',
-                      fontWeight: 'bold',
-                      backgroundColor: '#CD0C22',
-                    }}
                     onClick={handleClickOpen}
                   >
                     탈퇴하기

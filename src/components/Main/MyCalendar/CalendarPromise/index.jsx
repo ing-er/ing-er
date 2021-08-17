@@ -39,6 +39,7 @@ const CalendarPromise = (props) => {
         style={{
           fontSize: 20,
           color: changeTextColor(),
+          fontFamily: 'bold',
         }}
       >
         <WhatshotIcon />

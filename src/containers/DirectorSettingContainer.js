@@ -18,18 +18,17 @@ import {
 
 // import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
-// import styled from 'styled-components';
-// import mySwal from '../App.css';
+import styled from 'styled-components';
 
 // const mySwal = styled.div`
-// 	z-index: 1000000;
+// z-index: 1000000 !important;
+// .my-swal {
+// 	z-index: 1000000 !important;
+// }
 // `;
 
 const DirectorSettingContainer = () => {
 	
-// const mySwal = {
-// 	zIndex: '100000000',
-// };
 	const history = useHistory();
   const dispatch = useDispatch();
 
@@ -170,21 +169,19 @@ const DirectorSettingContainer = () => {
   }, [updateDetailCodeSuccess]);
 
 	useEffect(() => {
-		if (updateDetailError == 'fail'){
-			alert('존재하지 않는 공통코드입니다.')
-			// Swal.fire({
-			// 	target: document.getElementById('form-modal'),
-			// 	title: '<span style="color: white">존재하지 않는 공통코드입니다. <span>',
-			// 	icon: 'error',
-			// 	background: '#292A33',
-			// 	confirmButtonColor: '#E96F02',
-			// 	confirmButtonText: 'OK!',
-			// 	customClass: {
-			// 		container: 'mySwal',
-			// 		// content: mySwal,
-			// 	},
-			// }).then((result) => {
-			// });
+		if (updateDetailError){
+			Swal.fire({
+				title: '<span style="color: white">존재하지 않는 공통코드입니다. <span>',
+				icon: 'error',
+				background: '#292A33',
+				confirmButtonColor: '#E96F02',
+				confirmButtonText: 'OK!',
+				customClass: {
+					container: 'my-swal',
+				},
+			}).then((result) => {
+			});
+			dispatch(typeInitUpdateInfo());
 		}
   }, [updateDetailError]);
 

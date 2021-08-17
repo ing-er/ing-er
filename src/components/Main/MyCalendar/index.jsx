@@ -198,12 +198,8 @@ const MyCalendar = (props) => {
           style={{ marginBottom: '20px' }}
         >
           <Button
+            className="save"
             variant="outlined"
-            style={{
-              fontSize: 15,
-              fontWeight: 'bold',
-              backgroundColor: '#E96F02',
-            }}
             onClick={onClickSaveHandler}
             endIcon={<SaveIcon />}
           >
@@ -222,7 +218,10 @@ const MyCalendar = (props) => {
             >
               {requestdate}
             </Grid>
-            <Grid item style={{ color: changeTextColor() }}>
+            <Grid
+              item
+              style={{ color: changeTextColor(), fontFamily: 'regular' }}
+            >
               오늘의 공부 시간
             </Grid>
             <Grid

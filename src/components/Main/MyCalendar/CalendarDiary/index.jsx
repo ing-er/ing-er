@@ -41,6 +41,7 @@ const CalendarDiary = (props) => {
         style={{
           fontSize: 20,
           color: changeTextColor(),
+          fontFamily: 'bold',
         }}
       >
         <AssignmentIcon />

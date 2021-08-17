@@ -99,7 +99,7 @@ const HorizontalTabs = (props) => {
               }
               labelPlacement="top"
               label={
-                <Box component="div" fontSize={12}>
+                <Box component="div" fontSize={12} fontFamily="regular">
                   LIGHT MODE
                 </Box>
               }
@@ -114,7 +114,7 @@ const HorizontalTabs = (props) => {
               }
               labelPlacement="top"
               label={
-                <Box component="div" fontSize={12}>
+                <Box component="div" fontSize={12} fontFamily="regular">
                   랜덤방
                 </Box>
               }
@@ -123,11 +123,13 @@ const HorizontalTabs = (props) => {
               <Button
                 className="enter-button"
                 variant="outlined"
-                style={{
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  backgroundColor: '#E96F02',
-                }}
+                // style={{
+                //   fontSize: 20,
+                //   fontFamily: 'bold',
+                //   fontWeight: 'bold',
+                //   backgroundColor: '#E96F02',
+                //   color: 'white',
+                // }}
               >
                 입장하기
               </Button>

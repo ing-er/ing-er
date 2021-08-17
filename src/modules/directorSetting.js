@@ -397,7 +397,7 @@ export default function directorSetting(state = initialState, action) {
     case UPDATE_DETAIL_CODE_FAILURE:
       return {
         ...state,
-        updateDetailError: 'fail',
+        updateDetailError: true,
       };
 
     case INIT_UPDATE_INFO:
@@ -411,7 +411,7 @@ export default function directorSetting(state = initialState, action) {
         deleteDetailCodeSuccess: {},
         updateDetailCodeSuccess: {},
         error: {},
-        updateDetailError: {}
+        updateDetailError: false,
       };
 
     default:

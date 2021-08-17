@@ -57,6 +57,12 @@ const Wrapper = styled.div`
   & .input-container {
     text-align: center;
   }
+  .enter-button {
+    font-size: 15px;
+    font-family: 'bold';
+    font-weight: 'bold';
+    background-color: #e96f02;
+  }
 `;
 
 export default Wrapper;

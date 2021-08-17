@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
+  font-family: 'regular';
   & .all-container {
     padding: 20px;
   }
@@ -29,6 +30,7 @@ const Wrapper = styled.div`
     width: 80%;
     height: 100%;
     font-size: 20px;
+    font-family: 'regular';
     :focus {
       outline: none;
     }
@@ -43,6 +45,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     font-size: 18px;
+    font-family: 'regular';
     :focus {
       outline: none;
     }
@@ -54,6 +57,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     font-size: 18px;
+    font-family: 'regular';
     :focus {
       outline: none;
     }

@@ -252,6 +252,7 @@ const MyTodolist = (props) => {
                 item
                 style={{
                   fontWeight: 'bold',
+                  fontFamily: 'bold',
                   fontSize: 30,
                   color: changeTextColor(),
                 }}
@@ -271,11 +272,6 @@ const MyTodolist = (props) => {
               className="enter-button"
               variant="outlined"
               onClick={onClickSaveTodolist}
-              style={{
-                fontSize: 15,
-                fontWeight: 'bold',
-                backgroundColor: '#E96F02',
-              }}
               endIcon={<SaveIcon />}
             >
               저장

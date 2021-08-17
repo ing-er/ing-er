@@ -22,6 +22,13 @@ const Wrapper = styled.div`
     width: 100%;
     border: none;
   }
+  .save {
+    font-size: 15;
+    font-weight: 'bold';
+    background-color: #e96f02;
+    font-family: 'bold';
+    color: white;
+  }
 `;
 
 export default Wrapper;

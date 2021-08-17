@@ -32,6 +32,7 @@ const Wrapper = styled.div`
     border-radius: 1.25rem;
     color: white;
     font-weight: bold;
+    font-family: 'regular';
     background-color: #e96f02;
     margin: 0.5rem;
 

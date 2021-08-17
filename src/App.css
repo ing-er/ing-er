@@ -1,3 +1,11 @@
-/* .mySwal {
-  z-index: X !important;
-} */
+.my-swal {
+  z-index: 10000000 !important;
+}
+@font-face {
+  font-family: 'regular';
+  src: url('./font/nanum/NanumSquare_acB.ttf');
+}
+@font-face {
+  font-family: 'bold';
+  src: url('./font/nanum/NanumSquare_acEB.ttf');
+}

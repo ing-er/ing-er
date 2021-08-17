@@ -34,6 +34,7 @@ const KakaoLogin = ({ socialLogin }) => {
         color: 'white',
         border: '0',
         fontWeight: 'bold',
+        fontFamily: 'regular',
         backgroundColor: '#ffeb00',
         color: 'black',
         marginRight: '1rem',

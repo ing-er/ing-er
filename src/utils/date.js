@@ -52,6 +52,36 @@ export const changeKRFormat = (date) => {
   return `${year}년 ${month}월 ${day}일`
 }
 
+export const changeENFormat = (date) => {
+  const monthObj = {
+    1: 'January',
+    2: 'February',
+    3: 'March',
+    4: 'April',
+    5: 'May',
+    6: 'June',
+    7: 'July',
+    8: 'August',
+    9: 'September',
+    10: 'October',
+    11: 'Novenber',
+    12: 'December'
+  }
+  let [year, month, day] = date.split('-');
+  
+  if (month.charAt(0) === '0') {
+    month = month.slice(1);
+  }
+  month = monthObj[month];
+
+  if (day.charAt(0) === '0') {
+    day = day.slice(1);
+  }
+  
+  
+  return `${month} ${day}, ${year}`;
+}
+
 
 const leftpad = (value) => {
   if (value >= 10) {

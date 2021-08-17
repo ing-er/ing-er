@@ -1,11 +1,30 @@
 import React from 'react';
-import { TextField, withStyles, IconButton } from '@material-ui/core';
+import {
+  TextField,
+  withStyles,
+  makeStyles,
+  IconButton,
+  createStyles,
+} from '@material-ui/core';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
+
+const styles = (theme) =>
+  createStyles({
+    root: {
+      '& .MuiFormLabel-root': {
+        color: 'red',
+      },
+    },
+  });
 
 const CssTextField = withStyles({
   root: {
     '& label.Mui-focused': {
       color: 'white',
+      fontFamily: 'bold',
+    },
+    '&.MuiFormLabel-root': {
+      color: '#23A5EB',
     },
     '& .MuiInput-underline:after': {
       borderBottomColor: 'white',
@@ -23,20 +42,30 @@ const CssTextField = withStyles({
       },
     },
   },
+  // cssLabel: {
+  //   color: '#d3d3d3',
+  //   '&.Mui-focused': {
+  //     color: '#23A5EB',
+  //   },
+  // },
 })(TextField);
 
-// const textStyles = makeStyles((theme) => ({
-//   input: {
-//     color: 'white',
-//   },
-// }));
+const textStyles = makeStyles((theme) => ({
+  input: {
+    color: 'white',
+  },
+  label: {
+    color: 'red',
+  },
+}));
 
 const CommonLogin = ({
   uniqueNumber,
   setUniqueNumber,
   onPressUniqueNumber,
 }) => {
-  // const classes = textStyles();
+  const classes = textStyles();
+  const classes2 = styles;
 
   return (
     <div>
@@ -47,9 +76,12 @@ const CommonLogin = ({
         }}
         label="입장 번호 입력"
         value={uniqueNumber}
-        // InputProps={{
-        //   className: classes.input,
-        // }}
+        InputProps={{
+          className: classes.input,
+        }}
+        InputLableProps={{
+          className: classes.label,
+        }}
         onChange={(e) => {
           setUniqueNumber(e.target.value);
         }}

@@ -107,10 +107,12 @@ export const getTodolistData = async (id) => {
       // console.log(res);
       res.data.map((x, index) => {
         let todolistDetail = [];
+        let tmpTodoTotal = 0;
+        let tmpTodoComplete = 0;
         x.detail.map((y, idx) => {
-          todolistTotal++;
+          tmpTodoTotal++;
           if (y.isFinish === true) {
-            todolistComplete++;
+            tmpTodoComplete++;
           }
           todolistDetail.push({
             id: y.id,
@@ -131,6 +133,8 @@ export const getTodolistData = async (id) => {
         });
         if (x.date === todaydate) {
           todolistToday.push(todolistData[index]);
+          todolistTotal += tmpTodoTotal;
+          todolistComplete += tmpTodoComplete;
         }
       });
       // console.log('load 완료..');
@@ -387,10 +391,12 @@ const setTodolist = (state = initialState, action) => {
             todolistTotal = 0;
             res.data.map((x, index) => {
               let todolistDetail = [];
+              let tmpTodoTotal = 0;
+              let tmpTodoComplete = 0;
               x.detail.map((y, idx) => {
-                todolistTotal++;
+                tmpTodoTotal++;
                 if (y.isFinish === true) {
-                  todolistComplete++;
+                  tmpTodoComplete++;
                 }
                 todolistDetail.push({
                   id: y.id,
@@ -411,6 +417,8 @@ const setTodolist = (state = initialState, action) => {
               });
               if (x.date === todaydate) {
                 todolistToday.push(todolistData[index]);
+                todolistTotal += tmpTodoTotal;
+                todolistComplete += tmpTodoComplete;
               }
             });
             state.allTodolist = todolistData;

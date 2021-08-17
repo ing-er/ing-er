@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 import { motion } from 'framer-motion';
-
 import LoginContainer from '../../containers/LoginContainer';
 import { scrollHeader } from '../../utils/header';
-
 import {
   Button,
   Grid,
@@ -19,9 +16,24 @@ import LockOpenIcon from '@material-ui/icons/LockOpen';
 // import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 import SettingsIcon from '@material-ui/icons/Settings';
-import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 
 import Wrapper from './styles';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  MuiDialogTitle: {
+    color: 'white',
+    backgroundColor: '#292A33',
+    fontFamily: 'bold',
+  },
+  MuiDialogContent: {
+    backgroundColor: '#292A33',
+  },
+  MuiDialogActions: {
+    backgroundColor: '#292A33',
+  },
+});
 
 const Header = ({
   isJoin,
@@ -30,6 +42,7 @@ const Header = ({
   onSettingHandler,
   onLogOutHandler,
 }) => {
+  const classes = useStyles();
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -151,14 +164,37 @@ const Header = ({
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
+        style={{
+          borderRadius: 10,
+        }}
       >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+        <DialogTitle
+          id="customized-dialog-title"
+          onClose={handleClose}
+          classes={{
+            root: classes.MuiDialogTitle,
+          }}
+        >
           로그인 & 회원가입
         </DialogTitle>
-        <DialogContent dividers>
+        <DialogContent
+          dividers
+          classes={{
+            root: classes.MuiDialogContent,
+          }}
+        >
           <LoginContainer />
         </DialogContent>
-        <Button onClick={onLoginHandler}>닫기</Button>
+        <Button
+          onClick={onLoginHandler}
+          style={{
+            backgroundColor: '#292A33',
+            color: 'white',
+            fontFamily: 'bold',
+          }}
+        >
+          닫기
+        </Button>
       </Dialog>
     </Wrapper>
   );

@@ -12,6 +12,8 @@ const Layout = (props) => {
           style={{
             backgroundImage: 'url(img/inger_background6.png)',
             backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
           }}
         >
           <CssBaseline />

@@ -21,6 +21,7 @@ import { typeAuthUser } from '../modules/userAuthorization';
 const HorizontalTabsComponent = () => {
   const dispatch = useDispatch();
   const { mainIndex } = useSelector((state) => state.setMainIndex);
+  
   const setMainIndexCal = () => {
     dispatch(setMainIndexCalendar());
   };

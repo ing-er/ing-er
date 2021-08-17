@@ -428,6 +428,9 @@ const DIRECTORSETTING = ({
                     InputProps={{
                       className: classes.input,
                     }}
+                    style={{
+                      color: 'white',
+                    }}
                     onChange={(e) => {
                       setCommonType(e.target.value);
                     }}

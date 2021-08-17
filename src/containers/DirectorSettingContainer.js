@@ -18,14 +18,6 @@ import {
 
 // import withReactContent from 'sweetalert2-react-content';
 import Swal from 'sweetalert2';
-import styled from 'styled-components';
-
-// const mySwal = styled.div`
-// z-index: 1000000 !important;
-// .my-swal {
-// 	z-index: 1000000 !important;
-// }
-// `;
 
 const DirectorSettingContainer = () => {
 	
@@ -143,7 +135,18 @@ const DirectorSettingContainer = () => {
 	useEffect(() => {
 		if (updateCommonCodeSuccess?.message){
 			dispatch(typeGetCommonCode());
-			dispatch(typeInitUpdateInfo())
+			dispatch(typeInitUpdateInfo());
+			Swal.fire({
+				title: '<span style="color: white">추가되었습니다. <span>',
+				icon: 'success',
+				background: '#292A33',
+				confirmButtonColor: '#E96F02',
+				confirmButtonText: 'OK!',
+				customClass: {
+					container: 'my-swal',
+				},
+			}).then((result) => {
+			})
 		}
   }, [updateCommonCodeSuccess]);
 
@@ -165,6 +168,17 @@ const DirectorSettingContainer = () => {
 		if (updateDetailCodeSuccess?.message){
 			dispatch(typeGetDetailCode());
 			dispatch(typeInitUpdateInfo());
+			Swal.fire({
+				title: '<span style="color: white">추가되었습니다. <span>',
+				icon: 'success',
+				background: '#292A33',
+				confirmButtonColor: '#E96F02',
+				confirmButtonText: 'OK!',
+				customClass: {
+					container: 'my-swal',
+				},
+			}).then((result) => {
+			})
 		}
   }, [updateDetailCodeSuccess]);
 

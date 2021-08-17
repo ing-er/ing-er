@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { typeLogin, typeLogOut } from '../modules/userAuthorization';
 import KakaoLogin from '../components/Entrance/KakaoLogin';
 import CommonLogin from '../components/Entrance/CommonLogin';
 import {
   setKakoDialogOpen,
   setKakoDialogClose,
   typeAuthUser,
+  typeLogin,
+  typeLogOut,
+  typeTestLogin,
+  typeInitState,
 } from '../modules/userAuthorization';
 import { useHistory } from 'react-router';
 import Swal from 'sweetalert2';
@@ -20,11 +23,12 @@ function LoginContainer() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  let { isJoin, isAuth, isAdmin, userData } = useSelector(({ authorization }) => ({
+  let { isJoin, isAuth, isAdmin, userData, loginError } = useSelector(({ authorization }) => ({
     isJoin: authorization.isJoin,
     isAuth: authorization.isAuth,
     isAdmin: authorization.isAdmin,
-    userData: authorization.userData,
+    userData: authorization.userData, 
+    loginError: authorization.loginError, 
   }));
   
   const [uniqueNumber, setUniqueNumber] = useState('');
@@ -33,6 +37,23 @@ function LoginContainer() {
   useEffect(() => {
     dispatch(typeAuthUser());
   }, []);
+
+  useEffect(() => {
+    if(loginError){
+      Swal.fire({
+          title: '<span style="color: white">등록되지 않은 유저 코드입니다.<span>',
+          icon: 'error',
+          background: '#292A33',
+          confirmButtonColor: '#E96F02',
+          confirmButtonText: 'OK!',
+          customClass: {
+            container: 'my-swal',
+          },
+        }).then((result) => {
+        });
+      dispatch(typeInitState());
+    }
+  }, [loginError]);
 
   useEffect(() => {
     //* 회원가입된 일반회원, 회원가입하는 회원, 관리자, 제재회원,
@@ -83,7 +104,7 @@ function LoginContainer() {
       const formData = {
         oAuthId: Number(uniqueNumber)
       };
-        dispatch(typeLogin(formData));
+        dispatch(typeTestLogin(formData));
     }
 	};
 

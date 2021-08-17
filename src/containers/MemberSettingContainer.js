@@ -44,6 +44,20 @@ function MemberSettingContainer() {
   }, []);
 
   useEffect(() => {
+		if (!isAuth){
+			Swal.fire({
+				title: '<span style="color: white">잘못된 접근입니다. <span>',
+				icon: 'error',
+				background: '#292A33',
+				// confirmButtonColor: '#E96F02',
+				// confirmButtonText: 'OK!',
+			}).then((result) => {
+			});
+			history.push({ pathname: '/' });
+		};
+  }, [isAuth]);
+
+  useEffect(() => {
     if (name == info.name){
       setIsDupl(1);
     } else {

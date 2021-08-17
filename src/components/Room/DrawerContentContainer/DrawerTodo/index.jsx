@@ -67,6 +67,7 @@ const DrawerTodo = (props) => {
                 item
                 style={{
                   fontWeight: 'bold',
+                  fontFamily: 'bold',
                   fontSize: 30,
                 }}
               >

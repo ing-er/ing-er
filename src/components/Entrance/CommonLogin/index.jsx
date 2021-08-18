@@ -55,7 +55,7 @@ const textStyles = makeStyles((theme) => ({
     color: 'white',
   },
   label: {
-    color: 'red',
+    color: 'white',
   },
 }));
 
@@ -79,7 +79,7 @@ const CommonLogin = ({
         InputProps={{
           className: classes.input,
         }}
-        InputLableProps={{
+        InputLabelProps={{
           className: classes.label,
         }}
         onChange={(e) => {

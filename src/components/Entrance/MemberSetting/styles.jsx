@@ -10,7 +10,6 @@ const Wrapper = styled.div`
     color: white;
     width: 90%;
     height: 100%;
-    font-size: 20px;
     :focus {
       outline: none;
     }
@@ -27,6 +26,7 @@ const Wrapper = styled.div`
     padding: 0.375rem 0.75rem;
     border-radius: 1.25rem;
     font-size: 1rem;
+    font-family: 'regular';
     line-height: 1.5;
     transform: translateY(4px);
     border: 0;
@@ -42,6 +42,14 @@ const Wrapper = styled.div`
     transform: translateY(4px);
     border: 0;
     outline: 0;
+    font-family: 'regular';
+  }
+  .duple {
+    border-radius: 1.25rem;
+    color: white;
+    font-weight: bold;
+    background-color: #e96f02;
+    font-family: 'regular';
   }
   .cancel {
     color: white;
@@ -53,6 +61,17 @@ const Wrapper = styled.div`
     transform: translateY(4px);
     border: 0;
     outline: 0;
+  }
+  .withdrawal {
+    border-radius: 1.25rem;
+    color: white;
+    font-weight: bold;
+    background-color: #cd0c22;
+    font-family: 'regular';
+    &:hover {
+      background-color: white;
+      color: #cd0c22;
+    }
   }
 `;
 

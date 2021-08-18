@@ -31,6 +31,8 @@ const HorizontalTabs = (props) => {
     isRandomRoom,
     setIsRandomRoomTrue,
     setIsRandomRoomFalse,
+    setIsLightMode,
+    isLightMode,
   } = props;
 
   const labels = ['Calendar', 'Todo-list'];
@@ -49,6 +51,10 @@ const HorizontalTabs = (props) => {
     } else {
       setIsRandomRoomFalse();
     }
+  };
+
+  const handleLightModeChange = (event, newValue) => {
+    setIsLightMode(newValue);
   };
 
   return (
@@ -86,6 +92,21 @@ const HorizontalTabs = (props) => {
             <FormControlLabel
               control={
                 <Switch
+                  checked={isLightMode}
+                  onChange={handleLightModeChange}
+                  style={{ color: '#E96F02' }}
+                />
+              }
+              labelPlacement="top"
+              label={
+                <Box component="div" fontSize={12} fontFamily="regular">
+                  LIGHT MODE
+                </Box>
+              }
+            />
+            <FormControlLabel
+              control={
+                <Switch
                   checked={isRandomRoom}
                   onChange={handleSwitchChange}
                   style={{ color: '#E96F02' }}
@@ -93,20 +114,22 @@ const HorizontalTabs = (props) => {
               }
               labelPlacement="top"
               label={
-                <Box component="div" fontSize={12}>
+                <Box component="div" fontSize={12} fontFamily="regular">
                   랜덤방
                 </Box>
               }
             />
-            <Link to="/webrtc">
+            <Link to="/webrtc" style={{ textDecoration: 'none' }}>
               <Button
                 className="enter-button"
                 variant="outlined"
-                style={{
-                  fontSize: 20,
-                  fontWeight: 'bold',
-                  backgroundColor: '#E96F02',
-                }}
+                // style={{
+                //   fontSize: 20,
+                //   fontFamily: 'bold',
+                //   fontWeight: 'bold',
+                //   backgroundColor: '#E96F02',
+                //   color: 'white',
+                // }}
               >
                 입장하기
               </Button>

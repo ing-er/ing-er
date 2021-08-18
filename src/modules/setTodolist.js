@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export const ADDCONTAINER = 'ADDCONTAINER';
 export const ADDINPUT = 'ADDINPUT';
@@ -7,11 +8,10 @@ export const EDITCONTENT = 'EDITCONTENT';
 export const EDITCOMPLETE = 'EDITCOMPLETE';
 export const SAVETODOLIST = 'SAVETODOLIST';
 export const SETDATE = 'TODOLIST/SETDATE';
+export const DELETETODOLIST = 'DELETETODOLIST';
+export const DELETEDETAIL = 'DELETEDETAIL';
 
-const HOST = 'localhost:8080';
-const serverUrl = `http://${HOST}/api/v1`;
-// const HOST = 'i5a208.p.ssafy.io:8080';
-// const serverUrl = `http://${HOST}/api/v1`;
+const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 export const setTodolistAddContainer = (title, todolist) => ({
   type: ADDCONTAINER,
@@ -69,6 +69,21 @@ export const setTodolistSetDate = (date) => ({
   payload: date,
 });
 
+export const setTodolistDeleteTodolist = (index) => ({
+  type: DELETETODOLIST,
+  payload: {
+    index: index,
+  },
+});
+
+export const setTodolistDeleteDetail = (index, subindex) => ({
+  type: DELETEDETAIL,
+  payload: {
+    index: index,
+    subindex: subindex,
+  },
+});
+
 var todolistData = [];
 var todolistToday = [];
 let todolistComplete = 0;
@@ -87,15 +102,17 @@ export const getTodolistData = async (id) => {
   todolistTotal = 0;
   todolistComplete = 0;
   await axios
-    .get(serverUrl + '/todoList/select/' + id)
+    .get(serverUrl + 'todoList/select/' + id)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       res.data.map((x, index) => {
         let todolistDetail = [];
+        let tmpTodoTotal = 0;
+        let tmpTodoComplete = 0;
         x.detail.map((y, idx) => {
-          todolistTotal++;
+          tmpTodoTotal++;
           if (y.isFinish === true) {
-            todolistComplete++;
+            tmpTodoComplete++;
           }
           todolistDetail.push({
             id: y.id,
@@ -116,9 +133,11 @@ export const getTodolistData = async (id) => {
         });
         if (x.date === todaydate) {
           todolistToday.push(todolistData[index]);
+          todolistTotal += tmpTodoTotal;
+          todolistComplete += tmpTodoComplete;
         }
       });
-      // console.log('load �료..');
+      // console.log('load 완료..');
     })
     .catch((err) => {
       // console.log(err);
@@ -138,6 +157,9 @@ const initialState = {
       : Math.round((todolistComplete / todolistTotal) * 100),
   requestdate: todaydate,
 };
+
+let deleteTodolistDetail = [];
+let deleteTodolist = [];
 
 const setTodolist = (state = initialState, action) => {
   switch (action.type) {
@@ -277,51 +299,91 @@ const setTodolist = (state = initialState, action) => {
           });
         }
       });
+
       const async = async () => {
+        let check = false;
+        let checkError = false;
         if (createTodolist.length !== 0) {
           await axios
-            .post(serverUrl + '/todoList/create', createTodolist)
+            .post(serverUrl + 'todoList/create', createTodolist)
             .then((res) => {
-              console.log(res);
+              // console.log(res);
+              check = true;
             })
             .catch((err) => {
-              console.log(err);
+              // console.log(err);
+              checkError = true;
             });
         }
         if (createTodolistDetail.length !== 0) {
           await axios
-            .post(serverUrl + '/todoList/createDetail', createTodolistDetail)
+            .post(serverUrl + 'todoList/createDetail', createTodolistDetail)
             .then((res) => {
-              console.log(res);
+              // console.log(res);
+              check = true;
             })
             .catch((err) => {
-              console.log(err);
+              // console.log(err);
+              checkError = true;
             });
         }
         if (updateTodolist.length !== 0) {
           await axios
             .patch(serverUrl + '/todoList/update', updateTodolist)
             .then((res) => {
-              console.log(res);
+              // console.log(res);
+              check = true;
             })
             .catch((err) => {
-              console.log(err);
+              // console.log(err);
+              checkError = true;
             });
         }
         if (updateTodolistDetail.length !== 0) {
           await axios
-            .patch(serverUrl + '/todoList/updateDetail', updateTodolistDetail)
+            .patch(serverUrl + 'todoList/updateDetail', updateTodolistDetail)
             .then((res) => {
-              console.log(res);
+              // console.log(res);
+              check = true;
             })
             .catch((err) => {
-              console.log(err);
+              // console.log(err);
+              checkError = true;
             });
         }
+        if (deleteTodolistDetail.length !== 0) {
+          await axios
+            .delete(serverUrl + 'todoList/deleteDetail', {
+              data: deleteTodolistDetail,
+            })
+            .then((res) => {
+              // console.log(res);
+              deleteTodolistDetail = [];
+              check = true;
+            })
+            .catch((err) => {
+              // console.log(err);
+              checkError = true;
+            });
+        }
+        if (deleteTodolist.length !== 0) {
+          await axios
+            .delete(serverUrl + 'todoList/delete', { data: deleteTodolist })
+            .then((res) => {
+              // console.log(res);
+              deleteTodolist = [];
+              check = true;
+            })
+            .catch((err) => {
+              // console.log(err);
+              checkError = true;
+            });
+        }
+
         await axios
-          .get(serverUrl + '/todoList/select/' + userId)
+          .get(serverUrl + 'todoList/select/' + userId)
           .then((res) => {
-            console.log(res);
+            // console.log(res);
             todaydate = state.requestdate;
             todolistData = [];
             todolistToday = [];
@@ -329,10 +391,12 @@ const setTodolist = (state = initialState, action) => {
             todolistTotal = 0;
             res.data.map((x, index) => {
               let todolistDetail = [];
+              let tmpTodoTotal = 0;
+              let tmpTodoComplete = 0;
               x.detail.map((y, idx) => {
-                todolistTotal++;
+                tmpTodoTotal++;
                 if (y.isFinish === true) {
-                  todolistComplete++;
+                  tmpTodoComplete++;
                 }
                 todolistDetail.push({
                   id: y.id,
@@ -353,21 +417,54 @@ const setTodolist = (state = initialState, action) => {
               });
               if (x.date === todaydate) {
                 todolistToday.push(todolistData[index]);
+                todolistTotal += tmpTodoTotal;
+                todolistComplete += tmpTodoComplete;
               }
             });
             state.allTodolist = todolistData;
             state.todolist = todolistToday;
-            console.log('load �료..');
-            // console.log('SAVEDATA : todolist');
-            // console.log(state.todolist);
           })
           .catch((err) => {
             // console.log(err);
           });
+
+        if (check && !checkError) {
+          await Swal.fire({
+            title:
+              '<span style="color: white; font-size: 20px">' +
+              state.requestdate +
+              '\nTodolist가 저장되었습니다</span>',
+            icon: 'success',
+            background: '#292A33',
+            confirmButtonColor: '#E96F02',
+            confirmButtonText: 'OK!',
+          });
+        } else if (!check && !checkError) {
+          await Swal.fire({
+            title:
+              '<span style="color: white; font-size: 20px">' +
+              state.requestdate +
+              '\nTodolist 저장할 내용이 없습니다</span>',
+            icon: 'warning',
+            background: '#292A33',
+            confirmButtonColor: '#E96F02',
+            confirmButtonText: 'OK!',
+          });
+        } else if (checkError) {
+          await Swal.fire({
+            title:
+              '<span style="color: white; font-size: 20px">' +
+              state.requestdate +
+              '\nTodolist 저장하는 중 오류 발생</span>',
+            icon: 'error',
+            background: '#292A33',
+            confirmButtonColor: '#E96F02',
+            confirmButtonText: 'OK!',
+          });
+        }
       };
 
       async();
-
       // todaydate = state.requestdate;
       // todolistData = [];
       // todolistToday = [];
@@ -380,8 +477,8 @@ const setTodolist = (state = initialState, action) => {
         ...state,
         todolist: todolistToday,
         allTodolist: todolistData,
-        // todocomplete: todolistComplete,
-        // todototal: todolistTotal,
+        todocomplete: todolistComplete,
+        todototal: todolistTotal,
         todopercent:
           todolistTotal === 0
             ? 0
@@ -410,8 +507,61 @@ const setTodolist = (state = initialState, action) => {
       if (todolistTotal === 0) {
         state.todopercent = 0;
       }
-      console.log('SETDATE : todolist');
-      console.log(state.todolist);
+      return {
+        ...state,
+        todolist: todolistToday,
+        todopercent:
+          todolistTotal === 0
+            ? 0
+            : Math.round((todolistComplete / todolistTotal) * 100),
+      };
+    case DELETETODOLIST:
+      let tododata = todolistToday[action.payload.index];
+      if (tododata.id !== -1) {
+        deleteTodolist.push(tododata.id);
+      }
+      todolistToday.splice(action.payload.index, 1);
+      todolistData.splice(tododata.todoidx, 1);
+      tododata.list.map((x, idx) => {
+        todolistTotal--;
+        if (x.complete === true) {
+          todolistComplete--;
+        }
+      });
+      todolistData.map((x, idx) => {
+        if (idx >= tododata.todoidx) {
+          x.todoidx--;
+          x.list.map((y, subidx) => {
+            y.todoidx--;
+          });
+        }
+      });
+      return {
+        ...state,
+        todolist: todolistToday,
+        allTodolist: todolistData,
+        todopercent:
+          todolistTotal === 0
+            ? 0
+            : Math.round((todolistComplete / todolistTotal) * 100),
+      };
+    case DELETEDETAIL:
+      let data =
+        todolistToday[action.payload.index].list[action.payload.subindex];
+      if (data.id !== -1) {
+        deleteTodolistDetail.push(data.id);
+      }
+      todolistToday[action.payload.index].list.splice(
+        action.payload.subindex,
+        1,
+      );
+      todolistToday[action.payload.index].list.map((x, idx) => {
+        if (idx >= action.payload.subindex) {
+          x.detailidx--;
+        }
+      });
+      todolistTotal--;
+      if (data.complete) todolistComplete--;
       return {
         ...state,
         todolist: todolistToday,

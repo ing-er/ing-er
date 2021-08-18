@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export const EDITPROMISE = 'EDITPROMISE';
 export const EDITDIARY = 'EDITDIARY';
@@ -7,21 +8,16 @@ export const EDITDIARYISEDITABLE = 'EDITDIARYISEDITABLE';
 export const SETDATE = 'CALENDAR/SETDATE';
 export const SAVEDATA = 'SAVEDATA';
 
-const HOST = 'localhost:8080';
-const serverUrl = `http://${HOST}/api/v1`;
-// const HOST = 'i5a208.p.ssafy.io:8080';
-// const serverUrl = `http://${HOST}/api/v1`;
+const serverUrl = process.env.REACT_APP_SERVER_URL;
 
-export const setCalendarEditPromise = (promise, requestcalendar) => ({
+export const setCalendarEditPromise = (promise) => ({
   type: EDITPROMISE,
   payload: promise,
-  requestcalendar,
 });
 
-export const setCalendarEditDiary = (diary, requestcalendar) => ({
+export const setCalendarEditDiary = (diary) => ({
   type: EDITDIARY,
   payload: diary,
-  requestcalendar,
 });
 
 export const setCalendarEditPromiseIsEditable = (
@@ -42,10 +38,9 @@ export const setCalendarEditDiaryIsEditable = (
   isEditableDiary,
 });
 
-export const setCalendarSetDate = (date, requestcalendar) => ({
+export const setCalendarSetDate = (date) => ({
   type: SETDATE,
   payload: date,
-  requestcalendar,
 });
 
 export const setCalendarSaveData = () => ({
@@ -63,20 +58,24 @@ let todaydate = year + '-' + month + '-' + day;
 
 export const getCalendarData = async (id) => {
   userId = id;
-  await axios.get(serverUrl + '/calendar/list/' + id).then((res) => {
+  list = [];
+  listToday = {};
+  await axios.get(serverUrl + 'calendar/list/' + id).then((res) => {
     res.data.map((x, index) => {
       list.push({
         date: x.date,
-        promise: x.promise,
-        diary: x.diary,
+        promise: x.promise === null ? '' : x.promise,
+        diary: x.diary === null ? '' : x.diary,
         id: x.id,
+        studyTime: x.studyTime,
       });
       if (x.date === todaydate) {
         listToday = {
           date: x.date,
-          promise: x.promise,
-          diary: x.diary,
+          promise: x.promise === null ? '' : x.promise,
+          diary: x.diary === null ? '' : x.diary,
           id: x.id,
+          studyTime: x.studyTime,
         };
       }
     });
@@ -94,38 +93,40 @@ const initialState = {
 
 const setCalendar = (state = initialState, action) => {
   // console.log(state.calendar);
-  var idx = state.calendar.map((x) => x.date).indexOf(state.requestdate);
+  var idx = list.map((x) => x.date).indexOf(listToday);
   // if (idx !== -1) {
   //   state.requestcalendar = state.calendar[idx];
   // }
   switch (action.type) {
     case EDITPROMISE:
-      state.requestcalendar.promise = action.payload;
+      listToday.promise = action.payload;
       if (idx === -1) {
-        state.calendar.push(state.requestcalendar);
-        idx = state.calendar.length - 1;
+        list.push(listToday);
+        idx = list.length - 1;
       }
-      state.calendar[idx].promise = state.requestcalendar.promise;
+      list[idx].promise = listToday.promise;
       return {
         ...state,
-        requestcalendar: state.requestcalendar,
+        calendar: list,
+        requestcalendar: listToday,
       };
     case EDITDIARY:
-      state.requestcalendar.diary = action.payload;
+      listToday.diary = action.payload;
       if (idx === -1) {
-        state.calendar.push(state.requestcalendar);
-        idx = state.calendar.length - 1;
+        list.push(listToday);
+        idx = list.length - 1;
       }
-      state.calendar[idx].diary = state.requestcalendar.diary;
+      list[idx].diary = listToday.diary;
       return {
         ...state,
-        requestcalendar: state.requestcalendar,
+        calendar: list,
+        requestcalendar: listToday,
       };
     case EDITPROMISEISEDITABLE:
       state.isEditablePromise = !state.isEditablePromise;
       return {
         ...state,
-        requestcalendar: state.requestcalendar,
+        requestcalendar: listToday,
         isEditablePromise: state.isEditablePromise,
         isEditableDiary: state.isEditableDiary,
       };
@@ -133,68 +134,113 @@ const setCalendar = (state = initialState, action) => {
       state.isEditableDiary = !state.isEditableDiary;
       return {
         ...state,
-        requestcalendar: state.requestcalendar,
+        requestcalendar: listToday,
         isEditablePromise: state.isEditablePromise,
         isEditableDiary: state.isEditableDiary,
       };
     case SETDATE:
       state.requestdate = action.payload;
-      idx = state.calendar.map((x) => x.date).indexOf(state.requestdate);
+      idx = list.map((x) => x.date).indexOf(state.requestdate);
       if (idx !== -1) {
-        state.requestcalendar = state.calendar[idx];
+        listToday = list[idx];
       } else {
-        state.requestcalendar = {
+        listToday = {
           date: state.requestdate,
           promise: '',
           diary: '',
           id: -1,
+          studyTime: 0,
         };
       }
       return {
         ...state,
-        requestcalendar: state.requestcalendar,
+        calendar: list,
+        requestcalendar: listToday,
         requestdate: state.requestdate,
       };
     case SAVEDATA:
-      let id = state.requestcalendar.id;
+      let id = listToday.id;
       let post = {
-        date: state.requestcalendar.date,
-        diary: state.requestcalendar.diary,
-        promise: state.requestcalendar.promise,
+        date: listToday.date,
+        diary: listToday.diary,
+        promise: listToday.promise,
         userId: userId,
       };
+      let check = false;
+      let checkError = false;
       const async = async () => {
         if (id !== -1) {
           await axios
-            .patch(serverUrl + '/calendar/modify/' + id, post)
+            .patch(serverUrl + 'calendar/modify/' + id, post)
             .then((res) => {
               console.log(res);
+              check = true;
             })
             .catch((err) => {
-              console.log(err);
+              // console.log(err);
+              checkError = true;
             });
         } else {
-          if (
-            state.requestcalendar.promise === '' &&
-            state.requestcalendar.diary === ''
-          ) {
-            return {
-              ...state,
-            };
+          // if (listToday.promise === '' && listToday.diary === '') {
+          //   return {
+          //     ...state,
+          //     requestcalendar: listToday,
+          //     calendar: list,
+          //   };
+          // }
+          if (listToday.promise !== '' || listToday.diary !== '') {
+            await axios
+              .post(serverUrl + 'calendar/regist', post)
+              .then((res) => {
+                // console.log(res);
+                check = true;
+              })
+              .catch((err) => {
+                // console.log(err);
+                checkError = true;
+              });
           }
-          await axios
-            .post(serverUrl + '/calendar/regist', post)
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+        }
+        if (check && !checkError) {
+          await Swal.fire({
+            title:
+              '<span style="color: white; font-size: 20px">' +
+              listToday.date +
+              '\n다짐, 일기가 저장되었습니다</span>',
+            icon: 'success',
+            background: '#292A33',
+            confirmButtonColor: '#E96F02',
+            confirmButtonText: 'OK!',
+          });
+        } else if (!check && !checkError) {
+          await Swal.fire({
+            title:
+              '<span style="color: white; font-size: 20px">' +
+              listToday.date +
+              '\n다짐, 일기 저장할 내용이 없습니다</span>',
+            icon: 'warning',
+            background: '#292A33',
+            confirmButtonColor: '#E96F02',
+            confirmButtonText: 'OK!',
+          });
+        } else if (checkError) {
+          await Swal.fire({
+            title:
+              '<span style="color: white; font-size: 20px">' +
+              listToday.date +
+              '\n다짐, 일기를 저장하는 중 오류 발생</span>',
+            icon: 'error',
+            background: '#292A33',
+            confirmButtonColor: '#E96F02',
+            confirmButtonText: 'OK!',
+          });
         }
       };
       async();
       return {
         ...state,
+        requestcalendar: listToday,
+        calendar: list,
       };
     default:
       return state;

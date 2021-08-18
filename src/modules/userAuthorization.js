@@ -13,6 +13,11 @@ const LOGIN_USER = 'userAuthorization/LOGIN_USER';
 const LOGIN_USER_SUCCESS = 'userAuthorization/LOGIN_USER_SUCCESS';
 const LOGIN_USER_FAILURE = 'userAuthorization/LOGIN_USER_FAILURE';
 
+//* TEST_LOGIN_USER
+const TEST_LOGIN_USER = 'userAuthorization/TEST_LOGIN_USER';
+const TEST_LOGIN_USER_SUCCESS = 'userAuthorization/TEST_LOGIN_USER_SUCCESS';
+const TEST_LOGIN_USER_FAILURE = 'userAuthorization/TEST_LOGIN_USER_FAILURE';
+
 //* LOG_OUT_USER
 const LOG_OUT_USER = 'userAuthorization/LOG_OUT_USER';
 
@@ -21,13 +26,10 @@ const WITHDRAWAL_USER = 'userAuthorization/WITHDRAWAL_USER';
 const WITHDRAWAL_USER_SUCCESS = 'userAuthorization/WITHDRAWAL_USER_SUCCESS';
 const WITHDRAWAL_USER_FAILURE = 'userAuthorization/WITHDRAWAL_USER_FAILURE';
 
-//* 회원가입을 마친 상태의 유저에게 올바른 상단바를 보여 주기 위한 변수
-const COMPLETE_JOIN_USER = 'userAuthorization/COMPLETE_JOIN_USER';
+const INIT_STATE = 'userAuthorization/INIT_STATE';
 
 const DIALOGOPEN = 'DIALOGOPEN';
 const DIALOGCLOSE = 'DIALOGCLOSE';
-
-const SETTING_INITIALIZE = 'userAuthorization/SETTING_INITIALIZE'
 
 //* GENERATE_TYPE_FUNCTION
 export const typeAuthUser = () => ({
@@ -37,19 +39,22 @@ export const typeLogin = (formData) => ({
   type: LOGIN_USER,
   payload: formData,
 });
+export const typeTestLogin = (formData) => ({
+  type: TEST_LOGIN_USER,
+  payload: formData,
+});
 export const typeLogOut = () => ({
   type: LOG_OUT_USER,
-});
-export const typeCompleteJoinUser = () => ({
-  type: COMPLETE_JOIN_USER,
 });
 
 export const typeWithdrawal = () => ({
   type: WITHDRAWAL_USER,
 });
-export const typeSettingInitialize = () => ({
-  type: SETTING_INITIALIZE,
+
+export const typeInitState = () => ({
+  type: INIT_STATE,
 });
+
 
 //* MAIN_SAGA_FUNCTION
 
@@ -67,6 +72,7 @@ export function* authSaga() {
     });
   }
 }
+
 export function* loginSaga(action) {
   try {
     const loginResult = yield call(loginApi.loginAsync, action.payload);
@@ -77,6 +83,21 @@ export function* loginSaga(action) {
   } catch (e) {
     yield put({
       type: LOGIN_USER_FAILURE,
+      payload: e,
+    });
+  }
+}
+
+export function* testLoginSaga(action) {
+  try {
+    const loginResult = yield call(loginApi.testLoginAsync, action.payload);
+    yield put({
+      type: TEST_LOGIN_USER_SUCCESS,
+      payload: loginResult,
+    });
+  } catch (e) {
+    yield put({
+      type: TEST_LOGIN_USER_FAILURE,
       payload: e,
     });
   }
@@ -102,6 +123,7 @@ export function* withdrawalSaga() {
 export function* userAuthorizationSaga() {
   yield takeLatest(AUTH_USER, authSaga);
   yield takeLatest(LOGIN_USER, loginSaga);
+  yield takeLatest(TEST_LOGIN_USER, testLoginSaga);
   yield takeLatest(WITHDRAWAL_USER, withdrawalSaga);
 }
 
@@ -132,6 +154,7 @@ export default function authorization(state=initialState, action) {
         return {
           isAuth: false,
           isJoin: false,
+          isAdmin: false,
         }
       } else if (action.payload === 2) {
         //* 회원가입하려는 상태
@@ -139,25 +162,40 @@ export default function authorization(state=initialState, action) {
           ...state,
           isAuth: true,
           isJoin: true,
+          isAdmin: false,
           kakaoIdNum: action.kakaoIdNum,
         }
       } else {
-        //* 로그인되어 있는 상태
-        return {
-          ...state,
-          id: action.payload.id,
-          userData: action.payload,
-          info: action.payload,
-          isAuth: true,
-          isJoin: false,
-          kakaoIdNum: action.kakaoIdNum,
-        };
+        if (action.payload.usercode === 2){
+          //* 로그인되어 있는 상태(관리자)
+          return {
+            ...state,
+            id: action.payload.id,
+            userData: action.payload,
+            isAuth: true,
+            isJoin: false,
+            isAdmin: true,
+            kakaoIdNum: action.kakaoIdNum,
+          };
+        } else {
+          //* 로그인되어 있는 상태(일반 회원)
+          return {
+            ...state,
+            id: action.payload.id,
+            userData: action.payload,
+            isAuth: true,
+            isJoin: false,
+            isAdmin: false,
+            kakaoIdNum: action.kakaoIdNum,
+          };
+        }
       };
     case AUTH_USER_FAILURE:
       return {
         ...state,
         isAuth: false,
         isJoin: false,
+        isAdmin: false,
         error: action.payload.message,
       };
 
@@ -171,12 +209,28 @@ export default function authorization(state=initialState, action) {
     case LOGIN_USER_SUCCESS:
       //* 등록된 유저일 때,
       if (isNaN(action.payload)) {
-        return {
-          ...state,
-          kakaoIdNum: Number(action.payload.kakaoIdNum),
-          userData: action.payload,
-          isAuth: true,
-          isJoin: false,
+        if (action.payload.usercode === 2){
+          //* 로그인되어 있는 상태(관리자)
+          return {
+            ...state,
+            id: action.payload.id,
+            userData: action.payload,
+            isAuth: true,
+            isJoin: false,
+            isAdmin: true,
+            kakaoIdNum: Number(action.payload.kakaoIdNum),
+          };
+        } else {
+          //* 로그인되어 있는 상태(일반 회원)
+          return {
+            ...state,
+            id: action.payload.id,
+            userData: action.payload,
+            isAuth: true,
+            isJoin: false,
+            isAdmin: false,
+            kakaoIdNum: action.kakaoIdNum,
+          };
         };
       }
       else {
@@ -194,6 +248,48 @@ export default function authorization(state=initialState, action) {
         error: action.payload.message,
       };
 
+    case TEST_LOGIN_USER:
+      return {
+        ...state,
+      };
+    case TEST_LOGIN_USER_SUCCESS:
+      if(action.payload == 'fail') {
+        return {
+          ...state,
+          loginError: true,
+        };
+      } else {
+        if (action.payload.usercode === 2){
+          //* 로그인되어 있는 상태(관리자)
+          return {
+            ...state,
+            id: action.payload.id,
+            userData: action.payload,
+            isAuth: true,
+            isJoin: false,
+            isAdmin: true,
+            kakaoIdNum: Number(action.payload.kakaoIdNum),
+          };
+        } else {
+          return {
+            ...state,
+            id: action.payload.id,
+            userData: action.payload,
+            isAuth: true,
+            isJoin: false,
+            isAdmin: false,
+            kakaoIdNum: action.kakaoIdNum,
+          };
+        };
+      }
+
+    case TEST_LOGIN_USER_FAILURE:
+      return {
+        ...state,
+        isAuth: false,
+        error: action.payload.message,
+      };
+
     //* =====================
     //*   LOG_OUT_USER
     //* =====================
@@ -202,6 +298,7 @@ export default function authorization(state=initialState, action) {
         ...state,
         isAuth: false,
         isJoin: false,
+        isAdmin: false,
         userData: {},
       };
 
@@ -224,17 +321,10 @@ export default function authorization(state=initialState, action) {
         ...state,
       };
 
-      //* COMPLETE_JOIN_USER
-    case COMPLETE_JOIN_USER:
+    case INIT_STATE:
       return {
         ...state,
-        isAuth: true,
-        isJoin: false,
-      };
-    case SETTING_INITIALIZE:
-      return {
-        ...state,
-        setting: 0,
+        loginError: false,
       };
 
     case DIALOGOPEN:

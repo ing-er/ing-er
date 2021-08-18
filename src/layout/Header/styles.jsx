@@ -2,45 +2,48 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   position: relative;
-  height: 50px;
-  & .appbar {
+  height: 70px;
+
+  & .header-container {
+    position: fixed;
+    z-index: 1500;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    height: 50px;
+    height: 70px;
+    padding: 0.4rem;
     background-color: transparent;
-    /* background-color: #1E1F26; */
     box-shadow: none;
+    transition: all 0.3s ease;
   }
-  & .header-grid {
-    position: absolute;
-  }
-  & .header-button {
-    box-shadow: none;
-    background-color: transparent;
-    color: white;
+  & .hide {
+    top: -70px;
   }
   & .logo {
-    padding-left: 10px;
+    width: 4rem;
+    padding: 0.7rem;
     color: white;
     cursor: pointer;
   }
-  & .menu-button {
-    position: fixed;
-    left: 12px;
-    top: 14px;
-    z-index: 1300;
-    margin-left: 0;
-    width: 23px;
-    height: 20px;
-    cursor: pointer;
-    & div {
-      width: 100%;
-      height: 3px;
-      background: #fff;
-      border-radius: 30px;
+
+  & .login-button {
+    border-radius: 1.25rem;
+    color: white;
+    font-weight: bold;
+    font-family: 'regular';
+    background-color: #e96f02;
+    margin: 0.5rem;
+
+    &:hover {
+      background-color: white;
+      color: #e96f02;
     }
   }
-  & .display-none {
-    display: block;
+
+  & .setting-container {
+    display: flex;
   }
 `;
 

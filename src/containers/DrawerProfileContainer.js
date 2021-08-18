@@ -5,14 +5,13 @@ import {
   setCalendarEditPromiseIsEditable,
   setCalendarEditDiaryIsEditable,
   setCalendarSetDate,
-  setCalendarSaveData,
-  getCalendarData,
+  setCalendarSaveData
 } from '../modules/setCalendar';
 import { setTodolistSetDate } from '../modules/setTodolist';
 
 import DrawerProfile from '../components/Room/DrawerContentContainer/DrawerProfile';
 
-const DrawerProfileContainer = () => {
+const DrawerProfileContainer = ({ currentUserData }) => {
   const dispatch = useDispatch();
   const setCalendarEditPro = (promise) => {
     dispatch(setCalendarEditPromise(promise));
@@ -39,6 +38,8 @@ const DrawerProfileContainer = () => {
   const { requestdate } = useSelector((state) => state.setCalendar);
   const { isEditablePromise } = useSelector((state) => state.setCalendar);
   const { isEditableDiary } = useSelector((state) => state.setCalendar);
+  const { studyTime } = useSelector((state) => state.studyTime);
+  const { userData } = useSelector((state) => state.authorization)
 
   return (
     <DrawerProfile
@@ -53,6 +54,9 @@ const DrawerProfileContainer = () => {
       setCalendarSetDate={setCalendarSetDt}
       setCalendarSaveData={setCalendarSave}
       setTodolistSetDate={setTodolistSetdt}
+      studyTime={studyTime}
+      currentUserData={currentUserData}
+      localUserData={userData}
     />
   );
 };

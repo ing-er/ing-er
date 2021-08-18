@@ -6,7 +6,9 @@ import setIsRandomRoom from './setIsRandomRoom';
 import memberSetting, { userInfoSaga } from './memberSetting';
 import setTodolist from './setTodolist';
 import setCalendar from './setCalendar';
-import setTimer from './setTimer';
+import studyTime from './studyTime';
+import setLightMode from './setLightMode';
+import directorSetting, { adminSaga } from './directorSetting';
 
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -14,7 +16,7 @@ import storage from 'redux-persist/lib/storage';
 const persistConfig = {
   key: 'root',
   storage,
-}
+};
 
 const rootReducer = combineReducers({
   setMainIndex,
@@ -23,13 +25,14 @@ const rootReducer = combineReducers({
   setTodolist,
   setCalendar,
   authorization,
-  setTimer,
+  directorSetting,
+  studyTime,
+  setLightMode,
 });
 
 export function* rootSaga() {
-  yield all([userAuthorizationSaga(), userInfoSaga()]);
+  yield all([userAuthorizationSaga(), userInfoSaga(), adminSaga()]);
 }
-
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

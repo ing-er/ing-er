@@ -7,49 +7,56 @@ import Rest from './Rest';
 import Wrapper from './styles';
 import { motion } from 'framer-motion';
 
-const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {
+const Screen = ({
+  streamManager,
+  isLocalVideoActive,
+  isLocal,
+  studyTime,
+  onIncrease,
+  handleVideoClick,
+}) => {
   let videoRef = useRef();
-  const [username, setUsername] = useState(undefined)
+  const [userData, setUserData] = useState(undefined);
 
   /* subscriber hook */
   useEffect(() => {
     if (streamManager && !!videoRef) {
-      streamManager.addVideoElement(videoRef.current)
+      streamManager.addVideoElement(videoRef.current);
 
       // username 초기화
-      const name = JSON.parse(streamManager?.stream.connection.data).clientData;
-      setUsername(name);
+      const userData = JSON.parse(streamManager?.stream.connection.data).clientData;
+      setUserData(userData);
     }
-
-  }, [streamManager])
+  }, [streamManager]);
 
   return (
     <Wrapper>
       {streamManager !== undefined ? (
-        <motion.div className="conference-content"
-          whileHover={{ 
+        <motion.div
+          className="conference-content"
+          whileHover={{
             scale: 1.1,
-            textShadow: "0px 0px 8px rgb(255, 255, 255)",
-            boxShadow: "0px 0px 8px rgb(255, 255, 255)"
+            textShadow: '0px 0px 8px rgb(255, 255, 255)',
+            boxShadow: '0px 0px 8px rgb(255, 255, 255)',
           }}
         >
           <div className="screen-header-container">
-            <Name username={username} />
+            <Name username={userData?.name} />
             <Timer
               streamManager={streamManager}
-              username={username}
               isLocal={isLocal}
               isLocalVideoActive={isLocalVideoActive}
+              studyTime={studyTime}
+              onIncrease={onIncrease}
+              userData={userData}
             />
           </div>
-          {isLocal && !isLocalVideoActive && (
-            <Rest />
-          )}
-          {!isLocal && !streamManager.stream.videoActive && (
-            <Rest />
-          )}
+          {isLocal && !isLocalVideoActive && <Rest />}
+          {!isLocal && !streamManager.stream.videoActive && <Rest />}
           <div>
             <video
+              data-userdata={JSON.stringify(userData)}
+              onClick={handleVideoClick}
               className="screen"
               autoPlay={true}
               ref={videoRef}
@@ -58,11 +65,15 @@ const Screen = ({ streamManager, isLocalVideoActive, isLocal }) => {
         </motion.div>
       ) : (
         <div>
-          <p>empty</p>
+          <img
+            className="empty-img" 
+            src="img/inger.png"
+            alt="inger"
+          />
         </div>
       )}
     </Wrapper>
-  )
-}
+  );
+};
 
 export default Screen;

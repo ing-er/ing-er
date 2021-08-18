@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   &:before {
     content: '';
     display: block;
-    padding-top: 56.25%;
+    padding-top: 75%;
   }
 
   & .conference-content {
@@ -43,6 +43,10 @@ const Wrapper = styled.div`
     height: 100%;
     width: 100%;
     padding: 7px;
+  }
+
+  & .empty-img {
+    width: 10%;
   }
 `;
 

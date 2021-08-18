@@ -1,35 +1,34 @@
 import { useState, useEffect } from 'react';
 
-// import TodolistContainer from '../../../containers/MyTodolistContainer';
 import DrawerTodoContainer from '../../../containers/DrawerTodoContainer';
-import DrawerProfile from './DrawerProfile';
 import DrawerProfileContainer from '../../../containers/DrawerProfileContainer';
 import DrawerTodo from './DrawerTodo';
-import DrawerPromise from './DrawerPromise';
 
 import Wrapper from './styles';
 
-const DrawerContentContainer = ({ drawerId }) => {
-  const [contentDiv, setContentDiv] = useState(<DrawerProfileContainer />);
+const DrawerContentContainer = ({ drawerId, currentUserData }) => {
+  const [drawer, setDrawer] = useState(0);
 
   /* drawerId에 따라 drawerContent 변경 */
   useEffect(() => {
     if (drawerId === 'drawerProfile') {
-      setContentDiv(<DrawerProfileContainer />);
-    } else if (drawerId === 'drawerTodo') {
-      setContentDiv(
-        <DrawerTodoContainer>
-          <DrawerTodo />
-        </DrawerTodoContainer>,
-      );
-    } else if (drawerId === 'drawerPromise') {
-      setContentDiv(<DrawerPromise />);
+      setDrawer(0);
     } else {
-      setContentDiv(<DrawerProfile />);
+      setDrawer(1);
     }
   }, [drawerId]);
 
-  return <Wrapper>{contentDiv}</Wrapper>;
+  return (
+    <Wrapper>
+      {drawer === 0 ? (
+        <DrawerProfileContainer currentUserData={currentUserData} />
+      ) : (
+        <DrawerTodoContainer>
+          <DrawerTodo />
+        </DrawerTodoContainer>
+      )}
+    </Wrapper>
+  );
 };
 
 export default DrawerContentContainer;

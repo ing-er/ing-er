@@ -1,12 +1,6 @@
-import {
-  TextField,
-  Grid,
-  Container,
-  IconButton,
-  Button,
-} from '@material-ui/core';
-import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
-import dayjs from 'dayjs';
+import { TextField, Grid, IconButton } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
 
 const CalendarPromise = (props) => {
   let {
@@ -14,6 +8,7 @@ const CalendarPromise = (props) => {
     isEditablePromise,
     setCalendarEditPromise,
     setCalendarEditPromiseIsEditable,
+    isLightMode,
   } = props;
 
   const onChangePromiseHandler = (e) => {
@@ -22,6 +17,20 @@ const CalendarPromise = (props) => {
   const onClickPromiseHandler = () => {
     setCalendarEditPromiseIsEditable();
   };
+  const changeTextColor = () => {
+    if (!isLightMode) {
+      return 'white';
+    } else {
+      return '#0E263E';
+    }
+  };
+  const changeTextFieldColor = () => {
+    if (!isLightMode) {
+      return 'white';
+    } else {
+      return '#F6F7F9';
+    }
+  };
 
   return (
     <Grid container direction="column" alignItems="center">
@@ -29,19 +38,22 @@ const CalendarPromise = (props) => {
         item
         style={{
           fontSize: 20,
+          color: changeTextColor(),
+          fontFamily: 'bold',
         }}
       >
+        <WhatshotIcon />
         나의 오늘 다짐
       </Grid>
       <Grid
         item
         className="textfield-grid"
         style={{
-          backgroundColor: 'white',
+          backgroundColor: changeTextFieldColor(),
         }}
       >
         <IconButton onClick={onClickPromiseHandler}>
-          <SettingsApplicationsIcon />
+          <EditIcon />
         </IconButton>
         <TextField
           multiline={true}
@@ -50,6 +62,7 @@ const CalendarPromise = (props) => {
           value={calendardata.promise}
           onChange={onChangePromiseHandler}
           disabled={!isEditablePromise}
+          InputProps={{ disableUnderline: true }}
         />
       </Grid>
     </Grid>

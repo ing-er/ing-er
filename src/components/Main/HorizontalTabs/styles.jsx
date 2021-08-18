@@ -6,6 +6,13 @@ const Wrapper = styled.div`
     margin-top: 10px;
     margin-bottom: 10px;
   }
+  .enter-button {
+    font-size: 20px;
+    font-family: 'bold';
+    font-weight: bold;
+    background-color: #e96f02;
+    color: white;
+  }
 `;
 
 export default Wrapper;

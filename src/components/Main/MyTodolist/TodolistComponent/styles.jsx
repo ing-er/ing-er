@@ -14,7 +14,7 @@ const Wrapper = styled.div`
     justify-content: center;
   }
   & .content-container {
-    padding: 20px;
+    padding: 10px;
     border-radius: 30px;
   }
   & .title-input {

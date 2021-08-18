@@ -1,14 +1,6 @@
-import {
-  TextField,
-  Grid,
-  Container,
-  IconButton,
-  Button,
-} from '@material-ui/core';
-import SettingsApplicationsIcon from '@material-ui/icons/SettingsApplications';
-import Calendar from 'react-calendar';
+import { Grid, Button } from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
 import './Calendar.css';
-import dayjs from 'dayjs';
 
 import Wrapper from './styles';
 import CalendarComponent from './CalendarComponent';
@@ -155,10 +147,38 @@ const MyCalendar = (props) => {
     isEditableDiary,
     setCalendarSaveData,
     setTodolistSetDate,
+    isLightMode,
   } = props;
 
   const onClickSaveHandler = () => {
     setCalendarSaveData();
+  };
+
+  const handleStudyTime = () => {
+    const secs = calendardata.studyTime;
+
+    let hr = (secs / (60 * 60)) | 0;
+    let min = ((secs % 3600) / 60) | 0;
+    let sec = secs % 60 | 0;
+    if (hr < 10) hr = '0' + hr;
+    if (min < 10) min = '0' + min;
+    if (sec < 10) sec = '0' + sec;
+    return hr + ' : ' + min + ' : ' + sec;
+  };
+
+  const changeBackgroundColor = () => {
+    if (!isLightMode) {
+      return '#292A33';
+    } else {
+      return '#FFFFFF';
+    }
+  };
+  const changeTextColor = () => {
+    if (!isLightMode) {
+      return 'white';
+    } else {
+      return '#0E263E';
+    }
   };
 
   return (
@@ -168,23 +188,20 @@ const MyCalendar = (props) => {
         className="all-container"
         direction="row"
         style={{
-          backgroundColor: '#292A33',
+          backgroundColor: changeBackgroundColor(),
         }}
       >
         <Grid
           container
           xs={12}
-          justify="right"
+          justify="flex-end"
           style={{ marginBottom: '20px' }}
         >
           <Button
+            className="save"
             variant="outlined"
-            style={{
-              fontSize: 15,
-              fontWeight: 'bold',
-              backgroundColor: '#E96F02',
-            }}
             onClick={onClickSaveHandler}
+            endIcon={<SaveIcon />}
           >
             저장
           </Button>
@@ -196,23 +213,31 @@ const MyCalendar = (props) => {
               style={{
                 fontWeight: 'bold',
                 fontSize: 25,
+                color: changeTextColor(),
               }}
             >
               {requestdate}
             </Grid>
-            <Grid item>오늘의 공부 시간</Grid>
+            <Grid
+              item
+              style={{ color: changeTextColor(), fontFamily: 'regular' }}
+            >
+              오늘의 공부 시간
+            </Grid>
             <Grid
               item
               style={{
                 fontSize: 40,
+                color: changeTextColor(),
               }}
             >
-              01 : 53 : 05
+              {handleStudyTime()}
             </Grid>
             <Grid item>
               <CalendarComponent
                 setCalendarSetDate={setCalendarSetDate}
                 setTodolistSetDate={setTodolistSetDate}
+                isLightMode={isLightMode}
               />
             </Grid>
           </Grid>
@@ -227,6 +252,7 @@ const MyCalendar = (props) => {
                 setCalendarEditPromiseIsEditable={
                   setCalendarEditPromiseIsEditable
                 }
+                isLightMode={isLightMode}
               />
             </Grid>
             <Grid item>
@@ -235,6 +261,7 @@ const MyCalendar = (props) => {
                 isEditableDiary={isEditableDiary}
                 setCalendarEditDiary={setCalendarEditDiary}
                 setCalendarEditDiaryIsEditable={setCalendarEditDiaryIsEditable}
+                isLightMode={isLightMode}
               />
             </Grid>
           </Grid>

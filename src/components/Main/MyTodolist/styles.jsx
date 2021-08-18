@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   max-width: 1500px;
+  font-family: 'regular';
   & .all-container {
     padding: 30px;
   }
@@ -12,13 +13,13 @@ const Wrapper = styled.div`
   & .title-container {
     padding: 10px;
     border-radius: 30px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
   }
   & .title-subcontainer {
     justify-content: center;
   }
   & .content-container {
-    padding: 20px;
+    padding: 10px;
     border-radius: 30px;
   }
   & .title-input {
@@ -28,6 +29,7 @@ const Wrapper = styled.div`
     width: 80%;
     height: 100%;
     font-size: 20px;
+    font-family: 'regular';
     :focus {
       outline: none;
     }
@@ -39,6 +41,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     font-size: 18px;
+    font-family: 'regular';
     :focus {
       outline: none;
     }
@@ -50,12 +53,19 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     font-size: 18px;
+    font-family: 'regular';
     :focus {
       outline: none;
     }
   }
   & .input-container {
     text-align: center;
+  }
+  .enter-button {
+    font-size: 15px;
+    font-family: 'bold';
+    font-weight: 'bold';
+    background-color: #e96f02;
   }
 `;
 

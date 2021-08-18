@@ -8,6 +8,16 @@ export const Wrapper = styled.div`
   margin-right: 0;
   min-height: 64px;
 
+  & .room-title {
+    position:absolute;
+    align-self: center;
+    left: 0;
+    margin-left: 1rem;
+    font-family: 'Jua';
+    color: #ffffff;
+    font-size: 1.5rem;
+
+  }
   & .center-buttons {
     display: flex;
     justify-content: center;
@@ -20,17 +30,11 @@ export const Wrapper = styled.div`
     margin: 1rem;
     cursor: pointer;
   }
-  & .room-pause {
-    
-  }
-  & .room-close {
-    
-  }
   & .center-buttons-container {
     display: flex;
     justify-content: space-between;
     margin: 0 0.5rem;
-    z-index: 11;
+    z-index: 30;
   }
   & .open-drawer-container {
     position: fixed;
@@ -40,6 +44,51 @@ export const Wrapper = styled.div`
     right: 1rem;
     background-color: #ffffff;
     border-radius: 5px;
+  }
+
+  & .promise-container {
+    margin: 2rem;
+
+    & .promise {
+      border: 1px solid black;
+      border-radius: 5px;
+      padding: 1rem;
+      max-height: 150px;
+      overflow: auto;
+    }
+  }
+
+  & .backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 101;
+  }
+  & .modal {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    text-align: center;
+
+    & p {
+      color: #444;
+      font-weight: bold;
+    }
+  }
+
+  & .button-container {
+    display: flex;
+    justify-content: center;
+
+    & button {
+      font-weight: bold;
+      margin: 0 1rem 0 1rem;
+    }
   }
 `
 

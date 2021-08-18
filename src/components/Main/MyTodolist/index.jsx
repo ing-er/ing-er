@@ -1,8 +1,7 @@
-import { Grid, LinearProgress, IconButton, Button } from '@material-ui/core';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import { Grid, LinearProgress, Button } from '@material-ui/core';
+
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import SaveIcon from '@material-ui/icons/Save';
 import { withStyles } from '@material-ui/styles';
 
 import Wrapper from './styles';
@@ -13,7 +12,7 @@ import TodolistAdd from './TodolistAdd';
 const LinearProgressOrange = withStyles({
   root: {
     height: 10,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#F9F9F9',
     borderRadius: '20px',
   },
   bar: {
@@ -198,14 +197,31 @@ const MyTodolist = (props) => {
     setTodolistEditContent,
     setTodolistEditComplete,
     setTodolistSaveData,
+    setTodolistDeleteDetail,
+    setTodolistDeleteTodolist,
+    isLightMode,
   } = props;
   // console.log(todolistdata);
 
   const onClickSaveTodolist = (e) => {
     setTodolistSaveData();
   };
-  const handleAddContainer = () => {
-    setTodolistAddContainer('');
+  // const handleAddContainer = () => {
+  //   setTodolistAddContainer('');
+  // };
+  const changeBackgroundColor = () => {
+    if (!isLightMode) {
+      return '#292A33';
+    } else {
+      return '#FFFFFF';
+    }
+  };
+  const changeTextColor = () => {
+    if (!isLightMode) {
+      return 'white';
+    } else {
+      return '#0E263E';
+    }
   };
 
   return (
@@ -215,34 +231,39 @@ const MyTodolist = (props) => {
         className="all-container"
         direction="column"
         style={{
-          backgroundColor: '#292A33',
+          backgroundColor: changeBackgroundColor(),
         }}
       >
         <Grid container direction="row" justify="space-between">
           <Grid item>
-            <Grid container direction="row">
+            <Grid container direction="row" style={{ alignItems: 'center' }}>
               <Grid
                 item
                 style={{
                   marginRight: '10px',
                 }}
               >
-                <EventAvailableIcon htmlColor="white" fontSize="large" />
+                <EventAvailableIcon
+                  htmlColor={changeTextColor()}
+                  fontSize="large"
+                />
               </Grid>
               <Grid
                 item
                 style={{
                   fontWeight: 'bold',
+                  fontFamily: 'bold',
                   fontSize: 30,
+                  color: changeTextColor(),
                 }}
               >
                 {date}
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <IconButton onClick={handleAddContainer}>
-                  <AddCircleIcon htmlColor="#411AB0" />
+                  <AddCircleIcon htmlColor="#411AB0" fontSize="large" />
                 </IconButton>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
 
@@ -251,21 +272,39 @@ const MyTodolist = (props) => {
               className="enter-button"
               variant="outlined"
               onClick={onClickSaveTodolist}
-              style={{
-                fontSize: 15,
-                fontWeight: 'bold',
-                backgroundColor: '#E96F02',
-              }}
+              endIcon={<SaveIcon />}
             >
               저장
             </Button>
           </Grid>
         </Grid>
-        <Grid item xs={12} style={{ marginTop: '10px' }}>
+        <Grid
+          item
+          xs={12}
+          style={{ marginTop: '10px', color: changeTextColor() }}
+        >
           <div>{todopercent}%</div>
           <div>
             <LinearProgressOrange variant="determinate" value={todopercent} />
           </div>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid
+            item
+            // lg={3}
+            // md={4}
+            // sm={6}
+            // xs={12}
+            className="todolist-component-container"
+          >
+            <TodolistAdd
+              setTodolistAddContainer={setTodolistAddContainer}
+              backColor={'#1E1F26'}
+              textColor={'white'}
+              isLightMode={isLightMode}
+              plusButtonColor={'#1172DA'}
+            />
+          </Grid>
         </Grid>
         <Grid item xs={12}>
           <Grid container direction="row" justify="left">
@@ -290,6 +329,10 @@ const MyTodolist = (props) => {
                     backColor={'#1E1F26'}
                     textColor={'white'}
                     completeTextColor={'#4D4D4D'}
+                    plusButtonColor={'#1172DA'}
+                    setTodolistDeleteDetail={setTodolistDeleteDetail}
+                    setTodolistDeleteTodolist={setTodolistDeleteTodolist}
+                    isLightMode={isLightMode}
                   />
                 </Grid>
               );

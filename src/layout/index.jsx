@@ -1,4 +1,3 @@
-import Header from './Header';
 import { Container, CssBaseline } from '@material-ui/core';
 import Wrapper from './styles';
 import HeaderContainer from '../containers/HeaderContainer';
@@ -9,7 +8,14 @@ const Layout = (props) => {
   return (
     <div>
       {isEntrance && (
-        <Wrapper style={{ backgroundImage: 'url(img/inger_background.png)' }}>
+        <Wrapper
+          style={{
+            backgroundImage: 'url(img/inger_background6.png)',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+          }}
+        >
           <CssBaseline />
           <HeaderContainer />
           <Container className="content">

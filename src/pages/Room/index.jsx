@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 import ScreenContainer from '../../components/Room/ScreenContainer';
 import RoomDrawer from '../../components/Room/Drawer';
 import RoomAppbar from '../../components/Room/RoomAppbar';
@@ -13,18 +11,17 @@ const Room = ({
   leaveSession,
   handleVideoMute,
   isLocalVideoActive,
+  studyTime,
+  onIncrease,
+  currentUserData,
+  handleVideoClick,
+  handleDrawerOpen,
+  handleDrawerClose,
+  open,
+  mySessionId,
 }) => {
   /* drawer */
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  /* webrtc */
 
   return (
     <Wrapper>
@@ -32,7 +29,9 @@ const Room = ({
       <RoomAppbar
         handleVideoMute={handleVideoMute}
         handleDrawerOpen={handleDrawerOpen}
+        isLocalVideoActive={isLocalVideoActive}
         leaveSession={leaveSession}
+        mySessionId={mySessionId}
         open={open}
         classes={classes}
       />
@@ -40,11 +39,16 @@ const Room = ({
         handleDrawerClose={handleDrawerClose}
         open={open}
         classes={classes}
+        studyTime={studyTime}
+        currentUserData={currentUserData}
       >
         <ScreenContainer
           publisher={publisher}
           subscribers={subscribers}
           isLocalVideoActive={isLocalVideoActive}
+          studyTime={studyTime}
+          onIncrease={onIncrease}
+          handleVideoClick={handleVideoClick}
         />
       </RoomDrawer>
     </Wrapper>

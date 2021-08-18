@@ -8,20 +8,20 @@ import {
   setIsRandomRoomTrue,
   setIsRandomRoomFalse,
 } from '../modules/setIsRandomRoom';
-import { getCalendarData } from '../modules/setCalendar';
-import { getTodolistData } from '../modules/setTodolist';
+import { setIsLightMode } from '../modules/setLightMode';
+import { getCalendarData, setCalendarSetDate } from '../modules/setCalendar';
+import { getTodolistData, setTodolistSetDate } from '../modules/setTodolist';
 
 import HorizontalTabs from '../components/Main/HorizontalTabs';
 
 //* 민코
 // import MemberSetting from '../components/Entrance/MemberSetting';
-import {
-  typeAuthUser,
-} from '../modules/userAuthorization';
+import { typeAuthUser } from '../modules/userAuthorization';
 
 const HorizontalTabsComponent = () => {
   const dispatch = useDispatch();
   const { mainIndex } = useSelector((state) => state.setMainIndex);
+  
   const setMainIndexCal = () => {
     dispatch(setMainIndexCalendar());
   };
@@ -37,23 +37,25 @@ const HorizontalTabsComponent = () => {
     dispatch(setIsRandomRoomFalse());
   };
 
-  // const { id } = useSelector(({authorization}) => authorization.info.id);
-  // const { id } = useSelector((state) => state.authorization.userData);
-  const { id } = useSelector(({authorization }) => ({
+  const { isLightMode } = useSelector((state) => state.setLightMode);
+  const setIsLight = (isLightMode) => {
+    dispatch(setIsLightMode(isLightMode));
+  };
+
+  const { id } = useSelector(({ authorization }) => ({
     id: authorization.userData.id,
   }));
 
-  console.log(id)
-
+  const { requestdate } = useSelector((state) => state.setTodolist);
 
   useEffect(() => {
     typeAuthUser();
   }, []);
-  useEffect(() => {
-    getCalendarData(id);
-  }, []);
-  useEffect(() => {
-    getTodolistData(id);
+  useEffect(async () => {
+    await getCalendarData(id);
+    await getTodolistData(id);
+    await dispatch(setCalendarSetDate(requestdate));
+    await dispatch(setTodolistSetDate(requestdate));
   }, []);
 
   return (
@@ -64,6 +66,8 @@ const HorizontalTabsComponent = () => {
       isRandomRoom={isRandomRoom}
       setIsRandomRoomTrue={setIsRandomRoomT}
       setIsRandomRoomFalse={setIsRandomRoomF}
+      setIsLightMode={setIsLight}
+      isLightMode={isLightMode}
     />
   );
 };

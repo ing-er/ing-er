@@ -1,8 +1,6 @@
-import { Grid, LinearProgress, IconButton, Button } from '@material-ui/core';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import { Grid, LinearProgress, IconButton } from '@material-ui/core';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
+import SaveIcon from '@material-ui/icons/Save';
 import { withStyles } from '@material-ui/styles';
 
 import TodolistComponent from '../../../Main/MyTodolist/TodolistComponent';
@@ -33,10 +31,15 @@ const DrawerTodo = (props) => {
     setTodolistEditContent,
     setTodolistEditComplete,
     setTodolistSaveData,
+    setTodolistDeleteDetail,
+    setTodolistDeleteTodolist,
   } = props;
 
-  const handleAddContainer = () => {
-    setTodolistAddContainer('');
+  // const handleAddContainer = () => {
+  //   setTodolistAddContainer('');
+  // };
+  const onClickSaveTodolist = (e) => {
+    setTodolistSaveData();
   };
 
   return (
@@ -51,34 +54,35 @@ const DrawerTodo = (props) => {
       >
         <Grid container direction="row" justify="space-between">
           <Grid item>
-            <Grid container direction="row">
+            <Grid container direction="row" style={{ alignItems: 'center' }}>
               <Grid
                 item
                 style={{
                   marginRight: '10px',
                 }}
               >
-                <EventAvailableIcon htmlColor="white" fontSize="large" />
+                <EventAvailableIcon htmlColor="#000000" fontSize="large" />
               </Grid>
               <Grid
                 item
                 style={{
                   fontWeight: 'bold',
+                  fontFamily: 'bold',
                   fontSize: 30,
                 }}
               >
                 {date}
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <IconButton onClick={handleAddContainer}>
-                  <AddCircleIcon htmlColor="#411AB0" />
+                  <AddCircleIcon htmlColor="#411AB0" fontSize="large" />
                 </IconButton>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
 
-          {/* <Grid item>
-            <Button
+          <Grid item>
+            {/* <Button
               className="enter-button"
               variant="outlined"
               onClick={onClickSaveTodolist}
@@ -89,8 +93,11 @@ const DrawerTodo = (props) => {
               }}
             >
               저장
-            </Button>
-          </Grid> */}
+            </Button> */}
+            <IconButton onClick={onClickSaveTodolist}>
+              <SaveIcon htmlColor="#E96F02" />
+            </IconButton>
+          </Grid>
         </Grid>
         <Grid item xs={12} style={{ marginTop: '10px' }}>
           <div>{todopercent}%</div>
@@ -105,6 +112,22 @@ const DrawerTodo = (props) => {
             justify="left"
             style={{ backgroundColor: '#F6F7F9', borderRadius: '30px' }}
           >
+            <Grid
+              item
+              // lg={3}
+              // md={4}
+              // sm={6}
+              xs={12}
+              className="todolist-component-container"
+            >
+              <TodolistAdd
+                setTodolistAddContainer={setTodolistAddContainer}
+                backColor={'#FFFFFF'}
+                textColor={'#000000'}
+                plusButtonColor={'#411AB0'}
+                isLightMode={false}
+              />
+            </Grid>
             {todolistdata.map((data, index) => {
               return (
                 <Grid
@@ -126,6 +149,10 @@ const DrawerTodo = (props) => {
                     backColor={'#FFFFFF'}
                     textColor={'#000000'}
                     completeTextColor={'#CECECE'}
+                    plusButtonColor={'#411AB0'}
+                    setTodolistDeleteDetail={setTodolistDeleteDetail}
+                    setTodolistDeleteTodolist={setTodolistDeleteTodolist}
+                    isLightMode={false}
                   />
                 </Grid>
               );

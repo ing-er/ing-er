@@ -21,7 +21,7 @@ const DrawerContentContainer = ({ drawerId, currentUserData }) => {
   return (
     <Wrapper>
       {drawer === 0 ? (
-        <DrawerProfileContainer currentUserData={currentUserData} />
+        <DrawerProfileContainer currentUserData={currentUserData} drawerId={drawer} />
       ) : (
         <DrawerTodoContainer>
           <DrawerTodo />

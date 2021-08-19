@@ -11,7 +11,7 @@ import { setTodolistSetDate } from '../modules/setTodolist';
 
 import DrawerProfile from '../components/Room/DrawerContentContainer/DrawerProfile';
 
-const DrawerProfileContainer = ({ currentUserData }) => {
+const DrawerProfileContainer = ({ currentUserData, drawerId }) => {
   const dispatch = useDispatch();
   const setCalendarEditPro = (promise) => {
     dispatch(setCalendarEditPromise(promise));
@@ -57,6 +57,7 @@ const DrawerProfileContainer = ({ currentUserData }) => {
       studyTime={studyTime}
       currentUserData={currentUserData}
       localUserData={userData}
+      drawerId={drawerId}
     />
   );
 };

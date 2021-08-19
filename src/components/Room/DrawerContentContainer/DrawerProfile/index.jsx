@@ -37,6 +37,7 @@ const DrawerProfile = (props) => {
     studyTime,
     localUserData,
     currentUserData,
+    drawerId
   } = props;
 
   const [isLocal, setIsLocal] = useState(true);
@@ -96,8 +97,10 @@ const DrawerProfile = (props) => {
 
   // 5. update background colors
   useEffect(() => {
-    setCalendarBackground(remoteUserCalendarList);
-  }, [activeMonth, remoteUserCalendarList]);
+    if (drawerId === 0) {
+      setCalendarBackground(remoteUserCalendarList);
+    }
+  }, [activeMonth, remoteUserCalendarList, drawerId]);
 
   const onClickSaveHandler = () => {
     setCalendarSaveData();

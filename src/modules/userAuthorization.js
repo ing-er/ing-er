@@ -137,7 +137,6 @@ export const setKakoDialogClose = () => ({
 const initialState = {
   id: 0,
 };
-
 //* REDUCER
 export default function authorization(state=initialState, action) {
   switch (action.type) {
@@ -312,9 +311,10 @@ export default function authorization(state=initialState, action) {
     case WITHDRAWAL_USER_SUCCESS:
       return {
         ...state,
+        userData: {},
         isAuth: false,
         isJoin: false,
-        uinfo: action.payload,
+        withdrawalSuccess: action.payload,
       };
     case WITHDRAWAL_USER_FAILURE:
       return {
@@ -325,6 +325,7 @@ export default function authorization(state=initialState, action) {
       return {
         ...state,
         loginError: false,
+        withdrawalSuccess: {},
       };
 
     case DIALOGOPEN:

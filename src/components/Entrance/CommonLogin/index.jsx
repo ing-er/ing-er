@@ -23,9 +23,6 @@ const CssTextField = withStyles({
       color: 'white',
       fontFamily: 'bold',
     },
-    '&.MuiFormLabel-root': {
-      color: '#23A5EB',
-    },
     '& .MuiInput-underline:after': {
       borderBottomColor: 'white',
     },
@@ -42,12 +39,6 @@ const CssTextField = withStyles({
       },
     },
   },
-  // cssLabel: {
-  //   color: '#d3d3d3',
-  //   '&.Mui-focused': {
-  //     color: '#23A5EB',
-  //   },
-  // },
 })(TextField);
 
 const textStyles = makeStyles((theme) => ({
@@ -65,7 +56,6 @@ const CommonLogin = ({
   onPressUniqueNumber,
 }) => {
   const classes = textStyles();
-  const classes2 = styles;
 
   return (
     <div>

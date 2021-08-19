@@ -329,7 +329,7 @@ const setTodolist = (state = initialState, action) => {
         }
         if (updateTodolist.length !== 0) {
           await axios
-            .patch(serverUrl + '/todoList/update', updateTodolist)
+            .patch(serverUrl + 'todoList/update', updateTodolist)
             .then((res) => {
               // console.log(res);
               check = true;

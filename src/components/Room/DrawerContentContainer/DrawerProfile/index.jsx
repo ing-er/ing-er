@@ -97,9 +97,7 @@ const DrawerProfile = (props) => {
 
   // 5. update background colors
   useEffect(() => {
-    if (drawerId === 0) {
-      setCalendarBackground(remoteUserCalendarList);
-    }
+    setCalendarBackground(remoteUserCalendarList);
   }, [activeMonth, remoteUserCalendarList, drawerId]);
 
   const onClickSaveHandler = () => {

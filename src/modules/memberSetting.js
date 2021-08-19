@@ -17,11 +17,6 @@ const INIT_USER_INFO = 'memberSetting/INIT_UPDATE_INFO';
 const INIT_USER_INFO_SUCCESS = 'memberSetting/INIT_UPDATE_INFO_SINIT_USER_INFO_SUCCESS';
 const INIT_USER_INFO_FAILURE = 'memberSetting/INIT_UPDATE_INFO_FAILURE';
 
-//* WITHDRAWAL_USER
-const WITHDRAWAL_USER = 'memberSetting/WITHDRAWAL_USER';
-const WITHDRAWAL_USER_SUCCESS = 'memberSetting/WITHDRAWAL_USER_SUCCESS';
-const WITHDRAWAL_USER_FAILURE = 'memberSetting/WITHDRAWAL_USER_FAILURE';
-
 const INIT_STATE = 'memberSetting/INIT_STATE';
 
 //* GENERATE_TYPE_FUNCTION
@@ -37,10 +32,6 @@ export const typeUpdateUserInfo = (data) => ({
 export const typeInitInfo = (data) => ({
   type: INIT_USER_INFO,
   payload: data,
-});
-
-export const typeWithdrawal = () => ({
-  type: WITHDRAWAL_USER,
 });
 
 export const typeInitialize = () => ({
@@ -94,27 +85,11 @@ export function* updateUserInfoSaga(action) {
   }
 }
 
-export function* withdrawalSaga() {
-  try {
-    const withdrawalResult = yield call(editApi.WithdrawalUserAsync);
-    yield put({
-      type: WITHDRAWAL_USER_SUCCESS,
-      payload: withdrawalResult,
-    });
-  } catch (e) {
-    yield put({
-      type: WITHDRAWAL_USER_FAILURE,
-      payload: e,
-    });
-  }
-}
-
 //* WATCHER_SAGA_FUNCTION
 export function* userInfoSaga() {
   yield takeLatest(GET_USER_INFO, getUserInfoSaga);
   yield takeLatest(INIT_USER_INFO, registUserInfoSaga);
   yield takeLatest(POST_UPDATE_USER_INFO, updateUserInfoSaga);
-  yield takeLatest(WITHDRAWAL_USER, withdrawalSaga);
 }
 
 //* 초기 state
@@ -125,7 +100,7 @@ const initialState = {
 
 /* 리듀서 선언 */
 // 리듀서는 export default 로 내보내주세요.
-export default function memberSetting(state = initialState, action) {  
+export default function memberSetting(state = initialState, action) {
   switch (action.type) {
     //*   GET_USER_INFO
     case GET_USER_INFO:
@@ -173,25 +148,12 @@ export default function memberSetting(state = initialState, action) {
       return {
         ...state,
       };
-
-      case WITHDRAWAL_USER:
-      return {
-        ...state,
-      };
-    case WITHDRAWAL_USER_SUCCESS:
-      return {
-        ...state,
-        info: {},
-      };
-    case WITHDRAWAL_USER_FAILURE:
-      return {
-        ...state,
-      };
     
     case INIT_STATE:
       return {
         ...state,
-        update: {}
+        update: {},
+        withdrawalSuccess: {},
       };
 
     default:

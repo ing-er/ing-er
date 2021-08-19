@@ -10,6 +10,7 @@ import {
 import {
   typeAuthUser,
   typeWithdrawal,
+  typeInitState,
 } from '../modules/userAuthorization';
 
 import { useHistory } from 'react-router';
@@ -24,13 +25,14 @@ function MemberSettingContainer() {
   const history = useHistory();
   // useSelector는 리덕스 스토어의 상태를 조회.
   // useSelector를 통해 rootReducer에 있는 타 모듈을 불러옴.
-  let { kakaoIdNum, isJoin, isAuth, info, update } = useSelector(({authorization, memberSetting }) => ({
+  let { kakaoIdNum, isJoin, isAuth, info, update, withdrawalSuccess } = useSelector(({authorization, memberSetting }) => ({
     kakaoIdNum: authorization.kakaoIdNum,
     isJoin: authorization.isJoin,
     isAuth: authorization.isAuth,
     setting: authorization.setting,
     info: memberSetting.info,
     update: memberSetting.update,
+    withdrawalSuccess: authorization.withdrawalSuccess,
   }));
 
   const [name, setname] = useState('');
@@ -40,22 +42,32 @@ function MemberSettingContainer() {
 
   useEffect(() => {
     dispatch(typeGetUserInfo());
-    // dispatch(typeAuthUser());
   }, []);
+
 
   useEffect(() => {
 		if (!isAuth){
-			Swal.fire({
-				title: '<span style="color: white">잘못된 접근입니다. <span>',
-				icon: 'error',
-				background: '#292A33',
-				// confirmButtonColor: '#E96F02',
-				// confirmButtonText: 'OK!',
-			}).then((result) => {
-			});
+      if (withdrawalSuccess?.message){
+        Swal.fire({
+          title: '<span style="color: white">탈퇴하셨습니다. <span>',
+          icon: 'success',
+          background: '#292A33',
+        }).then((result) => {
+        });
+        dispatch(typeInitState());
+      } else {
+        Swal.fire({
+          title: '<span style="color: white">잘못된 접근입니다. <span>',
+          icon: 'error',
+          background: '#292A33',
+          confirmButtonColor: '#E96F02',
+          confirmButtonText: 'OK!',
+        }).then((result) => {
+        });
+      }
 			history.push({ pathname: '/' });
 		};
-  }, [isAuth]);
+  }, [isAuth, withdrawalSuccess]);
 
   useEffect(() => {
     if (name == info.name){

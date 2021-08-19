@@ -10,7 +10,7 @@ const Layout = (props) => {
       {isEntrance && (
         <Wrapper
           style={{
-            backgroundImage: 'url(img/inger_background6.png)',
+            backgroundImage: 'url(img/inger_background7.gif)',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',

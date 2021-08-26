@@ -110,7 +110,7 @@
   - **사용 기능** : 카카오 소셜 로그인
   - **담당자** : 김민재, 이채하
 - OpenVidu
-  - **링크** : https://docs.openvidu.io/en/2.19.0/tutorials/openvidu-insecure-react/
+  - **정리문서** : [docs/webRTC.md](./docs/webRTC.md) 참조
   - **소개** : webRTC 오픈 소스
   - **사용 기능** : 공부방
   - **담당자** : 김영환, 전선규
@@ -158,4 +158,5 @@
 
 ## 🖐 Installation
 
-- [settings](./exec/settings.md) 문서 참조
+- [settings](./docs/settings.md) 문서 참조
+

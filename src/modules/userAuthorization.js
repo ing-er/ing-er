@@ -4,30 +4,37 @@ import * as loginApi from '../api/auth/userAuthorization';
 //* CREATE_REQUEST_ACTION_TYPES
 
 //* AUTH_USER
+// 회원 검증
 const AUTH_USER = 'userAuthorization/AUTH_USER';
 const AUTH_USER_SUCCESS = 'userAuthorization/AUTH_USER_SUCCESS';
 const AUTH_USER_FAILURE = 'userAuthorization/AUTH_USER_FAILURE';
 
 //* LOGIN_USER
+// 로그인
 const LOGIN_USER = 'userAuthorization/LOGIN_USER';
 const LOGIN_USER_SUCCESS = 'userAuthorization/LOGIN_USER_SUCCESS';
 const LOGIN_USER_FAILURE = 'userAuthorization/LOGIN_USER_FAILURE';
 
 //* TEST_LOGIN_USER
+// 인증 코드 유저
 const TEST_LOGIN_USER = 'userAuthorization/TEST_LOGIN_USER';
 const TEST_LOGIN_USER_SUCCESS = 'userAuthorization/TEST_LOGIN_USER_SUCCESS';
 const TEST_LOGIN_USER_FAILURE = 'userAuthorization/TEST_LOGIN_USER_FAILURE';
 
 //* LOG_OUT_USER
+// 로그아웃
 const LOG_OUT_USER = 'userAuthorization/LOG_OUT_USER';
 
 //* WITHDRAWAL_USER
+// 탈퇴
 const WITHDRAWAL_USER = 'userAuthorization/WITHDRAWAL_USER';
 const WITHDRAWAL_USER_SUCCESS = 'userAuthorization/WITHDRAWAL_USER_SUCCESS';
 const WITHDRAWAL_USER_FAILURE = 'userAuthorization/WITHDRAWAL_USER_FAILURE';
 
+// 상태값 초기화
 const INIT_STATE = 'userAuthorization/INIT_STATE';
 
+// 카카오 dialog
 const DIALOGOPEN = 'DIALOGOPEN';
 const DIALOGCLOSE = 'DIALOGCLOSE';
 
@@ -162,19 +169,17 @@ export default function authorization(state=initialState, action) {
           isAuth: true,
           isJoin: true,
           isAdmin: false,
-          kakaoIdNum: action.kakaoIdNum,
         }
       } else {
         if (action.payload.usercode === 2){
           //* 로그인되어 있는 상태(관리자)
           return {
             ...state,
-            id: action.payload.id,
-            userData: action.payload,
+            id: action.payload.id,          // id값은 별도로 빼서 다른 컨테이너에서 사용.
+            userData: action.payload,       // 들어온 유저 정보 저장. 닉, 카테고리, 공개여부, 유저코드, 
             isAuth: true,
             isJoin: false,
             isAdmin: true,
-            kakaoIdNum: action.kakaoIdNum,
           };
         } else {
           //* 로그인되어 있는 상태(일반 회원)
@@ -185,7 +190,6 @@ export default function authorization(state=initialState, action) {
             isAuth: true,
             isJoin: false,
             isAdmin: false,
-            kakaoIdNum: action.kakaoIdNum,
           };
         }
       };
@@ -207,7 +211,7 @@ export default function authorization(state=initialState, action) {
       };
     case LOGIN_USER_SUCCESS:
       //* 등록된 유저일 때,
-      if (isNaN(action.payload)) {
+      if (isNaN(action.payload)) {            // 로그인할 때, 존재하지 않는 회원인 경우에 nan이 들어옴.
         if (action.payload.usercode === 2){
           //* 로그인되어 있는 상태(관리자)
           return {
@@ -217,7 +221,6 @@ export default function authorization(state=initialState, action) {
             isAuth: true,
             isJoin: false,
             isAdmin: true,
-            kakaoIdNum: Number(action.payload.kakaoIdNum),
           };
         } else {
           //* 로그인되어 있는 상태(일반 회원)
@@ -228,14 +231,12 @@ export default function authorization(state=initialState, action) {
             isAuth: true,
             isJoin: false,
             isAdmin: false,
-            kakaoIdNum: action.kakaoIdNum,
           };
         };
       }
       else {
-        return {
+        return {          // 회원가입하려는 회원은 nan을 받는다.
           ...state,
-          kakaoIdNum: action.payload,
           isJoin: true,
           isAuth: true,
         };
@@ -255,7 +256,9 @@ export default function authorization(state=initialState, action) {
       if(action.payload == 'fail') {
         return {
           ...state,
-          loginError: true,
+          loginError: true,                   // 유저 코드로 접속했을 때 fail값을 받으면 loginError상태를 만들어줌.
+                                              // 애초에 회원가입할 때 디비에 없는 접속 번호면 error 코드가 아니라, success를 상태 코드를 주기 때문에,
+                                              // 이와 같은 조치가 필요해졌음.
         };
       } else {
         if (action.payload.usercode === 2){
@@ -267,7 +270,6 @@ export default function authorization(state=initialState, action) {
             isAuth: true,
             isJoin: false,
             isAdmin: true,
-            kakaoIdNum: Number(action.payload.kakaoIdNum),
           };
         } else {
           return {
@@ -277,7 +279,6 @@ export default function authorization(state=initialState, action) {
             isAuth: true,
             isJoin: false,
             isAdmin: false,
-            kakaoIdNum: action.kakaoIdNum,
           };
         };
       }
@@ -314,21 +315,21 @@ export default function authorization(state=initialState, action) {
         userData: {},
         isAuth: false,
         isJoin: false,
-        withdrawalSuccess: action.payload,
+        withdrawalSuccess: action.payload,      // 회원탈퇴 성공 메시지를 받으면 useEffect로 효과를 줄 거임.
       };
     case WITHDRAWAL_USER_FAILURE:
       return {
         ...state,
       };
 
-    case INIT_STATE:
+    case INIT_STATE:            // 받은 상태 값 중, 다른 액션 진행에 방해되는 state값이 존재하지 않도록 초기화.
       return {
         ...state,
         loginError: false,
         withdrawalSuccess: {},
       };
 
-    case DIALOGOPEN:
+    case DIALOGOPEN:            // 카카오 로그인 다이얼로그와 관련된 액션.
       return {
         ...state,
         isOpen: true,

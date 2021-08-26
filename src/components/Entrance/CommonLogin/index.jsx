@@ -4,18 +4,8 @@ import {
   withStyles,
   makeStyles,
   IconButton,
-  createStyles,
 } from '@material-ui/core';
 import HowToRegIcon from '@material-ui/icons/HowToReg';
-
-const styles = (theme) =>
-  createStyles({
-    root: {
-      '& .MuiFormLabel-root': {
-        color: 'red',
-      },
-    },
-  });
 
 const CssTextField = withStyles({
   root: {
@@ -30,12 +20,6 @@ const CssTextField = withStyles({
       '& fieldset': {
         borderColor: 'red',
         color: 'white',
-      },
-      '&:hover fieldset': {
-        borderColor: 'yellow',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: 'green',
       },
     },
   },

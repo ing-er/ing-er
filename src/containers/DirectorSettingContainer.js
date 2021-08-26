@@ -246,19 +246,9 @@ const DirectorSettingContainer = () => {
 		setUpdatecode('')
   };
 
-	//* 세부 코드 관련 event
-  // const postCommonCode = (e) => {
-	// 	alert('준비 중입니다.');
-  // };
-
   const deleteDetailCode = (e) => {
 		dispatch(typeDeleteDetailCode(e.currentTarget.value));
   };
-
-  // const updateCommonCode = () => {
-	// 	dispatch(typeUpdateteCommonCode(updatecode));
-	// 	setUpdatecode('')
-  // };
 
 
 	//* 카테고리 렌더링
